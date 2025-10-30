@@ -1,0 +1,192 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use substitution to demonstrate the application of the associative property of multiplication. A strict symbolic equality is enforced on each step, although parenthese are optional for step 1, the first step must contain 3 distinct factors, the second 2, and the third only 1. The order of the factors much match the order in which the variables appear in the original expression. Numerical values are varied.
+
+*************************************************************-->
+
+<problem>
+<setup>
+<select assignNames="x y z" numToSelect="3">a b c d r s t v m n p q x y</select>
+<selectFromSequence name="a" from="2" to="5"/>
+<selectFromSequence name="b" from="2" to="5" exclude="$a"/>
+<selectFromSequence name="c" from="6" to="15"/>
+<!-- using <m> where you need specific notation, such as parentheses, or fancy latex -->
+<m name="lhs">($x $y) $z</m>
+<m name="rhs">$x ($y $z)</m>
+<!--   the <math> steps are used for answer checking of each step -->
+<math name="lhsStep1">($a $b)$c</math>
+<!-- for the demo steps, which are used in the solution, I need specific notation to appear, so I'm using an <m> -->
+<m name="lhs1Demo">($a \cdot $b)$c</m>
+<math name="abP"simplify>$a $b</math>
+<math name="lhsStep2">($abP)$c</math>
+<m name="lhs2Demo">($abP)$c</m>
+<math name="lhsStep3" simplify>($abP)$c</math>
+<m name="lhs3Demo">$lhsStep3</m>
+<mathList name="lhsSteps">$lhsStep1 $lhsStep2 $lhsStep3</mathList>
+<mathList name="lhsUserSteps">$userlhs1 $userlhs2 $userlhs3</mathList>
+
+<math name="rhsStep1">$a ($b $c)</math>
+<m name="rhs1Demo">$a ($b \cdot $c)</m>
+<math name="bcP"simplify>$b $c</math>
+<math name="rhsStep2">$a($bcP)</math>
+<m name="rhs2Demo">$a($bcP)</m>
+<math name="rhsStep3" simplify>$a($bcP)</math>
+<m name="rhs3Demo">$rhsStep3</m>
+<mathList name="rhsSteps">$rhsStep1 $rhsStep2 $rhsStep3</mathList>
+<mathList name="rhsUserSteps">$userrhs1 $userrhs2 $userrhs3</mathList>
+</setup>
+
+
+  
+<!--testing-->
+<!-- <p>lhsSteps = $lhsSteps</p>
+<p>lhsUserSteps = $lhsUserSteps</p>
+<p>rhsSteps = $rhsSteps</p>
+<p>rhsUserSteps = $rhsUserSteps</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Demonstrate the <alert>Associative Property of Multiplication</alert> by substituting the given numerical values. Simplify the right-hand side of the equation and the left hand side of the equation separately in three steps each.</p>
+<me>$lhs = $rhs</me>
+
+<p>Given that <m>$x = $a,\;\; $y = $b,\;\; $z = $c</m>,</p>  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<tabular>
+<row header>
+  <cell colSpan="2"><alert>Left-hand side</alert></cell>
+  <cell colSpan="2"></cell>
+</row>
+<row>
+  <cell halign="right"><m>$lhs = </m></cell>
+  <cell halign="left"><mathInput name="userlhs1"/></cell>
+  <cell colSpan="2">Substitute variables, without simplifying</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left"><mathInput name="userlhs2"/></cell>
+  <cell colSpan="2">Partially simplify to a product of two factors</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left"><mathInput name="userlhs3"/></cell>
+  <cell colSpan="2">Multiply</cell>
+</row>
+</tabular>
+
+<answer name="ans1a" matchPartial symbolicEquality>
+  <award>
+    <when>$lhsSteps = $lhsUserSteps</when>
+  </award>
+</answer>
+
+<tabular>
+<row header>
+  <cell colSpan="2"><alert>Right-hand side</alert></cell>
+  <cell colSpan="2"></cell>
+</row>
+<row>
+  <cell halign="right"><m>$rhs = </m></cell>
+  <cell halign="left"><mathInput name="userrhs1"/></cell>
+  <cell colSpan="2">Substitute variables, without simplifying</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left"><mathInput name="userrhs2"/></cell>
+  <cell colSpan="2">Partially simplify to a product of two factors</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left"><mathInput name="userrhs3"/></cell>
+  <cell colSpan="2">Multiply</cell>
+</row>
+</tabular>
+
+<answer name="ans1b" matchPartial symbolicEquality>
+  <award>
+    <when>$rhsSteps = $rhsUserSteps</when>
+  </award>
+</answer>
+
+
+  
+
+
+
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>The intended steps for each demonstration are:</p>
+<tabular>
+<row header>
+  <cell colSpan="2"><alert>Left-hand side</alert></cell>
+  <cell colSpan="2"></cell>
+</row>
+<row>
+  <cell halign="right"><m>$lhs = </m></cell>
+  <cell halign="left">$lhs1Demo</cell>
+  <cell colSpan="2">Substitute variables, without simplifying</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left">$lhs2Demo</cell>
+  <cell colSpan="2">Partially simplify to a product of two factors</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left">$lhs3Demo</cell>
+  <cell colSpan="2">Multiply</cell>
+</row>
+</tabular>
+
+<tabular>
+<row header>
+  <cell colSpan="2"><alert>Right-hand side</alert></cell>
+  <cell colSpan="2"></cell>
+</row>
+<row>
+  <cell halign="right"><m>$rhs = </m></cell>
+  <cell halign="left">$rhs1Demo</cell>
+  <cell colSpan="2">Substitute variables, without simplifying</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left">$rhs2Demo</cell>
+  <cell colSpan="2">Partially simplify to a product of two factors</cell>
+</row>
+<row>
+  <cell halign="right"><m> = </m></cell>
+  <cell halign="left">$rhs3Demo</cell>
+  <cell colSpan="2">Multiply</cell>
+</row>
+</tabular>
+
+</solution>
+</problem>

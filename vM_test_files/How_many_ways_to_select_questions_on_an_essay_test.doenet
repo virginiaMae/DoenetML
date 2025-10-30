@@ -1,0 +1,130 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine how many ways to choose k problems on a test with a bank of n questions. Application of the standard formula for combinations.
+This problem is randomized with k ranging from 3 to 5 and n ranging from 5 (k = 3, b = 2) to 10 (k = 5, b = 5).
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="k" from="3" to="5"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <math name="n" simplify>$k + $b</math>
+  <math name="binomkOfN">$n!/($k!$b!)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>k = $k</p>
+<p>binomkOfN = $binomkOfN</p> -->
+<!--testing-->
+  
+<p>An essay test consists of <m>$n</m> questions, of which you are to choose <m>$k</m> of them to answer. In how many ways can you choose the <m>$k</m> questions?</p> 
+  <p><m>\text{Number of ways to choose questions} = </m>
+      
+    <answer name="ans9" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$binomkOfN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans9.numSubmissions > 2 and $ans9.creditAchieved != 1">
+     <div name="helpText">
+      Recall that the number of ways to choose <m>k</m> objects, without order, from a set of <m>n</m> objects, is the number of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-5/"><term>combinations</term></ref>, given by: 
+       <me>C(n,k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}.</me>
+       In contrast, the number of ways to choose <m>k</m> objects <em>in a certain order</em>, is the number of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-4/"><term>permutations</term></ref>, given by: 
+    <me>P(n,k) = \frac{n!}{(n-k)!}.</me>
+       In this example, ask the question: "does the <em>order</em> in which you choose the questions matter?" For example, if you choose question 3 before question 7, does this change the number of ways you can choose?
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="n">12</math>
+  <math name="k">4</math>
+  <math name="binomkOfN" simplify>$n!/($k!($n - $k)!)</math>
+</setup>
+
+  
+<p><em>An essay test consists of <m>$n</m> questions, of which you are to choose <m>$k</m> of them to answer. In how many ways can you choose the <m>$k</m> questions?</em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $binomkOfN \amp\text{evaluate}</mrow>
+      </md></p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $binomkOfN{simplify} \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

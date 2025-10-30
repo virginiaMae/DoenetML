@@ -1,0 +1,97 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given an algebraic expression in words, write two equivalent expressions.
+*************************************************************-->
+
+<problem>
+
+<setup>
+  <select name="var">a b c x y z p q r s t w</select>
+  <selectFromSequence name="a" from="-10" to="10" exclude="0"/>
+  <math name="expr">$var + $a</math>
+  <boolean name="expr1Correct">$expr = $userExpr1</boolean>
+  <boolean name="expr2Correct">$expr = $userExpr2</boolean>
+  <boolean name="different" symbolicEquality>$userExpr1 != $userExpr2</boolean>
+  <math name="sol1">$expr</math>
+  <math name="sol2">$a + $var</math>
+  <math name="sol3" simplify="numberspreserveorder">(5$var + 5 $a)/5</math>
+  <math name="sol4" simplify="numberspreserveorder">($a + 2) + $var - 2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>var = $var</p>
+<p>expr = $expr</p>
+<p>expr1Correct = $expr1Correct</p>
+<p>expr2Correct = $expr2Correct</p>
+<p>different = $different</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Write two <alert>equivalent</alert>, but <alert>not identical</alert> algebraic expressions that represent the following statement:</p>
+<sideBySide widths="20% 60% 20%">
+  <div></div>
+  <div><p>"The sum of <m>$a</m> and $var."</p></div>
+  <div></div>
+</sideBySide>
+
+<p>Expression 1: <mathInput name="userExpr1"/><nbsp/><nbsp/><nbsp/><nbsp/>
+  Expression 2: <mathInput name="userExpr2"/></p>
+
+  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<answer name="ans1">
+    <award><when>$expr1Correct and $expr2Correct and $different</when>
+    </award>
+</answer>
+
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<feedback condition="$ans1.creditAchieved != 1 and $expr1Correct and $expr2Correct and $ans1.justSubmitted">Remember, they cannot be identical expressions. Can you use the <term>Commutative Property of Addition</term> to come up with two ways of writing <m>a + b</m>, for example?
+<p>Also, for the purposes of this question, <m>a - b</m> is identical to <m>a + (-b)</m>, so you'll have to change it a bit more than that.</p>
+</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>There are many possible answers; how many can you think of? Several are:</p>
+  <ul>
+    <li>$sol1</li>
+    <li>$sol2</li>
+    <li>$sol3</li>
+    <li>$sol4</li>
+  </ul>
+</solution>
+</problem>
+
+
+
+
+
+

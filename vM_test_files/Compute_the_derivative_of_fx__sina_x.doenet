@@ -1,0 +1,72 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the derivative of a sine function
+
+(CA-Deriv #9)
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="2" to="10"/>
+  <math name="expr" simplify="numberspreserveorder">f(x) = sin($a x)</math>
+  <math name="sol" simplify="numberspreserveorder">$a cos($a x)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Compute the derivative of <m>$expr</m>
+</p>
+
+<p><m>f'(x) = </m>
+    <answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>
+      <mathInput name="userAns" minWidth="150"/>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>f'(x) = $sol</m>
+</p>
+
+</solution>
+</problem>

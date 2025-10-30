@@ -1,0 +1,109 @@
+<!--************************************************************
+Author: UMN Math Dept.
+Reviewed/Remixed by: Doenet team
+About the problem: Determine which is the graph of the function and its derivative. 2 questions.
+This problem is not randomized.
+
+*************************************************************--> 
+
+
+
+
+<problem>
+<variantControl numVariants="1" />
+<!-- <title>Determine which is function and derivative, worksheet</title> -->
+
+<setup>
+
+<function name='f1' variables='x' labelPosition="upperleft">0.2(x-2)^2-1
+  <label><m>f(x)</m></label>
+</function>
+<function name='fprime1' variables='x' labelPosition="lowerleft">0.4 (-2 + x)
+  <label><m>Q(x)</m></label>
+</function>
+<function name='f2' variables='x' labelPosition="upperleft">x^2*sin(x)
+  <label><m>p(x)</m></label>
+</function>
+<function name='fprime2' variables='x'>x (x cos(x) + 2 sin(x))
+  <label><m>h(x)</m></label>
+</function>
+
+</setup>
+
+<p>
+In each plot, identify which of the curves is the graph of the derivative of the other.
+</p>
+
+<graph xmin='-3.5' xmax='6.5' ymin='-2.5' ymax='3.5' showNavigation="false">
+
+$f1{styleNumber="3"}
+$fprime1
+
+</graph>
+
+<p>The function 
+  <choiceinput inline name="cdf1">
+    <choice>Q(x)</choice>
+    <choice>f(x)</choice>
+  </choiceinput>
+  is the derivative of the function
+    <choiceinput inline name="cf1">
+    <choice>Q(x)</choice>
+    <choice>f(x)</choice>
+  </choiceinput>.
+
+  <answer>
+    <award>
+      <when>
+        $cdf1=<text>Q(x)</text> and $cf1 = <text>f(x)</text>
+      </when>
+    </award>
+  </answer>
+</p>
+
+<graph xmin='-5.5' xmax='5.5' ymin='-24.5' ymax='24.5' showNavigation="false">
+
+$f2{styleNumber="2"}
+$fprime2{styleNumber="4"}
+
+</graph>
+
+
+  
+<p>The function 
+  <choiceinput inline name="cdf2">
+    <choice>h(x)</choice>
+    <choice>p(x)</choice>
+  </choiceinput>
+  is the derivative of the function
+    <choiceinput inline name="cf2">
+    <choice>h(x)</choice>
+    <choice>p(x)</choice>
+  </choiceinput>.
+
+  <answer>
+    <award>
+      <when>
+        $cdf2=<text>h(x)</text> and $cf2 = <text>p(x)</text>
+      </when>
+    </award>
+  </answer>
+</p>
+
+  
+
+<solution>
+<p><m>Q(x)</m> is the derivative of <m>f(x)</m> and <m>h(x)</m> is the derivative of <m>p(x)</m>. </p>
+</solution>
+
+
+</problem>
+
+
+
+<setup>
+<topic>derivative</topic>
+<topic>polynomial</topic>
+<topic>function</topic>
+<topic>graphing derivative</topic>
+</setup>

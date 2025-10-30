@@ -1,0 +1,162 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="c" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="a" from="-4" to="4" exclude="-1 0 1"/>
+  <function name="parabolaEq" styleNumber="5">$a(x - $h)^2 + $k</function>
+  <!--maths for incorrect solutions-->
+  <function name="incorrectSignHEq">$a(x + $h)^2 + $k</function>
+  <function name="incorrectSignKEq">$a(x - $h)^2 - $k</function>
+  <function name="incorrectSignHKEq">$a(x + $h)^2 - $k</function>
+  <math name="sol" simplify="numbersPreserveOrder">y = $parabolaEq.formula</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>k = $k</p>
+<p>c = $c</p>
+<p>a = $a</p>
+<p>parabolaEq = $parabolaEq</p> -->
+<!--testing-->
+
+
+<p>Enter the equation of the parabola graphed below, using the vertex form <m>y = a(x - h)^2 + k</m></p>
+  <graph grid="1 1" xmin="-9" xmax="9" ymin="-9" ymax="9">
+    $parabolaEq
+    <point styleNumber="5">($h - $c, $k + $a)</point>
+    <point styleNumber="5">($h + $c, $k + $a)</point>
+    <point styleNumber="5" name="vertex">($h,$k)</point>
+    <function name="userFunc">$userEq</function>
+  </graph>
+
+<p><m>y = </m> <mathInput name="userEq"/>
+  <answer name="ans14">
+    <award name="correct">
+      <when>$userEq{isResponse} = $parabolaEq.formula</when>
+    </award>
+  
+  <award name="hIncorrectSign" credit="0">
+      <when>$userEq{isResponse} = $incorrectSignHEq</when>
+  </award>
+
+  <award name="kIncorrectSign" credit="0">
+      <when>$userEq{isResponse} = $incorrectSignKEq</when>
+  </award>  
+
+  <award name="hkIncorrectSign" credit="0">
+      <when>$userEq{isResponse} = $incorrectSignHKEq</when>
+  </award>
+</answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$hIncorrectSign or $kIncorrectSign or $hkIncorrectSign"><p>It looks like you have one or more sign errors.</p></feedback>
+  <feedback condition="$ans14.numSubmissions > 2 and $ans14.creditAchieved != 1">
+  <p>The vertex form of a parabola
+  <me>y = a(x - h)^2 + k</me> can be determined from it's graph as follows:</p>
+  <ul>
+    <li>First, locate the vertex, <m>(h,k)</m>.</li>
+    <li>Substitute the <m>x</m>-coordinate of the vertex in for the <m>h</m> term in the vertex form equation. Pay close attention to the sign of <m>h</m> when substituting it into the equation. Rememeber, <m>(x - h)^2</m> corresponds to a horizontal shift of <m>h</m> units to the <em>right</em>, and <m>(x + h)^2</m> corresponds to a horizontal shift of the parabola <m>h</m> units to the <em>left</em>. </li>
+    <li>Substitute the <m>y</m>-coordinate of the vertex in for the <m>k</m> term in the vertex form equation. The  action of <m>k</m> in the equation is to shift the entire graph vertically.</li>
+  <li>Next, determine the stretching/compression factor <m>a</m>, and substitute this value into the vertex form equation. This can be accomplished by visual inspection and comparison with the graph of a standard parabola, or by substituting coordinates of a known point on the graph in for <m>x</m> and <m>y</m>, and solving for the unknown <m>a</m>.</li>
+  </ul>
+  </feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection" newNameSpace><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example>
+<p><em>Enter the equation of the parabola graphed below, using the vertex form <m>y = a(x - h)^2 + k</m></em></p>
+
+  <graph grid="1 1" xmin="-9" xmax="9" ymin="-9" ymax="9">
+    <parabola vertex="(2,-3)" through="(3,2)" styleNumber="5"/>
+    <point styleNumber="5">(2 - 1, -4 + 6)</point>
+    <point name="showPoint" styleNumber="5">(2 + 1, -4 + 6)
+      <label><m>$showPoint.coords</m></label>
+    </point>
+    <point styleNumber="11">(2,-3)
+    </point>
+    <function name="hiddenFunc" hide="true">5(x-2)^2-3</function>
+  </graph>
+    
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>From the given graph, determine the coordinates of the vertex, <m>(h, k) = (2,-3)</m>. Therefore, so far we know the equation is <me>y = a(x - 2)^2 -3.</me></p>
+  </li>
+  <li><p>To determine the parameter, <m>a</m>, select a point on the graph that is distinct from the vertex, and substitute its coordinates in for <m>x</m> and <m>y</m> in the vertex form equation. We'll use the given point <m>(3,2)</m></p>
+    <md>
+      <mrow>y &= a(x - h)^2 + k</mrow>
+      <mrow>2 &= a(3 - 2)^2 + (-3)</mrow>
+      <mrow>5 &= a</mrow>
+    </md>
+  </li>
+  <li><p>We now use the values for <m>h, k</m> and <m>a</m> that we've computed to write the vertex form equation
+    <me>y = 5(x - 2)^2 - 3.</me> 
+  </p>
+    <updateValue target="hiddenFunc.hide" newValue="false" type="boolean">
+      <label>Show function on graph</label>
+    </updateValue>
+  <p> We check by graphing our final vertex form equation (note that the problem will automatically show you the graph of your function overlaid when you type the equation so that you can easily verify your work.)    
+  </p>
+  </li>
+</ul>
+
+    
+</example>    
+
+
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+$sol
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -122,7 +122,7 @@
         "esprima": "^4.0.1",
         "file-saver": "^2.0.5",
         "framer-motion": "^12.10.1",
-        "glob": "^11.0.2",
+        "glob": "^11.0.3",
         "handsontable": "^12.4.0",
         "hi-base32": "^0.5.1",
         "hyperformula": "^2.7.1",

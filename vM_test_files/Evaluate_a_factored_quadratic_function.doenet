@@ -1,0 +1,133 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Evaluate a factored quadratic function at a given input. Graphing tool provided to help with visualizing the geometry of the problem.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-8" to="-5"/>
+  <selectFromSequence name="b" from="1" to="9"/>
+  <selectFromSequence name="c" from="2" to="4"/>
+  <selectFromSequence name="d" from="2" to="4"/>
+  <selectFromSequence name="e" from="3" to="5"/>
+  <math name="expr">f(x) = $f</math>
+  <function name="f" simplify='false'>-($b + $c x)($d + $e x)</function>
+  <math name="sol" simplify>$$f($a)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f(a) = $$f($a)</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Evaluate <m>\displaystyle $expr</m> if <m>x = $a</m>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<setup>
+  <number name="xmin">min(-10, $a - 10)</number>
+  <number name="xmax">max(10, -$a + 10)</number>
+  <number name="ymin">min(-10, $sol + 0.2$sol)</number>
+  <number name="ymax">max(10, -0.2$sol)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+  
+<div><p>Enter the given function:</p> 
+  <p><m>f(x) = </m><mathInput name="eq1"/></p>
+
+  <p>Enter the proposed solution :</p> 
+  <p><m>f($a) = </m> <mathInput name="graphSol" bindValueTo="$mi"/></p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="graphFunc">$eq1</function>
+  $graphPt
+</graph>  
+</sideBySide>
+  
+<p>The proposed solution gives the point:</p>
+  <p><m>(x, f(x)) = </m><point name="graphPt" fixed styleNumber="5">($a, $graphSol)</point></p>
+</aside>  
+
+  
+<p><m>f($a) = </m> <mathInput name="mi"/>
+  <answer name="ans1" symbolicEquality>
+    <award name="allCorrect">
+      <when>$mi = $sol</when>
+    </award>
+  </answer>
+</p>
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review function notation, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-2-function-notation/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/function-notation-input-and-output.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+***********************************************-->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>f($a) = $sol</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

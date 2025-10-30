@@ -1,0 +1,157 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4"/>
+  <selectFromSequence name="k" from="-4" to="4" />
+  <selectFromSequence name="r" from="2" to="5"/>
+  <selectFromSequence name="styleNumber" from="7" to="12"/>
+
+  <math name="exprRHS" simplify="numbersPreserveOrder">$r^2</math>
+  <math name="exprLHS" simplify="numbersPreserveOrder">(x- $h)^2 + (y - $k)^2</math> 
+  
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p>
+<p>k = $k</p> -->
+<!--testing-->
+
+<p>For the graph of the circle below whose equation is of the form <m>(x - h)^2 + (y - k)^2 = r^2</m>, find the center <m>(h,k)</m> and radius, <m>r</m>.</p>
+  
+  <graph grid="1 1" name="g1">
+    <circle name="circle" center="($h, $k)" radius="$r" styleNumber="$styleNumber"/>
+    <point name="center" styleNumber="$styleNumber" coords="$circle.center"/> 
+
+    <circle name="circleGraph" radius="$userR" center="($userH, $userK)" hide="!$showUserCircle"/>
+    <point name="userCenter" coords="$circleGraph.center" hide="!$showUserCircle"/>
+    <lineSegment endpoints="$userCenter ($circleGraph.center.x + $userR, $circleGraph.center.y)" hide="!$showUserCircle"/>
+  </graph>
+  
+
+<p><m>\text{Center} = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/> <m>\bigg)</m></p>
+
+<p><m>\text{radius} = </m> <mathInput name="userR" prefill="r"/>.
+<booleanInput name="showUserCircle">
+  <label>Show second circle</label>
+</booleanInput>
+</p>
+
+  <answer name="ans2">
+    <award name="allCorrect">
+      <when>$h = $userH{isResponse} and $k = $userK{isResponse} and $r = $userR{isResponse}</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>r = $userR{isResponse} and h = $userH{isResponse} and k = $userK{isResponse}</when>
+    </award>
+
+        
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans2.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$symbolic">Please enter numerical values for <m>h, k, r</m> that correspond to the given circle.</feedback>
+  <feedback condition="$userR != $r and $ans2.justSubmitted">Your <m>r</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans2.justSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userK != $k and $ans2.justSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans2.numSubmissions > 2 and $ans2.creditAchieved != 1">
+    <div name="helpText">
+      <p>This question involves applying the standard equation for a circle:
+    <me>(x - h)^2 + (y - k)^2 = r^2</me> to determine key parameters of the circle when you are given the graph of the circle. </p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p>    
+<example newNameSpace>
+<p><em>For the graph of the circle below whose equation is of the form <m>(x - h)^2 + (y - k)^2 = r^2</m>, find the center <m>(h,k)</m> and radius, <m>r</m>.</em></p>
+
+<graph grid="1 1" name="g1">
+    <circle name="circle" center="($h, $k)" radius="$r" styleNumber="9" fixed/>
+    <point name="center" styleNumber="9" coords="$circle.center" fixed/> 
+  </graph>
+  
+<p><em><alert>Solution.</alert></em></p>
+<setup>
+  <math name="h">-3</math>
+  <math name="k">7</math>
+  <math name="r">2</math>   
+</setup>
+
+<p>From the given graph,</p>
+  <graph copySource="g1">
+    <lineSegment name="radius" endpoints="$circle.center ($circle.center[1] + $r, $circle.center[2])" styleNumber="11">
+      <label><m>r = $r</m></label>
+    </lineSegment>
+    <point copySource="center" styleNumber="11" labelPosition="upperLeft">
+      <label><m>O = $circle.center</m></label>
+    </point>
+  </graph>
+<p>we locate the center, which is at the point <m>$circle.center</m>. We count from the center the number of gridlines to reach the circumference in order to determine that the radius <m>r = $r</m></p>  
+
+
+</example>
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>The standard form for the equation of a circle is 
+  <me>(x - h)^2 + (y - k)^2 = r^2</me>
+From the given graph,
+  <graph copySource="g1">
+    <lineSegment name="radius" endpoints="$circle.center ($circle.center[1] + $r, $circle.center[2])" styleNumber="11">
+      <label><m>r = $r</m></label>
+    </lineSegment>
+    <point copySource="center" styleNumber="11" labelPosition="upperLeft">
+      <label><m>O = $circle.center</m></label>
+    </point>
+  </graph>
+we locate the center, which is at the point <m>$circle.center</m>. We count from the center the number of gridlines to reach the circumference in order to determine that the radius <m>r = $r</m></p>  
+
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

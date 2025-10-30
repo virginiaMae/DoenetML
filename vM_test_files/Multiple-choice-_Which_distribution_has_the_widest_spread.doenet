@@ -1,0 +1,52 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: 
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  
+</setup>
+
+
+<p>Which of the following normal distributions has the widest spread?</p>
+<answer name="ans1" shuffleOrder>
+  <choice credit>A normal distribution with <m>\mu = 1</m> and <m>\sigma = 3</m></choice>
+  <choice>A normal distribution with <m>\mu = 0</m> and <m>\sigma = 2</m></choice>
+  <choice>A normal distribution with <m>\mu = 2</m> and <m>\sigma = 1</m></choice>
+  <choice>A normal distribution with <m>\mu = 3</m> and <m>\sigma = 2</m></choice>
+  <choice>None of the the other choices</choice>
+</answer>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>A normal distribution with <m>\mu = 1</m> and <m>\sigma = 3</m>. </p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

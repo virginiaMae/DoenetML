@@ -1,0 +1,71 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify a product where one term involves a negative exponent.
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <math name="expr">($a)($b^(-2))</math>
+  <math name="sol" simplify>$expr</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Simplify.</p>
+
+<p><m>$expr = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns" />
+    <award name="correct" symbolicEquality>
+      <when>$userAns = $sol</when>
+    </award>
+  </answer>
+</p>
+
+<p><em>Note, your answer must be in the form of a fully reduced fraction or an integer value.</em></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>$sol</m></p> 
+</solution>
+</problem>

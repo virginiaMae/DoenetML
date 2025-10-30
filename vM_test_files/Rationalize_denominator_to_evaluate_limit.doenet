@@ -1,0 +1,109 @@
+<!--************************************************************
+Author: Adapted from Open Stax Calculus Volume 1 (Sec. 2.3, Ex. 97)
+Reviewed/Remixed by: Doenet team
+About the problem: This problem involves a rational function whose limit can be evaluated after rationalizing the denominator.
+This problem is randomized, and different variants can be viewed using the variant dropdown menu at the upper-left of the screen.
+Optional graphing tool provided to aid visualization.
+*************************************************************--> 
+
+<problem>
+
+<setup>
+<selectFromSequence name="a" from="-9" to="9" exclude="0"/>
+<select name="x">x z t v a r s</select>
+<math name="aSq" simplify>$a^2</math>
+<math name="rhs" simplify="numberspreserveorder">
+  <conditionalContent>
+    <case condition="$a > 0">($a^2 - $x)/($a - sqrt($x))</case>
+    <case condition="$a < 0">($a^2 - $x)/($a + sqrt($x))</case>
+  </conditionalContent>
+</math>
+<function name="f" variable="$x">$rhs</function>
+<m name="expr">\lim_{$x\to $aSq} $rhs</m>
+<math name="sol" simplify>2 $a</math>
+<number name="ymin">min(-5, $sol - 5)</number>
+<number name="ymax">max(5, $sol + 5)</number>
+<number name="xmin">min(-5, $aSq - 5)</number>
+<number name="xmax">max(5, $aSq + 5)</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>x = $x</p>
+<p>expr = $expr</p>
+<p>f.formula = $f.formula</p> -->
+<!--/testing-->
+
+  
+<p>Determine the limit.
+<me>\large{$expr}</me></p>
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function:</p>
+  <p><m>\;f($x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction" variable="$x">$mi</function>
+  </setup>
+  <p><m>$x</m> approaches: </p>
+  <p><m>$x \rightarrow </m><mathInput name="mi2"/></p>
+  <p>Note, the vertical line and the $p1.styleDescriptionWithNoun can be dragged along the function to explore its behavior near the limit.</p>
+  <p><booleanInput name="showTip" asToggleButton>
+        <label>No $p1.styleDescriptionWithNoun ? </label>
+  </booleanInput></p>
+</div>
+
+<stack>
+<graph ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  $miFunction
+  <line name="slider" styleNumber="2">x = $mi2</line>
+  <point name="p1" styleNumber="2">($mi2, $$miFunction($mi2))
+    <label>$p1.coords{displayDecimals="10"}</label>
+  </point>
+</graph>
+<p><m>f($p1.x{displayDecimals="10"}) = $p1.y{displayDecimals="10"}</m></p>
+</stack>
+</sideBySide>
+
+<p name="missingPt" hide="!$showTip">If you do not see a $p1.styleDescriptionWithNoun, did you check to make sure that the function is defined at that point? The missing point may be due to a point discontinuity in the graph. If this is the case, try substituting in a value that is very very close, but not quite exactly at, the value for <m>a</m>. This will allow you to see a draggable point in order to observe the behavior near the limit.</p>
+</aside> 
+
+  
+
+<p><m>$expr = </m> <mathInput name="userLimit"/>
+  <answer name="ans1" weight="0.9">
+    <award><when>$userLimit = $sol</when></award>
+  </answer>
+</p>
+
+<p hide="$ans1.creditAchieved != 1">
+  Is the function defined at <m>$x = $aSq</m>?
+  <answer name="ans1b" weight="0.1">
+    <choice>yes</choice>
+    <choice credit="1">no</choice>
+  </answer>
+</p>
+
+
+
+
+
+<solution>
+<p><m>$expr = $sol</m></p>
+<graph ymin="$ymin" ymax="$ymax" xmin="$xmin" xmax="$xmax">
+  $f
+  <endpoint name="p1Sol" styleNumber="2" open fixed labelPosition="lowerleft">($aSq, $sol)
+    <label>$p1Sol.coords</label>
+  </endpoint>
+</graph>
+</solution>
+
+
+</problem>
+
+<aside><title>Attribution</title>
+<p>Source: based on problem 97 in: <ref uri="https://openstax.org/books/calculus-volume-1/pages/2-3-the-limit-laws">OpenStax Calculus Volume 1</ref></p>
+<p>Adapted for Doenet by: <ref uri="https://www.doenet.org/publicportfolio/oM0X1zIdsyx7wMKishUWT">Virginia Mae</ref></p>
+</aside>
+

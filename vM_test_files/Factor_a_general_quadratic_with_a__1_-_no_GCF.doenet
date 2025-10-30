@@ -1,0 +1,97 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a quadratic trinomial where the leading coefficient is 1.  
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="-9" to="9" exclude="0"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="0 $a"/>
+    
+  <math name="c">$a + $b</math>
+  <math name="d">$a $b</math>
+  <math name="fullExprExp">x^2 + $c x + $d</math>
+  <math name="factoredExp">$factor1 $factor2</math>
+  <math name="factor1" simplify>x + $a</math>
+  <math name="factor2" simplify>x + $b</math>
+  <!--maths for feedbacks-->
+  <math name="signErrorAns1">(x+$a)(x-$b)</math>
+  <math name="signErrorAns2">(x-$a)(x+$b)</math>
+  <math name="signErrorAns3">(x-$a)(x-$b)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>fullExprExp = $fullExprExp{simplify}</p>
+<p>factoredExp = $factoredExp</p>
+<p>factor1= $factor1</p>
+<p>factor2= $factor2</p> -->
+<!--testing-->
+
+
+
+
+  
+<p>Factor 
+  <me>$fullExprExp{simplify}</me>
+</p>
+  <p><m>$fullExprExp{simplify} = </m><mathInput name="userFactored"/> 
+    <answer name="ans9">
+      <award>
+        <when>
+          <hasSameFactoring>$userFactored $factoredExp</hasSameFactoring>
+        </when>
+      </award>
+      <award name="signError" credit="0">
+        <when>
+          $userFactored = $signErrorAns1
+          or
+          $userFactored = $signErrorAns2
+          or
+          $userFactored = $signErrorAns3
+        </when>
+      </award>
+      <award name="noFactoring" credit="0">
+        <when>
+          $userFactored = $factoredExp{expand}
+        </when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+
+   <feedback condition="$signError">
+    <p>It looks like you have a sign error somewhere.</p>
+  <p><em>How to check</em>: FOIL out your factored answer to see if it matches your original, expanded quadratic expression.</p></feedback>
+
+  <feedback condition="$noFactoring">
+  <p>To factor the quadratic expression <m>($factoredExp{expand})</m>, means to split it into two factors, if possible. Generally, this means to separate it into two binomial terms, or a monomial term and a binomial term. Here are two simple examples:</p>
+<ul>
+  <li><m>x^2 + 4x - 5 = (x - 1)(x + 5)</m></li>
+  <li><m>2x^2 + 4x = 2x(x + 2)</m></li>
+</ul>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. Choose a possible factoring, and then FOIL it out to see if it matches your original, expanded quadratic expression.</p>
+  </feedback>
+
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>We are looking for factors of $d{simplify} that add up to <m><number>$c</number></m>. The two factors are <m>$a</m> and <m>$b</m>.</p>
+<p>The fully factored form is <m>$factoredExp{simplify}.</m></p>
+
+</solution>
+</problem>

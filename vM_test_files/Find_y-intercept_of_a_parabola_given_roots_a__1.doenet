@@ -1,0 +1,226 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the y-intercept of a parabola given roots, a = 1. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence assignNames="r s" numToSelect="2" from="-10" to="10"/>
+  <math name="expr" simplify="numbersPreserveOrder">(x - $r)(x - $s)</math>
+  <math name="yIntercept" simplify="numbers">$r$s</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>s = $s</p>
+<p>yIntercept = $yIntercept{simplify}</p> -->
+<!--testing-->
+
+
+  
+
+<p>A quadratic polynomial of the form <m>y = x^2 + bx +c</m> has <m>x</m>-intercepts at <m>x = $r</m> and <m>x = $s</m>. What is the <m>y</m>-intercept of this parabola?</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($yIntercept - 10, -10)</number>
+  <number name="xmin">min($r - 10, $s - 10, -10)</number>
+  <number name="ymax">max($yIntercept + 10, 10)</number>
+  <number name="xmax">max($r + 10, $s + 10, 10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The roots of the parabola are: <mathInput name="r1"/>, <mathInput name="r2"/></p>
+
+<p>Since we know that the equation takes the form
+   <m>y = x^2 +bx + c</m>, we also
+  know that <m>a = </m>
+  <answer inline weight="0">
+    <choice credit="1">1</choice>
+    <choice>0</choice>
+    <choice>100</choice>
+  </answer>
+    .</p>  
+  <p>Therefore, the equation of the
+  parabola in <term>root form</term> is:
+  <m>y = </m> <mathInput name="eq1" prefill="(x - r)(x - s)"/></p>
+
+<p>Graph parabola with given equation:</p> 
+  <p><m>y = $eq1</m></p>
+
+  <p>Graph point at the proposed <m>y</m>-intercept:</p> 
+  <p><m>(0, y) = </m></p>
+  <p><m>\bigg( 0, </m> <mathInput name="yInt" bindValueTo="$userAns"/> <m>\bigg)</m></p>
+</div>
+
+<div>
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <point name="r1Pt" styleNumber="2">($r1, $zeroFixed)</point>
+  <point name="r2Pt" styleNumber="2">($r2, $zeroFixed)</point>
+  <point name="userIntercept" fixed styleNumber="5">(0, $yInt)
+    <label>$userIntercept.coords</label>
+  </point>
+</graph>
+
+<me>\text{General Form:} y = ax^2 + bx + c</me>
+</div>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will occur at the intersection of the graphed function with the <m>y</m>-axis.</p>
+
+</aside>  
+
+
+<p><m>y\text{-intercept} = </m> 
+  <answer name="ans11">
+    <mathInput name="userAns"/>
+    <award name="correct">
+      <when>$userAns = $yIntercept</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans11.numSubmissions > 2 and $ans11.creditAchieved != 1">
+    <div name="helpText">
+      <p>Recall that the <m>y</m>-intercept of a quadratic function, or a parabola, refers to the point where the graph of the function intersects the <m>y</m>-axis. Therefore, to determine the <m>y</m>-coordinate of the parabola we need an equation for <m>y</m> in terms of <m>x</m>, and then we can substitute <m>x = 0</m> into this equation.</p>
+      <p>In this problem, we are given the <m>x</m>-intercepts, or roots, of the parabola. We are not told the equation directly, but we can infer that the polynomial can be restated in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/"><term>root form</term></ref> from the given information. This means we can write the equation as
+        <me>y = (x - r)(x - s).</me></p>
+
+      <p>Note that, we can not <em>always</em> assume the equation can be factored this way given only the roots, because other factorings are possible in general. (For example, the function could have a stretch factor, <m>a</m>.) However, in this special case, we are told indirectly that the <m>a</m> coefficient on the <m>x^2</m> term is equal to <m>1</m>, since we are given that the equation takes the form <m>y = x^2 + bx + c</m>. Therefore, the proposed factoring is valid.</p>
+      <p>We can use the equation in root form, substituting in the given information for <m>r</m> and <m>s</m>, and also that <m>x = 0</m>, to solve for the <m>y</m>-intercept.</p>
+    </div>
+  </feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<section newNameSpace><title></title>
+<setup>
+  <math name="r">14</math>
+  <math name="s">-3</math>
+  <math name="yIntercept" simplify>$r$s</math>
+  <math name="expr" simplify="numbersPreserveOrder">(x - $r)(x - $s)</math>
+</setup>
+  
+<p>Here is a similar worked example:</p>  
+<p><em>A quadratic polynomial of the form <m>y = x^2 + bx +c</m> has intercepts at <m>x = $r</m> and <m>x = $s</m>. What is the <m>y</m>-intercept of this parabola?</em></p>
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Since we are told that the parabola has an equation of the form <m>y = x^2 + bx + c</m>, we know that <m>a = 1</m> and therefore the equation can be expressed in root form as 
+  <me>y = $expr</me></li>
+  <li>Substitute <m>x = 0</m> into this equation to solve for the <m>y</m>-intercept,
+    <md>
+      <mrow>y = ((0) - $r)((0) + <abs>$s</abs>)</mrow>
+      <mrow>y = $yIntercept</mrow>
+    </md></li>
+</ul>
+</section>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Since we are told that the parabola has an equation of the form <m>y = x^2 + bx + c</m>, we know that <m>a = 1</m> and therefore the equation can be expressed in root form as 
+  <me>y = $expr</me></li>
+  <li>Substitute <m>x = 0</m> into this equation to solve for the <m>y</m>-intercept,
+    <conditionalContent>
+      <case condition="$r > 0 and $s > 0">
+        <md>
+          <mrow>y = ((0) - $r)((0) - $s)</mrow>
+          <mrow>y = $yIntercept</mrow>
+        </md>
+      </case>
+      <case condition="$r > 0 and $s < 0">
+        <md>
+          <mrow>y = ((0) - $r)((0) + <abs>$s</abs>)</mrow>
+          <mrow>y = $yIntercept</mrow>
+        </md>
+      </case>
+      <case condition="$r < 0 and $s > 0">
+        <md>
+          <mrow>y = ((0) + <abs>$r</abs>)((0) - $s)</mrow>
+          <mrow>y = $yIntercept</mrow>
+        </md>
+      </case>
+      <case condition="$r < 0 and $s < 0">
+        <md>
+          <mrow>y = ((0) + <abs>$r</abs>)((0) + <abs>$s</abs>)</mrow>
+          <mrow>y = $yIntercept</mrow>
+        </md>
+      </case>
+      <case condition="$r = 0 or $s = 0">
+        <md>
+          <mrow>y = $yIntercept</mrow>
+        </md>
+      </case>
+    </conditionalContent> 
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

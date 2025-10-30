@@ -1,0 +1,110 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the range of a half circle. Intervals may be entered using a graphical tool, or using inequalities or intervals in the input box.
+*************************************************************-->
+
+<problem newNameSpace><title/>
+  <setup>
+    <selectFromSequence name="a" from="1" to="10"/>
+    <math name="b" simplify>$a^2</math>
+    <select name="c">-1 1</select>
+    <function name="f" simplify="numbersPreserveOrder" styleNumber="5">$c sqrt($b - x^2)
+      <label><m>f(x)</m></label>
+    </function>
+    <math name="interval">
+      <conditionalContent>
+        <case condition="$c = -1">
+          [-$a,0]
+        </case>
+        <case condition="$c = 1">
+          [0,$a]
+        </case>
+      </conditionalContent>
+    </math>
+  </setup>
+  
+  
+  <!--testing-->
+  <!-- <p>a = $a</p>
+  <p>b = $b</p>
+  <p>f = $f</p>
+  <p>interval = $interval</p> -->
+  
+  <!--testing-->
+  
+  
+    
+
+    <graph size="small" xmin="-$a-2" xmax="$a + 2" ymin="-$a - 2" ymax="$a + 2" showNavigation="false" showBorder="false">
+      $f
+    </graph>
+
+  
+  <p>What is the <alert>range</alert> of the function:</p>
+  <m>\large{f(x) = $f.formula{simplify="numbersPreserveOrder"}}</m>
+
+  <p><alert>Range:</alert> <mathInput name="userRange" />
+    <answer name="ans1">
+      <award name="allCorrect">
+        <when>$userRange = $interval or $userRange = <subsetOfReals name="ineq" displayMode="inequalities" variable="y">$interval</subsetOfReals>
+        </when>
+      </award>
+    </answer>
+  </p>
+
+  <!--*********************************************
+              Feedbacks
+  **********************************************-->
+  <setup>
+    <select name="correctFeedback" type="text">
+      <option>Awesome!</option>
+      <option>Great job!</option>
+      <option>Fantastic!</option>
+      <option>Nice work!</option>
+      <option>Amazing!</option>
+      <option>Excellent!</option>
+      <option>Right on!</option>
+      <option>Perfect!</option>
+    </select>
+  </setup>
+    <feedback condition="$allCorrect">$correctFeedback</feedback>
+  
+   
+    
+  
+  <!--*********************************************
+              Hint
+  **********************************************-->
+  
+  
+  <!--*********************************************
+              Solution
+  **********************************************-->
+  <solution>
+  <p>$interval or $ineq</p>
+  </solution>
+  </problem>
+  
+  <!--******************************************************
+          Style Definitions
+  *******************************************************-->  
+  
+  <setup>
+  <styleDefinitions>
+  <!--blue, styleNumber 1 corrolary-->
+  <styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+  <!--red, styleNumber 2 corrolary-->
+  <styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+  <!--orange, styleNumber 3 corrolary-->
+  <styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+  <!--purple, styleNumber 4 corrolary-->
+  <styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+  <!--black, styleNumber 5 corrolary-->
+  <styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+  <!--green, styleNumber 1 but green corrolary-->
+  <styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+  </styleDefinitions>
+  </setup>
+  

@@ -1,0 +1,151 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify a complex rational expression. Response format is multiple choice.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-9" to="9" exclude="0" />
+  <selectFromSequence name="d" from="4" to="9"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="-$a 0"/>
+  <selectFromSequence name="e" from="-4" to="3" exclude="0"/>
+  <selectFromSequence name="c" from="1" to="9"/>
+  <math name="numC" expand>$a(x - $c) + $b(x + $c)</math>
+  <math name="denC" expand>$d(x + $c) - $e(x - $c)</math>
+  <math name="expr" >($a/(x + $c) + $b/(x - $c))/($d/(x - $c) -  ($e/(x + $c)))</math>
+  <math name="sol" simplify="numberspreserveorder">$numC / $denC</math>
+
+<!--   maths for incorrect answers below-->
+  <math name="numInc_1" simplify expand>($a + $b)($d - $e)</math>
+  <math name="denInc_1" simplify expand>(x - $c)(x + $c)</math>
+  <math name="incorrect1" simplify="numberspreserveorder">$numInc_1 / $denInc_1</math>
+  <math name="incorrect2" simplify="numberspreserveorder">($a + $b)/($d - $e)</math>
+  <math name="numInc_3" expand>$a(x + $c) + $b(x - $c)</math>
+  <math name="denInc_3" expand>$d(x + $c) + $e(x - $c)</math>
+  <math name="incorrect3" simplify="numberspreserveorder">$numInc_3 / $denInc_3</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>numC = $numC</p>
+<p>denC = $denC</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>sol = expr? <boolean>$sol = $expr</boolean></p>
+<p>numInc_1 = $numInc_1</p>
+<p>denInc_1 = $denInc_1</p>
+<p>incorrect1 = $incorrect1</p>
+<p>choices.displacement[1] = $choices.displacement[1]</p>
+<p>choices.displacement[1] = sol test: 
+  <boolean>$choices.displacement[1] = $sol</boolean></p>
+<p>i = $i</p>
+<p>j = $j</p>
+<p>k = $k</p>
+<p>l = $l</p> -->
+<!--testing-->
+
+
+<p>Simplify the following expression. Express the answer as a single reduced fraction or integer.</p>
+
+  <me>\displaystyle $expr</me>
+
+
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+<setup>
+  <vector name="choices">($sol, $incorrect1, $incorrect2, $incorrect3)</vector>
+  <selectFromSequence assignNames="i j k l" from="1" to="4" numToSelect="4"/>
+</setup>
+
+<p>a. <booleanInput name="choice1" disabled="$choice2 = true or $choice3 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$i]</m></label></booleanInput></p>
+  
+<p>b. <booleanInput name="choice2" disabled="$choice1 = true or $choice3 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$j]</m></label></booleanInput></p>
+  
+<p>c. <booleanInput name="choice3" disabled="$choice1 = true or $choice2 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$k]</m></label></booleanInput></p>
+  
+<p>d. <booleanInput name="choice4" disabled="$choice1 = true or $choice2 = true or $choice3 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$l]</m></label></booleanInput></p>
+  
+<p>e. <booleanInput name="choice5" disabled="$choice1 = true or $choice2 = true or $choice3 = true or $choice4 = true"><label>none of the above</label></booleanInput></p>
+
+<answer name="ans1">
+  <award>
+    <when>$choice1 = true and $choices.displacement[$i] = $sol</when>
+  </award>
+  <award>
+    <when>$choice2 = true and $choices.displacement[$j] = $sol</when>
+  </award>
+  <award>
+    <when>$choice3 = true and $choices.displacement[$k] = $sol</when>
+  </award>
+  <award>
+    <when>$choice4 = true and $choices.displacement[$l] = $sol</when>
+  </award>
+</answer>
+
+<!-- <p>  
+<answer name="ans2" shuffleOrder>
+  <choice credit="1"><m>\displaystyle $sol</m></choice>
+  <choice><m>\displaystyle $incorrect1</m></choice>
+  <choice><m>\displaystyle $incorrect2</m></choice>
+  <choice><m>\displaystyle $incorrect3</m></choice>
+  <choice>answer not shown</choice>
+</answer>
+</p> -->
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>$sol</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

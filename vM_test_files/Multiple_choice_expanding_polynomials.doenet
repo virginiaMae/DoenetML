@@ -1,0 +1,132 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Expand the product of a trinomial and a binomial to determine the coefficient on a given term. Response format is multiple choice.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="5" to="8" />
+  <selectFromSequence name="b" from="-9" to="8" exclude="0" />
+  <selectFromSequence name="c" from="2" to="8"/>
+  <selectFromSequence name="d" from="4" to="9" exclude="$c" />
+  <math name="expr" simplify="numberspreserveorder">(x^2 + $a x + $b)($c x + $d)</math>
+  <math name="sol" simplify>$d + $a $c</math>
+<!--   maths for incorrect answers below-->
+  <math name="incorrect1">1</math>
+  <math name="incorrect2" simplify>$a $c</math>
+  <math name="incorrect3" simplify>$c</math>
+  <math name="incorrect4" simplify>$d</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>incorrect1 = $incorrect1</p>
+<p>incorrect2 = $incorrect2</p>
+<p>incorrect3 = $incorrect3</p>
+<p>incorrect4 = $incorrect4</p>
+<p>i = $i</p>
+<p>j = $j</p>
+<p>k = $k</p> -->
+<!--testing-->
+
+
+<p>The coefficient of <m>x^2</m> in the expansion of $expr is:</p>
+
+
+
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+<setup>
+  <vector name="choices">($sol, $incorrect1, $incorrect2, $incorrect3, $incorrect4)</vector>
+  <selectFromSequence assignNames="i j k l m" from="1" to="5" numToSelect="5"/>
+</setup>
+
+<p>a. <booleanInput name="choice1" disabled="$choice2 = true or $choice3 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$i]</m></label></booleanInput></p>
+  
+<p>b. <booleanInput name="choice2" disabled="$choice1 = true or $choice3 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$j]</m></label></booleanInput></p>
+  
+<p>c. <booleanInput name="choice3" disabled="$choice1 = true or $choice2 = true or $choice4 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$k]</m></label></booleanInput></p>
+  
+<p>d. <booleanInput name="choice4" disabled="$choice1 = true or $choice2 = true or $choice3 = true or $choice5 = true"><label><m>\displaystyle $choices.displacement[$l]</m></label></booleanInput></p>
+  
+<p>e. <booleanInput name="choice5" disabled="$choice1 = true or $choice2 = true or $choice3 = true or $choice4 = true"><label><m>\displaystyle $choices.displacement[$m]</m></label></booleanInput></p>
+
+<answer name="ans1">
+  <award>
+    <when>$choice1 = true and $choices.displacement[$i] = $sol</when>
+  </award>
+  <award>
+    <when>$choice2 = true and $choices.displacement[$j] = $sol</when>
+  </award>
+  <award>
+    <when>$choice3 = true and $choices.displacement[$k] = $sol</when>
+  </award>
+  <award>
+    <when>$choice4 = true and $choices.displacement[$l] = $sol</when>
+  </award>
+  <award>
+    <when>$choice5 = true and $choices.displacement[$m] = $sol</when>
+  </award>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>$sol</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

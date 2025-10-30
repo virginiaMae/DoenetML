@@ -1,0 +1,233 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="r" from="2" to="5"/>
+
+  <math name="exprRHS" simplify="numbersPreserveOrder">$r^2 - $h^2 - $k^2</math>
+    <math name="exprLHS" simplify="numbersPreserveOrder">x^2 + $h2 x + y^2 + $k2 y</math> 
+  <math name="expr">$exprLHS =$exprRHS</math>
+  <math name="h2" simplify>-2$h</math>
+  <math name="k2" simplify>-2$k</math>
+  <math name="step1LHSTerm1x" simplify="numbersPreserveOrder">x^2 + $h2 x</math>
+  <math name="step1LHSTerm2x">($h2/2)^2</math>
+   <math name="step1LHSTerm1y" simplify="numbersPreserveOrder">y^2 + $k2 y</math>
+  <math name="step1LHSTerm2y">($k2/2)^2</math>
+  <math name="step1LHSx">$step1LHSTerm1x + $step1LHSTerm2x</math>
+  <math name="step1LHSy">$step1LHSTerm1y + $step1LHSTerm2y</math>
+  <math name="step1RHS">$exprRHS + $step1LHSTerm2x + $step1LHSTerm2y</math>
+
+  <math name="step2LHSx" simplify="numbersPreserveOrder">(x + ($h2/2))^2</math>
+  <math name="step2LHSy" simplify="numbersPreserveOrder">(y + ($k2/2))^2</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p>
+<p>k = $k</p>
+<p>exprLHS = $exprLHS</p>
+<p>exprRHS = $exprRHS</p>
+<p>step1LHSTerm1x = $step1LHSTerm1x</p>
+<p>step1LHSTerm2x = $step1LHSTerm2x</p>
+<p>step1LHSTerm1y = $step1LHSTerm1y</p>
+<p>step1LHSTerm2y = $step1LHSTerm2y</p>
+<p>step1LHSx = $step1LHSx</p>
+<p>step1LHSy = $step1LHSy</p>
+<p>step1RHS = $step1RHS</p>
+<p>step2LHSx = $step2LHSx</p>
+<p>step2LHSy = $step2LHSy</p> -->
+<!--testing-->
+
+<p>Complete the square to find the center <m>(h,k)</m> and radius <m>r</m> of the circle 
+  <me>$exprLHS = $exprRHS.</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph circle with given equation:</p> 
+  <p><mathInput name="eq1"/></p>
+
+  
+  <p>Graph circle with center and radius:</p> 
+<p><m>\text{Center} = </m></p>
+<p><m>\bigg(</m> <mathInput name="userHGraph" bindValueTo="$userH"/> , <mathInput name="userKGraph" bindValueTo="$userK"/> <m>\bigg)</m></p>
+
+<p><m>\text{radius} = </m> <mathInput name="userRGraph" bindValueTo="$userR"/></p>
+<p><booleanInput name="showUserCircle">
+  <label>Show second circle</label>
+</booleanInput>
+</p>
+</div>
+
+  
+<graph name="g1">
+  <conditionalContent condition="$eq1 = $expr">
+    <circle name="solGraph" radius="$r" center='($h, $k)' styleNumber="5"/>
+  </conditionalContent>
+  <circle name="circleGraph" radius="$userRGraph" center="($userHGraph, $userKGraph)" hide="!$showUserCircle"/>
+  <point name="userCenter" coords="$circleGraph.center" hide="!$showUserCircle"/>
+  <lineSegment endpoints="$userCenter ($circleGraph.center.x + $userRGraph, $circleGraph.center.y)" hide="!$showUserCircle"/>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two circles will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>\text{Center} = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/> <m>\bigg)</m></p>
+
+<p><m>\text{radius} = </m> <mathInput name="userR" prefill="r"/></p>
+
+  <answer name="ans21">
+    <award name="allCorrect">
+      <when>$h = $userH{isResponse} and $k = $userK{isResponse} and $r = $userR{isResponse}</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>r = $userR{isResponse} and h = $userH{isResponse} and k = $userK{isResponse}</when>
+    </award>
+    
+</answer>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans21.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$symbolic">Please enter numerical values for <m>h, k, r</m> that correspond to the given circle.</feedback>
+  <feedback condition="$userR != $r and $ans21.justSubmitted">Your <m>r</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans21.justSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userK != $k and $ans21.justSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans21.numSubmissions > 2 and $ans21.creditAchieved != 1">
+    <div name="helpText">
+    <p>Using the given equation in <m>x</m> and <m>y</m>, we can rewrite the equation in standard form <me>(x - h)^2 + (y - k)^2 = r^2</me> by completing the square. See the lesson on <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/">Completing the Square</ref> for more information.</p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p>    
+  <example newNameSpace>
+<p><em>Complete the square to find the center <m>(h,k)</m> and radius <m>r</m> of the circle </em>
+  <me>$exprLHS = $exprRHS.</me></p>
+
+<p><em><alert>Solution.</alert></em></p>
+<setup>
+  <math name="h">5</math>
+  <math name="k">7</math>
+  <math name="r">1</math>
+
+  <math name="exprRHS" simplify="numbersPreserveOrder">$r^2 - $h^2 - $k^2</math>
+  <math name="exprLHS" simplify="numbersPreserveOrder">x^2 - 2$h x + y^2 - 2 $k y</math> 
+  <math name="h2" simplify>-2$h</math>
+  <math name="k2" simplify>-2$k</math>
+  <math name="step1LHSTerm1x" simplify="numbersPreserveOrder">x^2 - 2$h x</math>
+  <math name="step1LHSTerm2x">($h2/2)^2</math>
+  <math name="step1LHSTerm1y" simplify="numbersPreserveOrder">y^2 - 2$k y</math>
+  <math name="step1LHSTerm2y">($k2/2)^2</math>
+  <math name="step1LHSx">$step1LHSTerm1x + $step1LHSTerm2x</math>
+  <math name="step1LHSy">$step1LHSTerm1y + $step1LHSTerm2y</math>
+  <math name="step1RHS">$exprRHS + $step1LHSTerm2x + $step1LHSTerm2y</math>
+
+  <math name="step2LHSx" simplify="numbersPreserveOrder">(x + ($h2/2))^2</math>
+  <math name="step2LHSy" simplify="numbersPreserveOrder">(y + ($k2/2))^2</math>
+</setup>
+
+<ul>
+<li>Complete the square to transform the given equation into the standard form for the equation of a circle <m>(x - h)^2 + (y - k)^2 = r^2</m>:
+  <p>
+  First, add constants to each side to form perfect square trinomials in x and y</p>
+  <md>
+    <mrow>$exprLHS \amp= $exprRHS</mrow>
+    <mrow>\bigg($step1LHSx \bigg) + \bigg($step1LHSy \bigg) \amp= $step1RHS</mrow> 
+    <mrow>\bigg( $step2LHSx \bigg) + \bigg($step2LHSy \bigg) \amp= <math name='rSquared' simplify>$r^2</math>\;\;\text{rewrite as the squares of binomials}</mrow>
+    <mrow>$step2LHSx + $step2LHSy \amp= $r^2\;\;\text{simplify}</mrow>
+  </md></li>
+  <li>Now that we have the equation for the circle in standard form, we can read from the equation, 
+    <ul>
+      <li><m>\text{Center} = ($h,$k)</m></li>
+      <li><m>\text{radius} = $r.</m></li>
+    </ul></li>
+    
+</ul>
+
+</example>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>Complete the square to transform the given equation into the standard form for the equation of a circle <m>(x - h)^2 + (y - k)^2 = r^2</m>:
+  <p>
+  First, add constants to each side to form perfect square trinomials in x and y</p>
+  <md>
+    <mrow>$exprLHS \amp= $exprRHS</mrow>
+    <mrow>\bigg($step1LHSx \bigg) + \bigg($step1LHSy \bigg) \amp= $step1RHS</mrow> 
+    <mrow>\bigg( $step2LHSx \bigg) + \bigg($step2LHSy \bigg) \amp= <math name='rSquared' simplify>$r^2</math>\;\;\text{rewrite as the squares of binomials}</mrow>
+    <mrow>$step2LHSx + $step2LHSy \amp= $r^2\;\;\text{simplify}</mrow>
+  </md></li>
+  <li>Now that we have the equation for the circle in standard form, we can read from the equation, 
+    <ul>
+      <li><m>\text{Center} = ($h,$k)</m></li>
+      <li><m>\text{radius} = $r.</m></li>
+    </ul></li>
+    
+</ul>
+    
+
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

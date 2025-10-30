@@ -1,0 +1,167 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Sum of two vector forces; answer in polar form. Graphing tool provided for visualization of the geometry of the problem.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+<selectFromSequence assignNames="a c" numToSelect="2" from="10" to="50"/>
+<selectFromSequence assignNames="b d" numToSelect="2" from="1" to="179"/>
+<math name="mag">sqrt(($a cos($b pi/180) + $c cos($d pi/180))^2 + ($a sin($b pi/180) + $c sin($d pi/180))^2)</math>
+<number name="magN" displayDecimals="1" padZeros>$mag</number>
+<math name="baseAngle">
+  arctan(($a sin($b pi/180) + $c sin($d pi/180))/ ($a cos($b pi/180) + $c cos($d pi/180))) *180/pi</math>
+<math name="dir">
+  <conditionalContent>
+    <case condition="$baseAngle > 0">
+      $baseAngle
+    </case>
+    <case condition="$baseAngle < 0">
+      $baseAngle + 180
+    </case>
+    <case condition="$baseAngle = infinity or $baseAngle= -infinity">
+      90
+    </case>
+  </conditionalContent>
+</math>
+<number name="dirN" displayDecimals="1" padZeros>$dir</number>
+
+</setup>
+  
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>mag = $mag</p>
+<p>magN = $magN</p>
+<p>baseAngle = $baseAngle</p>
+<p>dir = $dir</p>
+<p>dirN = $dirN</p> -->
+<!--testing-->
+
+<p>Two forces <m>F_1</m> and <m>F_2</m> act on an object.  <m>F_1</m> has a magnitude of <m>$a \;N</m> and direction angle <m>$b^{\circ}</m>.  <m>F_2</m> has a magnitude of <m>$c \;N</m> and direction angle <m>$d^{\circ}</m>.  Find the magnitude and direction of the resultant force <m>F_1 + F_2</m>. </p> 
+
+<p><em>Round the force and the direction angle to the nearest <m>0.1</m>.  Do not include the units in your answer.</em></p> 
+
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<p>Input the given force information to update the diagram</p>
+<p><alert>Graphing tip:</alert> The sum vector is the diagonal of the parallelogram formed by vectors <m>F_1</m> and <m>F_2</m></p>
+<sideBySide widths="30% 70%">
+
+<div>
+<p><m>||F_1|| = </m><mathInput name="f1MagG"/> <m>\theta _1 = </m><mathInput name="f1DirG"/></p>
+
+<p><m>||F_2|| = </m><mathInput name="f2MagG"/> <m>\theta _1 = </m><mathInput name="f2DirG"/></p>
+  
+<p>Check sum vector, <m>F_1 + F_2</m>:</p>
+<p>Magnitude:<mathInput name="userMagG" bindValueTo="$userMag"/><m>N</m>
+</p>
+<p>Direction:<mathInput name="userDirG" bindValueTo="$userDir"/><m>^{\circ}</m>
+</p>
+
+</div>
+  
+<graph xmin="-60" xmax="60" ymin="-60" ymax="60">
+<point name="pT" fixLocation styleNumber="5">(0,0)</point>
+<point name="pH_f1" layer="2" hide>($f1MagG cos($f1DirG pi/180), $f1MagG sin($f1DirG pi/180))
+</point>
+<vector name="f1G" head="$pH_f1" tail="$pT" styleNumber="2"/>
+
+<point name="pH_f2" layer="2" hide>($f2MagG cos($f2DirG pi/180), $f2MagG sin($f2DirG pi/180))
+</point>
+<vector name="f2G" head="$pH_f2" tail="$pT" styleNumber="2"/>
+<point name="pH_sum" layer="2" hide>($userMagG cos($userDirG pi/180), $userMagG sin($userDirG pi/180))</point>
+<vector name="sumG" head="$pH_sum" tail="$pT" applyStyleToLabel>
+  <label><m>F_1 + F_2</m></label>
+</vector>
+
+<polygon name="outline" vertices="$pH_f1 $pH_sum $pH_f2  $pT" styleNumber="6"/>
+</graph>
+
+
+</sideBySide>
+
+</aside>
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p>Magnitude: <mathInput name="userMag"/><m>N</m></p>
+  
+<p>Direction angle: <mathInput name="userDir" /><m>^{\circ}</m></p>
+
+<setup>
+<boolean name="correctMag" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userMag = $mag</boolean>
+<boolean name="correctDir" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userDir = $dir</boolean>
+</setup>
+  
+  <answer name="ans1">
+     <award name="correct1">
+      <when>$correctMag and $correctDir</when>
+    </award>
+  </answer>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="!$correctMag and $ans1.justSubmitted">Your magnitude is incorrect (or contains a rounding error).</feedback>
+  <feedback condition="!$correctDir and $ans1.justSubmitted">Your direction angle is incorrect (or contains a rounding error).</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p>Magnitude: <m>$magN \;\;N</m></p>
+  
+<p>Direction angle: <m>$dirN ^{\circ}</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<styleDefinition styleNumber="2" lineWidth="4"/>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

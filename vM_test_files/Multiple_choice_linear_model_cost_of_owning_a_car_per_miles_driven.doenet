@@ -1,0 +1,123 @@
+
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the slope of a line given a graph showing two data points. Randomized multiple choice with shuffled answer order. Tailored feedback is provided when students mistakenly answer with the reciprocal of the slope.
+
+*************************************************************-->
+<problem>
+<setup>
+<point name="p1" fixed labelPosition="lowerright" styleNumber="5">($m1/1000, $c1/1000)
+  <label><m>($m1, $c1)</m></label>
+</point>
+<point name="p2" fixed labelPosition="upperleft" styleNumber="5">($m2/1000, $c2/1000)
+  <label><m>($m2, $c2)</m></label>
+</point>
+<selectFromSequence name="m" from="0.27" to="0.77" step="0.01"/>
+<function name="costFunc">$m x</function>
+<number name="c1">$$costFunc($m1)</number>
+<number name="m1">5000</number>
+<number name="c2">$$costFunc($m2)</number>
+<number name="m2">20000</number>
+<!-- maths for incorrect choices -->
+<number name="d1">$m - 0.1</number>
+<number name="d2">$m + 0.1</number>
+<number name="d3">($m2 - $m1)/($c2 - $c1)</number>
+<number name="d4">$d3 + 0.1</number>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>costFunc = $costFunc</p>
+<p>c1 = $c1</p>
+<p>m1 = $m1</p>
+<p>c2 = $c2</p>
+<p>m2 = $m2</p>
+<p>m = $m</p>
+<p>d1 = $d1</p>
+<p>d2 = $d2</p>
+<p>d3 = $d3</p>
+<p>d4 = $d4</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+  
+<p>The graph below shows the total cost <m>y</m> (in thousands of dollars) of owning and operating a car, where <m>x</m> is the number of miles driven (in thousands of miles). Find the rate of change of the cost per miles driven.</p>
+
+<graph xmin="-18" xmax="$p2.x + 10" ymin="-4" ymax="14" showNavigation="false"  showBorder="false">
+  $p1 $p2
+  <line through="$p1 $p2"/>
+  <label anchor="(15,-1)" positionFromAnchor="bottom">Miles driven (in thousands of miles)</label>
+  <label anchor="(0,8)" positionFromAnchor="left">Total Cost (in thousands of dollars)</label>
+</graph>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1" shuffleOrder>
+  <choiceInput name="ci">
+  <choice><m>m = \text{\$} $d1\; \text{per mile}</m></choice>
+  <choice credit="1"><m>m = \text{\$} $m\; \text{per mile}</m></choice>
+  <choice><m>m = \text{\$} $d2\; \text{per mile}</m></choice>
+  <choice name="opposite"><m>m = \text{\$} $d3\; \text{per mile}</m></choice>
+  <choice><m>m = \text{\$} $d4\; \text{per mile}</m></choice>
+  </choiceInput>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$ans1.submittedResponse = $opposite.text">Recall that slope is calculated as <m>m = \frac{\text{rise}}{\text{run}}</m>, or <m>m = \frac{y_2 - y_1}{x_2 - x_1}</m></feedback>
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><m>m = \text{\$} $m\; \text{per mile}</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="13" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+</styleDefinitions>
+</setup>

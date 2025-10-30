@@ -1,0 +1,175 @@
+<setup>
+  <text name="source">Question 22:TR-Conics/TR35/TR3502/04062016131012_TR-Conics_8LR0TBFP</text>
+</setup>
+<!--******************************************************
+            Source code
+*******************************************************-->
+<!-- 
+
+QUESTION: Complete the square to write the equation of the ellipse in the form
+Style[HoldForm[(x-h)^2/a^2+ (y-k)^2/b^2 = 1],20] 
+
+($$b$$)^2*x^2-2*($$b$$)^2*($$h$$)*x+($$a$$)^2*y^2-2*($$a$$)^2*($$k$$)*y = ($$a$$)^2*($$b$$)^2-($$a$$)^2*($$k$$)^2-($$h$$)^2*($$b$$)^2;; 
+
+VARIABLES: {$$h$$[{-4,-3,-2,-1,1,2,3,4}, Choice], $$k$$[{-4,-3,-2,-1,1,2,3,4}, Choice], $$a$$[{1,3,5}, Choice], $$b$$[{2,4,6}, Choice]} ;;
+
+answerLabel = {"h =", "k =", "a =", "b ="};;
+
+answer = {$$h$$,$$k$$,$$a$$,$$b$$};;
+
+tolerance = 0
+
+
+-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <select name="a">1 3 5</select>
+  <select name="b">2 4 6</select>
+  <math name="displayFormula">(x - h)^2 / a^2 + (y - k)^2 / b^2 = 1</math>
+  <math name="exprRHS" simplify>$a^2 $b^2 - $a^2 $k^2 - $h^2 $b^2</math>
+  <math name="exprLHS" simplify>$b^2 x^2 - 2 $b^2 $h x + $a^2 y^2 -2 $a^2 $k y</math> 
+  <math name="expr">$exprLHS =$exprRHS</math>
+  <math name="userDisplayLHS" simplify>(x - $userH)^2 / $userA^2 + (y - $userK)^2 / $userB^2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p>
+<p>k = $k</p>
+<p>exprLHS = $exprLHS</p>
+<p>exprRHS = $exprRHS</p> -->
+<!--testing-->
+
+<p>Complete the square to write the equation of the ellipse in the form $displayFormula .</p> 
+  <me>$exprLHS = $exprRHS.</me>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<setup>
+  <number name="xmin">min(-2, $h - $a - 2)</number>
+  <number name="xmax">max(2, $h + $a + 2)</number>
+  <number name="ymin">min(-2, $k - $b - 2)</number>
+  <number name="ymax">max(2, $k + $b + 2)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph ellipse with given equation:</p> 
+  <p><mathInput name="eq1"/></p>
+
+  
+  <p>Graph ellipse with standard form:</p> 
+<p><m>\text{Center} = </m></p>
+<p><m>\bigg(</m> <mathInput name="userHGraph" bindValueTo="$userH"/> , <mathInput name="userKGraph" bindValueTo="$userK"/> <m>\bigg)</m></p>
+
+<p><m>a = </m> <mathInput name="userAGraph" bindValueTo="$userA"/></p>
+<p><m>b = </m> <mathInput name="userBGraph" bindValueTo="$userB"/></p>
+</div>
+
+  
+<graph name="g1" grid 
+  xmin="$xmin{link='false'}"   
+  xmax="$xmax{link='false'}" 
+  ymin="$ymin{link='false'}" 
+  ymax="$ymax{link='false'}">
+  <curve parmin="0" parmax="2pi" variable="t" hide="$eq1 != $expr">($a cos(t) + $h, $b sin(t) + $k)</curve>
+  <point name="userCenter" coords="($h, $k)" styleNumber="6" hide="$eq1 != $expr"/>
+  <curve name="userEllipseG" parmin="0" parmax="2pi" variable="t" styleNumber="2" layer="1">($userAGraph cos(t) + $userHGraph, $userBGraph sin(t) + $userKGraph)</curve>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two ellipses will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>\text{Center} = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/> <m>\bigg)</m></p>
+
+<p><m>a = </m> <mathInput name="userA"/> 
+ <nbsp/><nbsp/><nbsp/><m>b = </m> <mathInput name="userB"/></p>
+
+<answer name="ans1">
+    <award name="allCorrect" matchPartial>
+      <when>$h = $userH and $k = $userK and $a = $userA and $b = $userB</when>
+    </award> 
+</answer>
+
+<p>Your equation is: <m>\displaystyle $userDisplayLHS = 1</m></p>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$userA != $a and $ans1.responseHasBeenSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$userB != $b and $ans1.responseHasBeenSubmitted">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans1.responseHasBeenSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userK != $k and $ans1.responseHasBeenSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.numSubmissions > 2 and $ans21.creditAchieved != 1">
+    <div name="helpText">
+    <p>See the lesson on <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/">Completing the Square</ref> for more information.</p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li><m>\text{Center} = ($h,$k)</m></li>
+  <li><m>a = $a, \;\;\; b = $b</m></li>
+</ul>
+  
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

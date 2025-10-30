@@ -1,0 +1,210 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Continuously compounding interest application - determine the interest rate given P, A, and t.
+
+A graphing tool is provided to help with visualizing the geometry of the problem.
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="64000" to="72000" step="1000"/>
+  <selectFromSequence name="p" from="10000" to="20000" step="1000"/>
+  <selectFromSequence name="t" from="6" to="20"/>
+  
+  <math name="percent">ln($a/$p)*100/$t</math>
+  <number name="percentNumerical">$percent</number>
+
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>p = $p</p>
+<p>t = $t</p>
+<p>percent = $percent</p>
+<p>percentNumerical = $percentNumerical</p> -->
+<!--testing-->
+
+
+<p>Assuming continuously compounding interest, at what rate should <m>\$ $p</m> be invested so that after <m>$t</m> years, the investment will have grown to <m>\$ $a</m>?</p> 
+
+<p><em>Input your reponse as a decimal percent, rounding to the nearest <m>0.01 \;\text{percent}</m></em>.</p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">-5</number>
+  <number name="xmax">$t+5</number>
+  <number name="ymin">-1000</number>
+  <number name="ymax">$a + 5000</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given exponential function, including the computed interest rate:</p>
+  <p><m>A(t) = Pe^{rt}</m>:</p>
+  <p><m>A(t) = </m> <mathInput name="eq1"/></p>
+
+  <p>Check data point at final time:</p> 
+  <p><m>(t, A(t)) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="tFinal" /><m>,</m>
+  <mathInput name="finalAmount" bindValueTo="$userAns" displayDecimals="2" padZeros/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="graphExpFunc" variables="t" styleNumber="5">$eq1</function>
+  <point name="pT" coords="($tFinal, $finalAmount)"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+<!--*********************************************
+            User answer input
+**********************************************--> 
+
+  
+<p><m>\text{Rate} = </m> <mathInput name="userRate" prefillLatex="0.00"/><m>\%</m>
+  <answer name="ans43">
+    <award name="correctNumerical" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+      <when>$userRate{isResponse} = $percentNumerical</when>
+    </award>
+
+    <award name="correctSymbolic" symbolicEquality simplifyOnCompare>
+      <when>$userRate{isResponse} = $percent</when>
+    </award>
+
+    <award name="roundingError1" allowedErrorInNumbers="1" allowedErrorIsAbsolute credit="0">
+      <when>$userRate{isResponse} = $percentNumerical</when>
+    </award>
+  </answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correctNumerical or $correctSymbolic">$correctFeedback</feedback>
+  <feedback condition="$roundingError1">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+  
+  <feedback condition="$ans43.numSubmissions > 2 and $ans43.creditAchieved != 1">
+    <div name="helpText">We need to use the formula for continuously compounding interest, 
+    <me>A = P e^{r t}</me>
+where <m>A</m> is the accrual, or value at time <m>t</m>, <m>P</m> is the Principal, and <m>r</m> is the interest rate.
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+<p><em>Assuming continuously compounding interest, at what rate should <m>\$ $p</m> be invested so that after <m>$t</m> years, the investiment will have grown to <m>\$ $a</m>?</em></p> 
+
+<p><em>Input your reponse as a decimal percent, rounding to the nearest <m>0.01 \;\text{percent}</m></em>.</p>
+
+<setup>
+  <math name="a">55000</math>
+  <math name="p">21000</math>
+  <math name="t">25</math>
+  
+  <math name="percent">ln($a/$p)*100/$t</math>
+  <number name="percentNumerical">$percent</number>
+</setup>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<p>For our solution, we will use the definition of the 
+natural log function, as well as the
+properties of logarithms.</p>
+
+<md>
+      <mrow>A \amp= P e^{r t} \amp\text{formula for continously compounding interest}</mrow>
+      <mrow>$a \amp= $p e^{r $t} \amp\text{substitute known information}</mrow>
+      <mrow><math name="aOverP">$a/$p</math> \amp= e^{r $t} \amp\text{divide both sides by P}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= \ln(e^{r $t}) \amp\text{simplify fraction and take natural log of both sides}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= r $t \cdot \ln(e) \amp\text{apply properties of logarithms}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= r $t \cdot 1 \amp\text{apply definition of ln(e)}</mrow>
+      <mrow>\frac{\ln \left($aOverP{simplify}\right)}{$t} \amp= r \amp\text{isolate r}</mrow>
+      <mrow><math displayDecimals="6" simplify>$percentNumerical/100</math> \amp= r \amp\text{evaluate}</mrow>
+      <mrow>$percentNumerical{displayDecimals="2" padZeros} \% \amp= r \amp\text{convert response to a percent and round}</mrow>
+    </md> 
+
+<p><em>Note, do not include the <m>\%</m> symbol in your response.</em></p>
+</example>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+
+    <md>
+      <mrow>A \amp= P e^{r t} \amp\text{formula for continously compounding interest}</mrow>
+      <mrow>$a \amp= $p e^{r $t} \amp\text{substitute known information}</mrow>
+      <mrow><math name="aOverP">$a/$p</math> \amp= e^{r $t} \amp\text{divide both sides by P}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= \ln(e^{r $t}) \amp\text{simplify fraction and take natural log of both sides}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= r $t \cdot \ln(e) \amp\text{apply properties of logarithms}</mrow>
+      <mrow>\ln \bigg($aOverP{simplify}\bigg) \amp= r $t \cdot 1 \amp\text{apply definition of ln(e)}</mrow>
+      <mrow>\frac{\ln \left($aOverP{simplify}\right)}{$t} \amp= r \amp\text{isolate r}</mrow>
+      <mrow><math displayDecimals="6" simplify>$percentNumerical/100</math> \amp= r \amp\text{evaluate}</mrow>
+      <mrow>$percentNumerical{displayDecimals="2" padZeros} \% \amp= r \amp\text{convert response to a percent and round}</mrow>
+    </md>    
+<p><em>Note, do not include the <m>\%</m> symbol in your response.</em></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

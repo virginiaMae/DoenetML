@@ -1,0 +1,10 @@
+<p>Type the number 5 in the answer blank.  Then click the blue arrow.</p> 
+<answer name="ans1" maxNumAttempts="1" disableAfterCorrect>
+  5
+</answer>
+
+<div hide="!$ans1.creditAchieved">
+<p> You have not completed the assignment. You should now click the submit button. After clicking the submit button, you will see your score for this assignment.</p>
+
+<p>The Student Checklist on Canvas will now reflect that you have submitted this assignment.</p>
+</div>

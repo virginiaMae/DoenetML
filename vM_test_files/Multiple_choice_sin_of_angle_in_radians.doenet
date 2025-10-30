@@ -1,0 +1,209 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Multiple choice, determine the sine of a standard unit circle
+angle ranging from -2pi to 2pi radians. Unit circle widget provided.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+ 
+  <select assignNames="(theta sol)">
+<!--  Q1   variants a,b,c,d -->
+    <option>
+      <math>0</math>
+      <math>0</math>
+    </option>
+     <option>
+      <math>pi/6</math>
+      <math>1/2</math>
+    </option>
+    <option>
+      <math>pi/4</math>
+      <math>sqrt(2)/2</math>
+    </option>
+     <option>
+      <math>pi/3</math>
+      <math>sqrt(3)/2</math>
+    </option>
+<!--  Q2   variants e,f,g,h -->
+    <option>
+      <math>pi/2</math>
+      <math>1</math>
+    </option>
+    <option>
+      <math>2pi/3</math>
+      <math>sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>3pi/4</math>
+      <math>sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>5pi/6</math>
+      <math>1/2</math>
+    </option>
+<!--  Q3+   variants i,j,k,l -->
+    <option>
+      <math>pi</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>7pi/6</math>
+      <math>-1/2</math>
+    </option>
+    <option>
+      <math>5pi/4</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>4pi/3</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+<!--  Q3-   variants m,n,o,p -->
+    <option>
+      <math>-pi</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>-5pi/6</math>
+      <math>-1/2</math>
+    </option>
+    <option>
+      <math>-3pi/4</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>-2pi/3</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+<!--  Q4+   variants q,r,s,t,u -->
+    <option>
+      <math>3pi/2</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>5pi/3</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>7pi/4</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>11pi/6</math>
+      <math>-1/2</math>
+    </option>
+    <option>
+      <math>2pi</math>
+      <math>0</math>
+    </option>
+<!--  Q4-   variants v,w,x,y,z -->
+    <option>
+      <math>-pi/2</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>-pi/3</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>-pi/4</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>-pi/6</math>
+      <math>-1/2</math>
+    </option>
+    <option>
+      <math>-2pi</math>
+      <math>0</math>
+    </option>
+  </select>
+<vector name="choices">
+  (-1, -sqrt(3)/2, -sqrt(2)/2, -1/2, 0, 1/2, sqrt(2)/2, sqrt(3)/2, 1)
+</vector>     
+
+
+
+<boolean name="correct1" allowedErrorInNumbers="0.001">$sol = $choices.displacement[1]</boolean>
+<boolean name="correct2" allowedErrorInNumbers="0.001">$sol = $choices.displacement[2]</boolean>
+<boolean name="correct3" allowedErrorInNumbers="0.001">$sol = $choices.displacement[3]</boolean>
+<boolean name="correct4" allowedErrorInNumbers="0.001">$sol = $choices.displacement[4]</boolean>
+<boolean name="correct5" allowedErrorInNumbers="0.001">$sol = $choices.displacement[5]</boolean>
+<boolean name="correct6" allowedErrorInNumbers="0.001">$sol = $choices.displacement[6]</boolean>
+<boolean name="correct7" allowedErrorInNumbers="0.001">$sol = $choices.displacement[7]</boolean>
+<boolean name="correct8" allowedErrorInNumbers="0.001">$sol = $choices.displacement[8]</boolean>
+<boolean name="correct9" allowedErrorInNumbers="0.001">$sol = $choices.displacement[9]</boolean>
+  
+</setup>
+  
+<!--testing-->
+<!-- <p>theta = $theta</p>
+<p>sol = $sol</p>
+<p>choices.displacement[1] = $choices.displacement[1]</p> 
+<p>Answer check: <boolean>sin($theta) = $sol</boolean></p> -->
+<!--testing-->
+
+<p><m>\sin($theta) = </m></p>
+<answer name="ans1">
+<choice credit="$correct1"><m>\displaystyle{$choices.displacement[1]}</m></choice>
+<choice credit="$correct2"><m>\displaystyle{$choices.displacement[2]}</m></choice>
+<choice credit="$correct3"><m>\displaystyle{$choices.displacement[3]}</m></choice>
+<choice credit="$correct4"><m>\displaystyle{$choices.displacement[4]}</m></choice>
+<choice credit="$correct5"><m>\displaystyle{$choices.displacement[5]}</m></choice>
+<choice credit="$correct6"><m>\displaystyle{$choices.displacement[6]}</m></choice>
+<choice credit="$correct7"><m>\displaystyle{$choices.displacement[7]}</m></choice>
+<choice credit="$correct8"><m>\displaystyle{$choices.displacement[8]}</m></choice>
+<choice credit="$correct9"><m>\displaystyle{$choices.displacement[9]}</m></choice>
+</answer> 
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<m>\sin($theta) = $sol</m>
+</solution>
+</problem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

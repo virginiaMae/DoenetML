@@ -1,0 +1,256 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a quadratic equation, determine the constant k required to form a perfect square. A graphing tool is provided for checking solutions graphically.
+
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="e" from="1" to="100" exclude="1 4 9 16 25 36 49 64 81"/>
+  <selectFromSequence name="d" from="-20" to="20" exclude="0"/>
+  <selectFromSequence name="p" from="-4" to="4" exclude="0"/>
+  <math name="k" simplify>$p $e</math>
+  <math name="a" simplify>-$k / $e</math>
+  <math name="exprVertexForm">$a (x - $d)^2 + $k</math>
+  <math name="expr" expand simplify="numberspreserveorder">$exprVertexForm</math>
+  <math name="sol1">$d + sqrt($e)</math>
+  <math name="sol2">$d - sqrt($e)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>p = $p</p>
+<p>k = $k</p>
+<p>exprVertexForm = $exprVertexForm</p>
+<p>expr = $expr</p>
+<p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p> -->
+<!--testing-->
+
+<p>Solve the following equation by completing the square. Your final answer will have two solutions of the form <m>x = a \pm \sqrt{b}</m>.</p>
+
+
+<p><me>$expr = 0</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">min($d - 20, $d - sqrt($e)-20)</number>
+  <number name="xmax">max($d + 20, $d + sqrt($e)+20)</number>
+  <number name="ymin">min($k - 20, -20)</number>
+  <number name="ymax">max($k + 20, 20)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph proposed solutions:</p> 
+  <p><m>x = </m><mathInput name="x1" bindValueTo="$userSol1"/></p>
+  <p><nbsp/><nbsp/><nbsp/><nbsp/>or</p>
+  <p><m>x = </m> <mathInput name="x2" bindValueTo="$userSol2"/></p>
+  <p>Which yields roots of $r1, $r2.</p>
+</div>
+  
+<graph name="g1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <point name="r1" fixed styleNumber="5">($x1, 0)</point>
+  <point name="r2" fixed styleNumber="5">($x2, 0)</point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solutions are correct the graphed roots will occur at the intersection points of the given parabola with the <m>x-</m>axis.</p>
+
+</aside>  
+
+
+  
+<p>Solutions: <m>x = </m> <mathInput name="userSol1"/> or 
+<m>x = </m> <mathInput name="userSol2"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect" unorderedCompare>
+      <when>($userSol1, $userSol2) = ($sol1, $sol2)</when>
+    </award>
+  </answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect or $allCorrectAlt">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">To review the process for completing the square, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/Solving-Quadratic-Equations.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<setup>
+  <math name="e">101</math>
+  <math name="d">21</math>
+  <math name="p">2</math>
+  <math name="k" simplify>$p $e</math>
+  <math name="a" simplify>-$k / $e</math>
+  <math name="exprVertexForm">$a (x - $d)^2 + $k</math>
+  <math name="expr" expand simplify="numberspreserveorder">$exprVertexForm</math>
+  <math name="sol1">$d + sqrt($e)</math>
+  <math name="sol2">$d - sqrt($e)</math>
+</setup>
+
+  
+<p><em>Solve the following equation by completing the square. Your final answer will have two solutions of the form <m>x = a \pm \sqrt{b}</m>.</em></p>
+
+
+<p><me>$expr = 0</me></p>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+
+<ul>
+  <li><p>The goal is to manipulate the given equation, <m>-2x^2 + 84x - 680 = 0</m>, until we have a form that looks like <m>(x \pm d)^2 =  \pm e</m>. When we arrive at this form, we can proceed to solve for <m>x</m> by taking the square root of both sides of the equation.</p> 
+    <p>We start by trying to rewrite the first two terms on the left-hand side as a sum or a difference of squares.</p>
+  </li>
+  <li><p>We first notice that the expression on the left-hand side has a common factor of <m>-2</m>. We can first factor this out, then divide both sides of the equation by <m>-2</m>.</p>
+    <md>
+      <mrow>-2x^2 + 84x - 680 &= 0</mrow>
+      <mrow>-2(x^2 - 42x + 340) &= 0</mrow>
+      <mrow>x^2 - 42x + 340 &= 0</mrow>     
+    </md>
+  </li>
+  <li><p>Next, we "complete the square" for the first two terms <m>(x^2 - 42x)</m>. In order to make this binomial a perfect square, we need to add <m>21^2</m>, because <m>(x^2 - 42x + 21^2) = (x - 21)^2</m>.</p>
+    <p>We have to be careful here to keep our original expression unchanged. So, if we add a <m>21^2</m> inside the parentheses, we need to <em>subtract</em> a <m>21^2</m> outside the parentheses.</p>
+    <md>
+      <mrow>(x^2 -42x + 21^2) + 340 - 21^2 &= 0</mrow>
+      <mrow>(x - 21)^2 - 101 &= 0</mrow>
+    </md>
+  </li>
+  <li><p>A few more simplifications will allow us to isolate the <m>x</m> term:
+    <md>
+      <mrow>(x - 21)^2 &= 101</mrow>
+      <mrow>\sqrt{(x - 21)^2} &= \sqrt{101}</mrow>
+    </md>
+  </p>
+  <p>This last step results in our two possible solutions,
+    <me>(x - 21) = \sqrt{101} \;\;\;\text{or}\;\;\;(x - 21) = - \sqrt{101}</me>
+   </p>
+  </li>
+
+  <li><p>Solving each of the separate cases for <m>x</m> gives
+    <me>x = 21 + \sqrt{101}\;\;\;\text{or}\;\;\;x = 21 - \sqrt{101}</me>
+  </p>
+  </li>
+  <li><p>Next, we'll graph both solutions as a check on our work. Since we solved for <m>x</m> at the two locations where this quadratic equation is equal to zero, we have actually solved for the roots of the parabola given by <m>y = $expr</m>.</p>
+
+<setup>
+  <number name="xmin">min($d - 20, $d - sqrt($e)-20)</number>
+  <number name="xmax">max($d + 20, $d + sqrt($e)+20)</number>
+  <number name="ymin">min($k - 20, -20)</number>
+  <number name="ymax">max($k + 20, 20)</number>
+</setup>
+    
+  <sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1" prefill="$expr"/></p>
+  
+  <p>Graph proposed solutions:</p> 
+  <p><m>x = </m><mathInput name="x1" prefill="$sol1"/></p>
+  <p><nbsp/><nbsp/><nbsp/><nbsp/>or</p>
+  <p><m>x = </m> <mathInput name="x2" prefill="$sol2"/></p>
+  <p>Which yields roots of $r1, $r2.</p>
+</div>
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="givenParabola">$eq1</function>
+  <point name="r1" fixed styleNumber="5">($x1, 0)
+    <label>$r1.coords</label>
+  </point>
+  <point name="r2" fixed styleNumber="5">($x2, 0)
+    <label>$r2.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+  <p>The points we've plotted using our two solutions for <m>x</m> do in fact match up with the roots of the given parabola, so we know that our work is correct.</p>
+  </li>
+</ul>
+      
+</example>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+
+<p><m>x = $sol1</m> or <m>x = $sol2</m></p>
+
+<graph xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function styleNumber="12">$expr</function>
+  <point name="p1" fixed styleNumber="5">($sol1, 0)
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" fixed styleNumber="5">($sol2, 0)
+    <label>$p2.coords</label>
+  </point>
+</graph>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

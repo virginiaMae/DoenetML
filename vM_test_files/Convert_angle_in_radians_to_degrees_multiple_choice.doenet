@@ -1,0 +1,106 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem asks the student to convert an angle given in radians to degrees. The angles range from pi/12 to 7pi/4 radians.
+*************************************************************--> 
+
+<problem>
+<setup>
+  <select name="a">36 72 108 144 216 252 30 60 90 120 150 180 210 240 270 300 45 135 225 315 15 75 105 165</select>
+  <math name="gcf"><gcd>$a 180</gcd></math>
+  <math name="num" simplify>$a pi/$gcf</math>
+  <math name="den" simplify>180/$gcf</math>
+  <math name="angle" simplify>$num/$den</math>
+  <math name="unsimple">$a pi/180</math>
+  <select name="c">10 20 30 40 50 60</select>
+  <m name="choiceSol">$a^{\circ}</m>
+  <m name="choice1"><math><round>$angle $c</round></math>^{\circ}</m>
+  <m name="choice2"><math><round>$num</round></math>^{\circ}</m>
+  <m name="choice3"><number>$angle (90/pi)</number>^{\circ}</m>
+  <m name="choice4"><number>$angle (360/pi)</number>^{\circ}</m>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>gcf = $gcf</p>
+<p>num = $num</p>
+<p>den = $den</p>
+<p>unsimple = $unsimple</p>
+<p>c = $c</p>
+<p>choiceSol = $choiceSol</p>
+<p>choice1 = $choice1</p>
+<p>choice2 = $choice2</p>
+<p>choice3 = $choice3</p>
+<p>choice4 = $choice4</p> -->
+<!--testing-->
+
+<p>Convert the angle <m>\alpha = $angle</m> radians to degrees.</p>
+  
+  <answer name="ans1" shuffleOrder maxNumAttempts="2">  
+    <choice credit="1">$choiceSol</choice>
+    <choice>$choice1</choice>
+    <choice>$choice2</choice>
+    <choice>$choice3</choice>
+    <choice>$choice4</choice>
+  </answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">Your answer will be an integer value.
+  </feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<m>$angle\; \text{radians} = $a^{\circ}</m>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

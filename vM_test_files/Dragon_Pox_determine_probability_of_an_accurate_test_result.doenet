@@ -1,0 +1,261 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply Baye's rule to determine the probability of an accurate test result given: the percentage of positive results, the percentage of false negative results, and the percentage of infected individuals in a population.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="1" to="4"/>
+  <selectFromSequence name="c" from="1" to="5"/>
+  <math name="numerator">100$a - $a$b</math>
+  <math name="denominator">$numerator + (100$c - $c$a)</math>
+  <math name="probability">$numerator/$denominator</math>
+  <number name="probNumerical">$probability</number>
+  <math name="I" simplify>$a 100</math>
+  <math name="N" simplify>10000 - $I</math>
+  <number name="PosTrue">(1-$b/100)$I</number>
+  <number name="PosFalse">$c/100 $N</number>
+  <number name="NegTrue">(1 - $c/100)$N</number>
+  <number name="NegFalse">$b/100 $I</number>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>numerator = $numerator</p>
+<p>denominator = $denominator</p>
+<p>probability = $probability</p>
+<p>probNumerical = $probNumerical</p> -->
+<!--testing-->
+
+<p>A town with population <m>10000</m> has suffered an outbreak of dragon pox, with <m>$a \%</m> of the population being infected. There is a test to diagnose the disease. If you have dragon pox, the test will correctly register 'positive' <m><math simplify>(100-$b)</math>\%</m> of the time and will yield a 'false negative' <m>$b \%</m> of the time. If you do not have dragon pox, the test will register that correctly <m><math simplify>(100-$c)</math>\%</m> of the time and will yield a 'false positive' <m>$c \%</m>  of the time. Given that you tested positive for the disease, what is the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-8/">probability that you actually have</ref> dragon pox?</p>
+  
+<p><em>Enter your answer as a decimal (between <m>0</m> and <m>1</m>). Do not enter a percent and do not use the percent symbol. Round your answer to five decimal places.</em></p>
+
+<m>P(\text{you actually have dragon pox}) = </m>  <answer name="ans12" >
+    <mathInput name="userInput" prefillLatex="0.00000"/>
+      <award name="correct" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute credit="1" matchPartial>    
+        <when>
+      $userInput{isResponse}=$probNumerical
+        </when>
+      </award>
+
+      <award name="roundingError" allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute credit="0.6" matchPartial>
+        <when>$userInput{isResponse}=$probNumerical
+        </when>
+      </award>
+      
+      <award name="correctSymbolic" symbolicEquality simplifyOnCompare credit="1">    
+        <when>$userInput{isResponse}=$probability
+        </when>
+      </award>
+
+    </answer>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans12.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$roundingError">It looks like you may have rounded incorrectly. Try again for full credit, preserving more decimal places in your intermediate computations.</feedback>
+  
+  <feedback condition="$ans12.numSubmissions > 2 and $ans12.creditAchieved != 1">
+     <div name="helpText">
+       This problem is an application of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-8/">Bayes rule</ref>. Several similar examples are worked in section 2.8 of the textbook.
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>A town with population 10000 has suffered an outbreak of dragon pox, with <m>$a \%</m> of the population being infected. There is a test to diagnose the disease. If you have dragon pox, the test will correctly register 'positive' <m><math simplify>(100-$b)</math>\%</m> of the time and will yield a 'false negative' <m>$b \%</m> of the time. If you do not have dragon pox, the test will register that correctly <m><math simplify>(100-$c)</math>\%</m> of the time and will yield a 'false positive' <m>$c \%</m>  of the time. Given that you tested positive for the disease, what is the probability that you actually have dragon pox?</em></p>
+
+<setup>
+  <math name="a">10</math>
+  <math name="b">4</math>
+  <math name="c">2</math>
+
+  <math name="numerator">100$a - $a$b</math>
+  <math name="denominator">$numerator + (100$c - $c$a)</math>
+  <math name="probability">$numerator/$denominator</math>
+  <number name="probNumerical">$probability</number> 
+  <math name="I" simplify>$a 100</math>
+  <math name="N" simplify>10000 - $I</math>
+  <number name="PosTrue">(1-$b/100)$I</number>
+  <number name="PosFalse">$c/100 $N</number>
+  <number name="NegTrue">(1 - $c/100)$N</number>
+  <number name="NegFalse">$b/100 $I</number>
+  <number name="altAns" displayDecimals="5">$PosTrue/$totPos</number>
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+  <p>We construct a table:</p>
+    <table>
+      <tabular top="minor" bottom="minor" left="minor" right="minor">
+        <row header><cell>pop = 10000</cell><cell>Tested Positive</cell><cell>Tested Negative</cell><cell></cell></row>
+        <row>
+          <cell>infected</cell>
+          <cell><m><math simplify>100 - $b</math> \%</m></cell>
+          <cell><m>$b \%</m></cell>
+          <cell><m><math simplify>$a</math> \%</m></cell>
+        </row>
+        <row>
+          <cell>not infected</cell>
+          <cell><m>$c \%</m></cell>
+          <cell><m><math simplify>100 - $c</math> \%</m></cell>
+          <cell><m><math simplify>(100 - $a)</math> \%</m></cell>
+        </row>
+        <row>
+          <cell>Total</cell>
+          <cell></cell>
+          <cell></cell>
+          <cell><m>100 \%</m></cell>
+        </row>
+      </tabular>
+    </table>
+    
+
+  <p>Completing the table with numbers of the total population represented gives,</p>
+    <table>
+      <tabular top="minor" bottom="minor" left="minor" right="minor">
+        <row header><cell>pop = 10000</cell><cell>Tested Positive</cell><cell>Tested Negative</cell><cell></cell></row>
+        <row>
+          <cell>infected</cell>
+          <cell><m><math simplify>100 - $b</math> \%: $PosTrue</m></cell>
+          <cell><m>$b \%: $NegFalse</m></cell>
+          <cell><m><math simplify>$a</math> \%: $I</m></cell>
+        </row>
+        <row>
+          <cell>not infected</cell>
+          <cell><m>$c \%: $PosFalse</m></cell>
+          <cell><m><math simplify>100 - $c</math> \%: $NegTrue</m></cell>
+          <cell><m><math simplify>(100 - $a)</math> \%: $N</m></cell>
+        </row>
+        <row>
+          <cell>Total</cell>
+          <cell><math name="totPos" simplify>$PosTrue +$PosFalse</math></cell>
+          <cell><math  simplify>$NegTrue +$NegFalse</math></cell>
+          <cell><m>100 \%: 10000</m></cell>
+        </row>
+      </tabular>
+    </table>
+  
+  <p>Looking at the first column of those who tested positive, we can now compute the probability that our positive test was accurate:
+    <me>P(\text{you actually have dragon pox}) = \frac{$PosTrue}{$totPos} = $probNumerical{displayDecimals="5"}.</me></p>
+  
+</example>
+
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Refer to the lesson on <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-8/">Bayes' rule</ref> for this solution method.</p>
+  <p>We construct a table:
+    <table>
+      <tabular top="minor" bottom="minor" left="minor" right="minor">
+        <row header><cell>pop = 10000</cell><cell>Tested Positive</cell><cell>Tested Negative</cell><cell></cell></row>
+        <row>
+          <cell>infected</cell>
+          <cell><m><math simplify>100 - $b</math> \%</m></cell>
+          <cell><m>$b \%</m></cell>
+          <cell><m><math simplify>$a</math> \%</m></cell>
+        </row>
+        <row>
+          <cell>not infected</cell>
+          <cell><m>$c \%</m></cell>
+          <cell><m><math simplify>100 - $c</math> \%</m></cell>
+          <cell><m><math simplify>(100 - $a)</math> \%</m></cell>
+        </row>
+        <row>
+          <cell>Total</cell>
+          <cell></cell>
+          <cell></cell>
+          <cell><m>100 \%</m></cell>
+        </row>
+      </tabular>
+    </table>
+  </p>    
+
+  <p>Completing the table with numbers of the total population represented gives,
+    <table>
+      <tabular top="minor" bottom="minor" left="minor" right="minor">
+        <row header><cell>pop = 10000</cell><cell>Tested Positive</cell><cell>Tested Negative</cell><cell></cell></row>
+        <row>
+          <cell>infected</cell>
+          <cell><m><math simplify>100 - $b</math> \%: $PosTrue</m></cell>
+          <cell><m>$b \%: $NegFalse</m></cell>
+          <cell><m><math simplify>$a</math> \%: $I</m></cell>
+        </row>
+        <row>
+          <cell>not infected</cell>
+          <cell><m>$c \%: $PosFalse</m></cell>
+          <cell><m><math simplify>100 - $c</math> \%: $NegTrue</m></cell>
+          <cell><m><math simplify>(100 - $a)</math> \%: $N</m></cell>
+        </row>
+        <row>
+          <cell>Total</cell>
+          <cell><math name="totPos" simplify>$PosTrue +$PosFalse</math></cell>
+          <cell><math  simplify>$NegTrue +$NegFalse</math></cell>
+          <cell><m>100 \%: 10000</m></cell>
+        </row>
+      </tabular>
+    </table>
+  </p>
+  <p>Looking at the first column of those who tested positive, we can now compute the probability that our positive test was accurate:
+    <me>P(\text{you actually have dragon pox}) = \frac{$PosTrue}{$totPos} = $probNumerical{displayDecimals="5"}.</me></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

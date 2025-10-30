@@ -1,0 +1,209 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem requires the student to use right triangle trigonometry as well as Law of sines to calculate the area of a trianble given SSA. Answers are fill-in the blank with an approximate decimal value.
+
+There are 2 versions to this problem:
+Version 1: the number of solutions varies; 0, 1, or 2 are possible
+
+Version 2: there are always 2 solutions; this is given in the problem statement
+
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="A" from="16" to="29"/>
+  <selectFromSequence name="a" from="11" to="15"/>
+  <selectFromSequence name="c" from="16" to="20"/>
+  <math name="h" simplify>$c sin($A pi/180)</math>
+  <math name="areaL" simplify>(0.5 + 0.5(<abs>$a - $h</abs>/($a - $h)))*(0.5 $h*($c cos($A pi/180) + sqrt($a^2 - $h^2)))</math>
+  <number name="areaLN">$areaL</number>
+
+  <math name="areaS" simplify>(0.5 + 0.5(<abs>$a - $h</abs>/($a - $h))) * 
+    (0.5 + 0.5(<abs>$c -  $a</abs>/($c - $a))) *
+    (0.5 $h*($c cos($A pi/180) - sqrt($a^2 - $h^2)))
+  </math>
+  <number name="areaSN">$areaS</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>a = $a</p>
+<p>c = $c</p>
+<p>h = $h</p>
+<p>areaL = $areaL</p>
+<p>areaLN = $areaLN</p>
+<p>areaS = $areaS</p>
+<p>areaSN = $areaSN</p>
+<p>h = $h</p> -->
+<!--testing-->
+
+<p>Three parts of an SSA triangle are given. Compute the areas of the triangles.  There will be two possible answers.</p>
+
+<p>In the triangle shown (not drawn to scale):</p>
+  <md>
+    <mrow>A &= $A^{\circ}</mrow>
+    <mrow>a &= $a</mrow>
+    <mrow>c &= $c</mrow>
+  </md>
+
+
+ 
+
+<!--*********************************************
+            User Input
+**********************************************-->
+
+  <sideBySide>
+    <div>
+<graph name="g1" size="small" fixAxes displayXAxis="false" displayYAxis="false" xmin="-3" xmax="13" ymin="-2" ymax="9" identicalAxisScales displayMode="inline">  
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5" labelPosition="top">(8, 6)
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5" labelPosition="right">(10,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC">
+    <label><m>a</m></label>
+  </lineSegment>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC" labelPosition="lowerright">
+    <label><m>b</m></label>
+  </lineSegment>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB" labelPosition="upperleft">
+    <label><m>c</m></label>
+  </lineSegment>
+  <lineSegment name="hSeg" styleNumber="6" endpoints="$pB ($pB.x, 0)" labelPosition="lowerleft">
+    <label><m>h</m></label>
+  </lineSegment>  
+  <angle name="angleA" through="$pB $pA $pC" styleNumber="2"/>
+  <angle name="angleB" through="$pA $pB $pC" styleNumber="3" />
+  <angle name="angleC" through="$pA $pC $pB" styleNumber="4" />
+   <angle name="angleH" through="$pB ($pB.x, 0) $pA" styleNumber="6" radius="0.75"/>
+  <label anchor="(3,6.5)">Not to scale</label>
+</graph>
+      <p><alert>Solution 1:</alert></p>
+      <p><m>A_1 = </m><mathInput name="userA1" />square units</p>
+    </div>
+
+    
+    <div>
+   
+<graph name="g2" size="small" fixAxes displayXAxis="false" displayYAxis="false" xmin="-3" xmax="13" ymin="-2" ymax="9" identicalAxisScales newNamespace displayMode="inline">  
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5" labelPosition="top">(8, 6)
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5" labelPosition="lowerright">(6,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC" labelPosition="upperleft">
+    <label><m>a</m></label>
+  </lineSegment>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC" labelPosition="lowerright">
+    <label><m>b</m></label>
+  </lineSegment>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB" labelPosition="upperleft">
+    <label><m>c</m></label>
+  </lineSegment>
+  <lineSegment name="hSeg" styleNumber="6" endpoints="$pB ($pB.x, 0)" labelPosition="lowerright">
+    <label><m>h</m></label>
+  </lineSegment>
+  <lineSegment name="hor" styleNumber="6" endpoints="$C ($pB.x, 0)"/>  
+  <angle name="angleA" through="$pB $pA $pC" styleNumber="2"/>
+  <angle name="angleB" through="$pA $pB $pC" styleNumber="3" />  
+  <angle name="angleC" through="$pA $pC $pB" styleNumber="4" />
+  <angle name="angleH" through="$pB ($pB.x, 0) $pC" styleNumber="6" radius="0.75"/>
+  <label anchor="(3,6.5)">Not to scale</label>
+</graph>
+      
+      <p><alert>Solution 2:</alert></p>
+      <p><m>A_2 = </m><mathInput name="userA2" />square units</p>
+    </div>
+  </sideBySide>
+
+
+  
+<p><em>Round area(s) to the nearest <m>0.01</m> square units.</em></p>
+       
+<setup>
+  <mathList name="userSols" unordered>$userA1 $userA2</mathList>
+  <mathList name="solList" unordered>$areaLN $areaSN</mathList>
+  <boolean name="errorInSol1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userA1 != $areaLN and $userA1 != $areaSN</boolean>
+  <boolean name="errorInSol2" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userA2 != $areaLN and $userA2 != $areaSN</boolean>
+</setup>
+
+
+<!-- testing -->
+<!-- <p>userSols = $userSols</p>
+<p>solList = $solList</p> -->    
+<!-- /testing -->
+       
+<answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+  <award name="correct">
+    <when>$userSols = $solList</when>
+  </award>
+</answer>
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+ 
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted and $errorInSol1">There is an error in <alert>Solution 1</alert>.</feedback>
+  <feedback condition="$ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted and $errorInSol2">There is an error in <alert>Solution 2</alert>.</feedback>
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>A_1 = $areaLN</m> square units, and <m>A_2 = $areaSN</m> square units.</p>
+    <p>For validation, it does not matter in which order the solutions are entered.</p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

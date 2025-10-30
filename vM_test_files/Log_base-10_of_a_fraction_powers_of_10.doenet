@@ -1,0 +1,126 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Evaluate the log_10 of a fraction, where the denominator ranges from 10 to 10^6
+
+Full simplification and symbolic equality is enforced for answer checking.
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="b" from="-6" to="-1"/>
+  <math name="c">10^$b</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>b = $b</p>
+<p>c = $c{simplify}</p> -->
+<!--testing-->
+
+
+<p><m>y = \log_{10} $c{simplify}</m></p> 
+
+<p><m>y = </m> 
+  <answer name="ans23">
+    <mathInput name="userAns"/>
+    <award name="correct" symbolicEquality>
+      <when>$userAns = $b</when>
+    </award>
+
+    <award name="multiplied" credit="0">
+      <when>$userAns = 10$c</when>
+    </award>
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$multiplied">The <ref uri="https://open.lib.umn.edu/algebra/chapter/6-1-the-logarithm-function/">logarithm function</ref> returns the exponent that the base must be <em>raised to</em> that results in the input argument, <m>$c{simplify}</m>. It looks like you took the product of <m>10</m> and <m>$c{simplify}</m>, which is not the correct operation.</feedback>
+
+  <feedback condition="$ans23.numSubmissions > 2 and $ans23.creditAchieved != 1">
+    <p>The definition of the <ref uri="https://open.lib.umn.edu/algebra/chapter/6-1-the-logarithm-function/">logarithm function</ref> is:
+  <me>\log_a x = y \;\;\text{implies}\;\;a^y = x</me>
+where <m>a >0, a \neq 1</m> and <m> x > 0</m>. The first step when computing the logarithm without a calculator is to rewrite the equation in exponential form. Then, ask yourself, "what exponent must <m>a</m> be <em>raised to</em> to result in <m>x</m>?" The answer to this question is the exponent <m>y</m>.</p>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+  
+<p>Here is a similar worked example:</p> 
+<example>
+<p><em>Find <m>\log_{12} 144</m></em></p> 
+
+<p><em><alert>Solution.</alert></em></p>
+    <md>
+      <mrow>\log_a x \amp= y \;\;\text{implies}\;\;a^y = x \amp\text{general definition}</mrow>
+      <mrow>\log_{12} \frac{1}{144} \amp= y \;\;\text{implies}\;\;12^y = \frac{1}{144} \amp\text{rewrite given logarithm as an exponential}</mrow>
+      <mrow>\log_{12} \frac{1}{144} \amp= -2 \;\;\amp y \;\text{must be equal to}\;\;-2\;\;\text{for the equation to be true}</mrow>
+    </md>
+</example>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Rewrite the logarithmic expression as an exponential:
+  <md>
+      <mrow>\log_a x \amp= y \;\text{implies}\;a^y = x \;\;\;\;\text{general definition}</mrow>
+      <mrow>\log_{10} $c{simplify} \amp= y \;\text{implies}\;10^y = $c{simplify} \;\;\;\;\text{rewrite given logarithm as an exponential}</mrow>
+      <mrow>\log_{10} $c{simplify} \amp= $b \;\;\;\; y \;\text{must be equal to}\;$b\;\text{for the equation to be true}</mrow>
+    </md></li>
+</ul>
+    
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

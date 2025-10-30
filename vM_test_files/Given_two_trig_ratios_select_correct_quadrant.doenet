@@ -1,0 +1,121 @@
+<problem>
+<setup>
+<selectFromSequence name="a" from="1" to="4"/>
+<selectFromSequence name="b" from="5" to="9"/>
+<math name="aOverb" simplify>$a / $b</math>
+<math name="bOvera" simplify>$b / $a</math>
+<select name="qSelect" assignNames="(cond1 cond2 index)">
+  <option>
+    <math>csc(theta) = $bOvera</math>
+    <math>cot(theta) > 0</math>
+    <number>1</number>
+  </option>
+  <option>
+    <math>sec(theta) = -$bOvera</math>
+    <math>cot(theta) < 0</math>
+    <number>2</number>
+  </option>
+  <option>
+    <math>cos(theta) = -$aOverb</math>
+    <math>tan(theta) > 0</math>
+    <number>3</number>
+  </option>
+  <option>
+    <math>csc(theta) = -$bOvera</math>
+    <math>tan(theta) < 0</math>
+    <number>4</number>
+  </option>
+  <option>
+    <math>cos(theta) = -$aOverb</math>
+    <math>sec(theta) < 0</math>
+    <number>5</number>
+  </option>
+</select>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>cond1 = $cond1</p>
+<p>cond2 = $cond2</p>
+<p>index = $index</p> -->
+<!--testing-->
+
+<p>If $cond1  and $cond2, complete the following sentence:</p>
+
+<p><nbsp/><nbsp/><nbsp/><nbsp/><alert><m>\theta</m> is in...</alert></p>  
+<p>
+  <answer name="ans1" maxNumAttempts="1">
+    <choice credit="$index = 1">Quadrant <alert>I</alert></choice>
+    <choice credit="$index = 2">Quadrant <alert>II</alert></choice>
+    <choice credit="$index = 3">Quadrant <alert>III</alert></choice>
+    <choice credit="$index = 4">Quadrant <alert>IV</alert></choice>
+    <choice credit="$index = 5">Quadrant <alert>II</alert> or 
+ <alert>III</alert></choice>
+  </answer>
+</p>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  
+<p><conditionalContent>
+  <case condition="$index = 1">Quadrant <alert>I</alert></case>
+  <case condition="$index = 2">Quadrant <alert>II</alert></case>
+  <case condition="$index = 3">Quadrant <alert>III</alert></case>
+  <case condition="$index = 4">Quadrant <alert>IV</alert></case>
+  <case condition="$index = 5">Quadrant <alert>II</alert> or 
+ <alert>III</alert></case>
+</conditionalContent>
+</p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,484 @@
+<activity>
+<setup>
+  <group name="funcAndDeriv" styleNumber="6">
+    <function name="f" domain="[-1,9]" hide styleNumber="10">sqrt(4x + 4)</function>
+    <derivative name="fPrime" hide>$f</derivative>
+  </group>
+  <function name="instTangFunc">$tangent.slope x + $tangent.yIntercept</function>
+  <point name="dp1" styleNumber="9" hide>(2,3.5)
+    <constraints>
+      <constrainTo>$f</constrainTo>
+    </constraints>
+  </point>
+  <lineSegment styleNumber="10" endpoints="(0,0) -0.2($dp1)"/>
+  <lineSegment name="beam1" hide endpoints="(0,0) $dp1" styleNumber="6"/>
+  <ray name="beam2" hide endpoint="$dp1" through="($dp1.x + 1, $dp1.y)" styleNumber="6"/>
+  <graph name="baseGraph" xmin="-8" xmax="8" ymin="-8" ymax="8" identicalAxisScales size="large">
+  </graph>
+</setup>
+
+<!-- testing -->
+<!-- <p>Tangent formula = $instTangFunc.formula</p> -->
+<!-- /testing -->
+  
+<p>A parabolic mirror has the equation <me>y = $f.formula</me></p>
+
+<!-- *********************************************************************
+              Step 1: Sketch the mirror
+*********************************************************************
+ -->
+
+  
+<p><alert>Step 1:</alert> Find three points on this function and then drag the $userFunc.styleDescription curve to your selected points to sketch the mirror. Points on the curve should be placed in alphabetical order from left to right.</p>
+<p>When you are finished, click the button below to check your shape and move onto the next step.</p>
+<answer name="drawParabola">
+  <award><when>
+    $pointsPlaced = true
+  </when></award></answer>
+
+<hint><title>Hint for Step 1</title>
+  <p>Here's a few tips for finding points on the function:</p>
+  <ul>
+    <li>Where is <m>y = 0</m>?</li>
+    <li>What is <m>y</m> when <m>x = 0</m>?</li>
+    <li>What is <m>x</m> when <m>y = 4</m>?</li>
+  </ul>
+</hint>
+  
+
+
+<triggerSet triggerWhen="$drawParabola.creditAchieved = 1">
+  <updateValue target="divStep2.hide" newValue="false" type="boolean" />
+</triggerSet>
+
+
+  
+<!-- *********************************************************************
+              Step 2: Sketch the light beam
+*********************************************************************
+ -->
+ 
+<div name="divStep2" hide>  
+<p><alert>Step 2:</alert> A lightbulb is placed at <alert>the origin</alert>. A ray of light shines upward toward the parabola and <alert>reflects off the tangent line</alert> so the <ref>the angle of incidence</ref> equals the <ref uri="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_all.html">angle of refraction</ref>.</p>
+<p>Click here to place the light source and beam.
+  <updateValue target="light.hide" newValue="false" type="boolean" disabled="$light.hide=false">
+    <label>Click Me!</label>
+  </updateValue>
+</p>
+
+<p>Check <alert>step 2:</alert>
+  <answer name="lightBmPlaced">
+    <award><when>$userdp0 = (0,0) and $$f($userdp1.x) = $userdp1.y and $userdp2.y < $$f($userdp2.x)</when>  
+    </award>
+  </answer></p>
+
+<updateValue target="tangent.hide" newValue="false" type="boolean" triggerWhen="$$f($userdp1.x) = $userdp1.y"/>
+
+<hint><title>Hint for Step 2</title>
+<p>You should correctly place the light source and the intersection point of the light beam with the parabolic mirror. The angle of the reflected portion of the light beam does not have to be exact, but it should show up as reflected <em>within</em> the mirror, not outside the mirror.</p></hint>
+</div>
+
+<!-- *********************************************************************
+              Step 3
+*********************************************************************
+ -->
+ 
+<div hide="$lightBmPlaced.creditAchieved != 1">
+<p><alert>Step 3:</alert> Find the derivative <m>\frac{dy}{dx}</m>.</p>
+    <p><m>\displaystyle{\frac{dy}{dx}} = </m>
+      <answer name="derivAns">$fPrime.formula</answer>
+    </p>
+
+<hint><title>Hint for Step 3</title>
+<p>You will need a combination of two differentiation rules: 
+  <ul>
+    <li>The rule for <ref uri="https://activecalculus.org/single/sec-2-1-elem-rules.html">Power functions</ref></li>
+    <li>The <ref uri="https://activecalculus.org/single/sec-2-5-chain.html">Chain rule</ref></li>
+  </ul>
+</p></hint>
+</div>
+
+<!-- *********************************************************************
+              Step 4
+*********************************************************************
+ -->
+ 
+<div hide="$derivAns.creditAchieved != 1">
+<p><alert>Step 4:</alert> Recall that the angle <m>\theta</m> formed by a line with slope <m>m</m> and the <m>x</m>-axis has the property <me>\tan \theta = m</me> Suppose the intersection point of the light beam and the parabolic mirror is located at <math>(a, sqrt(4a+4))</math>.</p>
+<p>Find the slope <m>m</m> of the incident light beam. 
+
+    <m>m = </m>
+      <answer name="slopeAns">
+        <mathInput name="userSlope"/>
+        <award>sqrt(4a + 4)/a</award>
+      </answer></p>
+
+<triggerSet triggerWhen="$derivAns.creditAchieved = 1">
+  <updateValue target="ipLabel.hide" newValue="false" type="boolean" />
+  <updateValue target="theta.hide" newValue="false" type="boolean" />
+</triggerSet> 
+
+<hint><title>Hint for Step 4</title>
+<p>Take a quick look at the triangle below, and fill in the lengths of the sides.</p>
+<sideBySide>
+<stack>
+<p><m>s_1 = </m>
+  <answer weight="0">
+    <choice><m>4</m></choice>
+    <choice credit><m>a</m></choice>
+    <choice><m>\sqrt{4a + 4}</m></choice>
+    <choice><m>a^2</m></choice>
+    <choice><m>4a + 4</m></choice>
+  </answer></p>
+
+<p><m>s_2 = </m>
+  <answer weight="0">
+    <choice><m>4</m></choice>
+    <choice><m>a</m></choice>
+    <choice credit><m>\sqrt{4a + 4}</m></choice>
+    <choice><m>a^2</m></choice>
+    <choice><m>4a + 4</m></choice>
+  </answer></p>
+
+<p>The definition of <m>\tan(\theta)</m> in terms of side lengths is
+  <answer inline weight="0">
+    <choice>opp / hyp</choice>
+    <choice>adj / hyp</choice>
+    <choice>adj / opp</choice>
+    <choice credit>opp / adj</choice>
+  </answer></p>
+</stack>
+  
+<graph xmin="-1" ymin="-4" ymax="6" xmax="6">
+  <point name="pDemo" styleNumber="13" fixLocation>(3,4)</point>
+  <label anchor="$pDemo+(0.2,0.2)" positionFromAnchor="upperright">
+    <m>(a, \sqrt{4a + 4})</m>
+  </label>
+  <angle name="thetaDemo" through="(5,0) (0,0) $pDemo">
+    <label><m>\theta</m></label>
+  </angle>
+  <lineSegment styleNumber="13" endpoints="(0,0) $pDemo" layer="2"/>
+  <lineSegment applyStyleToLabel endpoints="(0,0) $pDemo.x">
+    <label><m>s_1</m></label>
+  </lineSegment>
+  <lineSegment applyStyleToLabel endpoints="($pDemo.x,0) $pDemo" styleNumber="8">
+    <label><m>s_2</m></label>
+  </lineSegment>
+</graph>
+</sideBySide>
+
+</hint>
+
+<triggerSet triggerWhen="$slopeAns.creditAchieved = 1">
+  <updateValue target="ipLabel.hide" newValue="true" type="boolean"/>
+  <updateValue target="divStep5.hide" newValue="false" type="boolean"/>
+</triggerSet>
+
+</div>
+
+
+<!-- *********************************************************************
+              Step 5
+*********************************************************************
+ -->
+ 
+<div name="divStep5" hide>
+<p><alert>Step 5:</alert> Let <m>\alpha</m> be the angle formed by the tangent line (in black) and the <m>x</m>-axis. Find <m>\tan \alpha</m> as a function of <m>x</m>.</p>
+    <sideBySide margins="3%" widths="60% 40%">
+    <graph name="angleGraph" copySource="baseGraph" size="medium" xmin="-10">
+      $funcAndDeriv
+      $userdp1
+      $tangent
+      <label anchor="$userdp1 + (0.2,-0.1)" positionFromAnchor="lowerright"><m>P</m></label>
+      <line name="xAxis" fixLocation hide>y=0</line>
+      <intersection name="xInt" hide>$xAxis $tangent</intersection>
+      <angle name="alpha" through="(5,0) $xInt $userdp1" styleNumber="8" radius="1.5">
+        <label><m>\alpha</m></label>
+      </angle>
+      <lineSegment endpoints="($userdp1.x,0) $userdp1" styleNumber="6"/>
+    </graph>
+    <stack>
+    <p>Drag <m>P</m> to check your formula</p>
+    <p><alert>graphical slope:</alert> <m>m = $tangent.slope</m></p>
+    <p><alert>Your formula, evaluated at <m>x</m>:</alert>  
+    <function name="userSlopeFunc" hide>$userTanEq</function>
+    <m>f($userdp1.x) = $$userSlopeFunc($userdp1.x)</m></p>
+    </stack>
+    </sideBySide>
+    <p><m>f(x) = \tan(\alpha) = </m>
+      <answer name="tanAlphaAns">
+        <mathInput name="userTanEq"/>
+        <award>$fPrime.formula</award>
+      </answer> 
+    </p>
+
+
+<hint><title>Hint for Step 5</title>
+<p>Take another look at your answer to step <m>3</m>!</p>
+</hint>  
+</div>
+
+
+<!-- *********************************************************************
+              Step 6
+*********************************************************************
+ -->
+ 
+<div hide="$tanAlphaAns.creditAchieved != 1">
+<p><alert>Step 6:</alert> Use a <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-3-7/">double angle formula</ref> to find <m>\tan(2 \alpha)</m>.</p>
+    <p><m>\tan(2\alpha) = </m>
+      <answer name="tan2AlphaAns">
+        <mathInput name="userTan2Alpha"/>
+        <award>2sqrt(x+1)/x</award>
+      </answer>
+    </p>
+<hint><title>Hint for Step 6</title>
+<p>Grab some scratch paper and be persistent!</p>
+</hint>
+</div>
+
+
+
+<!-- *********************************************************************
+              Step 7
+*********************************************************************
+ -->
+ 
+<div hide="$tan2AlphaAns.creditAchieved != 1">
+  <p><alert>Step 7:</alert> Compare your results from step <m>6</m> with those from step <m>4</m>.</p>
+    <sideBySide>
+      <stack>
+        <p><alert>Your results:</alert></p>
+        <p><m>\tan(\theta) = m = $userSlope</m></p>
+        <p><m>\tan(2\alpha) = $userTan2Alpha</m></p>
+      </stack>
+    <graph name="angleGraph2" copySource="angleGraph">
+      $light
+      $theta
+    </graph>
+  
+    </sideBySide>
+    
+    <p>You have now shown that 
+    <m>\tan(2 \alpha) = \tan (</m><mathInput name="miUserTheta"/><m>)</m> 
+      <answer name="thetaAns">
+        <award><when>$miUserTheta = theta</when>
+        </award>
+      </answer></p>
+</div>
+
+
+
+<!-- *********************************************************************
+              Step 8
+*********************************************************************
+ -->
+ 
+<div hide="$thetaAns.creditAchieved != 1">
+  <p><alert>Step 8:</alert> Prove that the angle of incidence (and therefore the angle of reflection) is also <m>\alpha</m>.</p>
+    <p><answer name="alphaProofAns" handGraded expanded type="text" forceFullCheckworkButton/> <nbsp/><nbsp/><em>Submit your response to proceed to step 9</em></p>
+
+<hint><title>Hint for Step 8</title>
+<p>Fill in the empty rectangles with the correct labels in the graph below.</p>
+<graph copySource="baseGraph" ymin="-1" xmin="-6" ymax="5" xmax="$userdp1.x + 1" displayXAxisTickLabels="false" displayYAxisTickLabels="false" showNavigation="false" hideOffGraphIndicators>
+  $light
+  $tangent
+  <angle copySource="alpha" radius="0.8"><label></label></angle>
+  <angle copySource="theta" radius="0.8"><label></label></angle>
+  <angle through="(-5,0) (0,0) $userdp1" fixLocation styleNumber="12" radius="0.7" layer="3"/>
+  <angle through="$xInt $userdp1 (0,0)" fixLocation styleNumber="10" radius="0.8"/>
+  <rectangle center="(1.5,0.8)" width="1.6" height="0.4" styleNumber="7"  fixLocation/>
+  <label anchor="(-4,4)" styleNumber="14" layer="4"><m>\theta = 2\alpha</m></label>
+
+  <rectangle center="(-3.9,0.7)" width="1.6" height="0.4" styleNumber="8"  fixLocation/>
+  <label anchor="(-2,4)" styleNumber="14" layer="4"><m>\alpha</m></label>
+
+  <rectangle center="(-0.6,1)" width="1.6" height="0.4" styleNumber="12"  fixLocation/>
+  <label anchor="(-4,3)" styleNumber="14" layer="4"><m>\gamma = 180 - 2\alpha</m></label>
+
+  <rectangle center="(0.3,3.2)" width="1.6" height="0.4" styleNumber="10"  fixLocation/>
+  <label anchor="(-2,3)" styleNumber="14" layer="2"><m>180 - \alpha - \gamma</m></label>
+</graph>
+  
+
+</hint>
+</div>
+
+
+
+<!-- *********************************************************************
+              Step 9
+*********************************************************************
+ -->
+ 
+<div hide="$alphaProofAns.responseHasBeenSubmitted = false">
+<!--   <updateValue target="g1.hide" newValue="true" type="boolean" triggerWhen="$alphaProofAns.responseHasBeenSubmitted"/> -->
+  <p><alert>Step 9:</alert> Consider two lines in the diagram below: (1) Line <m>A</m>, which is coincident with the reflected light beam and (2) the horizontal line at the base of the mirror. These two lines are cut by the same tangent line, or <alert>transversal</alert>.</p>
+  
+<p>Recall the <ref uri="https://k12.libretexts.org/Bookshelves/Mathematics/Geometry/03%3A_Lines/3.04%3A_Corresponding_Angles">Converse of Corresponding Angles Postulate</ref> from elementary geometry. Using this fact in combination with the results from step <m>8</m>, what can you conclude about the two lines? (Enter your response below the diagram).</p>
+
+
+
+    
+    <p>In the diagram below, position line <m>A</m> by dragging the $userdp3.styleDescriptionWithNoun to the correct location to illustrate your conclusion.</p>
+<graph copySource="g1" ymin="-1" xmin="-6" ymax="5" xmax="8" displayXAxis="false" displayYAxis="false" fixAxes="false">
+    $light
+  <angle name="alpha2" copySource="alpha"/>
+  <angle name="alpha3" betweenLines="$tangent $beam2Par" styleNumber="12" radius="1.5"/>
+  <angle name="alphaMirror" through="$xInt $userdp1 (0,0)" styleNumber="8" radius="1.5">
+    <label><m>\alpha</m></label>
+  </angle>
+  <line name="beam2Par" through="$userdp1 $userdp2" styleNumber="6">
+    <label>Line <m>A</m></label>
+  </line>
+  <line name="xAxis2" copySource="xAxis" styleNumber="6" hide="false"/>  
+  <line name="correctBeam2" slope="0" through="$userdp1" hide/>
+  <point name="userdp3" copySource="userdp2" styleNumber="11" layer="4">
+    <constraints><attractTo threshold="0.08">$correctBeam2</attractTo></constraints>
+  </point>
+</graph>
+<em>You may have to zoom out slightly on the graph. Use the (-) symbol in the lower right corner.</em>
+
+<triggerSet triggerWhen="$beam2Par.slope = 0">
+  <updateValue target="beam2Par.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="userdp1.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="userdp2.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="userdp3.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="alpha3.styleNumber" newValue="8"/>
+</triggerSet>
+
+<p><answer name="parallelConclusionAns" handGraded expanded type="text" forceFullCheckworkButton/> <nbsp/><nbsp/><em>Submit your response to proceed to step 10</em></p>
+  </div>
+  
+
+<!-- *********************************************************************
+              Step 10
+*********************************************************************
+ -->
+ 
+<div hide="$parallelConclusionAns.responseHasBeenSubmitted = false">
+
+ <p><alert>Step 10:</alert> What is the slope of the <em>reflected</em> light beam?
+   <m>\text{Slope} = </m><answer name="reflectedSlopeAns">0</answer>
+ </p>
+</div>
+  
+  
+  
+<graph name="g1" copySource="baseGraph">
+  <group name="drawPoints">
+  <point name="v" fixLocation styleNumber="6">(-1,0)</point>
+  <point name="p1" fixLocation styleNumber="6">(0,2)</point>
+  <point name="p2" fixLocation styleNumber="6">(3,4)</point>
+  <point name="vF" fixLocation styleNumber="6">(-4,0)</point>
+  <point name="p1F" fixLocation styleNumber="6">(0,-2)</point>
+  <point name="p2F" fixLocation styleNumber="6">(3,-4)</point>
+  <point name="p3F" fixLocation styleNumber="6">(1,0)</point>
+  <point name="p4F" fixLocation styleNumber="6">(3,0)</point>
+  <point name="p5F" fixLocation styleNumber="6">(-3,4)</point>
+  <point name="p6F" fixLocation styleNumber="6">(-3,-4)</point>
+  <point name="p7F" fixLocation styleNumber="6">(0,4)</point>
+  <point name="p8F" fixLocation styleNumber="6">(0,-4)</point>
+  <point name="p9F" fixLocation styleNumber="6">(3,2)</point>
+  <point name="p10F" fixLocation styleNumber="6">(3,-2)</point>
+  <point name="p11F" fixLocation styleNumber="6">(4,0)</point>
+  <point name="p12F" fixLocation styleNumber="6">(-4,2)</point>
+  <point name="p13F" fixLocation styleNumber="6">(-4,4)</point>
+  <point name="p14F" fixLocation styleNumber="6">(-4,-2)</point>
+  <point name="p15F" fixLocation styleNumber="6">(-4,-4)</point>
+  <point name="p16F" fixLocation styleNumber="6">(4,2)</point>
+  <point name="p17F" fixLocation styleNumber="6">(4,-2)</point>
+  <point name="p18F" fixLocation styleNumber="6">(4,4)</point>
+  <point name="p19F" fixLocation styleNumber="6">(4,-4)</point>
+  <point name="p20F" fixLocation styleNumber="6">(-3,2)</point>
+  <point name="p21F" fixLocation styleNumber="6">(-3,-2)</point>
+  <point name="p22F" fixLocation styleNumber="6">(-3,0)</point>
+  <point name="p23F" fixLocation styleNumber="6">(0,0)</point>
+  </group>
+  <point name="cdp1" hide="$drawParabola.creditAchieved = 1" applyStyleToLabel>(-7,4)
+    <constraints>
+      <attractTo>$drawPoints</attractTo>
+    </constraints>
+    <label><m>A</m></label>
+  </point>
+  <point name="cdp2" hide="$drawParabola.creditAchieved = 1" applyStyleToLabel>(2,6)
+    <constraints>
+      <attractTo>$drawPoints</attractTo>
+    </constraints>
+    <label><m>B</m></label>
+  </point>
+  <point name="cdp3" hide="$drawParabola.creditAchieved = 1" applyStyleToLabel>(7,4)
+    <constraints>
+      <attractTo>$drawPoints</attractTo>
+    </constraints>
+    <label><m>C</m></label>
+  </point>
+  <function name="userFunc" through="$cdp1 $cdp2 $cdp3" domain="[$cdp1.x, infinity]" />
+  $f
+
+<group name="light" hide>
+  <point name="userdp0" styleNumber="9">(-2,6)
+    <constraints><constrainToGrid/></constraints>
+  </point>
+  <point name="userdp1" styleNumber="13">(1,4)
+    <constraints><attractTo>$f</attractTo></constraints>
+  </point>
+  <point name="userdp2" styleNumber="13">(4,7)
+  </point>
+  <circle name="userSource" center="$userdp0" radius="0.5" filled styleNumber="13"/>
+  <polyline name="userBeam" styleNumber="13" vertices="$userdp0 $userdp1 $userdp2"/>
+</group>
+  
+  <line name="tangent" hide through="$userdp1" slope="$$fPrime($userdp1.x)" styleNumber="5"/>
+  <label name="ipLabel" hide anchor="$userdp1 + (0.1,0.1)" positionFromAnchor="lowerright">
+        <m>(a, \sqrt{4a + 4})</m>
+  </label>
+  <angle name="theta" hide through="(5,0) (0,0) $userdp1">
+    <label><m>\theta</m></label>
+  </angle>
+</graph>
+
+
+<boolean name="pointsPlaced" hide><mathList>$cdp1 $cdp2 $cdp3</mathList> = <mathList>$v $p1 $p2</mathList></boolean>
+
+<triggerSet triggerWhen="$pointsPlaced = true">
+  <updateValue target="userFunc.hide" newValue="true" type="boolean" />
+  <updateValue target="f.hide" newValue="false" type="boolean" />
+  <updateValue target="drawPoints.hide" newValue="true" type="boolean" />
+  <updateValue target="cdp1.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="cdp2.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="cdp3.fixLocation" newValue="true" type="boolean"/>
+  <updateValue target="g1.xmin" newValue="-3"/>
+  <updateValue target="g1.ymin" newValue="-3"/>
+</triggerSet>
+
+
+
+
+</activity>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4" markerStyleWord="point"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<styleDefinition styleNumber="13" fillColor="gold" fillOpacity=".5" markerSize="5" markerStyle="circle" markerColor="gold" lineColor="gold" lineOpacity="0.9" lineWidth="4"/>
+
+<!--white for masking-->
+<styleDefinition styleNumber="14" fillColor="white" backgroundColor="white" fillOpacity="1" markerSize="4" markerStyle="circle" markerColor="#469152" lineColor="black" lineOpacity="0.7" lineWidth="2"/>
+</styleDefinitions>
+</setup>

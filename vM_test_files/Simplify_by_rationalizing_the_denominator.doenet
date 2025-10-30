@@ -1,0 +1,67 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: A multiple choice question involving simplification of a rational expression by rationalizing the denominator. This problem is randomized to create multiple variants.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="10"/>
+  <selectFromSequence name="b" from="3" to="12" exclude="$c 0"/>
+  <selectFromSequence name="c" from="-4" to="4" exclude="$a 0"/>
+
+  <math name="term1" simplify>($a$c - $b)</math>
+  <math name="term2" simplify>($c - $a)</math>
+  <math name="term3" simplify>($c^2 - $b)</math>
+
+  
+  <math name="sol_term1">($a$c - $b)</math>
+  <math name="sol_term2">($c - $a)</math>
+  <math name="sol_term3">($c^2 - $b)</math>
+  
+  <gcd name="d">$term1 $term2 $term3</gcd>
+  <math name="numFactor">$a + sqrt($b)</math>
+  <math name="denFactor">$c + sqrt($b)</math>
+  <math name="denFactorConjugate">$c - sqrt($b)</math>
+  <math name="fullExpr">$numFactor/$denFactor</math>
+  <math name="choiceA">$a - $c</math>
+  <math name="choiceB_correct">($term1/$d + ($term2 sqrt($b))/$d)/($term3/$d)</math>
+  <math name="choiceC">$d + $d sqrt($b)</math>
+  <math name="choiceD">-($a$c + sqrt($b))/($term3)</math>
+  
+  <math name="choiceE" simplify>($term1/$d + $term2 sqrt($b)/$d)/(($c^2 - $b^2)/$d)</math>  
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p> -->
+<!--testing-->
+<p>Simplify.</p>
+  
+  <me>$fullExpr =  </me>
+    <answer name="ans_BA2">
+      <choice><m>$choiceA{simplify}</m></choice>
+      <choice credit="1">$choiceB_correct{simplify}</choice>
+      <choice><m>$choiceC{simplify}</m></choice>
+      <choice><m>$choiceD{simplify}</m></choice>
+      <choice><m>$choiceE{simplify}</m></choice>
+    </answer>
+
+<solution>
+  <p>First, rationalize the denominator by multiplying both the numerator and the denominator by the conjugate of <m>$denFactor</m>:
+    <me>$fullExpr = $fullExpr \cdot \frac{\left($denFactorConjugate \right)}{\left($denFactorConjugate \right)}</me>
+  Next, FOIL out the numerator and denominator:
+    <me><math>($a$c - $a sqrt($b) + $c sqrt($b) - (sqrt($b))^2)/($c^2 - $c sqrt($b) + $c sqrt($b) - (sqrt($b))^2)</math></me>
+  Combine like terms:
+    <me><math name="final_unsimp">($sol_term1 + $sol_term2 sqrt($b))/$sol_term3</math></me>
+    Simplifying leads to:
+    <me><math>$final_unsimp{simplify}</math></me>
+  The greatest common divisor of the numerator and denominator is $d. Dividing all terms by the greatest common divisor and simplifying leads to:
+    <me>$choiceB_correct{simplify}.</me></p>   
+</solution>
+</problem>

@@ -1,0 +1,79 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify a rational expression involving variable exponents. Values for the variables are stated in the problem description.
+
+(BA-Basics #131 unsorted ESNSQMYZ)
+*************************************************************-->
+<problem>
+<setup>
+<selectFromSequence name="a" from="-4" to="-2"/>
+<select name="b">2 3</select>
+<selectFromSequence name="c" from="-6" to="-4"/>
+<math name="expr">(x^a / y^b)^c</math>
+<math name="dSol" simplify>$a $c</math>
+<math name="eSol" simplify>-$b $c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>dSol = $dSol</p>
+<p>eSol = $eSol</p> -->
+<!--testing-->  
+
+  
+<p>Write the expression $expr where <m>a = $a</m>, <m>b = $b</m>, and <m>c = $c</m>, in the form <m>x^d y^e</m>.  Your answers will be the exponents <m>d</m> and <m>e</m> that you find.</p>
+
+  <p><m>d = </m><mathInput name="userd"/></p>
+  <p><m>e = </m><mathInput name="usere"/></p>
+  <p>Your expression is <m>x^{$userd} y^{$usere}</m></p>
+      
+    <answer name="ans1">
+      <award name="correct">
+        <when>$usere = $eSol and $userd = $dSol</when>
+      </award>
+    </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$usere != $eSol and $ans1.justSubmitted">Your value for <m>e</m> is incorrect.</feedback>
+  <feedback condition="$userd != $dSol and $ans1.justSubmitted">Your value for <m>d</m> is incorrect.</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+    <p>Here is a similar worked example:</p>
+
+  </hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>d = $dSol</m></p>
+<p><m>e = $eSol</m></p>
+</solution>
+</problem>

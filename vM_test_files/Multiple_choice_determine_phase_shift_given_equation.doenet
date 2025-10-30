@@ -1,0 +1,131 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the equation of a cosine wave, determine the phase shift. Parameters are randomized, and the order of choices is shuffled. Optional graphing applet can be hidden by commenting out the <aside> portion of the document.
+
+(TR-Graphs #33 TR1232)
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <select name="b">1 2 3 4 7/8 5/8 3/8 3/4 5/6 2/3 1/3 1/2</select>
+  <select name="c">-1/2 -1/3 -2/3 -1/6 -5/6 -1/4 -3/4 -1/8 -3/8 -5/8 -7/8 7/8 5/8 3/8 1/8 1/4 5/6 1/6 2/3 1/3 1/2</select>
+  <math name="expr" simplify="numberspreserveorder">y = $a(cos($b x + $c pi))</math>
+  <math name="choice1" simplify>$b</math>
+  <math name="choice2" simplify>-$c pi</math>
+  <math name="choice3" simplify>($c/$b) pi</math>
+  <math name="choice4" simplify><math simplify>($c $b)</math> pi</math>
+  <math name="choice5" simplify>-($c/$b) pi</math>
+</setup>
+
+<p>Find the <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-2-5/">phase shift</ref> of the graph <me>$expr</me></p>
+
+<!--*********************************************
+           Graphing tool
+**********************************************--> 
+<div newNamespace>
+
+<aside><title>Graphing tool</title>
+<setup>
+  <function name="base" styleNumber="5">$userBaseFn</function> 
+  <function name="f1">$userA cos($userB x + $userC)</function> 
+  <function name="fExtrema" domain="[-20, 20]">$f1</function>
+  <number name="zeroFixed" fixed>0</number> 
+  <number name="nR">pi/2</number>
+  <number name="nL">0</number>
+</setup>
+
+<!--testing-->
+<!-- <p>f1 = $f1.formula</p>
+<p>base = $base.formula</p> -->
+<!--testing-->
+
+
+<p>Graph base function: </p>
+<p><m>y = </m><mathInput name="userBaseFn"/></p>
+
+<p>Graph given function: </p>
+<p><m>y = </m> <mathInput name="userA" prefill="a" minWidth="25"/><m>\cos\bigg(</m> <mathInput name="userB" prefill="b" minWidth="25"/> <m>x + </m> <mathInput name="userC" prefill="c"/> <m>\bigg)</m></p>
+
+<p><em>tip: You can use the $wavePointR.styleDescription points to measure horizontal distance to wave points. </em></p>
+<graph  xTickScaleFactor="pi" aspectRatio="3/2" size="full" xmin="-4pi" xmax="4pi">
+  $f1 $base $fExtrema.extrema
+
+  <point name="axisPt"  styleNumber="5" layer="2">($nL,$wavePointR.y)
+  </point>
+  <point name="wavePointR" styleNumber="5" layer="2">($nR, $$f1($nR))
+    <constraints>
+      <attractTo>$fExtrema.extrema</attractTo>
+    </constraints>
+  </point>
+  
+  <lineSegment name="hMeasure" endpoints="$axisPt $wavePointR" styleNumber="6" labelPosition="lowerright">
+    <label>$hMeasure.length</label>
+  </lineSegment>
+  
+  <line name="vertL" styleNumber="4">x = $axisPt.x</line>
+  <line name="vert2" styleNumber="4">x = $wavePointR.x</line>
+  <regionBetweenCurveXAxis function="$f1" styleNumber="1" boundaryValues="$axisPt.x $wavePointR.x"/>
+</graph>
+
+
+</aside>
+</div>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><answer name="ans1" shuffleOrder>
+  <choice>$choice1</choice>
+  <choice>$choice2</choice>
+  <choice>$choice3</choice>
+  <choice>$choice4</choice>
+  <choice credit="1">$choice5</choice>
+</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><m>\text{Phase shift} = $choice5</m></p> 
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

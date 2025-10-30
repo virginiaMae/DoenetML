@@ -1,0 +1,66 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Distribute, combine like terms, and simplify to solve for x. Step-by-step solution provided.
+*************************************************************-->
+
+<setup>
+  <selectFromSequence assignNames="a b d e" numToSelect="4" from="2" to="6"/>
+  <selectFromSequence name="x" from="-5" to="5"/>
+  <math name="fullExpr">$a($b x + 2) + $d x - $e</math>
+  <math name="solExpr" simplify>$a($b $x + 2) + $d $x - $e</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>x = $x</p>
+<p>solExpr = $solExpr</p> -->
+<!--testing-->
+
+
+
+<problem>
+  <p>Solve for <m>x</m>.</p>
+    <me>$fullExpr = $solExpr</me>
+    <p><m>x = </m> <answer name="ans1">$x
+    </answer>
+    </p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+<solution>
+<p>First, distribute the $a to each term in the binomial:
+  <me><math>$a $b x + 2 $a + $d x - $e = $solExpr</math>.</me></p>
+<p>Next, combine like terms, moving constant terms to the right-hand side:
+  <me><math>(<math simplify>$a $b</math> + $d) x = $solExpr - <math simplify>2 $a</math> + $e</math></me></p>
+<p>Simplify:
+  <me><math name="finalCoeff" simplify>$a $b + $d</math> x = <math name="finalRHS" simplify>$solExpr - 2 $a + $e</math></me></p>
+<p>Finally, divide by $finalCoeff to solve for <m>x</m>:
+  <md>
+    <mrow><math>($finalCoeff x) / $finalCoeff</math> \amp= <math>$finalRHS/$finalCoeff</math></mrow>
+    <mrow>x\amp= <math simplify>$finalRHS/$finalCoeff</math>.</mrow>
+  </md></p>
+</solution>
+</problem>

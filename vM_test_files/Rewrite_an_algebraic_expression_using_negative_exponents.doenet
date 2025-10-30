@@ -1,0 +1,82 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of negative exponents to rewrite a given algebraic expression.
+
+(BA-Basics #106 BA6103)
+
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="6" to="9"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <selectFromSequence name="c" from="4" to="6"/>
+  <selectFromSequence name="d" from="4" to="6"/>
+  <math name="expr" simplify="numberspreserveorder">($a / x^($b)) + ($c / x^($d))</math>
+  <math name="sol" simplify="numberspreserveorder">$a x^(-$b) + $c x^(-$d)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Write <m>\displaystyle{f(x)= $expr}</m>  in the form  <m>a x^b + c x^d</m>. Enter <m>a</m>, <m>b</m>, <m>c</m> and <m>d</m> below in the same order they appear in the function.</p>
+
+<p><m>a = </m> <mathInput name="userA"/></p>
+<p><m>b = </m> <mathInput name="userB"/></p>
+<p><m>c = </m> <mathInput name="userC"/></p>
+<p><m>d = </m> <mathInput name="userD"/></p>
+
+<p>
+    <answer name="ans1" matchPartial>
+      <award name="correct">
+        <when>$userA = $a and $userB = -$b and $userC = $c and $userD = -$d</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>\displaystyle{f(x) = $expr = $sol}</m></p>
+<p>Therefore, <m>a = $a</m>, <m>b = -$b</m>, <m>c = $c</m>, and <m>d = -$d</m>.</p>
+
+</solution>
+</problem>

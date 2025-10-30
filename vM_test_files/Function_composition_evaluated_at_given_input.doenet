@@ -1,0 +1,171 @@
+
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Evaluate the composition of two functions, f(g) and g(f) at a given input.
+The worked example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <select assignNames="(f)">
+    <option><function>x^2</function></option>
+    <option><function>$d x^2</function></option>
+    <option><function>$e x^2</function></option>
+    <option><function>x^2 /2</function></option>
+    <option><function>$e x^2 + x</function></option>
+    <option><function>$d x^2 - x</function></option>    
+  </select>
+  <select assignNames="(g)">
+    <option><function>x - $c</function></option>
+    <option><function>x + $c</function></option>
+    <option><function>$d + x</function></option>
+    <option><function>x - $d</function></option>
+    <option><function>x + ($e + 1)</function></option>
+    <option><function>x + ($d - 1)</function></option>
+  </select>
+
+  
+  <selectFromSequence assignNames="a" from="-3" to="3" exclude="0"/>
+  <selectFromSequence assignNames="c d e" numToSelect="3" from="-6" to="6" exclude="0"/>
+  <math name="sol1" simplify>$$f($$g($a))</math>
+  <math name="sol2" simplify>$$g($$f($a))</math>
+  
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>f = $f</p>
+<p>g = $g</p>
+<p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p> -->
+
+<!--testing-->
+
+
+<p>Given the functions,
+  <md>
+    <mrow>f(x) &= $f.formula{simplify="numbersPreserveOrder"}</mrow> 
+  <mrow>g(x) &= $g.formula{simplify="numbersPreserveOrder"}</mrow>
+  </md>
+  evaluate <m name="expr1">f(g($a))</m> and <m name="expr2">g(f($a))</m>.</p>
+
+<p><m>f(g($a)) = </m> <mathInput name="mi1"/></p>
+<p><m>g(f($a)) = </m> <mathInput name="mi2"/></p>
+  
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$mi1 = $sol1 and $mi2 = $sol2</when>
+    </award>
+  </answer>
+
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$mi1 != $sol1 and $ans1.justSubmitted">Your response for <m>f(g($a))</m> is incorrect.</feedback>
+  <feedback condition="$mi2 != $sol2 and $ans1.justSubmitted">Your response for <m>g(f($a))</m> is incorrect.</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review function notation, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-2-function-notation/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/function-notation-input-and-output.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<setup>
+  <function name="f">x^3</function>
+  <function name="g">3x - 1</function>
+  <math name="a">-1</math>
+  <math name="b">7</math>
+  <math name="sol1" simplify>$$f($$g($a))</math>
+  <math name="sol2" simplify>$$g($$f($a))</math>
+</setup>
+
+
+<p><em>Given the functions,</em>
+  <md>
+    <mrow>f(x) &= $f.formula{simplify="numbersPreserveOrder"}</mrow> 
+    <mrow>g(x) &= $g.formula{simplify="numbersPreserveOrder"}</mrow>
+  </md>
+  <em>evaluate <m name="expr1">f(g($a))</m> and <m name="expr2">g(f($a))</m>.</em></p>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>We are asked to evaluate the function compositions <m>f(g($a))</m> and <m>g(f($a))</m>. In each case, we first evaluate the inner function, then use the output of this first step as the input of the outer function.</p>
+  </li>
+  <li><p>To evaluate <m>f(g($a))</m>, first evaluate the inner function <m>g</m>
+    <me>g($a) = 3($a) - 1 = <math name="gOfa" simplify>3($a) - 1</math></me></p>
+    <p>Use the output of the previous step as the input to <m>f</m>
+    <me>f($gOfa) = ($gOfa) ^3 = <math name="fOfg" simplify>$gOfa ^3</math></me></p>
+    <p>Therefore, <m>f(g($a)) = $fOfg</m>.</p>
+  </li>
+  <li><p>To evaluate <m>g(f($a))</m>, first evaluate the inner function <m>f</m>
+    <me>f($a) = ($a)^3 = <math name="fOfa" simplify>$a^3</math></me></p>
+    <p>Use the output of the previous step as the input to <m>g</m>
+    <me>g($fOfa) = 3($fOfa) - 1  = <math name="gOff" simplify>3($fOfa) - 1</math></me></p>
+    <p>Therefore, <m>g(f($a)) = $gOff</m>.</p>
+  </li>
+</ul>
+</example>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>$expr1 = $sol1</m></p>
+<p><m>$expr2 = $sol2</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,272 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given two points of a geometric sequence, find the explicit formula. Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="r" from="2" to="3"/>
+  <selectFromSequence name="g_0" from="2" to="6"/>
+  <selectFromSequence name="k" from="2" to="3"/>
+  <selectFromSequence name="n_1" from="1" to="3"/>
+  <math name="g_1" simplify>$g_0 $r^$n_1</math>
+  <math name="n_k" simplify>$n_1 + $k</math>
+  <math name="n_m" simplify>$n_1 + $k + 1</math>
+  <math name="g_k" simplify>$g_0 $r^($n_k)</math>
+  <math name="g_m" simplify>$g_0 $r^($n_k+1)</math>
+  <math name="formula">$g_0 $r^n</math>
+  <!--maths for incorrect responses-->
+  <math name="noG_0ans">$r^n</math>
+  <boolean name="containsN"><matchesPattern pattern="()()^n" allowImplicitIdentities>$userInput</matchesPattern></boolean>
+
+  <number name="xmin1">-2</number>
+  <number name="xmax1">$n_m + 2</number>
+  <number name="ymin1">-0.1*$ymax1</number>
+  <number name="ymax1">$g_m + 5</number>
+
+</setup>
+
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>r = $r</p>
+<p>g_0 = $g_0</p>
+<p>k = $k</p>
+<p>n_1 = $n_1</p>
+<p>g_1 = $g_1</p>
+<p>n_k= $n_k</p>
+<p>n_m= $n_m</p>
+<p>g_k = $g_k</p>
+<p>g_m = $g_m</p>
+<p>formula = $formula</p>
+<p>containsN = $containsN</p>
+<p>noG_0Ans = $noG_0ans</p>
+<p>ans1.creditAchieved = $ans1.creditAchieved</p>
+<p>ans1.responseHasBeenSubmitted = $ans1.responseHasBeenSubmitted</p> -->
+  
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+
+<p>Find an explicit formula for the geometric sequence with <m>g_{$n_1} = $g_1</m> and <m>g_{$n_k} = $g_k</m>.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<setup>
+  <function name="graphFunc" variables="n" styleNumber="6">$graphExpr</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<stack>
+  <p>Plot known points of the sequence:</p>
+  <p>1. Term number <mathInput name="userIndex1" minWidth="30"/> of the sequence has value: <mathInput name="userValue1"/></p>
+  <p>2. Term number <mathInput name="userIndex2" minWidth="30"/> of the sequence has value: <mathInput name="userValue2"/></p>
+  <p>Plot general expression for <m>g_n</m></p>
+  <p><m>g_n = </m><mathInput name="graphExpr" bindValueTo="$userInput"/></p>
+  <p><em>Note, the above expression should contain the variable <m>n</m></em>.</p>
+<!--   <p>Check <m>g_{$n} = </m><mathInput name="graph_x_n" bindValueTo="$user_g_n"/></p> -->
+</stack>
+
+
+  
+<graph xmin="$xmin1{link='false'}" xmax="$xmax1{link='false'}" ymin="$ymin1{link='false'}" ymax="$ymax1{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>g_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>g_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>g_0</m></label>
+  </point>
+  $graphFunc
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="lowerright">
+    <label><m>g_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="$n_m + 2"/></sources>
+  </map>
+</graph>
+
+</sideBySide>
+</aside>
+
+<!--*********************************************
+            User solution input
+**********************************************-->    
+<p><m>g_n = </m>     
+    <answer name="ans1" >
+      <mathInput name="userInput"/> 
+      <award name="correct" credit="1">    
+        <when>$userInput=$formula</when>
+      </award>
+
+     <award name="notAnEquationInN" credit="0">  
+        <when>$containsN = false</when>
+      </award>
+
+      <award name="noG_0" symbolicEquality simplifyOnCompare credit="0">  
+        <when>
+      $userInput = $noG_0ans
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$notAnEquationInN"><p>It looks like this expression is missing an exponent <m>n</m>.</p></feedback>
+  <feedback condition="$noG_0"><p>It looks like this expression is missing a <m>g_0</m> term.</p></feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <div name="helpText">
+      The explicit formula for a geometric sequence has the form 
+    <me>g_n = g_0 \cdot r^n</me>
+    where <m>g_n</m> is the <m>n^{\text{th}}</m> term in the sequence, <m>g_0</m> is the <m>0^{\text{th}}</m> term in the sequence, and <m>r</m> is the common ratio.
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>Find an explicit formula for the <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-2-4/">geometric sequence</ref> with <m>g_{$n_1} = $g_1</m> and <m>g_{$n_k} = $g_k</m>.</em></p>
+
+<setup>
+  <math name="r">4</math>
+  <math name="g_0">3</math>
+  <math name="k">3</math>
+  <math name="n_1">2</math>
+  <math name="g_1" simplify>$g_0 $r^$n_1</math>
+  <math name="n_k" simplify>$n_1 + $k</math>
+  <math name="g_k" simplify>$g_0 $r^($n_k)</math>
+  <math name="formula">$g_0 $r^n</math>
+</setup>
+
+<setup>
+    <math name="gkOverg1" simplify>$g_k/$g_1</math>
+    <math name="stepBack" simplify>-$n_1</math>
+  </setup>
+
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+    <li>First, use the given information to solve for <m>r</m>. There are <m>$n_k - $n_1 = $k</m> steps between the <m>g_{$n_1}</m> term and the <m>g_{$n_k}</m> term. Each step correponds to multiplication by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>g_{$n_k} \amp= g_{$n_1} \cdot r^{$k} \amp\text{general formula, starting from n = $n_1}</mrow>
+        <mrow>$g_k \amp= $g_1 \cdot r^{$k} \amp\text{substitute given values}</mrow>
+        <mrow>\frac{$g_k}{$g_1} \amp= r^{$k} \amp\text{simplify}</mrow>
+            <mrow>\sqrt[$k]{$gkOverg1} \amp= \sqrt[$k]{r^3} \amp\text{solve for}\;r</mrow>
+ 
+        <mrow>$r \amp= r \amp\text{simplify}</mrow>
+      </md></li>
+    <li>Calculate <m>g_0</m>. There are <m>0 - $n_1 = $stepBack</m> steps between the <m>g_{$n_1}</m> term and the <m>g_0</m> term. Each step backward in the sequence corresponds to division by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>g_0 \amp= <math>g_($n_1)  r^$stepBack</math> \amp\text{general formula}</mrow>
+        <mrow>g_0 \amp= <math>g_($n_1)/r^($n_1)</math>\amp\text{simplify}</mrow>
+        <mrow>g_0 \amp= <math>$g_1/$r^($n_1)</math>\amp\text{substitute known values}</mrow>
+        <mrow>g_0 \amp= $g_0</mrow>
+      </md>
+    </li>
+    <li>Write the explicit formula, substituting the values we computed for <m>r</m> and <m>g_0</m>.
+      <me>g_n = $formula</me></li>
+  </ul>
+
+
+</example>
+  
+<p><em>How to check</em>: Use the explicit formula you derived to solve for one of the original given values. </p>
+
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <setup>
+    <math name="gkOverg1" simplify>$g_k/$g_1</math>
+    <math name="stepBack" simplify>-$n_1</math>
+  </setup>
+<ul>
+    <li>The explicit formula has the form <me>g_n = g_0 \cdot r^n</me></li>
+    <li>First, use the given information to solve for <m>r</m>. There are <m>$n_k - $n_1 = $k</m> steps between the <m>g_{$n_1}</m> term and the <m>g_{$n_k}</m> term. Each step correponds to multiplication by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>g_{$n_k} \amp= g_{$n_1} \cdot r^{$k} \amp\text{general formula, starting from n = $n_1}</mrow>
+        <mrow>$g_k \amp= $g_1 \cdot r^{$k} \amp\text{substitute given values}</mrow>
+        <mrow>\frac{$g_k}{$g_1} \amp= r^{$k} \amp\text{simplify}</mrow>
+        <conditionalContent>
+          <case condition="$k = 2">
+            <mrow>\sqrt{$gkOverg1} \amp= \sqrt{r^2} \amp\text{solve for}\;r</mrow>
+          </case>
+          <case condition="$k != 2">
+            <mrow>\sqrt[$k]{$gkOverg1} \amp= \sqrt[$k]{r^$k} \amp\text{solve for}\;r</mrow>
+          </case>
+        </conditionalContent>
+        <mrow>$r \amp= r \amp\text{simplify}</mrow>
+      </md></li>
+    <li>Calculate <m>g_0</m>. There are <m>0 - $n_1 = $stepBack</m> steps between the <m>g_{$n_1}</m> term and the <m>g_0</m> term. Each step backward in the sequence corresponds to division by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>g_0 \amp= <math>g_($n_1)  r^$stepBack</math> \amp\text{general formula}</mrow>
+        <mrow>g_0 \amp= <math>g_($n_1)/r^($n_1)</math>\amp\text{simplify}</mrow>
+        <mrow>g_0 \amp= <math>$g_1/$r^($n_1)</math>\amp\text{substitute known values}</mrow>
+        <mrow>g_0 \amp= $g_0</mrow>
+      </md>
+    </li>
+    <li>Write the explicit formula, substituting the values we computed for <m>r</m> and <m>g_0</m>.
+      <me>g_n = $formula</me></li>
+  </ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

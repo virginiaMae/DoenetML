@@ -1,0 +1,231 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a quadratic equation in vertex form, determine the roots of the parabola using the quadratic formula. Parameters are set to generate real roots. Responses are specified as decimal approximations.
+A graphing tool is provided for visualizing the geometry of the problem.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-6" to="6" exclude="1 0"/>
+  <selectFromSequence name="c" from="-6" to="6" exclude="1 0 $a"/>
+  <selectFromSequence name="p" from="1" to="10"/>
+  <number name="b">ceil(sqrt(abs(4 $a $c)) + $p)</number>
+  <math name="r" simplify="numberspreserveorder">(-$b + sqrt($b^2 - 4 $a $c))/(2 $a)</math>
+  <math name="s" simplify="numberspreserveorder">(-$b - sqrt($b^2 - 4 $a $c))/(2 $a)</math>
+  <math name="h" simplify>-$b/(2$a)</math>
+  <math name="k" simplify>$c - ($b^2/(4$a))</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a x^2 + $b x + $c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>s = $s</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>expr = $expr</p> -->
+<!--testing-->
+
+<p>Use the quadratic formula to solve for the roots of the parabola <m>y = $expr.</m></p>
+
+
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($k - 10, -10)</number>
+  <number name="xmin">min($r - 10, $s - 10, -10)</number>
+  <number name="ymax">max($k + 10, 10)</number>
+  <number name="xmax">max($r + 10, $s + 10, 10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The given equation is <m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Plot the roots: </p>
+    <p><m>x = </m><mathInput name="graphR" bindValueTo="$userR"/>, or </p>
+    <p><m>x = </m><mathInput name="graphS" bindValueTo="$userS"/></p>
+
+</div>
+
+<div>
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <point name="R" fixLocation styleNumber="2">($userR, 0)</point>
+  <point name="S" fixLocation styleNumber="2">($userS, 0)</point>
+</graph>
+</div>
+  
+</sideBySide>
+
+</aside>  
+
+
+<!--*********************************************
+            User Input
+**********************************************-->
+  
+<p><m>x = </m> <mathInput name="userR"/> or <m>x = </m> <mathInput name="userS"/>.</p>
+
+  <answer name="ans1">
+    <award name="allCorrect" unorderedCompare allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+      <when><math>$userR, $userS</math> = <math>$r, $s</math>
+      </when>
+    </award>
+
+    <award name="rOrSIncorrect" unorderedCompare credit="0" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+      <when><math>$userR, $userS</math> != <math>$r, $s</math>
+      </when>
+    </award>
+  </answer>
+
+ 
+<p><em>You can answer precisely, using square roots</em><footnote>To enter a square root on your keyboard, type "sqrt".</footnote> <em>, or you can enter a decimal approximation to the nearest <m>0.01</m>.</em></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$rOrSIncorrect">One or both of your root values is incorrect</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p>  
+<example newNamespace>
+<p>Use the quadratic formula to solve for the roots of the parabola <m>y = $expr.</m></p>
+
+<setup>
+  <number name="a">7</number>
+  <number name="c">3</number>
+  <number name="p">1</number>
+  <number name="conj">$b^2 - 4 $a $c</number>
+  <number name="b">ceil(sqrt(4 $a $c) + $p)</number>
+  <math name="h" simplify>-$b/(2$a)</math>
+  <math name="k" simplify>$c - ($b^2/(4$a))</math>
+  <math name="rEq1">(-$b + sqrt($b^2 - 4 $a $c))/(2 $a)</math>
+  <math name="rEq2" simplify="numberspreserveorder">(-$b + sqrt($conj))/(2 $a)</math>
+  <math name="r">$rEq2</math>
+  <math name="sEq1">(-$b - sqrt($b^2 - 4 $a $c))/(2 $a)</math>
+  <math name="sEq2" simplify="numberspreserveorder">(-$b - sqrt($conj))/(2 $a)</math>
+  <math name="s">$sEq2</math>  
+  <math name="expr" simplify="numbersPreserveOrder">$a x^2 + $b x + $c</math> 
+</setup>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Determine the coefficients <m>a</m>, <m>b</m>, and <m>c</m> from the given equation: <me>$expr</me>
+    <md>
+      <mrow>a &= $a</mrow>
+      <mrow>b &= $b</mrow>
+      <mrow>c &= $c</mrow>
+    </md></li>
+  <li><p>The quadratic formula is 
+    <me>x = \frac{-b \pm \sqrt{b^2 - 4 a c}}{2a}</me>
+    Substituting known values yields two separate equations.</p>
+  </li>
+  <li><p>Simplify the first equation:
+    <md>
+      <mrow>x &= $rEq1</mrow>
+      <mrow>x &= $rEq2</mrow>
+    </md>
+  </p>
+  </li>
+  <li><p>Simplify the second equation:
+    <md>
+      <mrow>x &= $sEq1</mrow>
+      <mrow>x &= $sEq2</mrow>
+    </md>
+  </p>
+  </li>
+  <li><p>Now we can choose to enter the values above as our answers, or use a calculator to get a decimal approximation. Let's get an approximation.</p>
+    <p>Therefore, our solution is: <m>x = <number name="numR" displayDecimals="2">$rEq2</number></m> or <m>x = <number name="numS" displayDecimals="2">$sEq2</number></m></p>
+  </li>
+</ul>
+
+<p><em><alert>How to check your answer</alert></em>: Graph the given quadratic equation, and also your two solutions for <m>x</m>, which are the roots. If your solution is correct, the points for the roots will appear at the intersections of the parabola with the <m>x</m>-axis. This procedure is illustrated below.</p>
+
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The given equation is <m>y = </m> <mathInput name="eq1" prefill="$expr"/></p>
+
+  <p>Plot the roots: </p>
+    <p><m>x = </m><mathInput name="graphR" prefill="$numR" displayDecimals="2"/>, or </p>
+    <p><m>x = </m><mathInput name="graphS" prefill="$numS" displayDecimals="2"/></p>
+</div>
+
+<div>
+<graph name="g1" ymin="-4" ymax="4" xmin="-6" xmax="2">
+  <function name="givenParabola">$eq1</function>
+  <point name="R" fixLocation styleNumber="2">($graphR, 0)</point>
+  <point name="S" fixLocation styleNumber="2">($graphS, 0)</point>
+</graph>
+</div>
+</sideBySide>
+</example>
+  
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>Approximate decimal response: <m>x = <number displayDecimals="2">$r</number></m> or <m>x = <number displayDecimals="2">$s</number></m>.</p>
+<p>Precise response: <m>x = $r</m> or <m>x = $s</m>.</p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

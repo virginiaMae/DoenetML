@@ -1,0 +1,135 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use properties of logarithms to solve for x in a logarithmic equation. In this equation, the opposite of b log_a(c) is set equal to log_a (x).
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence assignNames="a c" from="2" to="10" numToSelect="2"/>
+  <selectFromSequence name="b" from="-4" to="4" exclude="0 1"/>
+  <math name="expr" simplify="numberspreserveorder" format="latex">$b \log_{$a} ($c) = \log_$a x</math>
+  <math name="sol" simplify>$c^$b</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Given <me>$expr,</me> find <m>x</m>.</p> 
+
+<p><m>x = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns"/>
+    <award name="correct">
+      <when>$userAns = $sol</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+      <p>Try first simplifying the left-hand side of this equation using the <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-6-2-solving-a-linear-equation-in-one-variable/">Properties of Logarithms</ref>.</p>
+    </feedback>
+  
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p> 
+<example newNamespace>
+<setup>
+  <number name="a">4</number>
+  <number name="c">12</number>
+  <number name="b">-2</number>
+  <math name="expr" simplify="numberspreserveorder" format="latex">$b \log_{$a} ($c) = \log_$a x</math>
+  <math name="sol">$c^$b</math>
+</setup>
+
+  
+<p><em>Given <me>$expr,</me> find <m>x</m>.</em></p> 
+ 
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>First, we simplify the term on the left-hand side by applying the property of logarithms that
+    <me>\log_b x^n = n\log_b x</me>
+    This gives us,
+    <md>
+      <mrow>$b \log_{$a} ($c) \amp= \log_4 ($sol)</mrow>
+      <mrow>\amp= \log_4 \bigg($sol{simplify}\bigg)</mrow>
+    </md></li>
+  <li>We can now compare our simplified expression to the right-hand side and equate corresponding terms to determine <m>x</m>,
+    <md>
+      <mrow>\log_4 \bigg($sol{simplify}\bigg) \amp= \log_4 x</mrow>
+      <mrow>$sol{simplify} \amp= x</mrow>
+    </md></li>
+</ul>
+</example>
+
+<p>Video Textbook Link: <ref uri="https://open.lib.umn.edu/algebra/chapter/6-1-the-logarithm-function/">The Logarithm Function</ref></p>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x = $sol{simplify}</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

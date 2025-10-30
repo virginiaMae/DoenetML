@@ -1,0 +1,163 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a quadratic equation in factored form, determine the roots of the parabola.
+A graphing tool is provided for visualizing the geometry of the problem.
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="1 0"/>
+  <selectFromSequence name="r" from="-5" to="5" step="2" exclude="0"/>
+  <selectFromSequence name="s" from="-5" to="5" step="2" exclude="0 $r"/>
+  <math name="b" simplify>$a(-$s + -$r)</math>
+  <math name="c" simplify>$r$s$a</math>
+  <math name="h" simplify>-$b/(2$a)</math>
+  <math name="k" simplify>$c - ($b^2/(4$a))</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a(x - $r)(x - $s)</math>
+  <math name="generalForm" simplify="numbersPreserveOrder">$a x^2 + $b x + $c</math>
+  <math name="factoredGeneralForm" simplify="numbersPreserveOrder">$a(x^2 + ($b/$a)x + ($c/$a))</math>
+  <math name="finalRootForm" simplify="numbersPreserveOrder">$a(x - $s)(x - $r)</math>
+  <math name="userEq" simplify="numbersPreserveOrder">$userA(x - $userR)(x - $userS)</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>s = $s</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>expr = $expr</p>
+<p>generalForm = $generalForm</p>
+<p>factoredGeneralForm = $factoredGeneralForm</p> -->
+<!--testing-->
+
+<p>Find the roots of the parabola <m>y = $expr.</m></p>
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($k - 10, -10)</number>
+  <number name="xmin">min($r - 10, $s - 10, -10)</number>
+  <number name="ymax">max($k + 10, 10)</number>
+  <number name="xmax">max($r + 10, $s + 10, 10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The given equation is <m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Plot the roots: </p>
+    <p><m>x = </m><mathInput name="graphR" bindValueTo="$userR"/>, or </p>
+    <p><m>x = </m><mathInput name="graphS" bindValueTo="$userS"/></p>
+
+</div>
+
+<div>
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <function name="overlayParabola" styleNumber="2">$eq2</function>
+  <point name="R" fixLocation styleNumber="2">($userR, 0)</point>
+  <point name="S" fixLocation styleNumber="2">($userS, 0)</point>
+</graph>
+
+<me>\text{Factored Form:} y = a(x-r)(x-s)</me>
+</div>
+  
+</sideBySide>
+
+
+</aside>  
+
+
+<!--*********************************************
+            User Input
+**********************************************-->
+  
+<p><m>x = </m> <mathInput name="userR"/> or <m>x = </m> <mathInput name="userS"/>.</p>
+
+  <answer name="ans1">
+    <award name="allCorrect" unorderedCompare>
+      <when><math>$userR, $userS</math> = <math>$r, $s</math>
+      </when>
+    </award>
+
+    <award name="rOrSIncorrect" unorderedCompare credit="0">
+      <when><math>$userR, $userS</math> != <math>$r, $s</math>
+      </when>
+    </award>
+  </answer>
+
+ 
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$rOrSIncorrect">One or both of your root values is incorrect</feedback>
+  
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>The roots may be read directly from the Factored Form, they are <m>x = $r</m> or <m>x = $s</m>.</p>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

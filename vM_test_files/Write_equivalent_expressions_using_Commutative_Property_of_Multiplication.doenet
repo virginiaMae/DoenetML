@@ -1,0 +1,102 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the commutative property of multiplication to generate two distinct equivalent expressions. 
+*************************************************************-->
+
+<problem>
+<setup>
+<select assignNames="x y z" numToSelect="3">a b c d r s t v m n p q x y</select>
+<selectFromSequence name="b" from="2" to="10" exclude="0"/>
+<math name="productExpr">$x $y($b + $z)</math>
+<math name="sol1">$x($b + $z)$y</math>
+<math name="sol2">$y $x($b + $z)</math>
+<math name="sol3">$y($b + $z)$x</math>
+<math name="sol4">($b + $z)$x $y</math>
+<math name="sol5">($b + $z)$y $x</math>
+<boolean name="firstCorrect" symbolicEquality>
+  $user1 = $sol1 or $user1 = $sol2 or
+  $user1 = $sol3 or $user1 = $sol4 or
+  $user1 = $sol5
+</boolean>
+<boolean name="secondCorrect" symbolicEquality>
+  $user2 = $sol1 or $user2 = $sol2 or
+  $user2 = $sol3 or $user2 = $sol4 or
+  $user2 = $sol5
+</boolean>
+<boolean name="firstCorrectAndUnique">$firstCorrect and $unique</boolean>
+<boolean name="secondCorrectAndUnique">$secondCorrect and $unique</boolean>
+<boolean name="unique" symbolicEquality>$user1 != $user2</boolean>
+</setup>
+
+<!--testing-->
+<!-- <p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p>
+<p>sol3 = $sol3</p>
+<p>sol4 = $sol4</p>
+<p>sol5 = $sol5</p>
+<p>firstCorrect = $firstCorrect</p>
+<p>secondCorrect = $secondCorrect</p>
+<p>unique = $sol1</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Applying <em>only</em> the <term>Commutative Property of Multiplication</term>, write two distinct expressions that are equivalent to the expression shown below.</p>
+<me>$productExpr</me>
+
+  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<p>First expression:</p>
+<p><m>$productExpr = </m><mathInput name="user1"/></p>
+
+<p>Second expression:</p>
+<p><m>$productExpr = </m><mathInput name="user2"/></p>
+
+<answer name="ans1">
+  <award>
+    <when>$firstCorrectAndUnique and $secondCorrectAndUnique</when>
+  </award>
+</answer>
+
+
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$unique = false and $ans1.justSubmitted">For credit, you must enter two unique solutions</feedback>
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>There are a total of 5 options equivalent to the original expression:</p>
+  <ul>
+    <li>$sol1</li>
+    <li>$sol2</li>
+    <li>$sol3</li>
+    <li>$sol4</li>
+    <li>$sol5</li>
+  </ul>
+</solution>
+</problem>

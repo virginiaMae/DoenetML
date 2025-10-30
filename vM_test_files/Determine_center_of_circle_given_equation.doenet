@@ -1,0 +1,146 @@
+<setup>
+  <text name="source">Question 4:TR-Conics/TR31/TR3105/11182020162456_TR-Conics_NH8RC0V6</text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+QUESTION: The center of the circle given by the equation (x-2)^2 + y^2= 9 is
+
+A) (-2,3)
+B) (-2,0)
+C) (2,0)
+D) (2,3)  ;; 
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Real]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {""};;
+
+answer = {"a","b","c","d"}
+(*Enter correct answer in first position (answer a). *);;
+SOLUTION = {3}
+tolerance = 0
+-->
+
+<problem>
+<setup>
+  <selectFromSequence name="h" from="-8" to="8" exclude="$r 0 -2"/>
+  <selectFromSequence name="r" from="2" to="6"/>
+  <math name="expr" simplify="numberspreserveorder">(x - $h)^2 + y^2 = $r^2</math>
+  <point name="sol">($h, 0)</point>
+  <point name="choice2">(-$h, -$r)</point>
+  <point name="choice3">($r, 0)</point>
+  <point name="choice4">(-$h, $r)</point>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p> -->
+<!--testing-->
+
+<p>The center of the circle given by the equation <m>$expr</m> is</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<sideBySide margins="5%">
+<div>
+<slider name="hG" from="-10" to="10" initialValue="-2">
+  <label><m>h</m></label>
+</slider>
+<slider name="kG" from="-10" to="10" initialValue="-2">
+  <label><m>k</m></label>
+</slider>
+<slider name="rG" from="0" to="10" initialValue="1">
+  <label><m>r</m></label>
+</slider>
+</div>
+
+<stack>  
+<graph name="g1">
+  <circle name="circleGraph" radius="$rG" center="($hG, $kG)" />
+  <point name="userCenter" coords="$circleGraph.center" styleNumber="5"/>
+  <lineSegment endpoints="$userCenter ($circleGraph.center.x + $rG, $circleGraph.center.y)" />
+</graph>
+  
+<math simplify="numberspreserveorder">(x - $hG)^2 + (y - $kG)^2 = $rG^2</math>
+</stack>
+  
+</sideBySide>
+
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+  
+<answer name="ans1" shuffleOrder>
+  <choice credit="1">$sol</choice>
+  <choice>$choice2</choice>
+  <choice>$choice3</choice>
+  <choice>$choice4</choice>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>The center is <m>$sol</m>.</p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

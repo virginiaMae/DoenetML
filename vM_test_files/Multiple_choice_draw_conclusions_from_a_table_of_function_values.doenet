@@ -1,0 +1,185 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Multiple choice format; given a table of function values, determine which set of coordinate pairs makes the relationship not a function. Parameters are randomized, and order of choices is shuffled. 
+
+
+(BA-Basics #122 BA9008)
+
+*************************************************************-->
+<problem>
+<setup>
+<selectFromSequence name="x1" from="-6" to="-1"/>
+<selectFromSequence name="d" from="2" to="4"/>
+<math name="y1" simplify>$x1^2</math>
+<math name="x2" simplify>$x1 + $d</math>
+<math name="y2" simplify>$x2^2</math>
+<math name="x3" simplify>$x2 + 1</math>
+<math name="y3" simplify>$x3^2</math>
+<math name="x4" simplify>$x3 + 2</math>
+<math name="y4" simplify>$x4^2</math> 
+<point name="choice1"><math simplify>($x3, -($x3^2))</math></point>
+<point name="choice2"><math simplify>($x3 + 1, ($x3 + 1)^2)</math></point>
+<point name="choice3"><math simplify>($x4 + 1, -sqrt($x4 + 1))</math></point>
+<point name="choice4"><math simplify>($x1 + 1, -($x1 + 1)^2)</math></point>
+<point name="choice5"><math simplify>($x1 - 1, -$x1 - 1)</math></point>
+</setup>
+
+<!--*********************************************
+            Begin testing
+**********************************************--> 
+<!-- <p>d = $d</p>
+<p>x1 = $x1</p>
+<p>y1 = $y1</p>
+<p>x2 = $x2</p>
+<p>y2 = $y2</p>
+<p>x3 = $x3</p>
+<p>y3 = $y3</p>
+<p>x4 = $x4</p>
+<p>y4 = $y4</p>
+<p>choice1 = $choice1</p>
+<p>choice2 = $choice2</p>
+<p>choice3 = $choice3</p>
+<p>choice4 = $choice4</p>
+<p>choice5 = $choice5</p> -->
+<!--*********************************************
+            End testing
+**********************************************-->
+  
+<p>Some of the values of the <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-1/">function</ref> <m>f(x)</m> are given in the table.</p>
+
+<tabular top="medium" bottom="medium" left="medium" right="medium" width="400">
+<row header>
+  <cell colSpan="5"><m>f(x)</m></cell>
+</row>
+<row halign="center">
+  <cell><m>x</m></cell>
+  <cell><m>$x1</m></cell>
+  <cell><m>$x2</m></cell>
+  <cell><m>$x3</m></cell>
+  <cell><m>$x4</m></cell>
+</row>
+<row halign="center">
+  <cell><m>y</m></cell>
+  <cell><m>$y1</m></cell>
+  <cell><m>$y2</m></cell>
+  <cell><m>$y3</m></cell>
+  <cell><m>$y4</m></cell>
+</row>
+</tabular>
+
+<p>Which additional input/output pair would cause <m>f(x)</m> to not be a function ?</p>
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($y1, $y2, $y3, $y4, $choice1.y, $choice2.y, $choice3.y, $choice4.y, $choice5.y) - 2</number>
+  <number name="ymax">max($y1, $y2, $y3, $y4, $choice1.y, $choice2.y, $choice3.y, $choice4.y) + 2</number>
+  <number name="xmin">$choice5.x - 4</number>
+  <number name="xmax">$x4 + 4</number>  
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+
+<sideBySide margins="3%">
+<stack>
+<p>Enter given points from table:</p>
+<p><m>P_1 = \bigg( </m> <mathInput name="userX1" prefill="x"/> , <mathInput name="userY1" prefill="y"/> <m>\bigg)</m></p>
+<p><m>P_2 = \bigg( </m> <mathInput name="userX2"/> , <mathInput name="userY2"/> <m>\bigg)</m></p>
+<p><m>P_3 = \bigg( </m> <mathInput name="userX3"/> , <mathInput name="userY3"/> <m>\bigg)</m></p>
+<p><m>P_4 = \bigg( </m> <mathInput name="userX4"/> , <mathInput name="userY4"/> <m>\bigg)</m></p>
+<p>Enter a test point:</p>
+<p><m>P = \bigg( </m> <mathInput name="userXt"/> , <mathInput name="userYt"/> <m>\bigg)</m></p>
+</stack>
+
+<graph name="g1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" size="full">
+  <point name="userp1" fixed coords="($userX1, $userY1)" styleNumber="8" layer="2" />
+  <point name="userp2" fixed coords="($userX2, $userY2)" styleNumber="8" layer="2"/>
+  <point name="userp3" fixed coords="($userX3, $userY3)" styleNumber="8" layer="2"/>
+  <point name="userp4" fixed coords="($userX4, $userY4)" styleNumber="8" layer="2"/>
+  <point name="userpt" fixed coords="($userXt, $userYt)" styleNumber="7" layer="2"/>
+  <line name="vert" styleNumber="6" through="$userpt ($userpt.x, $userpt.y + 1)"/> 
+  <function name="f" hide="$userX1 = x or $userY1 = y" styleNumber="8" through="$userp1 $userp2 $userp3 $userp4 $hiddenPt1 $hiddenPt2"/>
+
+  <conditionalContent condition="$userYt != $$f($userXt)">
+    <endpoint open switchable="false" styleNumber="7">($userXt, $$f($userXt))</endpoint>
+  </conditionalContent>
+  <conditionalContent condition="$userp1 != (0,0) and $userp2 != (0,0) and $userp3 != (0,0) and $userp4 != (0,0)">
+    <point name="hiddenPt1" hide>(0,0)</point>
+  </conditionalContent>
+  <conditionalContent condition="$userp1 != (6,36) and $userp2 != (6,36) and $userp3 != (6,36) and $userp4 != (6,36)">
+    <point name="hiddenPt2" hide>(6,36)</point>
+  </conditionalContent>
+<legend position="lowerleft">
+  <label forObject="$userp1">Given point</label>
+  <label forObject="$userpt">Test point</label>
+</legend>
+</graph>
+</sideBySide>
+  
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1" shuffleOrder>
+  <choice credit>$choice1</choice>
+  <choice credit>$choice2</choice>
+  <choice credit>$choice3</choice>
+  <choice credit>$choice4</choice>
+  <choice credit>$choice5</choice>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>The point $choice1 cannot be on the function. There is already a function output value (a <m>y</m>-value) in the table corresponding to the function input value <m>x = $choice1.x</m>. This is given in the table as <m>($x3, $y3)</m>.</p>
+<p>Recall that, to be called a <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-1/">function</ref>, a relationship can only have one output, or <m>y</m>-value, corresponding to each input, or <m>x</m>-value (the vertical line test).</p>
+  
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

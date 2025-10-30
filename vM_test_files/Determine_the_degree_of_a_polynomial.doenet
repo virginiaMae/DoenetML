@@ -1,0 +1,106 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the degree of a given polynomial
+
+(BA-Basics #104 BA6101)
+
+
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <select name="a">6 8 14 18</select>
+  <select name="d">11 13 17 19</select>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <selectFromSequence name="c" from="2" to="5"/>
+  <math name="expr">$a x - $b x^($c) + $d</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>interval = $interval</p> -->
+<!--testing-->
+
+ 
+<p>What is the degree of the polynomial
+  <me>$expr</me>
+</p>
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph polynomial: <m>\;y = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup></div>
+  
+<graph>
+  $miFunction
+</graph>
+</sideBySide>
+</aside>  
+
+<answer name="ans1">$c</answer>
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review the definition for the domain of a function, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-3-the-domain-and-range-of-a-function/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/Domain-Range.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>\text{Degree = $c}</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

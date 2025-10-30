@@ -1,0 +1,81 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of an odd function to evaluate an expression given information about the function value at a single input.
+
+*************************************************************-->
+
+<problem>
+<setup>
+<selectFromSequence name="x" from="1" to="8"/>
+<selectFromSequence name="y" from="-10" to="10" exclude="0"/>
+<math name="sol" simplify>0</math>
+<math name="expr1">g($x) = $y</math>
+<math name="expr2">g($x) + g(-$x)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>x = $x</p>
+<p>y = $y</p>
+<p>sol = $sol</p>
+<p>expr1 = $expr1</p>
+<p>expr2 = $expr2</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+
+<p>The function <m>g(x)</m> has odd symmetry. One of the values is $expr1. </p>
+
+<p>What is $expr2 ?</p> 
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<p><m>$expr2 = </m> 
+  <answer name="ans1">$sol</answer>
+</p>
+  
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hints
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>Recall the definition for an <term>odd function</term> as a function that meets the following criteria:</p>
+  <me>f(x) = -f(-x)\;\;\;\text{Definition of an odd function}</me>
+
+<p>Therefore, if <m>$expr1</m>, then <m>f(-x) = -$y</m> and <m>$expr2 = $y + (-$y) = $sol</m></p>
+</solution>
+</problem>

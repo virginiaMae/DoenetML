@@ -1,0 +1,110 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a recursivle formula for a sequence and a specified initial term, determine the kth term of the sequence. This problem has two versions:
+Version 1: a simpler version where the sequence always has the form 2 a_(n-1) - 1. The value of the initial term and the required term vary
+Version 2: the sequence formula varies, negative values allowed
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+<problem><title/>
+<setup>
+  <selectFromSequence name="m" from="-5" to="5" exclude="-1 0 1"/>
+  <selectFromSequence name="b" from="-5" to="5" exclude="0"/> 
+  <selectFromSequence name="a1" from="-5" to="5" exclude="0"/> 
+  <math name="expr">$m a_(n-1) + $b</math>
+  <function name="fSeq">$m x + $b</function>
+  <number name="a2">$$fSeq($a1)</number>
+  <number name="a3">$$fSeq($a2)</number>
+  <number name="a4">$$fSeq($a3)</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>m = $m</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>a1 = $a1</p>
+<p>a2 = $a2</p>
+<p>a3 = $a3</p>
+<p>a4 = $a4</p> -->
+<!--testing-->
+  
+<p>If <m>a_1 = $a1</m> and <m>a_n = $expr</m>, find <m>a_4</m>.</p>
+  <p><m>a_4 = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userInput"/> 
+      <award name="correct" credit="1">    
+        <when>
+      $userInput = $a4
+        </when>
+      </award>
+    </answer>
+  </p>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+  <li>We have <m>a_1 = $a1</m> and are given the recursive formula, <m>a_n = $expr</m>. To calculate <m>a_4</m> we must compute forward sequentially from <m>a_2</m>:
+    <md>
+      <mrow>a_1 &= $a1</mrow>
+      <mrow>a_2 &= <math format="latex">$m \cdot $a1 + $b</math> = $a2</mrow>
+      <mrow>a_3 &= <math format="latex">$m \cdot $a2 + $b</math> = $a3</mrow>
+      <mrow>a_4 &= <math format="latex">$m \cdot $a3 + $b</math> = $a4</mrow>
+    </md>
+  </li>
+  <li><p><m>a_4 = $a4</m></p></li>
+</ul>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

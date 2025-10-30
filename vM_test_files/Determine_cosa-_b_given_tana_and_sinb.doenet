@@ -1,0 +1,277 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine cos(A - B) given tan(A) and sin(B). Graphing tool provided for visualization of the geometry of the problem. Answers are required to be exact, but full simplification is not enforced.
+
+*************************************************************-->
+
+<problem>
+
+<setup>
+<selectFromSequence assignNames="a b c d" from="-5" to="5" numToSelect="4" exclude="0"/>
+<math name="p" simplify>sqrt($a^2 + $b^2)</math>
+<math name="q" simplify>sqrt($c^2 + $d^2)</math>
+<math name="sinOfA" simplify>$a/$p</math>
+<math name="cosOfA" simplify>$b/$p</math>
+<math name="tanOfA" simplify>$a/$b</math>
+<math name="sinOfB" simplify>$c/$q</math>
+<math name="cosOfB" simplify>$d/$q</math>
+<math name="r" simplify>$a^2 + $b^2</math>
+<math name="s" simplify>$c^2 + $d^2</math>
+<math name="solRaw">($cosOfA)($cosOfB) + ($sinOfA)($sinOfB)</math>
+<math name="sol" simplify>($b $d + $a $c)/sqrt($r $s)</math>
+
+<interval name="int1">
+  <conditionalContent>
+    <case condition="$a > 0 and $b > 0">0 < A < pi/2</case>
+    <case condition="$a > 0 and $b < 0">pi/2 < A < pi</case>
+    <case condition="$a < 0 and $b < 0">pi < A < 3pi/2</case>
+    <case condition="$a < 0 and $b > 0">3pi/2 < A < 2pi</case>
+  </conditionalContent>
+</interval>
+
+<interval name="int2">
+  <conditionalContent>
+    <case condition="$c > 0 and $d > 0">0 < B < pi/2</case>
+    <case condition="$c > 0 and $d < 0">pi/2 < B < pi</case>
+    <case condition="$c < 0 and $d < 0">pi < B < 3pi/2</case>
+    <case condition="$c < 0 and $d > 0">3pi/2 < B < 2pi</case>
+  </conditionalContent>
+</interval>
+  
+<math name="sqrFact4" simplify>$r $s/4</math>
+<math name="sqrFact9" simplify>$r $s/9</math>
+<math name="sqrFact16" simplify>$r $s/16</math>
+<math name="sqrFact25" simplify>$r $s/25</math>
+<math name="sqrFact36" simplify>$r $s/36</math>
+<math name="sqrFact49" simplify>$r $s/49</math>
+<math name="sqrFact64" simplify>$r $s/64</math>
+<math name="simplSol" simplify>
+  <conditionalContent>
+    <case condition="mod($r $s, 4) = 0">($b $d + $a $c)/ (2 sqrt($sqrFact4))</case>
+    <case condition="mod($r $s, 9) = 0">($b $d + $a $c)/ (3 sqrt($sqrFact9))</case>
+    <case condition="mod($r $s, 16) = 0">($b $d + $a $c)/ (4 sqrt($sqrFact16))</case>
+    <case condition="mod($r $s, 25) = 0">($b $d + $a $c)/ (5 sqrt($sqrFact25))</case>
+    <case condition="mod($r $s, 36) = 0">($b $d + $a $c)/ (6 sqrt($sqrFact36))</case>
+    <case condition="mod($r $s, 49) = 0">($b $d + $a $c)/ (7 sqrt($sqrFact49))</case>
+    <case condition="mod($r $s, 64) = 0">($b $d + $a $c)/ (8 sqrt($sqrFact64))</case>
+    <else>($b $d + $a $c)/sqrt($r $s)</else>
+  </conditionalContent>
+</math>
+
+<boolean name="check1">$sol = $simplSol</boolean>
+<boolean name="check2">$solRaw = $simplSol</boolean>
+<boolean name="isReduced" symbolicEquality>$sol != $simplSol</boolean>
+
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>p = $p</p>
+<p>q = $q</p>
+<p>r = $r</p>
+<p>s = $s</p>
+<p>sinOfA = $sinOfA</p>
+<p>cosOfA = $cosOfA</p>
+<p>tanOfA = $tanOfA</p>
+<p>sinOfB = $sinOfB</p>
+<p>cosOfB = $cosOfB</p>
+<p>solRaw = $solRaw</p>
+<p>sol = $sol</p>
+<p>simplSol = $simplSol</p>
+<p>check1 = $check1</p>
+<p>check2 = $check2</p>
+<p>isReduced = $isReduced</p>
+<p>int1 = $int1</p>
+<p>int2 = $int2</p>
+<!--testing-->
+
+
+<p>If <m>\tan(A) = $tanOfA</m>, where $int1, and <m>\sin(B) = $sinOfB</m>, where $int2, find <m>\cos(A - B)</m>.</p>
+
+
+<p><m>\cos(A - B) = </m>
+  <answer name="ans1">
+    <mathInput name="userInput"/>
+    <award name="correct1">
+      <when>$userInput = $sol</when>
+    </award>
+  </answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+  
+
+  
+
+  
+
+
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+
+<div newNamespace>
+<p><alert>Triangle 1</alert>: Angle <m>A</m>. Adjust the triangle below to match the given problem.</p>
+
+<setup>
+<number name="zeroFixed" fixed>0</number>
+<boolean name="signMatchQ1">$(../a) > 0 and $(../b) > 0 and $userSinA > 0 and $userCosA > 0</boolean>
+<boolean name="signMatchQ2">$(../a) > 0 and $(../b) < 0 and $userSinA > 0 and $userCosA < 0</boolean>
+<boolean name="signMatchQ3">$(../a) < 0 and $(../b) < 0 and $userSinA < 0 and $userCosA < 0</boolean>
+<boolean name="signMatchQ4">$(../a) < 0 and $(../b) > 0 and $userSinA < 0 and $userCosA > 0</boolean>
+<boolean name="signMatch">$signMatchQ1 or $signMatchQ2 or $signMatchQ3 or $signMatchQ4</boolean>
+</setup>
+  
+<sideBySide widths="30% 70%">
+<div>
+<p><m>s_1 = </m><mathInput name="A" prefill="5"/></p>
+<p><m>s_2 = </m><mathInput name="B" prefill="5"/></p>
+<p><m>s_3 = </m><mathInput name="C" prefill="5sqrt(2)"/> (hypotenuse)</p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+
+</div>
+
+<div>
+  <p>Check <m>\sin(A)</m> and <m>\cos(A)</m>:</p>
+  <p>
+  <m>\sin A = </m><mathInput name="userSinA"/></p>
+  <m>\cos A = </m><mathInput name="userCosA"/>
+  <answer name="checkA" weight="0">
+    <award>
+      <when>$userSinA / $userCosA = $(../tanOfA) and $signMatch</when>
+    </award>
+    <award name="signError" credit="0">
+      <when>$userSinA / $userCosA = $(../tanOfA) and $signMatch = false</when>
+    </award>
+  </answer>
+  <feedback condition="$signError">It looks like you made a sign error. Which quadrant is this triangle located in? What are the signs of its <m>x</m> and <m>y</m>-coordinates?</feedback>
+
+  <graph>
+    <point name="p1" styleNumber="2" coords="($zeroFixed,$zeroFixed)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroFixed)"/>
+    <point name="p3" coords="($A, $B)" layer="2"/>
+
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" styleNumber="2" applyStyleToLabel>
+      <label><m>s_1 = $A{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" styleNumber="3" labelPosition="upperright" applyStyleToLabel>
+      <label><m>s_2 = $B{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1" styleNumber="4" labelPosition="upperleft" applyStyleToLabel>
+      <label><m>s_3 = $C{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="thetaShow" styleNumber="2" through="$p2 $p1 $p3" radius="0.2 $line1.length">
+      <label><m>A</m></label>
+    </angle>
+    <angle name="theta" through="(5,0) $p1 $p3"  chooseReflexAngle="allowed" hide/>
+  </graph>
+</div>
+</sideBySide>
+</div>
+
+<div newNamespace>
+<p><alert>Triangle 2</alert>: Angle <m>B</m>. Adjust the triangle below to match the given problem.</p>
+<number name="zeroFixed" fixed hide>0</number>
+
+<sideBySide widths="30% 70%">
+<div>
+<p><m>s_1 = </m><mathInput name="A" prefill="5"/></p>
+<p><m>s_2 = </m><mathInput name="B" prefill="5"/></p>
+<p><m>s_3 = </m><mathInput name="C" prefill="5sqrt(2)"/> (hypotenuse)</p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+</div>
+
+<div>
+  <p>Check <m>\cos(B) = </m>
+  <answer name="checkSinB" weight="0">$(../cosOfB)</answer>
+  </p>
+  <feedback condition="$checkCosB.creditAchieved = 0 and $checkCosB.submittedResponse = -$(../cosOfB)">It looks like you made a sign error. Which quadrant is this triangle located in? What is the sign of its <m>x</m>-coordinate?</feedback>
+  <graph>
+    <point name="p1" styleNumber="2" coords="($zeroFixed,$zeroFixed)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroFixed)"/>
+    <point name="p3" coords="($A, $B)" layer="2"/>
+
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" styleNumber="2" applyStyleToLabel>
+      <label><m>s_1 = $A{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" styleNumber="3" labelPosition="upperright" applyStyleToLabel>
+      <label><m>s_2 = $B{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1" styleNumber="4" labelPosition="upperleft" applyStyleToLabel>
+      <label><m>s_3 = $C{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="thetaShow" styleNumber="2" through="$p2 $p1 $p3" radius="0.2 $line1.length">
+      <label><m>B</m></label>
+    </angle>
+    <angle name="theta" through="(5,0) $p1 $p3"  chooseReflexAngle="allowed" hide/>
+  </graph>
+</div>
+</sideBySide>
+</div>
+</aside>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\cos(A - B) = $simplSol</m></p>
+
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

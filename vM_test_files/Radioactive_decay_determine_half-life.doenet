@@ -1,0 +1,235 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Radioactive decay application - determine the half life given the original amount and amount remaining after t years.
+
+A graphing tool is provided to help with visualizing the geometry of the problem.
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="g" from="1000" to="10000" step="1000"/>
+  <selectFromSequence name="finalAmount" from="105" to="405" step="10"/>
+  <selectFromSequence name="t" from="10" to="30"/>
+  
+  <math name="k">ln($finalAmount/$g)/(-$t)</math>
+  <number name="kNumerical">$k</number>
+  <math name="tHalf">-ln(2)$t/(ln($finalAmount/$g))</math>
+  <number name="tHalfNumerical" padZeros>$tHalf</number>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>g = $g</p>
+<p>finalAmount = $finalAmount</p>
+<p>t = $t</p>
+<p>k = $k</p>
+<p>kNumerical = $kNumerical</p>
+<p>tHalf = $tHalf</p>
+<p>tHalfNumerical = $tHalfNumerical</p> -->
+<!--testing-->
+
+
+<p>At <m>t = 0</m>, there are <m>$g \;\text{grams}</m> of a radioactive material present. At time <m>t = $t</m>, there are <m>$finalAmount\; \text{grams}</m> remaining. What is the half-life of the element?</p> 
+
+<p><em>Round your answer to the nearest <m>0.01 \; \text{years}</m></em>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">-5</number>
+  <number name="xmax">$t+5</number>
+  <number name="ymin">-500</number>
+  <number name="ymax">$g + 1000</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the exponential decay function:</p>
+  <p><m>N(t) = N_0 e^{-\lambda t}</m>:</p>
+  <p><m>N(t) = </m> <mathInput name="eq1"/></p>
+
+  <p>Data point at initial amount:</p> 
+  <p><m>(t_0, N_0) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="t0_g" /><m>,</m>
+  <mathInput name="N0_g"/><m> \bigg)</m> </p>
+
+  <p>Data point at half-life:</p> 
+  <p><m>(t_{\text{half}}, N_{\text{half}}) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="thalf_g" bindValueTo="$userAns"/><m>,</m>
+  <mathInput name="Nhalf_g"/><m> \bigg)</m> </p>
+
+  <p>Data point at final time:</p> 
+  <p><m>(t_f, N_f) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="tf_g" /><m>,</m>
+  <mathInput name="Nf_g" /><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="graphExpFunc" variables="t" styleNumber="5">$eq1</function>
+  <point name="p0" coords="($t0_g, $N0_g)"/>
+  <point name="ph" coords="($thalf_g, $Nhalf_g)"/>
+  <point name="pf" coords="($tf_g, $Nf_g)"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+  
+<p><m>t_{\text{half-life}} = </m> 
+  <answer name="ans48">
+    <mathInput name="userAns" prefillLatex="0.00"/>
+    <award name="correctNumerical" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+      <when>$userAns = $tHalfNumerical</when>
+    </award>
+
+    <award name="correctSymbolic" symbolicEquality simplifyOnCompare>
+      <when>$userAns = $tHalf</when>
+    </award>
+
+    <award name="roundingError1" allowedErrorInNumbers="1" allowedErrorIsAbsolute credit="0">
+      <when>$userAns = $tHalfNumerical</when>
+    </award>
+
+    <award name="answeredWithK" credit="0" allowedErrorInNumbers="1" allowedErrorIsAbsolute>
+      <when>$userAns = $k or $userAns = $kNumerical</when>
+    </award>
+
+  </answer>  <m>\text{years}</m>.
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correctNumerical or $correctSymbolic">$correctFeedback</feedback>
+  <feedback condition="$roundingError1">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+
+    <feedback condition="$answeredWithK">It looks like you've solved for the decay rate <m>\lambda</m>, but this is only the first step. What is the final answer the problem is asking for?</feedback>
+  
+  <feedback condition="$ans48.numSubmissions > 2 and $ans48.creditAchieved != 1">We need to use the formula for radioactive decay, 
+    <me>N(t) = N_0 e^{-\lambda t}</me>
+where <m>N(t)</m> is the amount of the substance remaining at time <m>t</m>, <m>N_0</m> is the initial amount, and <m>\lambda</m> is the decay rate.</feedback>
+
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection" newNameSpace><title>Worked Example</title>
+  
+<p>Here is a similar worked example:</p> 
+<example>
+<p><em>At <m>t = 0</m>, there are <m>$g \;\text{grams}</m> of a radioactive material present. At time <m>t = $t</m>, there are <m>$finalAmount\; \text{grams}</m> remaining. What is the half-life of the element?</em></p>
+
+<setup>
+  <math name="g">11000</math>
+  <math name="t">30</math>
+  <math name="finalAmount">505</math>
+  <math name="k">ln($finalAmount/$g)/(-$t)</math>
+  <number name="kNumerical">$k</number>
+  <math name="tHalf">-ln(2)$t/(ln($finalAmount/$g))</math>
+  <number name="tHalfNumerical">$tHalf</number>
+</setup>
+
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Use the given information to determine the decay rate, <m>\lambda</m>:
+  <md>
+      <mrow>$finalAmount \amp= $g e^{-\lambda ($t)} \amp\text{substitute known information}</mrow>
+      <mrow>\ln\bigg(\frac{$finalAmount}{$g}\bigg) \amp= \ln(e^{-\lambda ($t)})\;\;\amp\text{divide both sides by $g then take natural log of both sides}</mrow>
+      <mrow>\frac{\ln(\frac{$finalAmount}{$g})}{-$t} \amp= \lambda\;\;\amp\text{simplify}</mrow>
+    <mrow>$kNumerical{displayDecimals="8"} \amp= \lambda\;\amp\text{keep 8 decimal places, or retain symbolic expression}</mrow>
+    </md></li>
+  <li>Use <m>\lambda = $kNumerical{displayDecimals="8"}</m> to solve for the half-life:
+    <md>
+      <mrow>N(t) \amp= <math name="amountHalf" simplify>$g/2</math> = $g e^{-$kNumerical{displayDecimals="8"} (t)} \amp\text{substitute known information}</mrow>
+      <mrow>\frac{$amountHalf}{$g} \amp= e^{-$kNumerical{displayDecimals="8"} (t)} \amp\text{divide both sides by $g}</mrow>
+      <mrow>\ln\bigg(\frac{1}{2}\bigg) \amp= \ln(e^{-$kNumerical{displayDecimals="8"} (t)}) \amp\text{take natural log of both sides}</mrow>
+      <mrow>\frac{\ln\bigg(\frac{1}{2}\bigg)}{-$kNumerical{displayDecimals="8"}} \amp= t \amp\text{simplify}</mrow>
+      <mrow> $tHalfNumerical{displayDecimals="2"} \amp= t \amp\text{evaluate, rounding to two decimal places}</mrow>
+    </md>
+  </li>
+</ul>
+</example>
+
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Use the given information to determine the decay rate, <m>\lambda</m>:
+  <md>
+      <mrow>$finalAmount \amp= $g e^{-\lambda ($t)} \amp\text{substitute known information}</mrow>
+      <mrow>\ln\bigg(\frac{$finalAmount}{$g}\bigg) \amp= \ln(e^{-\lambda ($t)})\;\;\amp\text{divide both sides by $g then take natural log of both sides}</mrow>
+      <mrow>\frac{\ln(\frac{$finalAmount}{$g})}{-$t} \amp= \lambda\;\;\amp\text{simplify}</mrow>
+    <mrow>$kNumerical{displayDecimals="8"} \amp= \lambda\;\amp\text{keep 8 decimal places, or retain symbolic expression}</mrow>
+    </md></li>
+  <li>Use <m>\lambda = $kNumerical{displayDecimals="8"}</m> to solve for the half-life:
+    <md>
+      <mrow>N(t) \amp= <math name="amountHalf" simplify>$g/2</math> = $g e^{-$kNumerical{displayDecimals="8"} (t)} \amp\text{substitute known information}</mrow>
+      <mrow>\frac{$amountHalf}{$g} \amp= e^{-$kNumerical{displayDecimals="8"} (t)} \amp\text{divide both sides by $g}</mrow>
+      <mrow>\ln\bigg(\frac{1}{2}\bigg) \amp= \ln(e^{-$kNumerical{displayDecimals="8"} (t)}) \amp\text{take natural log of both sides}</mrow>
+      <mrow>\frac{\ln\bigg(\frac{1}{2}\bigg)}{-$kNumerical{displayDecimals="8"}} \amp= t \amp\text{simplify}</mrow>
+      <mrow> $tHalfNumerical{displayDecimals="2"} \amp= t \amp\text{evaluate, rounding to two decimal places}</mrow>
+    </md>
+  </li>
+</ul>
+    
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

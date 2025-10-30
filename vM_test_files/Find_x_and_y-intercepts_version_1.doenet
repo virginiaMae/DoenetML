@@ -1,0 +1,212 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find x and y-intercepts of a line given a linear equation. Graphing tool provided for visualizing the geometry of the problem.
+This problem has two versions
+Version 1 - x and y terms are added in the given equation.
+Version 2 - x and y terms are subtracted in the given equation.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <select name="c">
+    <option><math>3</math></option>
+    <option><math>5</math></option>
+    <option><math>7</math></option>
+  </select>
+  <selectFromSequence name="d" from="-1" to="1" exclude="0"/>
+  <math name="RHS">$c $d</math>
+  <math name="xInt">$c $d/$a</math>
+  <math name="yInt">$c $d/$b</math> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>RHS = $RHS</p>
+<p>xInt = $xInt</p>
+<p>yInt = $yInt</p> -->
+<!--testing-->
+
+
+<p>Find the <m>x</m>-intercept and the <m>y</m>-intercept of the line 
+  <me>$a x + $b y = $RHS{simplify}.</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Enter the given equation of the line (note, this is called standard form, Ax + By = C):</p> 
+  <p><mathInput name="eq1"/></p>
+
+   <p>Enter proposed <m>x</m>-intercept:</p> 
+   <p><m>\bigg( </m><mathInput name="graphXInt" bindValueTo="$userXInt"/><m>, 0 \bigg)</m></p>
+
+  <p>Enter proposed <m>y</m>-intercept:</p> 
+  <p><m>\bigg( 0, </m> <mathInput name="graphYInt" bindValueTo="$userYInt" /><m>\bigg)</m></p>
+</div>
+
+  
+<graph name="g1">
+  <point name="p1" coords="($userXInt, 0)" fixed>
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" coords="(0, $userYInt)" fixed>
+    <label>$p2.coords</label>
+  </point>
+  <line name="line1" equation="$eq1" fixed>
+    <label>Line 1</label>
+  </line>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+<p><m>x</m>-intercept: <m>\bigg( </m><mathInput name="userXInt"/><m>, 0 \bigg)</m></p>
+
+<p><m>y</m>-intercept: <m>\bigg( 0, </m> <mathInput name="userYInt" /><m>\bigg)</m></p>
+  <answer name="ans4">
+    <award name="correct" symbolicEquality simplifyOnCompare>
+      <when>$userXInt{isResponse} = $xInt and $userYInt{isResponse} = $yInt</when>
+    </award>
+    <award name="xIntIncorrect" credit="0">
+      <when>$userXInt{isResponse} != $xInt and $userYInt{isResponse} = $yInt</when>
+    </award>
+    <award name="yIntIncorrect" credit="0">
+      <when>$userXInt{isResponse} = $xInt and $userYInt{isResponse} != $yInt</when>
+    </award>
+</answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans4.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$xIntIncorrect"><p>Your <m>x</m>-intercept is incorrect.</p></feedback>
+  <feedback condition="$yIntIncorrect"><p>Your <m>y</m>-intercept is incorrect.</p></feedback>
+
+  
+  <feedback condition="$ans4.numSubmissions > 2 and $ans4.creditAchieved != 1">
+    <p>In order to answer this question, you must be familiar with the meanings of the terms <term><m>x</m>-intercept</term> and <term><m>y</m>-intercept</term>.</p>
+<p>To solve for the <m>x</m>-intercept, we substitute <m>y = 0</m> into the given equation of the line and solve for the corresponding <m>x</m>-coordinate on that line.</p>
+<p>Similarly, to solve for the <m>y</m>-intercept, we substitute <m>x = 0</m> into the given equation of the line and solve for the corresponding <m>y</m>-coordinate on that line.</p> </feedback>
+  
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+ 
+<p>Here is a simple worked example:</p>
+
+<example>
+<p><em>Find the <m>x</m>-intercept and the <m>y</m>-intercept of the line 
+  <me>12 x - 5 y = 20.</me></em></p>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+<li>First, solve for the <m>x</m>-intercept:
+  <md>
+    <mrow>12x - 5(0) \amp = 20 \amp\text{substitute}\;\; y = 0</mrow>
+    <mrow>x \amp = \frac{20}{12} \amp\text{divide by the coefficient of}\;x</mrow>
+    <mrow>x \amp = \frac{5}{3} \amp\text{simplify}</mrow>
+  </md>
+The <m>x</m>-intercept is located at <m>(\frac{5}{3},0)</m></li>
+
+<li>Next, solve for the <m>y</m>-intercept:
+  <md>
+    <mrow>12(0) - 5y \amp = 20 \amp\text{substitute}\;\; x = 0</mrow>
+    <mrow>y \amp = \frac{20}{-5} \amp\text{divide by the coefficient of }\;y</mrow>
+    <mrow>y \amp = -4 \amp\text{simplify}</mrow>
+  </md>
+The <m>y</m>-intercept is located at <m>(0,-4)</m></li>
+</ul>
+
+<p>We can check by graphing:</p>
+  <graph grid xmin="-6" xmax="6" ymin="-6" ymax="6" size="small">
+    <line fixed>12x - 5y = 20</line>
+    <point name="xIntDemo" fixed styleNumber="8">(5/3,0)
+    <label><m>x</m>-intercept</label>
+    </point>
+    <point name="yIntDemo" fixed styleNumber="11">(0,-4)
+    <label><m>y</m>-intercept</label>
+    </point>
+  </graph>
+</example>
+
+  
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>First, solve for the <m>x</m>-intercept:
+  <md>
+    <mrow>$a x + $b(0) \amp = $RHS{simplify} \amp\text{substitute}\;\; y = 0</mrow>
+    <mrow>x \amp = \frac{$RHS{simplify}}{$a} \amp\text{divide by the coefficient of}\;x</mrow>
+    <mrow>x \amp = $xInt{simplify} \amp\text{simplify}</mrow>
+  </md>
+The <m>x</m>-intercept is located at <m>($xInt{simplify},0)</m></li>
+
+<li>Next, solve for the <m>y</m>-intercept:
+  <md>
+    <mrow>$a(0) + $b y \amp = $RHS{simplify} \amp\text{substitute}\;\; x = 0</mrow>
+    <mrow>y \amp = \frac{$RHS{simplify}}{$b} \amp\text{divide by the coefficient of }\;y</mrow>
+    <mrow>y \amp = $yInt{simplify} \amp\text{simplify}</mrow>
+  </md>
+The <m>y</m>-intercept is located at <m>(0,$yInt{simplify})</m></li>
+</ul>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

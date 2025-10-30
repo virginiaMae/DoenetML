@@ -1,0 +1,312 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the amplitude and wavelength of a sine wave from its graph. Variants involve amplitudes ranging from 2 to 8 and vertical shifts ranging from -4 to 4. The coefficient on the angle also varies between 1/4 to 4.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="8"/>
+  <selectFromSequence name="d" from="-4" to="4" exclude="0"/>
+  <select name="b">1/3 1/2 2/3 3/2 2 3 4 4/3 1/4</select>
+  <function name="f">$a sin($b x) + $d</function> 
+  <math name="userB" simplify>2pi/$lambdaChoice</math>
+  <math name="userFunc">$userA sin($userB x) + $d</math>
+  <function name="g" styleNumber="4">$userFunc</function>
+  <number name="ymin">min(-$a - 4, $d - $a - 4)</number>
+  <number name="ymax">max($a + 4, $d + $a + 4)</number>
+  <number name="xmin">-$twoLambda - 0.5</number>
+  <number name="xmax">$twoLambda + 0.5</number>
+  <number name="n">0</number>
+  <number name="zeroFixed" fixed>0</number>
+  <math name="lambda" simplify>2pi / $b</math>
+  <math name="halfLambda" simplify>pi/$b</math>
+  <math name="threeHalfLambda" simplify>3pi/$b</math>
+  <math name="twoLambda" simplify>4pi/$b</math>
+  <m name="xDistlabel">
+    <conditionalContent>
+      <case condition="$wavePointRight.x = -$twoLambda">x = -$twoLambda</case>
+      <case condition="$wavePointRight.x = -$threeHalfLambda">x = -$threeHalfLambda</case>
+      <case condition="$wavePointRight.x = -$lambda">x = -$lambda</case>
+      <case condition="$wavePointRight.x = -$halfLambda">x = -$halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda/2">x = $halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda">x = $lambda</case>
+      <case condition="$wavePointRight.x = $threeHalfLambda">x = $threeHalfLambda</case>
+      <case condition="$wavePointRight.x = $twoLambda">x = $twoLambda</case>
+    </conditionalContent>
+  </m>
+  <math name="userEq" simplify="numberspreserveorder">$userA sin($userB x) + $d</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p>
+<p>f = $f.formula</p>
+<p>g = $g.formula</p>
+<p>n = $n</p>
+<p>lambda = $lambda</p> -->
+<!--testing-->
+
+<p>Find the amplitude and wavelength of the graph below.
+</p>
+<p><em>tip: you can drag the $dp1.styleDescription and $fp1.styleDescription points to measure vertical distance. You can use the $wavePointRight.styleDescription point to trace out one wavelength. </em></p>
+
+<graph xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" xTickScaleFactor="pi" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" aspectRatio="3/2" size="large">
+  $f $g
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3">($dp1.x, 0.75)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3" applyStyleToLabel>
+    <label>Drag to midline</label>
+  </line>
+  <line name="midlineHidden" hide fixed>y = $d</line> 
+
+  <map name="maxMinMap" hide>
+    <template>
+      <point name="wvPt">($lambda $i, $$f($lambda $i))
+      </point>
+    </template>
+    <sources alias="i">
+      <sequence from="-6" to="6" step="0.5"/>
+    </sources>
+  </map>
+  <point name="wavePointLeft"  styleNumber="4">($zeroFixed,$wavePointRight.y)</point>
+  <point name="wavePointRight" styleNumber="4">($n, $$f($n))
+    <constraints>
+      <attractTo>$maxMinMap</attractTo>
+    </constraints>
+  </point>
+  <lineSegment endpoints="$wavePointLeft $wavePointRight" styleNumber="6" labelPosition="lowerright">
+    <label>$xDistlabel</label>
+  </lineSegment>
+  <line name="vert" styleNumber="4">x = $wavePointRight.x</line>
+  <regionBetweenCurveXAxis function="$f" styleNumber="1" boundaryValues="$wavePointLeft.x $wavePointRight.x"/>
+</graph>
+
+
+<setup>
+  <boolean name="aCorrect" allowedErrorInNumbers="0.25">$userA = $a</boolean>
+  <boolean name="lambdaCorrect">$lambdaChoice = $lambda</boolean>
+</setup>
+
+<p><m>\text{Amplitude} = </m><mathInput name="userA"/></p>
+<p><m>\text{Wavelength} = </m>
+  <choiceInput name="lambdaChoice" inline>
+    <choice><math>8pi</math></choice>
+    <choice><math>6pi</math></choice>
+    <choice><math>4pi</math></choice>
+    <choice><math>3pi</math></choice>
+    <choice><math>4pi/3</math></choice>
+    <choice><math>3pi/2</math></choice>
+    <choice><math>pi</math></choice>
+    <choice><math>2pi/3</math></choice>
+    <choice><math>pi/2</math></choice>
+  </choiceInput> <m>\;\;\text{radians}</m>
+</p>
+
+<p> 
+  <answer name="ans1">
+      <award name="correct">   
+        <when>
+          $aCorrect and $lambdaCorrect
+        </when>
+      </award>
+  </answer>
+</p>
+
+<p>The wave equation you have entered (<em>shown in $g.styleDescription</em>) is:</p> 
+<p>
+  <md>
+    <mrow>y &= A \sin(B x) + D </mrow>
+    <mrow> &= $userEq \; ,</mrow>
+    <mrow>\text{where  } B &= $userB = \frac{2 \pi}{\text{Wavelength}}</mrow>
+  </md>
+</p>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="!$aCorrect and $ans1.justSubmitted">The amplitude is incorrect.</feedback>
+
+  <feedback condition="!$lambdaCorrect and $ans1.justSubmitted">The wavelength is incorrect.</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+ 
+<p>Here is a similar worked example which illustrates how to use the interactive graph:</p> 
+  
+<example newNameSpace>
+  <setup>
+  <math name="a">5</math>
+  <math name="d">-4</math>
+  <math name="b">2/3</math>
+  <function name="f">$a sin($b x) + $d</function> 
+  <math name="userFunc">$userA sin($userB x) + $d</math>
+  <function name="g" styleNumber="4">$userFunc</function>
+  <number name="ymin">min(-$a - 4, $d - $a - 4)</number>
+  <number name="ymax">max($a + 4, $d + $a + 4)</number>
+  <number name="xmin">-$twoLambda - 0.5</number>
+  <number name="xmax">$twoLambda + 0.5</number>
+  <number name="n">0</number>
+  <number name="zeroFixed" fixed>0</number>
+  <math name="lambda" simplify>2pi / $b</math>
+  <math name="halfLambda" simplify>pi/$b</math>
+  <math name="threeHalfLambda" simplify>3pi/$b</math>
+  <math name="twoLambda" simplify>4pi/$b</math>
+  
+  <m name="xDistlabel">
+    <conditionalContent>
+      <case condition="$wavePointRight.x = -$twoLambda">x = -$twoLambda</case>
+      <case condition="$wavePointRight.x = -$threeHalfLambda">x = -$threeHalfLambda</case>
+      <case condition="$wavePointRight.x = -$lambda">x = -$lambda</case>
+      <case condition="$wavePointRight.x = -$halfLambda">x = -$halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda/2">x = $halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda">x = $lambda</case>
+      <case condition="$wavePointRight.x = $threeHalfLambda">x = $threeHalfLambda</case>
+      <case condition="$wavePointRight.x = $twoLambda">x = $twoLambda</case>
+    </conditionalContent>
+  </m>
+</setup>
+
+
+
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p>
+<p>f = $f.formula</p>
+<p>g = $g.formula</p>
+<p>n = $n</p>
+<p>lambda = $lambda</p> -->
+
+
+<p>Find the amplitude and wavelength of the graph below. 
+</p>
+<p><em>Note, the example graph is not interactive.</em></p>
+
+<graph xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" xTickScaleFactor="pi" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" aspectRatio="3/2" size="large">
+  $f $g
+  <point name="dp1" styleNumber="2" layer="2" fixLocation>(-pi, -9)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3" fixLocation>($dp1.x, $d)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3"/>
+  <line name="midlineHidden" hide fixed>y = $d</line> 
+
+  <point name="wavePointLeft"  styleNumber="4" fixLocation>($zeroFixed,$wavePointRight.y)</point>
+  <point name="wavePointRight" styleNumber="4" fixLocation>(3pi, $$f(3pi))
+  </point>
+  <lineSegment endpoints="$wavePointLeft $wavePointRight" styleNumber="6" labelPosition="lowerright">
+    <label>$xDistlabel</label>
+  </lineSegment>
+  <line name="vert" styleNumber="4">x = $wavePointRight.x</line>
+  <regionBetweenCurveXAxis function="$f" styleNumber="1" boundaryValues="$wavePointLeft.x $wavePointRight.x"/>
+</graph>
+
+  
+
+  
+<p><alert><em>Solution.</em></alert></p>
+<p>The easiest way to solve this problem is to use the draggable measuring tools on the graph. In the image above, the measurements have already been taken for you. To see how the tools work, it's easiest to explain in a short video:</p>
+  
+<p><ref uri="https://www.youtube.com/watch?v=sEPx8VKoZTg">1-minute Video on Using the Graph</ref></p>
+
+<p>There are three guides. The <alert>$fp1.styleDescriptionWithNoun</alert> guide snaps to the midline of the wave, or you can read off the <m>y</m>-axis that this midline occurs at <m>y = -4</m>.</p>
+
+<p>The <alert>$dp1.styleDescriptionWithNoun</alert> guide measures out the vertical distance to a peak or a trough of the wave (it does not snap to these points though.) Use the measured distance to determine the amplitude of the wave. In this case, it's the distance between <m>y = -9</m> and <m>y = -4</m>, which is <m>5</m>.</p>
+
+<p>Finally, the <alert>$wavePointLeft.styleDescriptionWithNoun</alert> guide snaps to various horizontal distances along the length of the wave. It is up to you to determine where one wavelength ends and the next one begins! In this case, the sine wave ends at <m>3 \pi</m>, which you can also read directly off of the <m>x</m>-axis. Sometimes it's harder to read the exact value from the <m>x</m>-axis if there is a fractional wavelength. In those cases, use the guide.</p>
+
+<p>Our final answer is:</p>
+ 
+<p><m>\text{Amplitude} = $a</m></p>
+<p><m>\text{Wavelength} = $lambda</m></p>
+
+<p>The wave equation is shown below when you enter your answers. Remember, the <m>B</m> parameter in the equation is defined as <m>B = \frac{2 \pi}{\text{Wavelength}}</m></p>
+
+<p>For us, we found a wavelength of <m>$lambda</m>, so our <m>B</m> value in the equation is:
+  <me>B = \frac{2 \pi}{$lambda} = $b</me></p>
+
+</example>
+
+  
+</hint>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Amplitude} = $a</m></p>
+<p><m>\text{Wavelength} = $lambda</m></p>
+<p><m>y = $f.formula </m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

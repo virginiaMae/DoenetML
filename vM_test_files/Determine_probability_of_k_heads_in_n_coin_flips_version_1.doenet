@@ -1,0 +1,151 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the probability of k heads in n coin flips, where n and k are randomized. There are two versions of this problem:
+Version 1: record answers as a fraction
+Version 2: record answers with a decimal response
+
+The Worked Example can be hidden from veiw by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="n" from="4" to="10"/>
+  <selectFromSequence name="k" from="2" to="$n-2"/>
+  <math name="numerator">$n!/($k!($n - $k)!)</math>
+  <math name="probOfKHeads">($n!/($k!($n-$k)!))/(2^$n)</math>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>probOfKHeads = $probOfKHeads = $probOfKHeads{simplify}</p> -->
+<!--testing-->
+
+<p>If <m>$n</m> coins are tossed, what is the probability that exactly <m>$k</m> will land 'heads'? Express the answer as a fraction.</p> 
+
+  <p><m>P(\text{$k heads}) = </m>
+      
+    <answer name="ans9" >
+      <mathInput name="userInput" prefill="/"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$probOfKHeads
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans9.numSubmissions > 2 and $ans9.creditAchieved != 1">
+     <div name="helpText">
+       <p>In general, to find the probability that when flipping <m>n</m> coins, exactly <m>k</m> land heads, we must determine 
+         <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me>
+         where <m>E</m> is the number of ways to land <m>k</m> heads, and the total number of outcomes is the number of ways (with any number of heads from <m>0</m> to <m>n</m>) that <m>n</m> coins can be flipped.</p>
+         <ul>
+           <li>the numerator will be found from the <m>n^{\text{th}}</m> row of Pascal's Triangle. The row number corresponds to the number of coins, <m>n</m> (recall that the top row corresponds to row <m>0</m>). We count across the row, assuming that we start with 0 heads and counting up by one each column to find the correct value (since Pascal's Triangle is symmetric, this is equivalent to starting with all heads and counting down).
+             <image source='doenet:cid=bafkreif4xsvpzw75msd7lmjp45n6z2cdcwp6jw4e2nuiuyoa5q2mroi4fi' description="graphical representation of Pascal's Triangle" asfilename='PascalsTriangle.png' size="small" mimeType='image/png' />
+           </li>
+           <li>alternatively, the numerator can be found by computing the number of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-5/">combinations</ref> of <m>k</m> objects from a set of size <m>n</m>, using
+             <me>C(n,k) = \frac{n!}{k!(n - k)!}</me></li>
+           <li>the denominator is <m>2^n</m>, or the total number of possible coin tosses for <m>n</m> coins.</li>
+         </ul>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>If <m>$n</m> coins are tossed, what is the probability that exactly <m>$k</m> will land 'heads'?</em></p> 
+
+<setup>
+  <math name="n">12</math>
+  <math name="k">6</math>
+  <math name="numerator">$n!/($k!($n - $k)!)</math>
+  <math name="probOfKHeads">($n!/($k!($n-$k)!))/(2^$n)</math>
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>The probability of rolling <m>k</m> heads on <m>n</m> coin flips is given by
+  <me>P(H = k) = \frac{C(n,k)}{2^n} = \frac{\binom{n}{k}}{2^n}</me></p>
+<ul>
+  <li>The numerator is 
+    <md>
+      <mrow>\binom{n}{k} \amp= \binom{$n}{$k} \amp\text{compute binomial coefficient}</mrow>
+      <mrow>\amp=$numerator</mrow>
+      <mrow>\amp=$numerator{simplify}</mrow>
+    </md></li>
+  <li>The denominator is <m>2^{$n} = <math name="denominator" simplify>2^$n</math></m></li>
+  <li>The probability is
+    <me>P(H = $k) = <math>$numerator{simplify}/$denominator</math> = $probOfKHeads{simplify}</me></li>
+</ul>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>The probability of rolling <m>k</m> heads on <m>n</m> coin flips is given by
+  <me>P(H = k) = \frac{C(n,k)}{2^n} = \frac{\binom{n}{k}}{2^n}</me></p>
+<ul>
+  <li>The numerator is 
+    <md>
+      <mrow>\binom{n}{k} \amp= \binom{$n}{$k} \amp\text{compute binomial coefficient}</mrow>
+      <mrow>\amp=$numerator</mrow>
+      <mrow>\amp=$numerator{simplify}</mrow>
+    </md></li>
+  <li>The denominator is <m>2^{$n} = <math name="denominator" simplify>2^$n</math></m></li>
+  <li>The probability is
+    <me>P(H = $k) = <math>$numerator{simplify}/$denominator</math> = $probOfKHeads{simplify}</me></li>
+</ul>
+
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

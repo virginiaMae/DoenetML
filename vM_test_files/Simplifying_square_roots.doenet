@@ -1,0 +1,122 @@
+<problem>
+
+<setup>
+  <mathList name="squares">4 9 16 25 36 49 64 81 100</mathList>
+<!--   <selectFromSequence name="a" from="1" to="200"/> -->
+  <boolean name="divBy4"><mod>$a 4</mod> = 0</boolean>
+  <boolean name="divBy9"><mod>$a 9</mod> = 0</boolean>
+  <boolean name="divBy16"><mod>$a 16</mod> = 0</boolean>
+  <boolean name="divBy25"><mod>$a 25</mod> = 0</boolean>
+  <boolean name="divBy36"><mod>$a 36</mod> = 0</boolean>
+  <boolean name="divBy49"><mod>$a 49</mod> = 0</boolean>
+  <boolean name="divBy64"><mod>$a 64</mod> = 0</boolean>
+  <boolean name="divBy81"><mod>$a 81</mod> = 0</boolean>
+  <boolean name="divBy100"><mod>$a 100</mod> = 0</boolean>
+  <boolean name="divBy121"><mod>$a 121</mod> = 0</boolean>
+  <boolean name="divBy144"><mod>$a 144</mod> = 0</boolean>
+  <boolean name="divBy169"><mod>$a 169</mod> = 0</boolean>
+  <boolean name="divBy225"><mod>$a 225</mod> = 0</boolean>
+  <boolean name="divBy256"><mod>$a 256</mod> = 0</boolean>
+  <boolean name="divBy289"><mod>$a 289</mod> = 0</boolean>
+  <boolean name="divBy324"><mod>$a 324</mod> = 0</boolean>
+  <boolean name="divBy361"><mod>$a 361</mod> = 0</boolean>
+  <boolean name="divBy400"><mod>$a 400</mod> = 0</boolean>
+
+  <math name="expr">sqrt($a)</math>
+  <math name="default" simplify>$expr</math>
+  <math name="rem1" simplify>
+    <conditionalContent>
+      <case condition="$divBy100 = true">$a/100</case>
+      <case condition="$divBy81 = true">$a/81</case>
+      <case condition="$divBy64 = true">$a/64</case>
+      <case condition="$divBy49 = true">$a/49</case>
+      <case condition="$divBy36 = true">$a/36</case>
+      <case condition="$divBy25 = true">$a/25</case>
+      <case condition="$divBy16 = true">$a/16</case>
+      <case condition="$divBy9 = true">$a/9</case>
+      <case condition="$divBy4 = true">$a/4</case>
+    </conditionalContent>
+  </math>
+  <math name="simple1" simplify>
+    <conditionalContent>
+      <case condition="$divBy100 = true">10 sqrt($rem1)</case>
+      <case condition="$divBy81 = true">9 sqrt($rem1)</case>
+      <case condition="$divBy64 = true">8 sqrt($rem1)</case>
+      <case condition="$divBy49 = true">7 sqrt($rem1)</case>
+      <case condition="$divBy36 = true">6 sqrt($rem1)</case>
+      <case condition="$divBy25 = true">5 sqrt($rem1)</case>
+      <case condition="$divBy16 = true">4 sqrt($rem1)</case>
+      <case condition="$divBy9 = true">3 sqrt($rem1)</case>
+      <case condition="$divBy4 = true">2 sqrt($rem1)</case>
+      <else>$expr</else>
+    </conditionalContent>
+  </math>
+<!--   simple1 covers numbers up to 100, it fails for 2*36*4 = 288, because it doesn't catch the remaining factor of 4, it first catches the factor of 36 -->
+  <boolean name="divSBy4"><mod>$rem1 4</mod> = 0</boolean>
+  <boolean name="divSBy9"><mod>$rem1 9</mod> = 0</boolean>
+  <boolean name="divSBy16"><mod>$rem1 16</mod> = 0</boolean>
+  <boolean name="divSBy25"><mod>$rem1 25</mod> = 0</boolean>
+  <boolean name="divSBy36"><mod>$rem1 36</mod> = 0</boolean>
+  <boolean name="divSBy49"><mod>$rem1 49</mod> = 0</boolean>
+  <boolean name="divSBy64"><mod>$rem1 64</mod> = 0</boolean>
+  <boolean name="divSBy81"><mod>$rem1 81</mod> = 0</boolean>
+  <boolean name="divSBy100"><mod>$rem1 100</mod> = 0</boolean>
+  <math name="simple2" simplify>
+    <conditionalContent>
+      <case condition="$divSBy100 = true">
+        10 ($simple1 / sqrt($rem1)) sqrt($rem1/100)
+      </case>
+      <case condition="$divSBy81 = true">
+        9 ($simple1 / sqrt($rem1)) sqrt($rem1/81)
+      </case>
+      <case condition="$divSBy64 = true">
+        8 ($simple1 / sqrt($rem1)) sqrt($rem1/64)
+      </case>
+      <case condition="$divSBy49 = true">
+        7 ($simple1 / sqrt($rem1)) sqrt($rem1/49)
+      </case>
+      <case condition="$divSBy36 = true">
+        6 ($simple1 / sqrt($rem1)) sqrt($rem1/36)
+      </case>
+      <case condition="$divSBy25 = true">
+        5 ($simple1 / sqrt($rem1)) sqrt($rem1/25)
+      </case>
+      <case condition="$divSBy16 = true">
+        4 ($simple1 / sqrt($rem1)) sqrt($rem1/16)
+      </case>
+      <case condition="$divSBy9 = true">
+        3 ($simple1 / sqrt($rem1)) sqrt($rem1/9)
+      </case>
+      <case condition="$divSBy4 = true">
+        2 ($simple1 / sqrt($rem1)) sqrt($rem1/4)
+      </case>
+      <else>$simple1</else>
+    </conditionalContent>
+  </math>
+  
+  
+</setup>
+
+
+<!-- testing -->
+<p>Enter a number less than or equal to 241 = <mathInput name="a"/></p>
+<p>a{simplify} = $a{simplify}</p>
+<p>simple1 = $simple1</p>
+<p>simple2 = $simple2</p>
+<p>expr = $expr</p>
+<p>default = $default</p>
+
+
+<!-- /testing -->
+
+<p>Simplify <me>$expr</me></p>
+
+<p><m>$expr = </m><answer name="ans1" symbolicEquality>$simple2</answer> Answer = $simple2</p>
+
+  
+</problem>
+
+
+
+
+

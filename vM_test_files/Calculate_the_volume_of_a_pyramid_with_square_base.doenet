@@ -1,0 +1,61 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the volumne of a square-based pyramid given its side length and height. Analytical responses of the form A = (1/3) s^2 * h are accepted, as well as decimal approximations. Side length and height parameters range from 3 to 10.
+
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="s" from="3" to="10"/>
+  <selectFromSequence name="h" from="3" to="10"/>
+  <number name="sol" displayDecimals="2" padZeros>(1/3)$h $s^2</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+  
+<p>Find the volume of the square-based pyramid with each side of the base <m>s = $s</m> and height <m>h = $h</m>. Round your answer to the nearest <m>0.01</m>.
+</p>
+
+<p>
+<m>\text{Volume} = </m>
+  <answer name="ans1" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>$sol</answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Volume} = $sol</m></p>
+</solution>
+</problem>

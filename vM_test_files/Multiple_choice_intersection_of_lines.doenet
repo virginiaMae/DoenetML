@@ -1,0 +1,137 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the y-coordinate of the intersection of two lines. Response format is multiple choice.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-9" to="9" exclude="0" />
+  <selectFromSequence name="b" from="-9" to="9" exclude="0 $a" />
+
+  <math name="eq1" >x + y = $a</math>
+  <math name="eq2" >x - y = $b</math>
+  <math name="x" simplify>($a + $b)/2</math>
+  <math name="y" simplify>$a - $x</math>
+  <text name="sol">
+    <conditionalContent>
+      <case condition="$x > $a">negative</case>
+      <case condition="$x < $a">positive</case>
+      <case condition="$x = $a">zero</case>
+    </conditionalContent>
+  </text>
+<!--   maths for incorrect answers below-->
+  
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>eq1 = $eq1</p>
+<p>eq2 = $eq2</p>
+<p>x = $x</p>
+<p>y = $y</p>
+
+<p>sol = $sol</p>
+
+<p>i = $i</p>
+<p>j = $j</p>
+<p>k = $k</p> -->
+<!--testing-->
+
+
+<p>The <m>y</m>-coordinate of the intersection of the lines below is:</p>
+
+  <me>\begin{cases}
+        $eq1\\
+        $eq2\\
+      \end{cases}   
+  </me>
+
+
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+<setup>
+  <textlist name="choices">
+    <text>positive</text>
+    <text>negative</text>
+    <text>zero</text>
+  </textlist>
+  <selectFromSequence assignNames="i j k" from="1" to="3" numToSelect="3"/>
+</setup>
+
+<p>a. <booleanInput name="choice1" disabled="$choice2 = true or $choice3 = true or $choice4 = true"><label> $choices.texts[$i]</label></booleanInput></p>
+  
+<p>b. <booleanInput name="choice2" disabled="$choice1 = true or $choice3 = true or $choice4 = true"><label> $choices.texts[$j]</label></booleanInput></p>
+  
+<p>c.  <booleanInput name="choice3" disabled="$choice1 = true or $choice2 = true or $choice4 = true"><label> $choices.texts[$k]</label></booleanInput></p>
+  
+<p>d. <booleanInput name="choice4" disabled="$choice1 = true or $choice2 = true or $choice3 = true"><label>more information is needed</label></booleanInput></p>
+
+<answer name="ans1">
+  <award>
+    <when>$choice1 = true and $choices.texts[$i] = $sol</when>
+  </award>
+  <award>
+    <when>$choice2 = true and $choices.texts[$j] = $sol</when>
+  </award>
+  <award>
+    <when>$choice3 = true and $choices.texts[$k] = $sol</when>
+  </award>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>$sol; <m>y = $y</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

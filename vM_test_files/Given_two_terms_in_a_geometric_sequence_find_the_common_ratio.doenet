@@ -1,0 +1,262 @@
+<problem><title/>
+<setup>
+  <select name="r" type="math">1/2 1/3 1/4 2/3 3/4 2 3 4 5 1/5 2/5 3/2 4/3 3/5 -1/2 -1/3 -1/4 -2/3 -3/4 -2 -3 -4 -5 -1/5 -2/5 -3/2 -4/3 -3/5</select>
+
+  <selectFromSequence name="n1" from="2" to="4"/>
+  <selectFromSequence name="n" from="3" to="5" exclude="4"/>
+  <selectFromSequence name="a0" from="2" to="7"/>
+
+  <math name="test">2$r + 1</math>
+  <math name="n2" simplify>$n1 + $n</math>
+  <math name="n3" simplify>$n2 + 1</math>
+  <math name="a1" simplify>$a0 $r^$n1</math>
+  <math name="a2" simplify>$a0 $r^$n2</math>
+  <math name="a3" simplify>$a0 $r^($n2 + 1)</math>
+  <math name="reciprocal_a1" simplify>$a1^(-1)</math>
+  <!--maths for incorrect answers-->
+  <number name="rNumerical">$r</number>
+
+  
+  <number name="xmin1">-2</number>
+  <number name="xmax1">$n2 + 2</number>
+  <number name="ymin1">-0.1*$ymax1</number>
+  <number name="ymax1">$a3+ 5</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>n1 = $n1</p>
+<p>n2 = $n2</p>
+<p>test = $test = $test{simplify}</p>
+<p>a0 = $a0</p>
+<p>a1 = $a1</p>
+<p>a2 = $a2</p>
+<p>reciprocal_a1 = $reciprocal_a1</p> -->
+<!--testing-->
+  
+<p>If <m>\{a_n\}</m> is a geometric sequence with <m>a_{$n1} = $a1</m> and <m>a_{$n2} = $a2</m>, what is the common ratio <m>r</m>?</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<setup>
+  <function name="graphFunc" variables="n" styleNumber="6">$a0 * $user_graph_r^n</function>
+  <function name="graphFuncFull" variables="n" >$graphExprFull</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<stack>
+  <p>Plot known points of the sequence:</p>
+  <p>1. Term number <mathInput name="userIndex1" minWidth="30"/> of the sequence has value: <mathInput name="userValue1"/></p>
+  <p>2. Term number <mathInput name="userIndex2" minWidth="30"/> of the sequence has value: <mathInput name="userValue2"/></p>
+  <p>Test proposed common ratio <m>r</m></p>
+  <p><m>a_n = a_0 \bigg( </m><mathInput name="user_graph_r" bindValueTo="$userInput"/><m>\bigg)^n</m></p>
+
+</stack>
+
+
+<conditionalContent>
+  <case condition="$r > 0">
+<graph xmin="$xmin1{link='false'}" xmax="$xmax1{link='false'}" ymin="$ymin1{link='false'}" ymax="$ymax1{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>a_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>a_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>a_0</m></label>
+  </point>
+  $graphFunc
+  $graphFuncFull
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="lowerright">
+    <label><m>a_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="$n3 + 1"/></sources>
+  </map>
+</graph>
+  </case>
+
+  <case condition="$r < 0">
+<graph xmin="$xmin1{link='false'}" xmax="$xmax1{link='false'}" ymin="$ymin1{link='false'}" ymax="$ymax1{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>a_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>a_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>a_0</m></label>
+  </point>
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="lowerright">
+    <label><m>a_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="$n3 + 1"/></sources>
+  </map>
+  <map>
+    <template>
+      <point>($i, $$graphFuncFull($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="$n3 + 1"/></sources>
+  </map>
+</graph>
+  </case>
+</conditionalContent>
+</sideBySide>
+
+  <p><em>Note, in the above applet <m>a_0</m> is calculated behind-the-scenes to construct the graph. If you'd like to check your own <m>a_0</m>, you can enter the full equation below.</em></p>
+<p>Plot general expression for <m>a_n</m></p>
+  <p><m>a_n = </m><mathInput name="graphExprFull"/></p>
+</aside>
+
+
+
+  
+  <p><m>r = </m>
+      
+    <answer name="ans29" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$r
+        </when>
+      </award>
+
+      <award name="decimalR" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">    
+        <when>
+      $userInput=$rNumerical
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$decimalR">Express your answer as an exact fraction rather than a decimal approximation.</feedback>
+  <feedback condition="$ans29.numSubmissions > 2 and $ans29.creditAchieved != 1">
+     <div name="helpText">
+      The explicit formula for a <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-2-4/">geometric sequence</ref> has the form 
+    <me>a_n = a_0 \cdot r^n</me>
+    where <m>a_n</m> is the <m>n^{\text{th}}</m> term in the sequence, <m>a_0</m> is the <m>0^{\text{th}}</m> term in the sequence, and <m>r</m> is the common ratio.
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>If <m>\{a_n\}</m> is a geometric sequence with <m>a_{$n1} = $a1</m> and <m>a_{$n2} = $a2</m>, what is the common ratio <m>r</m>?</em></p>
+<setup>
+  <math name="r">2/3</math>
+  <math name="n1">5</math>
+  <math name="n">4</math>
+  <math name="a0">3</math>
+
+  <math name="test">2$r + 1</math>
+  <math name="n2" simplify>$n1 + $n</math>
+  <math name="a1" simplify>$a0 $r^$n1</math>
+  <math name="a2" simplify>$a0 $r^$n2</math>
+  <math name="reciprocal_a1" simplify>$a1^(-1)</math>
+  <math name="n2Overn1" simplify>$a2 $reciprocal_a1</math>
+  <math name="stepBack" simplify>-$n_1</math>
+</setup>
+
+
+<p><alert><em>Solution.</em></alert></p>
+<ul>
+    <li>First, use the given information to solve for <m>r</m>. There are <m>$n2 - $n1 = $n</m> steps between the <m>a_{$n1}</m> term and the <m>a_{$n2}</m> term. Each step correponds to multiplication by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>a_{$n2} \amp= a_{$n1} \cdot r^{$n} \amp\text{general formula, starting from n = $n1}</mrow>
+        <mrow>$a2 \amp= $a1 \cdot r^{$n} \amp\text{substitute given values}</mrow>
+        <mrow>$a2 \cdot $reciprocal_a1 \amp= r^{$n} \amp\text{simplify; cancel common factors}</mrow>
+        <mrow>\sqrt[$n]{$n2Overn1} \amp= \sqrt[$n]{r^$n} \amp\text{solve for}\;r</mrow>
+        <mrow>$r \amp= r \amp\text{simplify}</mrow>
+      </md></li>
+</ul>
+</example>
+
+<p><em>How to check</em>: Use the explicit formula you derived to solve for one of the original given values. </p>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<setup>
+    <math name="n2Overn1" simplify>$a2 $reciprocal_a1</math>
+    <math name="stepBack" simplify>-$n_1</math>
+  </setup>
+
+<ul>
+    <li>The explicit formula has the form <me>a_n = a_0 \cdot r^n</me></li>
+    <li>First, use the given information to solve for <m>r</m>. There are <m>$n2 - $n1 = $n</m> steps between the <m>a_{$n1}</m> term and the <m>a_{$n2}</m> term. Each step correponds to multiplication by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>a_{$n2} \amp= a_{$n1} \cdot r^{$n} \amp\text{general formula, starting from n = $n1}</mrow>
+        <mrow>$a2 \amp= $a1 \cdot r^{$n} \amp\text{substitute given values}</mrow>
+        <mrow>$a2 \cdot $reciprocal_a1 \amp= r^{$n} \amp\text{simplify; cancel common factors}</mrow>
+        <conditionalContent>
+          <case condition="$n = 2">
+            <mrow>\sqrt{$n2Overn1} \amp= \sqrt{r^2} \amp\text{solve for}\;r</mrow>
+          </case>
+          <case condition="$n != 2">
+            <mrow>\sqrt[$n]{$n2Overn1} \amp= \sqrt[$n]{r^$n} \amp\text{solve for}\;r</mrow>
+          </case>
+        </conditionalContent>
+        <mrow>$r \amp= r \amp\text{simplify}</mrow>
+      </md></li>
+</ul>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

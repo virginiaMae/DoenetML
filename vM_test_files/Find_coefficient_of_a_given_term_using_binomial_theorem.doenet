@@ -1,0 +1,107 @@
+<setup>
+<text name="source">Question 24:TR-Series/TR45/TR4505/04302021110841_TR-Series_K7L7X06N
+</text>
+</setup>
+<!--******************************************************
+      Source
+*******************************************************-->
+<!-- 
+QUESTION:In the expansion of (x + y)^8, what is the coefficient of the term x^3y^5? ;; 
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Choice]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {""};;
+
+answer = {"56"};;
+
+tolerance = 0
+-->
+
+
+
+<problem newNamespace>
+<setup>
+  <selectFromSequence name="n" from="7" to="12"/>
+  <selectFromSequence name="p" from="2" to="5"/>
+  <math name="expr" simplify>x^$p y^($n - $p)</math>
+  <math name="sol" expand simplify>nCr($n, $p)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>p = $p</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+  
+<p>In the expansion of <m>(x + y)^{$n}</m>, what is the coefficient "<m>a</m>" of the term <m>a $expr</m> ? </p>
+<p><m>a = </m>       
+    <answer name="ans1" >
+      <mathInput name="userInput"/> 
+      <award name="correct">    
+        <when>
+      $userInput=$sol
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  
+<feedback condition="$correct">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>a = $sol</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

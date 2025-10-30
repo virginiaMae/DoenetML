@@ -1,0 +1,62 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify a ratio of terms involving square roots.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+<select name="a">5 7</select>
+<select name="c">2 3 6</select>
+<math name="b" simplify>$a $c</math>
+<math name="expr">sqrt($b)/sqrt($a)</math>
+<math name="sol" simplify>sqrt($c)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+
+<!--testing-->  
+
+  
+<p>Simplify.
+  <me>$expr</me></p>
+
+  <p><m>\displaystyle $expr = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userAns"/> 
+      <award name="correct" symbolicEquality>
+        <when>$userAns = $sol
+        </when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<feedback condition="$correct or $numeratorNegative or $denominatorNegative">Nice work!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+    <p>Here is a similar worked example:</p>
+
+  </hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$sol</p>
+</solution>
+</problem>

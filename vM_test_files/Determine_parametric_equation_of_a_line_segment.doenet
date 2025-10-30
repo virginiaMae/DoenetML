@@ -1,0 +1,158 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="t" from="3" to="6"/>
+  <selectFromSequence name="h" from="-8" to="8"/>
+  <selectFromSequence name="k" from="-8" to="8"/>
+  <selectFromSequence name="u" from="1" to="4"/>
+  <selectFromSequence name="v" from="1" to="4"/>
+  <selectFromSequence assignNames="a b" from="-1" to="1" exclude="0" numToSelect="2"/>
+  <math name="xOft" simplify="numberspreserveorder">$h + $a $u t</math>
+  <math name="yOft" simplify="numberspreserveorder">$k + $b $v t</math>
+  <point name="pi" styleNumber="5">($h, $k)</point>
+  <math name="x_final" simplify>$h + $a $u $t</math>
+  <math name="y_final" simplify>$k + $b $v $t</math>
+  <point name="pf" styleNumber="5">($x_final, $y_final)</point>
+  <number name="xmin">min(-3, $pi.x - 3, $pf.x - 3)</number>
+  <number name="xmax">max(3, $pi.x + 3, $pf.x + 3)</number>
+  <number name="ymin">min(-3, $pi.y - 3, $pf.y - 3)</number>
+  <number name="ymax">max(3, $pi.y + 3, $pf.y + 3)</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>t = $t</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>u = $u</p>
+<p>v = $v</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>xOft = $xOft</p>
+<p>yOft = $yOft</p> -->
+<!--testing-->
+
+<p>Write a set of parametric equations for the line segment which begins at the point $pi at time <m>t = 0</m> and moves at a constant speed until finishing at the point $pf at time <m>t = $t</m>.</p> 
+
+<p>Note: The answers should be functions of <m>t</m>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<setup>
+  <number name="tGraph">0</number>
+  <function name="fx" variable="t">$user_xOft</function>
+  <function name="fy" variable="t">$user_yOft</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p><m>x(t) = </m> <mathInput name="user_xOftGraph" bindValueTo="$user_xOft"/></p>
+<p><m>y(t) = </m> <mathInput name="user_yOftGraph" bindValueTo="$user_yOft"/></p>
+
+<booleanInput name="animationOn"><label>Animate</label></booleanInput>
+
+<animateFromSequence target="tGraph" from="0" to="$t" animationOn="$animationOn" animationInterval="100" step="0.15"/>
+</div>
+
+  
+<graph name="g1" grid="1 1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  $pi $pf
+  <line styleNumber="6" through="$pi $pf"/>
+  <point name="pGraph" styleNumber="2">($$fx($tGraph), $$fy($tGraph))</point>
+  <lineSegment name="animationLine" endpoints="$pi $pGraph" styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>x(t) = </m> <mathInput name="user_xOft"/></p>
+<p><m>y(t) = </m> <mathInput name="user_yOft"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$user_xOft{isResponse} = $xOft and $user_yOft{isResponse} = $yOft</when>
+    </award>       
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$user_xOft != $xOft and $ans1.justSubmitted">Your response for <m>x(t)</m> is incorrect.</feedback>
+  <feedback condition="$user_yOft != $yOft and $ans1.justSubmitted">Your response for <m>y(t)</m> is incorrect.</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x(t) = $xOft</m></p>
+<p><m>y(t) = $yOft</m></p>
+</solution>
+
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

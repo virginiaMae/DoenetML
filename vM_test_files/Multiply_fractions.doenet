@@ -1,0 +1,159 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Multiply fractions and give answer in reduced form. A fully worked example is provided; this can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <select name="a">1 3 7</select>
+  <select name="b">3 9</select>
+  <select name="c">2 4 5 10</select>
+  <select name="d">1 2 4</select>
+  <select name="e">2 3 5</select>
+  <math name="n1" simplify>$a $e</math>
+  <math name="d1" simplify>$d $e</math>
+  <math name="p">$n1/$c</math>
+  <math name="q">$b/ $d1</math>
+  <math name="expr">$p $q</math>
+  <me name="mExpr">$p \cdot $q</me>
+  <math name="sol" simplify>($a $b) / ($c $d)</math>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>n1 = $n1</p>
+<p>d1 = $d1</p>
+<p>p = $p</p>
+<p>q = $q</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Multiply then reduce: $mExpr</p>
+
+<p><m>$p \cdot $q = </m>
+    <answer name="ans1">
+      <mathInput name="userFraction"/>
+      <award name="correct" symbolicEquality="true">   
+        <when>$userFraction = $sol</when>
+      </award>
+      <award name="notFully" credit="0.5">   
+        <when>$userFraction = $sol</when>
+      </award>
+    </answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$notFully and $ans1.creditAchieved != 1">This fraction can still be simplified further. Look for more common factors in the numerator and denominator!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <select name="a">9</select>
+  <select name="b">4</select>
+  <select name="c">7</select>
+  <select name="d">5</select>
+  <select name="e">2</select>
+  <math name="n1" simplify>$a $e</math>
+  <math name="d1" simplify>$d $e</math>
+  <math name="p">$n1/$c</math>
+  <math name="q">$b/ $d1</math>
+  <math name="expr">$p $q</math>
+  <me name="mExpr">$p \cdot $q</me>
+  <math name="sol" simplify>($a $b) / ($c $d)</math>
+</setup>
+
+  
+<p><em>Multiply then reduce: $mExpr</em></p>
+
+ 
+<p><alert><em>Solution.</em></alert></p>
+<p>When multiplying fractions, you can either choose to:</p>
+  <ul>
+    <li>multiply, and then simplify, <em>or</em>,</li>
+    <li>first cancel common factors, and then multiply</li>
+  </ul>
+
+<p>Here, we will show the second option. First, notice that both the numerator and the denominator have a factor of <m>2</m>. First, cancel this common factor. Then, multiply across the numerators and across the denominators.</p>
+  <md>
+    <mrow>\frac{$a \cdot \color{red}{$e}}{$c} \cdot \frac{$b}{$d \cdot \color{red}{$e}} &= \frac{$a \cdot \require{cancel}\cancel{$e}}{$c} \cdot \frac{$b}{$d \cdot \cancel{$e}}</mrow>
+    <mrow>\frac{$a}{$c} \cdot \frac{$b}{$d} &= $sol</mrow>
+  </md>
+
+    
+</example>
+
+<sideBySide margins="2%">
+<p>
+Textbook Link: <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-1-4-multiplying-and-dividing-fractions/">Multiplying and Dividing Fractions</ref>
+</p>
+
+<div>
+<p>Video textbook reference: <ref uri="https://open.lib.umn.edu/precalculus/">Precalculus</ref></p>
+<p>Text-based textbook reference: <ref uri="https://mathbooks.unl.edu/PreCalculus/Numbers-and-Operations.html">Precalculus</ref></p>
+</div>
+</sideBySide> 
+  
+<!-- <p><em><alert>How to check your answer</alert></em>: </p> -->
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+$sol
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

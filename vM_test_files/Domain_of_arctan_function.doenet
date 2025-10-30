@@ -1,0 +1,104 @@
+<problem>
+<setup>
+  <function name="f" simplify="numbersPreserveOrder" styleNumber="5">arctan(x)
+    <label><m>f(x)</m></label>
+  </function>
+   <math name="interval">(-infinity, infinity)
+  </math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>f = $f</p>
+<p>interval = $interval</p> -->
+<!--testing-->
+
+ 
+<p>What is the <alert>domain</alert> of the function
+<me>y = $f.formula{simplify="numbersPreserveOrder"}</me></p>
+  <answer name="ans1" shuffleOrder>
+    <choice><m>\displaystyle -1 \leq x \leq 1</m></choice>
+    <choice><m>\displaystyle 0 \leq x \leq \pi</m></choice>
+    <choice><m>\displaystyle -\frac{\pi}{2} \leq x \leq \frac{\pi}{2}</m></choice>
+    <choice><m>\displaystyle -\frac{\pi}{2} < x < \frac{\pi}{2}</m></choice>
+    <choice credit="1"><m>\displaystyle -\infty < x < \infty</m></choice>
+  </answer>
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function: </p>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup></div>
+  
+<graph>
+  $miFunction
+</graph>
+</sideBySide>
+</aside>  
+
+
+<!--*********************************************
+            Answer input
+**********************************************-->
+
+  
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><math>-infinity < x < infinity</math></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

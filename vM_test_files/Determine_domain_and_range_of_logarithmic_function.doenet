@@ -1,0 +1,167 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a logarithmic function with a linear expression as its argument, determine the domain and range.
+
+A graphing tool is provided to help with visualizing the geometry of the problem.
+A descriptive solution is provided.
+
+
+
+*************************************************************--> 
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="9"/>
+  <selectFromSequence name="b" from="2" to="9"/>
+  <selectFromSequence name="c" from="5" to="15"/>
+
+  <math name="f">log_$b ($c - $a x)</math>
+  <math name="domain" simplify>(-infinity, $c/$a)</math>
+  <math name="range">(-infinity, infinity)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>f = $f</p>
+<p>domain = $domain</p>
+<p>range = $range</p> -->
+<!--testing-->
+
+<p>Consider the function
+  <me>f(x) = $f</me></p>
+
+<p>What is the domain of the function in interval notation ? </p>
+
+<p><m>\text{Domain} = </m> <mathInput name="userDomain"/>
+</p>
+
+
+  
+<p>What is the range of the function in interval notation ? </p>
+<p><m>\text{Range} = </m><mathInput name="userRange" /></p>
+
+<p>
+  <answer name="ans1" matchPartial>
+    <award name="correct">
+      <when>$userDomain = $domain and $userRange = $range
+      </when>
+    </award>
+  </answer>
+</p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<setup>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<p>Enter given function</p>
+<p><m>f(x) = \log_{$b} \bigg(</m> <mathInput name="graphf1"/><m>\bigg)</m></p>
+
+<p>Graph (and drag if desired) a vertical line to observe domain limits</p>
+<p><m>x = </m><mathInput name="graphVert"/></p>
+<p>Graph (and drag if desired) a horizontal line to observe range limits</p>
+<p><m>y = </m><mathInput name="graphHor"/></p>
+
+<graph xmin="-4" xmax="4" ymin="-3" ymax="3">
+  <function name="gf">log($graphf1, $b)</function>
+  <point name="vDp" styleNumber="8">($graphVert, $zeroFixed)</point>
+  <line styleNumber="8">x = $vDp.x</line>
+  <point name="hDp" styleNumber="9">($zeroFixed, $graphHor)</point>
+  <line styleNumber="9">y = $hDp.y</line>
+</graph>
+
+<p><em>Disclaimer: every graphing software tool has some technical limitations. If you observe unexpected or strange-looking behavior in a graph, know that this might be the cause! Use what you know mathematically to practice a healthy skepticism of technology.</em></p>
+<p><em>In this example, the logarithm function renders incorrectly at asymptotic values. If you zoom out, you might find that the near-vertical extension of the function is truncated!</em></p>
+
+</aside>  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and corr $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$userDomain != $domain and $ans1.justSubmitted">Your domain is incorrect.</feedback>
+  <feedback condition="$userRange != $range and $ans1.justSubmitted">Your range is incorrect.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+</example>
+
+
+ </hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+ <li><p>Note that the argument to a logarithm cannot be a negative number. Therefore, we must have that
+   <md>
+     <mrow>$c - $a x \amp> 0</mrow>
+     <mrow>- $a x \amp> -$c</mrow>
+     <mrow>x \amp< <math simplify>$c/$a</math></mrow>
+   </md>
+   The domain of <m>f</m> is <m>$domain</m>
+ </p>
+ </li>
+ <li><p>As <m>x</m> values get closer and closer to <math simplify>$c/$a</math>, the function values increase toward <m>-\infty</m>. As <m>x</m> values get smaller and smaller, function values increase toward <m>+ \infty</m>. Observe the graph of the function or check test values to determine that the range of this function is $range.</p>
+   <graph size="small" xmin="-4" xmax="4" ymin="-3" ymax="3">
+     <function>log(($c - $a x),$b)</function>
+   </graph>
+     
+ </li>
+</ul>
+    
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

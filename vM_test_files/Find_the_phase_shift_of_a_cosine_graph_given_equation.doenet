@@ -1,0 +1,104 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the equation of a cosine function, determine the phase shift. No graphing tool provided. Parameters are randomized. 
+
+(TR-Graphs #28 TR1208)
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="8"/>
+  <selectFromSequence name="b" from="2" to="4"/>
+  <select name="c">1/6 1/4 1/3 1/2 2/3 -(1/6) -(1/4) -(1/3) -(1/2) -(2/3)</select>
+  <selectFromSequence name="d" from="-5" to="5"/>
+  <math name="sol" simplify>-($c / $b) pi</math>
+  <math name="solAlt" simplify>
+    <conditionalContent>
+      <case condition="$sol < 0">
+        (-($c / $b) + 2/$b) pi
+      </case>
+      <case condition="$sol > 0">
+        (-($c / $b) - 2/$b) pi
+      </case>
+    </conditionalContent>
+  </math>
+      
+  <math name="expr" simplify="numberspreserveorder">y = $a cos($b x + $c pi) + $d</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>solAlt = $solAlt</p> -->
+<!--testing-->
+
+
+<p>Find the <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-2-5/">phase shift</ref> of the graph
+
+	<me name="format">$expr</me></p>
+
+<p><m>\text{Phase shift} = </m><mathInput name="userShift"/>
+  <answer name="ans1">
+      <award name="correct">   
+        <when>$userShift = $sol</when>
+      </award>
+      <award name="correctAlt">
+        <when>$userShift = $solAlt</when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctAlt">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Phase shift} = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

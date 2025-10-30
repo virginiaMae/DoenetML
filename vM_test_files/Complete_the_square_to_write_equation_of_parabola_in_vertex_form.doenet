@@ -1,0 +1,198 @@
+<problem><title/>
+<setup>
+  <selectFromSequence assignNames="h k a" numToSelect="3" from="-4" to="4" exclude="0"/>
+  <math name="expr" simplify>$a x^2 - 2 $a $h x + $a $h^2 + $k</math>
+  <math name="sol" simplify="numberspreserveorder">$a(x - $h)^2 + $k</math>
+  <math name="altSol" simplify="numberspreserveorder">$k + $a(x - $h)^2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>f
+<p>h = $h</p>
+<p>k = $k</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>altSol = $altSol</p> -->
+<!--testing-->
+
+<p>Complete the square to write the equation of the parabola, whose vertex is at <m>(h,k)</m>, in the form <m>y = a(x - h)^2 +k</m>.</p>
+
+
+<p><me>y = $expr</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">$h - 10</number>
+  <number name="xmax">$h + 10</number>
+  <number name="ymin">$k - 10</number>
+  <number name="ymax">$k + 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph parabola in vertex form:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+
+  <p>If your conversion is correct the second parabola will be on top of the first.</p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="givenParabola">$eq1</function>
+  <function name="userParabola" styleNumber="2">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+  
+<p>Vertex form equation: </p>
+
+  <p><m>y = </m> <answer name="ans1">
+    <mathInput name="userVertexForm"/>
+    <award name="allCorrect" symbolicEquality simplifyOnCompare>
+      <when>$userVertexForm = $sol</when>
+    </award>
+    <award name="allCorrectAlt" symbolicEquality simplifyOnCompare>
+      <when>$userVertexForm = $altSol</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect or $allCorrectAlt">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">To review the process for completing the square, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/Solving-Quadratic-Equations.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<p><em>Complete the square to write the equation of the parabola, whose vertex is at <m>(h,k)</m>, in the form <m>y = a(x - h)^2 +k</m>.</em></p>
+
+<p><me>y = 5x^2+30x+42</me></p> 
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<setup>
+  <number name="h">-3</number>
+  <number name="k">-3</number>
+  <number name="xmin">$h - 10</number>
+  <number name="xmax">$h + 10</number>
+  <number name="ymin">$k - 10</number>
+  <number name="ymax">$k + 10</number>
+</setup>
+<ul>
+  <li><p>The goal is to manipulate the right-hand side of the given equation until we have a form that looks like <m>a(x - h)^2 +k</m>. Therefore, we need to rewrite the first two terms as a sum or a difference of squares.</p>
+  </li>
+  <li><p>We first notice that the first two terms have a common factor of <m>5</m>. We can factor out this <m>5</m>, which will eventually become our <m>a</m> coefficient.</p>
+    <md>
+      <mrow>y &= 5x^2+30x+42</mrow>
+      <mrow>&= 5(x^2 + 6x) + 42</mrow>
+    </md>
+  </li>
+  <li><p>Next, we "complete the square" for the binomial in parentheses, <m>(x^2 + 6x)</m>. In order to make this binomial a perfect square, we need to add <m>9</m>, because <m>(x^2 + 6x + 9) = (x + 3)^2</m>.</p>
+    <p>We have to be careful here to keep our original expression unchanged. So, if we add a <m>9</m> into the parentheses, we need to <em>subtract</em> a <m>5 \cdot 9</m> outside the parentheses (because we still have that factor of <m>5</m> out in front...)</p>
+    <md>
+      <mrow>y &= 5(x^2 + 6x) + 42</mrow>
+      <mrow>&= 5(x^2 + 6x + 9) + 42 - 5 \cdot 9</mrow>
+    </md>
+  </li>
+  <li><p>Almost there! Now, we can rewrite the expression inside the parentheses as a perfect square, and simplify
+    <md>
+      <mrow>y &= 5(x^2 + 6x + 9) + 42 - 5 \cdot 9</mrow>
+      <mrow>&= 5(x + 3)^2 - 3</mrow>
+    </md></p>
+  </li>
+  <li><p>We now have an equation that matches the desired vertex form perfectly! <me>y = 5(x + 3)^2 - 3.</me> This means that <m>(h,k) = (-3, -3)</m>.</p>
+  </li>
+  <li><p>Next, we'll graph both equations as a check on our work:</p>
+    
+  <sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1" prefill="5x^2 + 30x + 42"/></p>
+
+  <p>Graph parabola in vertex form:</p> 
+  <p><m>y = </m> <mathInput name="eq2" prefill="5(x + 3)^2 - 3"/></p>
+
+  
+</div>
+      
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="givenParabola">$eq1</function>
+  <function name="userParabola" styleNumber="2">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+  <p>The second parabola is on top of the first (to see this clearly, try deleting the second equation), so the graphs of our two quadratic equations are equivalent.</p>
+  </li>
+</ul>
+      
+</example>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>y = $sol</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

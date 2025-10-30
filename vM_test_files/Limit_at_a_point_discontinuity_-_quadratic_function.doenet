@@ -1,0 +1,123 @@
+<problem><title/>
+<setup>
+<selectFromSequence name="lim" from="1" to="9"/>
+<selectFromSequence name="b" from="1" to="9"/>
+<math name="a" simplify>-$b^2 / $lim</math>
+<selectFromSequence name="styleNumber" from="7" to="12"/>
+<number name="ymax">$$f2(10) + 2</number>
+</setup>
+
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>lim = $lim</p> -->
+<!-- /testing -->
+
+<p>Determine <m>\lim\limits_{x \to $b} f(x)</m> for the function <m>f(x)</m> shown in the figure below</p>
+
+<graph xmin="-1" xmax="12" ymin="-0.2*$ymax" ymax="$ymax" grid="1 1">
+  <function name="f1" domain="[0,$b]" styleNumber="$styleNumber">-x^2 / $a</function> 
+  <function name="f2" domain="[$b,10]" styleNumber="$styleNumber">-x^2 / $a</function>
+  <endpoint name="ep0" fixLocation styleNumber="$styleNumber">(0, $$f1(0))</endpoint>
+  <endpoint name="epB" open fixLocation styleNumber="$styleNumber" labelPosition="right">($b, $$f1($b))
+    <label><m>$epB.coords</m></label>
+  </endpoint>
+  <endpoint name="ep10" fixLocation styleNumber="$styleNumber">(10, $$f2(10))</endpoint>
+</graph>
+
+<p>The limit as <m>x \to $b</m> is <answer name="ans1">$lim</answer></p>
+</problem>
+
+<solution>
+  <p><m>\lim\limits_{x \to $b} f(x) = $lim</m></p>
+</solution>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+<div hide>Webwork source code: 
+[TMPL]/Library/WHFreeman/Rogawski_Calculus_Early_Transcendentals_Second_Edition/2_Limits/2.2_Limits-_A_Numerical_and_Graphical_Approach/2.2.5.pg".
+<!--   #Problem 2.2.5 ET2e
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Finding limits using graphs)
+## Institution(W.H.Freeman)
+## Author(JustAsk!)
+## Level(2)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Rogawski')
+## EditionText1('2')
+## Section1('2.2')
+## Problem1('5')
+## KEYWORDS('calculus', 'limits', 'approximation', 'graphs')
+## MO(1)-TF-12/18/2014
+DOCUMENT();        # This should be the first executable line in the problem.
+loadMacros(
+  "PGstandard.pl",
+  "PGgraphmacros.pl",
+  "freemanMacros.pl",
+  "AnswerFormatHelp.pl",
+  "MathObjects.pl",
+  "PGcourse.pl"
+);
+
+$showPartialCorrectAnswers = 0;
+$solutionexits=1;
+$lim=random(1,9,1);
+$to=random(1,9,1);
+$a=-($to**2)/$lim;
+$upperx = ceil(Compute("(-10*$a)^(1/2)")) + 2;
+$gridx = $upperx + 1;
+$tickx = $upperx - 1;
+$graphObject = init_graph(-1,-1,$upperx,10,'ticks'=>[$tickx,9],'grid'=>[$gridx,11],'axes'=>[0,0],'size'=>[300,300]);
+$func1 = qq! -(x^2)/$a for x in [0, $to) using color:red and weight:2!;
+$func2 = qq! -(x^2)/$a for x in ($to, 10] using color:red and weight:2!;
+plot_functions($graphObject , $func1, $func2);
+TEXT(beginproblem());
+BEGIN_TEXT
+\{ textbook_ref_exact("Rogawski ET 2e", "2.2","5") \}$BR
+Determine \( \lim\limits_{x \to $to} f(x) \) for the function \(f(x)\) shown in the figure below
+$PAR
+
+\{ image(insertGraph($graphObject), 'width'=>300,'height'=>300) \} 
+$PAR
+
+The limit as \(x \to $to\) is  \{ ans_rule(5) \} \{ AnswerFormatHelp("limits") \}
+END_TEXT
+
+SOLUTION(EV3(<<'END_SOLUTION'));
+$BR$BBOLD Solution:$EBOLD 
+$PAR
+The graph suggests that \(f(x) \to $lim\) as \(x \to $to\)
+END_SOLUTION
+
+ANS( num_cmp( $lim ) );
+
+ENDDOCUMENT();
+
+#JustAsk 2007 -->
+</div>

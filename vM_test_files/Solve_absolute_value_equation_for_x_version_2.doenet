@@ -1,0 +1,202 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve an absolute value equation for x. There are 3 versions of this problem:
+Version 1 has form |x +/- a| = b
+Version 2 has form |x +/- a| +/- d = c
+Version 3 has form k|x +/- a| +/- d = c
+
+
+
+(BA-Lines #19 BA03052)
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="1" to="6"/>
+  <selectFromSequence name="c" from="1" to="6"/>
+  <selectFromSequence name="d" from="1" to="3"/>
+  <selectFromSequence name="b" from="-1" to="1" exclude="0"/>
+  <math name="m" simplify>$a $b</math>
+  <math name="n" simplify>$c + $d</math>
+  <math name="p" simplify>x + $m</math>
+  <math name="sol1" simplify>-$n - $m</math>
+  <math name="sol2" simplify>$n - $m</math>
+  <math name="expr" simplify="numberspreserveorder">|$p| - $d = $c</math>
+  <math name="LHS" simplify="numberspreserveorder">|$p| - $d</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>m = $m</p>
+<p>n = $n</p>
+<p>p = $p</p>
+<p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p>
+<p>expr = $expr</p> -->
+<!--testing-->
+
+
+<p>Solve for <m>x</m>.</p>
+  <me>$expr</me>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<p>To understand this problem graphically, imagine a "<m>\color{red}{y = }</m> ", to the left of the expression you are given.</p>
+  <p>Then, we would have
+    <me>\color{red}{y = } $expr.</me>
+  In words, this is saying that there is (we hope) one or more values, call them <m>y</m>, where <m>y = $LHS</m> and also <m>y = $c</m>. We've turned our single equation into two equations. Let's graph these two equations to see if they intersect!</p>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given expression to the left of the equals sign:</p> 
+  <p><m>\color{red}{y = }</m><mathInput name="graphEq1"/></p>
+
+  
+  <p>Enter the given number to the right of the equals sign:</p> 
+  <p><m>\color{red} {y = }</m><mathInput name="graphEq2"/></p>
+</div>
+  
+<graph name="g1">
+  <function name="f">$graphEq1</function>
+  <line name="line2" equation="y = $graphEq2" fixed styleNumber="2"/>
+  <point name="p1" coords="(-1, $graphY1)" styleNumber="5">
+    <constraints>
+      <constrainToGrid/>
+      <constrainTo>$line2</constrainTo>
+    </constraints>
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" coords="(1, $graphY2)" styleNumber="5">
+    <label>$p2.coords</label>
+    <constraints>
+      <constrainToGrid/>
+      <constrainTo>$line2</constrainTo>
+    </constraints>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>First intersection point (drag or type):</p>
+<p><m>(x_1,y_1) =  </m></p>
+<p><m>\bigg(</m> <mathInput name="graphX1" bindValueTo="$p1.x"/> , <mathInput name="graphY1" bindValueTo="$graphEq2"/><m> \bigg)</m></p>
+<p>Second intersection point (drag or type):</p>
+<p><m>(x_2,y_2) =  </m></p>
+<p><m>\bigg(</m> <mathInput name="graphX2" bindValueTo="$p2.x"/> , <mathInput name="graphY2" bindValueTo="$graphEq2"/><m> \bigg)</m></p>
+
+
+  <p>Notice, we've used a horizontal line on the graph to represent all values of <m>y</m> that are equal to the right-hand side (since it is a constant number).</p>
+  
+  <p>Where does it look like the absolute value function and the horizontal line intersect each other? Enter these locations as the "First intersection point" and "Second intersection point".</p>
+
+</aside>  
+
+
+<p>Solution(s): <m>x = </m><mathInput name="userSol1"/> or <m>x = </m> <mathInput name="userSol2"/></p>
+
+  <answer name="ans1">
+    <award name="correct" unorderedCompare>
+      <when>
+        <mathList>$userSol1 $userSol2</mathList> = <mathList>$sol1 $sol2</mathList>
+      </when>
+    </award>
+    <award name="half" unorderedCompare matchPartial credit="0">
+      <when>
+        <mathList>$userSol1 $userSol2</mathList> = <mathList>$sol1 $sol2</mathList>
+      </when>
+    </award>
+</answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+    <feedback condition="$half">One of your two answers is incorrect.</feedback>
+ 
+  
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x = $sol1</m> or <m>x = $sol2</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--white for masking-->
+<styleDefinition styleNumber="13" fillColor="white" fillOpacity="1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="black" lineOpacity="0.7" lineWidth="2"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

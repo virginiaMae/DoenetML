@@ -1,0 +1,62 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the area of a trapezoid given height and base lengths. 
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="b1" from="3" to="8"/>
+  <selectFromSequence name="d" from="1" to="4"/>
+  <math name="b2" simplify>$b1 + $d</math>
+  <selectFromSequence name="h" from="3" to="10"/>
+  <number name="sol">(1/2)$h ($b1 + $b2)</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+  
+<p>Find the area of the trapezoid with height <m>h = $h</m>, and the two bases, <m>b_1 = $b1</m> and <m>b_2 = $b2</m>.
+</p>
+
+<p>
+<m>\text{Area} = </m>
+  <answer name="ans1">$sol</answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Area} = $sol</m></p>
+</solution>
+</problem>

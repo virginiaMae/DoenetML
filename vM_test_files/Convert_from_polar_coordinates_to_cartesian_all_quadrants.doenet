@@ -1,0 +1,263 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Convert from polar to Cartesian coordinates. Graphing tool provided for visualization of the geometry of the problem. Approximate answers to 2 decimal places.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+<selectFromSequence name="r" from="5" to="25"/>
+<selectFromSequence name="a" from="0" to="23"/>
+<selectFromSequence name="b" from="1" to="14"/>
+<math name="Theta" simplify>15$a + $b</math>
+<math name="x" simplify>$r cos($Theta pi/180)</math>
+<math name="y" simplify>$r sin($Theta pi/180)</math>
+<math name="usedDegX">$r cos($Theta)</math>
+<math name="usedDegY">$r sin($Theta)</math>
+<number name="xn" displayDecimals="2" padZeros>$x</number>
+<number name="yn" displayDecimals="2" padZeros>$y</number>
+<number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<!--testing-->
+
+
+<!--testing-->
+
+<p>Convert from polar coordinates to Cartesian coordinates.  Round answers to the nearest <m>0.01</m>.</p>
+<md>
+  <mrow>r &= $r</mrow>
+  <mrow>\theta &= $Theta^{\circ}</mrow>
+</md>
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+
+<sideBySide widths="30% 70%">
+<div>
+<p><m>r = </m><mathInput name="userR"/></p>
+<p><m>\theta = </m><mathInput name="userTheta"/><m>^{\circ}</m> <em>enter in degrees</em></p>
+<p>Check <m>x</m>-coord: <mathInput name="userXGraph" bindValueTo="$userX"/></p>
+<p>Check <m>y</m>-coord: <mathInput name="userYGraph" bindValueTo="$userY"/></p>
+<p><em>Note: Symbolic expressions are accepted for the <m>x</m> and <m>y</m>-coordinates, however, you must enter the angles in these expressions in radians.</em></p>
+</div>
+  
+  <graph xmin="-26" xmax="26" ymin="-26" ymax="26" >
+    <point name="pT" hide coords="($zeroFixed, $zeroFixed)"/>
+    <point name="pH" styleNumber="5" coords="($userR cos($userTheta pi/180), $userR sin($userTheta pi/180))"/>
+
+    <vector name="userV" head="$pH" tail="$pT" />
+    <angle name="userThetaG" degrees="$userTheta" radius="0.2 $userR">
+      <label><m>\theta</m></label>
+    </angle>
+    <circle name="userRCirc" styleNumber="6" center="$pT" fixed radius="$userR"/>
+    <map name="radii">
+      <template><circle center="$pT" radius="$i" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="2" to="40" step="2"/>
+      </sources>
+    </map>
+    <map name="diagonalsQ1">
+      <template><line slope="tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    <map name="diagonalsQ2">
+      <template><line slope="-tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    <lineSegment name="userXSeg" endpoints="$pT ($userXGraph, 0)" fixLocation styleNumber="8"/>
+    <lineSegment name="userYSeg" endpoints="($userXGraph,0) ($userXGraph, $userYGraph)" fixLocation styleNumber="9"/>
+  </graph>
+
+</sideBySide>
+
+
+</aside>
+
+  
+<p><m>x = </m><mathInput name="userX"/></p>
+<p><m>y = </m><mathInput name="userY"/></p>
+  <answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+     <award name="correct1">
+      <when>$userX = $x and $userY = $y</when>
+    </award>
+  </answer>
+  
+<p><em>Note: Symbolic expressions are accepted, however, you must enter the angle in your expression in radians.</em></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+  <boolean name="xIncorrect" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userX != $x</boolean>
+  <boolean name="yIncorrect" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userY != $y</boolean>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$xIncorrect and $ans1.justSubmitted">Your response for <m>x</m> is incorrect.</feedback>
+  <feedback condition="$yIncorrect and $ans1.justSubmitted">Your response for <m>y</m> is incorrect.</feedback>
+  <feedback condition="($userX = $usedDegX and $ans1.responseHasBeenSubmitted) or ($userY = $usedDegY and $ans1.responseHasBeenSubmitted)">If entering your response as a mathematical expression, you need to express the angle in radians. Alternatively, you can provide a numerical answer.</feedback>
+  
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="r">26</math>
+  <math name="Theta">131</math>
+  <math name="x" simplify>$r cos($Theta pi/180)</math>
+  <math name="y" simplify>$r sin($Theta pi/180)</math>
+  <number name="Alpha">180 - $Theta</number>
+  <number name="xn">$x</number>
+  <number name="negXn">-$x</number>
+  <number name="yn">$y</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>x = $x</p>
+<p>y = $y</p>
+<p>xn = $xn</p>
+<p>yn = $yn</p> -->
+<!--testing-->
+
+<p>Convert from polar coordinates to Cartesian coordinates.  Round answers to the nearest <m>0.01</m>.</p>
+<md>
+  <mrow>r &= $r</mrow>
+  <mrow>\theta &= $Theta^{\circ}</mrow>
+</md>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>We sketch the ordered pair given in polar coordinates first using the graphing tool. The given radius is <m>$r</m> and the direction angle of <m>$Theta^{\circ}</m> places this point in the second quadrant.</p>
+
+
+<sideBySide widths="30% 70%">
+<div>
+<p><m>r = </m><mathInput name="userR" prefill="$r"/></p>
+<p><m>\theta = </m><mathInput name="userTheta" prefill="$Theta"/><m>^{\circ}</m> <em>enter in degrees</em></p>
+
+</div>
+  
+  <graph name="exGraph" xmin="-26" xmax="26" ymin="-26" ymax="26" >
+    <point name="pT" hide coords="($zeroFixed, $zeroFixed)"/>
+    <point name="pH" styleNumber="5" coords="($userR cos($userTheta pi/180), $userR sin($userTheta pi/180))"/>
+
+    <vector name="userV" head="$pH" tail="$pT" />
+    <angle name="userThetaG" degrees="$userTheta" radius="0.2 $userR">
+      <label><m>\theta</m></label>
+    </angle>
+    <circle name="userRCirc" styleNumber="6" center="$pT" fixed radius="$userR"/>
+    <map name="radii">
+      <template><circle center="$pT" radius="$i" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="2" to="40" step="2"/>
+      </sources>
+    </map>
+    <map name="diagonalsQ1">
+      <template><line slope="tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    <map name="diagonalsQ2">
+      <template><line slope="-tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    
+  </graph>
+</sideBySide>
+  
+<p>We consider the triangle formed between the radius and the horizontal axis and define the Cartesian coordinates with respect to this smaller angle (call it <m>\alpha</m>).</p>
+
+
+<p><m>\alpha = 180 - $Theta = $Alpha ^{\circ}</m></p>
+  
+<graph copySource="exGraph" ymin="-10" xmax="10">
+  <lineSegment name="XSeg" endpoints="$pT ($xn, 0)" fixLocation styleNumber="8"/>
+  <label anchor="(-11, 2)"><m>x</m></label>
+  <lineSegment name="YSeg" endpoints="($xn,0) ($xn, $yn)" fixLocation styleNumber="9"/>
+  <label anchor="(-20, 10)"><m>y</m></label>
+  <angle through="$userV.head (0,0) (-5,0)" styleNumber="8" radius="6">
+    <label><m>\alpha</m></label>
+  </angle>
+</graph>
+  
+
+<p>The adjacent side of the triangle formed between <m>\alpha</m> and the horizontal axis is the <m>x</m>-coordinate of the given point, and the opposite side of the triangle formed is the <m>y</m>-coordinate. The length of the hypotenuse is the length of the radius, given by <m>r</m>.</p>
+  
+<p>We first compute the <m>x</m>-coordinate:</p>
+
+<p><md>
+  <mrow>\frac{x}{r} &= \cos(\alpha)</mrow>
+  <mrow>x &= $r \cos($Alpha)</mrow>
+  <mrow>x &\approx $negXn ? \;\;\text{reconsider the sign based on quadrant}</mrow>
+  <mrow>x &\approx $xn </mrow>
+</md>
+</p>
+
+<p>Note, since we used <m>\alpha</m> instead of <m>\theta</m> in our calculations (this is optional), we need to perform a final check on the sign of our calculated <m>x</m>-coordinate based on the quadrant we are in.</p>
+
+<p>The calculations for the <m>y</m>-coordinate are similar, and our final answer will be positive since <m>\sin(\theta)</m> is positive in the second quadrant:</p>
+
+<p><md>
+  <mrow>\frac{y}{r} &= \sin(\alpha)</mrow>
+  <mrow>y &= $r \sin($Alpha)</mrow>
+  <mrow>y &\approx $yn ? \;\;\text{reconsider the sign based on quadrant}</mrow>
+  <mrow>y &\approx $yn </mrow>
+</md>
+</p>
+
+<p>Finally, it <em>is</em> possible to answer this question using the symbolic expressions for the <m>x</m> and <m>y</m>-coordinates. A <alert>word of caution</alert> however: you must include a conversion factor from degrees to radians, because the computer algebra system works with radians by default. So, if you're feeling too lazy to get out a calculator, you <em>could</em> write the answers as:</p>
+
+<p><m>x = $x</m></p>
+<p><m>y = $y</m></p>
+
+<p>This answer is more accurate than the decimal approximation, and if you enter <m>\theta</m> as your angle, you do not need to worry about the signs.</p>
+  
+</example>
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p><m>x = $xn</m></p>
+<p><m>y = $yn</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

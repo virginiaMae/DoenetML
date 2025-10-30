@@ -1,0 +1,115 @@
+<problem><title/>
+<setup>
+  <select assignNames="a b c d e f g h i" numToSelect="9" >-13 -11 -10 -9 -7 7 9 10 11 13</select>
+  <selectFromSequence assignNames="x y z" numToSelect="3" withReplacement from="-4" to="4"/>
+  <math name="RHS1" simplify>$a $x + $b $y + $c $z</math>
+  <math name="RHS2" simplify>$d $x + $e $y + $f $z</math>
+  <math name="RHS3" simplify>$g $x + $h $y + $i $z</math>
+  <math name="LHS1" simplify="numberspreserveorder">$a x + $b y + $c z</math>
+  <math name="LHS2" simplify="numberspreserveorder">$d x + $e y + $f z</math>
+  <math name="LHS3" simplify="numberspreserveorder">$g x + $h y + $i z</math>
+  <math name="eq1">$LHS1 = $RHS1</math>
+  <math name="eq2">$LHS2 = $RHS2</math>
+  <math name="eq3">$LHS3 = $RHS3</math>
+  <boolean name="independent">$eq1 != $eq2 and $eq1 != $eq3 and $eq2 != $eq3</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>g = $g</p>
+<p>h = $h</p>
+<p>i = $i</p>
+<p>x = $x</p>
+<p>y = $y</p>
+<p>z = $z</p>
+<p>independent = $independent</p> -->
+<!--testing-->
+
+
+<p>Find the solution to the system of equations:</p>
+  <md>
+    <mrow>$LHS1 \amp= $RHS1</mrow>
+    <mrow>$LHS2 \amp= $RHS2</mrow>
+    <mrow>$LHS3 \amp= $RHS3</mrow>
+  </md>
+
+
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+  
+<p><m>(x, y, z) = \bigg(</m> <mathInput name="userX"/><m>,</m>
+  <mathInput name="userY"/><m>,</m> 
+  <mathInput name="userZ"/>
+  <m> \bigg)</m>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userX = $x and $userY = $y and $userZ = $z</when>
+    </award>    
+</answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allcorrect and $ans1.responseHasBeenSubmitted">$correctFeedback</feedback>
+  <feedback condition="$x != $userX and $ans1.responseHasBeenSubmitted"><p>Your <m>x</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$y != $userY and $ans1.responseHasBeenSubmitted"><p>Your <m>y</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$z != $userZ and $ans1.responseHasBeenSubmitted"><p>Your <m>z</m>-coordinate is incorrect.</p></feedback>
+
+
+  
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>(x,y,z) = ($x, $y, $z)</m></p>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

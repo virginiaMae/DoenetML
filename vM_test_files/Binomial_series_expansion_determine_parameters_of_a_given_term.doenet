@@ -1,0 +1,123 @@
+<setup>
+  <text name="source">Question 31:TR-Series/Unsorted_12042017/Question2/12042017101428_TR-Series_9OKFV0WN</text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+
+-->
+
+<problem>
+<setup>
+  <selectFromSequence name="p" from="2" to="6"/>  
+  <selectFromSequence name="n" from="7" to="9"/>
+  <selectFromSequence name="c" from="2" to="6"/>
+  <math name="f" simplify>$n - $k</math>
+  <math name="k" simplify>$c - 1</math>
+  <math name="aSol" simplify>nCr($n, $k) (-$p)^($k)</math>
+  <math name="bSol" simplify>2$f</math>
+  <math name="cSol" simplify>$k</math>
+  <math name="expr" simplify>(x^2 - $p y)^$n</math>
+  <math name="test" expand simplify="numberspreserveorder">(x^2 - $p y)^$n</math>
+  <text name="numericalWord">
+    <conditionalContent>
+      <case condition="$c = 1">first</case>
+      <case condition="$c = 2">second</case>
+      <case condition="$c = 3">third</case>
+      <case condition="$c = 4">fourth</case>
+      <case condition="$c = 5">fifth</case>
+      <case condition="$c = 6">sixth</case>
+    </conditionalContent>
+  </text>
+</setup>
+
+
+<!--testing-->
+<!-- <p>p = $p</p>
+<p>n = $n</p>
+<p>c = $c</p>
+<p>k = $k</p>
+<p>f = $f</p>
+<p>aSol = $aSol</p>
+<p>bSol = $bSol</p>
+<p>cSol = $cSol</p>
+<p>test = $test</p> -->
+<!--testing-->
+
+<p>In the expansion of <m>$expr</m>, the <alert>$numericalWord</alert> term can be written in the form <m>a x^b y^c</m>.  Find <m>a</m>, <m>b</m>, and <m>c</m>.
+</p>
+
+<p>(Note, when using the binomial expansion, terms are written in the order of descending powers of <m>x</m>. The first term in the expression corresponds to <m>k = 0</m>, the second term to <m>k = 1</m>, and so on.)</p>
+<!--*********************************************
+            User-input
+**********************************************-->
+  
+  <p><m>a = </m> <mathInput name="userA"/><nbsp/>
+    <m>b = </m> <mathInput name="userB"/><nbsp/>
+    <m>c = </m> <mathInput name="userC"/></p>
+
+    <answer name="ans1" matchPartial>
+      <award name="correct">    
+        <when>$userA = $aSol and $userB = $bSol and $userC = $cSol 
+        </when>
+      </award>     
+    </answer>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$userA != $aSol and $ans1.justSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$userB != $bSol and $ans1.justSubmitted">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$userC != $cSol and $ans1.justSubmitted">Your <m>c</m> value is incorrect.</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>a = $aSol, \;\;b = $bSol, \;\; c = $cSol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,86 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This challenging puzzle problem can be used in a variety of algebraic contexts. Students may use a brute-force method to count the number of combinations possible based on some sorting method, or may  arrive at the arithmetic sequence mentioned in the solution. 
+
+Scroll down to the commented out portion on line 51 to view the solution as an instructor. (Immediate solution feedback has been suppressed for students to encourage discussion.)
+
+*************************************************************-->
+<problem>
+
+<p>How many solutions can you find to the equation <m>x + y + z = 20</m>,  where <m>x, y</m>, and <m>z</m> are positive integers ?</p>
+  
+<p>Note that <m>x = 1,\; y = 1,\; z = 18</m> and <m>x = 18,\; y = 1,\; z = 1</m> are different solutions. Also, <m>0</m> is not a positive integer.</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p>Number of solutions =  
+  <answer name="ans1">171</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1a.creditAchieved = 1 and $ans1b.creditAchieved = 1">$correctFeedback</feedback>
+    <feedback condition="$usedGivenPt and $ans1b.responseHasBeenSubmitted">Oops! You can't use the point given in the problem statement in your response.</feedback>
+  <feedback condition="$p2Oncircle and $p3Oncircle and !$p2p3unique">Make sure to give two different points.</feedback>
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>Please email the <ref uri="mailto:team@doenet.org">Doenet team</ref> with a link to this problem and we will reply with the solution.</p>
+  
+<!-- <p>There are <m>171</m> solutions.</p>
+<p>One way to attack the problem is to choose a value of <m>z</m> and see how many pairs <m>x</m> and <m>y</m> can go with it.  For example, if <m>z = 1</m> then <m>x + y = 19</m> and so there are <m>18</m> such <m>(x, y)</m>  pairs (since <m>x</m> can be anything from <m>1</m> to <m>18</m>).</p>
+  
+<p>If you look at this carefully, you see that if <m>z</m> is any number from <m>1</m> to <m>18</m> there
+are <m>(19 - z)</m> pairs <m>(x, y)</m> that can go with it.</p> 
+
+<p>This means our answer is <m>1 + 2 + \dots + 18</m>. The trick to getting this sum is to write the equation forward <m>S = 1 + 2 + \dots + 18</m> and then backward <m>S = 18 + 17 + \dots + 1</m> and, adding the numbers in the same position obtain <m>2S = 19 + 19 + \dots + 19</m> so <m>2S = 18 \times 19</m> and so <m>S = 9 \times 19 = 171</m></p>  -->
+</solution>
+
+<aside><title>Attribution</title>
+<p>This question was obtained from the <ref uri="https://webwork.maa.org/moodle/">WeBWork</ref> problem library. </p>
+</aside>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,173 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the center and radius of a circle given its equation in standard form. Graphing tool provided to help with visualizing the geometry of the problem.
+The worked example can be removed by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="r" from="2" to="6"/>
+  <math name="center">($h, $k)</math>
+  <math name="p" simplify>($h, $k + $r)</math>
+  <math name="y" simplify>$k + $r</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p>
+<p>k = $k</p> -->
+<!--testing-->
+
+<p>A circle is described by the equation
+  <me>(x - h)^2 + (y - k)^2 = r^2</me>
+where the center of the circle is at <m>C = (h, k)</m> and <m>r</m> is its radius. </p>
+<p>Given that a circle has center <m>C = $center</m>, and its circumference passes through the point <m>P = $p</m>, find the following:
+  
+  <ul>
+    <li>the radius</li>
+    <li>two other points on the circumference of the circle</li>
+  </ul>
+</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<p>Place the center of the circle, and drag to the correct location: <nbsp/><nbsp/> 
+  <updateValue target="cP.hide" newValue="false" type="boolean">
+    <label>Place center</label>
+  </updateValue>
+</p>
+<p>Place the given point, and drag to the correct location: <nbsp/><nbsp/> 
+  <updateValue target="gP.hide" newValue="false" type="boolean">
+    <label>Place point</label>
+  </updateValue>
+</p>
+
+  
+<graph name="g1" grid="1 1"> 
+  <point name="cP" hide styleNumber="8">(1, 1)
+    <constraints><constrainToGrid/></constraints>
+  </point>
+  <point name="gP" hide styleNumber="11">(3, 1)
+    <constraints><constrainToGrid/></constraints>
+  </point>
+  <circle name="gCirc" hide="$gP.hide = true" styleNumber="11" center="$cP" through="$gP"/>
+</graph>
+<p>If you found your solution geometrically, don't forget to check your answer by substituting your solution values back into the original equation!</p>
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>\text{radius} = </m> 
+  <answer name="ans1a">$r</answer>
+</p>
+
+  
+<p><m>P_2 = \bigg(</m> <mathInput name="p2x"/> , <mathInput name="p2y"/> <m>\bigg)</m></p>
+
+  
+<p><m>P_3 = \bigg(</m> <mathInput name="p3x"/> , <mathInput name="p3y"/> <m>\bigg)</m></p>
+
+<setup>
+  <boolean name="p2Oncircle">($p2x - $h)^2 + ($p2y - $k)^2 = $r^2</boolean>
+  <boolean name="p3Oncircle">($p3x - $h)^2 + ($p3y - $k)^2 = $r^2</boolean>
+  <math name="p2">($p2x, $p2y)</math>
+  <math name="p3">($p3x, $p3y)</math>
+  <boolean name="p2p3unique">$p2 != $p and $p3 != $p and $p2 != $p3</boolean>
+  <boolean name="usedGivenPt">$p2 = $p or $p3 = $p</boolean>
+</setup>
+
+<p><answer name="ans1b">
+  <award><when>$p2Oncircle and $p3Oncircle and $p2p3unique</when></award>
+</answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1a.creditAchieved = 1 and $ans1b.creditAchieved = 1">$correctFeedback</feedback>
+    <feedback condition="$usedGivenPt and $ans1b.responseHasBeenSubmitted">Oops! You can't use the point given in the problem statement in your response.</feedback>
+  <feedback condition="$p2Oncircle and $p3Oncircle and !$p2p3unique">Make sure to give two different points.</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p>    
+<example newNameSpace>
+
+
+</example>
+
+ </hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li><p>Substitute the coordinates for the center of the circle in for <m>h</m> and <m>k</m> in the given equation, and the coordinates for the point on the circumference of the circle for <m>x</m> and <m>y</m>.
+  <me>($h - ($h))^2 + ($y - ($k))^2 = r^2</me></p>    
+  </li>
+  <li><p>Simplifying the left-hand side of this equation gives
+    <me><math simplify>$r^2</math> = r^2</me>
+  We take the positive square root to solve for <m>r</m>, 
+    <me>r = $r</me></p>
+  </li>
+  <li><p>There are an infinite number of correct answers to the second part of this problem! To determine two additional points on the circle, consider points that are a distance of <m>r = 4</m> away from the center. It might help to make a sketch or use the graphical tool. When you find a point, you can check that the <m>x</m> and <m>y</m> values work in the original equation.</p>
+    <p>Three of the easiest points to find are: <math simplify>($h + $r, $k)</math>, <math simplify>($h - $r, $k)</math>, and <math simplify>($h, $k - $r)</math>.</p>
+  </li>
+</ul>   
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

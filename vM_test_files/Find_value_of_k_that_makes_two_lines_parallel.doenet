@@ -1,0 +1,209 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the value of k (the y-coordinate of a point on the second line) that makes two lines parallel. Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-6" to="3"/>
+  <selectFromSequence name="b" from="-4" to="4"/>
+  <selectFromSequence name="c" from="2" to="5"/>
+  <selectFromSequence name="d" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="e" from="-3" to="4"/>
+  <selectFromSequence name="f" from="0" to="7"/>
+  <selectFromSequence name="g" from="2" to="5"/>
+  <math name="line1x2" simplify>$a + $c</math>
+  <math name="line1y2" simplify>$b + $d</math>
+  <math name="line2x2" simplify>$e + $g</math>
+  <math name="sol" simplify>$f + ($g $d)/$c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>g = $g</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Find the value of <m>k</m> so that the two lines are parallel.</p>
+<p>Line 1 contains the points <m>($a, $b)</m> and <m>($line1x2, $line1y2)</m>. </p>
+<p>Line 2 contains the points <m>($e, $f)</m> and <m>($line2x2, k)</m>. </p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph line through first two points:</p> 
+  <p><m>P_1 = </m> <mathInput name="p1"/></p>
+  <p><m>P_2 = </m> <mathInput name="p2"/></p>
+
+  <p>Graph line through second two points:</p> 
+  <p><m>P_3 = </m> <mathInput name="p3"/></p>
+  <p><m>P_4 = </m> <mathInput name="p4"/></p>
+</div>
+
+  
+<graph name="g1">
+  <line name="line1" through="$P1 $P2">
+    <label>Line 1</label>
+  </line>
+  <point name="P1" fixed coords="$p1">
+    <label>$P1.coords</label>
+  </point>
+  <point name="P2" fixed coords="$p2">
+    <label>$P2.coords</label>
+  </point>
+  <line name="line2" through="$P3 $P4" styleNumber="2">
+    <label>Line 2</label>
+  </line>
+  <point name="P3" fixed coords="$p3" styleNumber="2">
+    <label>$P3.coords</label>
+  </point>
+  <point name="P4" fixed coords="$p4" styleNumber="2">
+    <label>$P4.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+  
+
+<p><m>k = </m>
+  <answer name="ans1">$sol</answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<div newNamespace>  
+<setup>
+  <math name="a">8</math>
+  <math name="b">5</math>
+  <math name="c">1</math>
+  <math name="d">6</math>
+  <math name="e">4</math>
+  <math name="f">1</math>
+  <math name="g">2</math>
+  <math name="line1x2" simplify>$a + $c</math>
+  <math name="line1y2" simplify>$b + $d</math>
+  <math name="line2x2" simplify>$e + $g</math>
+  <math name="sol" simplify>$f + ($g $d)/$c</math>
+  <math name="correctEq">$m x + $yInt</math> 
+</setup>
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>Find the value of <m>k</m> so that the two lines are parallel.</em></p>
+<p><em>Line 1 contains the points <m>($a, $b)</m> and <m>($line1x2, $line1y2)</m>. </em></p>
+<p><em>Line 2 contains the points <m>($e, $f)</m> and <m>($line2x2, k)</m>.</em></p>
+
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>When two lines are parallel, their slopes are equal. We first  compute the slope given the two points indicated for Line 1.</p></li>
+  <li><p><m>m = \frac{y_2 - y_1}{x_2 - x_1} = <math name="m1">($line1y2 - $b)/($line1x2 - $a)</math> = $m1{simplify}</m></p>
+  </li>
+  <li>Since this is also the slope for Line 2, we can substitute this value in the slope formula for Line 2, and solve for <m>k</m>
+    <md>
+      <mrow>6 &= <math>(k - 1)/(6 - 4)</math></mrow>
+      <mrow>6(2) &= k - 1</mrow>
+      <mrow>13 &= k</mrow>
+    </md>
+  </li>
+  <li><p>We can graph our solution to check our answer:</p>
+    <graph xmin="-1" xmax="19" ymin="-1" ymax="19">
+      <line name="line1" through="$P1 $P2">
+        <label>Line 1</label>
+      </line>
+      <point name="P1" fixed coords="($a, $b)">
+        <label>$P1.coords</label>
+      </point>
+      <point name="P2" fixed coords="($line1x2, $line1y2)">
+        <label>$P2.coords</label>
+      </point>
+      <line name="line2" through="($e, $f) ($line2x2, $sol)" styleNumber="2">
+        <label>Line 2</label>
+      </line>
+      <point name="P3" fixed coords="($e, $f)" styleNumber="2">
+        <label>$P3.coords</label>
+      </point>
+      <point name="P4" fixed coords="($line2x2, $sol)" styleNumber="2">
+        <label>$P4.coords</label>
+      </point>
+    </graph>
+  </li>
+</ul>
+
+
+</example>
+</div>
+
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>k = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

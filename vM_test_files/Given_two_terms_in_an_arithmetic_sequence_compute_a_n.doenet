@@ -1,0 +1,155 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given two terms in an arithmetic sequence, compute the nth term.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="p" from="5" to="10"/>
+  <selectFromSequence name="q" from="4" to="8"/>
+  <selectFromSequence name="r" from="9" to="15"/>
+  <selectFromSequence name="d" from="3" to="18"/>
+  <selectFromSequence name="m" from="-13" to="7"/>
+  
+  <math name="sub2" simplify>$p + $q + $r</math>
+  <math name="a_sub2" simplify>$m + $d($q + $r)</math>
+  <math name="sub1" simplify>$p + $q</math>
+  <math name="a_sub1">$m + $d$q</math>
+  <math name="a_sub0">$m - $d$p</math>
+  <!--maths for incorrect responses-->
+
+</setup>
+
+
+<!--testing-->
+<!-- <p>p = $p</p>
+<p>q = $q</p>
+<p>r = $r</p>
+<p>d = $d</p>
+<p>m = $m</p>
+<p>sub2 = $sub2</p>
+<p>a_sub2 = $a_sub2</p>
+<p>sub1 = $sub1</p>
+<p>a_sub1 = $a_sub1</p>
+<p>a_sub1{simplify} = $a_sub1{simplify}</p>
+<p>a_sub0{simplify} = $a_sub0{simplify}</p> -->
+<!--testing-->
+  
+<p>If <m>\{a_n\}</m> is an arithmetic sequence with <m>a_{$p} = $m</m> and <m>a_{$sub2} = $a_sub2</m>, find <m>a_{$sub1}</m></p>
+  <p><m>a_{$sub1} = </m>
+      
+    <answer name="ans7" >
+      <mathInput name="userInput"/> 
+      <award name="correct" credit="1">    
+        <when>
+      $userInput=$a_sub1{simplify}
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Amazing!</feedback>
+  <feedback condition="$ans7.numSubmissions > 2 and $ans7.creditAchieved != 1">
+    <p>In this problem, we are given two values of the arithmetic sequence, and tasked with finding a third value. We can use the two given values to determine the <term>explicit formula</term> for this arithmetic sequence. Recall that this formula takes the form:
+    <md>
+      <mrow>\text{Arithmetic Sequence, Explicit Formula:}</mrow>
+      <mrow>a_n = d(n) + a_0</mrow>
+    </md></p>
+<p>Our first task is to find the common difference, <m>d</m>. To do this, we use the formula <me>d = \frac{a_{n_2} - a_{n_1}}{n_2 - n_1}</me> where <m>n_1</m> and <m>n_2</m> represent the <m>n</m> values for two known terms in the sequence.</p>
+<p>Once we have solved for <m>d</m>, we can use a known point of the sequence to solve for <m>a_0</m>. With <m>d</m> and <m>a_0</m>, we can write the explicit formula and use it to solve for any value of the sequence, <m>a_n</m>. </p>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>If <m>\{a_n\}</m> is an arithmetic sequence with <m>a_4 = 8</m> and <m>a_{35} = 597</m>, what is <m>a_{17}</m>? </em></p>
+
+  <p><alert><em>Solution.</em></alert></p>
+  <ul>
+    <li>First, solve for the common difference, <m>d</m>
+      <md>
+        <mrow>\text{Let}\;\;n_2 = 35\;\;\text{and}\;\;n_1 \amp= 4</mrow>
+        <mrow>\text{then,}\;\;d\amp= \frac{597 - 8}{35 - 4}</mrow>
+        <mrow>\amp=19</mrow>
+      </md></li>
+    <li>Next, substitute <m>a_4 = 8</m> and <m>d = 19</m> in the explicit formula to solve for <m>a_0</m>
+      <md>
+        <mrow>a_n \amp= d(n) + a_0</mrow>
+        <mrow>8 \amp=19\cdot 4 + a_0</mrow>
+        <mrow>-68 \amp= a_0</mrow>
+      </md></li>
+    <li>Finally, use the completed explicit formula to solve for <m>a_{17}</m>
+      <md>
+        <mrow>a_n =\amp 19 n - 68</mrow>
+        <mrow>a_{17} =\amp 19\cdot17 - 68</mrow>
+        <mrow>=\amp255</mrow>
+      </md></li>
+  </ul>
+</example>
+  
+<p><em>How to check</em>: Use the explicit formula you derived to solve for the second value of the sequence given in the problem statement. If your explicit formula is correct, the sequence values will match.</p>
+
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+    <li>First, solve for the common difference, <m>d</m>
+      <md>
+        <mrow>d \amp= \frac{$a_sub2{simplify} - ($m)}{$sub2{simplify} - $p}</mrow>
+        <mrow>\amp= $d</mrow>
+      </md></li>
+    <li>Next, substitute <m>a_{$p} = $m</m> and <m>d = $d</m> in the explicit formula to solve for <m>a_0</m>
+      <md>
+        <mrow>a_n \amp= d(n) + a_0</mrow>
+        <mrow>$m \amp=$d\cdot $p + a_0</mrow>
+        <mrow>$a_sub0{simplify} \amp= a_0</mrow>
+      </md></li>
+    <li>Finally, use the completed explicit formula to solve for <m>a_{$sub1{simplify}}</m>
+      <md>
+        <mrow>a_n =\amp <math>$d n + $a_sub0{simplify}</math></mrow>
+        <mrow>a_{$sub1{simplify}} =\amp <math>$d  $sub1{simplify} + $a_sub0{simplify}</math></mrow>
+        <mrow>=\amp $a_sub1{simplify}</mrow>
+      </md></li>
+  </ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

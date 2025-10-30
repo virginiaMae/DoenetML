@@ -1,0 +1,136 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the type of symmetry (even, odd, or neither) given the graph of an odd rational function. 
+
+(BA-Basics #60 BA1325)
+*************************************************************-->
+<problem>
+<setup>
+  <function name="f">(x^3 + x)/(x^2)</function>
+</setup>
+  
+<p>Is the function graphed below even, odd, or neither?</p>
+<me>f(x) = $f</me>
+<graph name="g1" xmin="-3" xmax="3" ymin="-10" ymax="10">
+   <function name="fL" domain="(-infinity, 0)">(x^3 + x)/(x^2)</function>
+   <function name="fR" domain="(0, infinity)">(x^3 + x)/(x^2)</function>
+</graph>
+
+<!--*********************************************
+            Graphing tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <p>Check if <alert>even:</alert>
+ </p>
+  <p><booleanInput name="showEven" prefill="true"/>
+    <m>f(-x) = </m> <mathInput name="miEven"/>  
+  </p>
+  <p>Check if <alert>odd:</alert></p>
+    <p><booleanInput name="showOdd" prefill="true"/>
+    <m>- f(-x) = </m> <mathInput name="miOdd"/>
+  </p>
+ 
+  
+  <setup>
+  <function name="miFunctionL" domain="(-infinity, 0)">$mi</function>
+  <function name="miFunctionR" domain="(0, infinity)">$mi</function>
+  <function name="evenFunctionL" domain="(-infinity, 0)" styleNumber="8" hide="!$showEven">$miEven</function>
+  <function name="evenFunctionR" domain="(0, infinity)" styleNumber="8" hide="!$showEven">$miEven</function>
+  <function name="oddFunctionL" domain="(-infinity, 0)" styleNumber="9" hide="!$showOdd">$miOdd</function>
+  <function name="oddFunctionR" domain="(0, infinity)" styleNumber="9" hide="!$showOdd">$miOdd</function>
+  </setup>
+</div>
+  
+<graph>
+  $miFunctionL $miFunctionR 
+  $evenFunctionL $evenFunctionR 
+  $oddFunctionL $oddFunctionR
+</graph>
+</sideBySide>
+
+</aside>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1">
+  <choice>even</choice>
+  <choice credit="1">odd</choice>
+  <choice>neither</choice>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><term>Odd functions</term> have the following property:
+  <me>f(x) = -f(-x)</me>
+  </p>
+  <p>You can overlay the graph of <m>f(x)</m> with <m>-f(-x)</m> to informally check if a function is odd. You can also compare the two functions algebraically.</p>
+  <p>The graph below illustrates that the given function, <m>f(x) = $f</m>, is an <alert>odd</alert> function.</p>
+  <graph copySource="g1">
+    <function name="solF" copySource="fL"/>
+    <booleanInput name="showAlt" anchor="(-2,1)" prefill="true">
+      <label>Show <m>-f(-x)</m></label>
+    </booleanInput>
+    <function name="altFL" domain="(-infinity, 0)" styleNumber="8" hide="!$showAlt">-$$f(-x)</function>
+    <function name="altFR" domain="(0, infinity)" styleNumber="8" hide="!$showAlt">-$$f(-x)</function>
+    <legend>
+      <label forObject="altFL"><math simplify="numberspreserveorder">-$$f(-x)</math></label>
+      <label forObject="solF"><m>$f</m></label>
+    </legend>
+  </graph>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="13" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+</styleDefinitions>
+</setup>

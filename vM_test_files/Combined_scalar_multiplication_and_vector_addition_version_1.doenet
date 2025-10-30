@@ -1,0 +1,162 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Combined scalar multiplication and vector addition. Graphing tool provided for visualization of the geometry of the problem.
+
+There are two versions to this problem:
+Version 1: Abstracts given vectors u and v, then asks for a*u + b*v
+Version 2: Expression a*u + b*v is given 
+
+
+(TR-Vectors #12 TR2804)
+*************************************************************-->
+<problem><title/>
+<setup>
+<selectFromSequence assignNames="xa xb ya yb" numToSelect="4" from="-5" to="5"/>
+<selectFromSequence assignNames="a b" numToSelect="2" from="2" to="6"/>
+<vector name="u" displayWithAngleBrackets>($xa, $ya)</vector>
+<vector name="v" displayWithAngleBrackets>($xb, $yb)</vector>
+<vector name="sol">$a$u + $b$v</vector>
+<math name="solx" simplify>$sol.displacement[1]</math>
+<math name="soly" simplify>$sol.displacement[2]</math>
+</setup>
+  
+<!-- testing -->
+<!-- <p>xa = $xa</p>
+<p>xb = $xb</p>
+<p>ya = $ya</p>
+<p>yb = $yb</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>v = $v</p>
+<p>u = $u</p>
+<p>sol = $sol</p>
+<p>solx = $solx</p>
+<p>soly = $soly</p> -->
+<!--testing-->
+
+<p>If <m>\vec{u} = $u</m> and <m>\vec{v} = $v</m>,
+find <m name="expr">$a \vec{u} + $b \vec{v}</m></p>
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<p>Let <m>\vec{R}</m> be the sum of the two vectors. Drag the heads of the vectors to be added, as well as the sum vector <m>R</m>, to the correct locations.</p>
+<p><alert>Graphing tip:</alert> The sum vector is the diagonal of the parallelogram formed by vectors <m>$a \vec{u}</m> and <m>$b \vec{v}</m></p>
+
+<p>Check sum vector <m>\vec{R}</m> displacements:</p>
+<p>
+  <m>\Delta x = </m>
+    <answer name="xGraph" weight="0">
+      <mathInput name="userXS" bindValueTo="$userSumx"/>
+      <award><when>$userXS = $sumG.displacement[1]</when></award>
+    </answer>
+</p>
+<p>
+  <m>\Delta y = </m>
+    <answer name="yGraph" weight="0">
+      <mathInput name="userYS" bindValueTo="$userSumy"/>
+      <award><when>$userYS = $sumG.displacement[2]</when></award>
+    </answer>
+</p>
+
+<graph grid="1 1" xmin="-20" xmax="20" ymin="-20" ymax="20" size="full" aspectRatio="3/2">
+<point name="pT" fixLocation styleNumber="5">(0,0)</point>
+<point name="pH_u" layer="2" hide>(4,0)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<vector name="uG" head="$pH_u" tail="$pT" styleNumber="13"/>
+<label anchor="$pH_u" positionFromAnchor="upperright"><m>\langle $pH_u.x, $pH_u.y \rangle</m></label>
+
+<point name="pH_v" layer="2" hide>(0,4)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<vector name="vG" head="$pH_v" tail="$pT" styleNumber="14"/>
+<label anchor="$pH_v" positionFromAnchor="upperleft"><m>\langle $pH_v.x, $pH_v.y \rangle</m></label>
+
+<point name="pH_sum" layer="2" hide>(4,4)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<vector name="sumG" head="$pH_sum" tail="$pT" styleNumber="10"/>
+<label anchor="$pH_sum" positionFromAnchor="top"><m>\vec{R} = \langle $pH_sum.x, $pH_sum.y \rangle</m></label>
+
+
+<polygon name="outline" vertices="$pH_u $pH_sum $pH_v  $pT" styleNumber="6"/>
+</graph>
+
+<p><em>Note:</em> the above checkboxes check to see if the displacements match the graph that you've drawn. For a full check on the problem, click the  "Check Work" button below.</p>
+
+
+</aside>
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p><m>$expr = \bigg \langle </m><mathInput name="userSumx" minWidth="20"/> , <mathInput name="userSumy" minWidth="20"/><m>\bigg \rangle</m></p>
+
+  <answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+     <award name="correct1">
+      <when>$userSumx = $solx and $userSumy = $soly</when>
+    </award>
+  </answer>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p><m>$expr= \langle $solx, $soly \rangle</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<styleDefinition styleNumber="2" lineWidth="4"/>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--blue, styleNumber 1 corrolary but dashed-->
+<styleDefinition styleNumber="13" lineStyle="dashed" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary, but dashed-->
+<styleDefinition styleNumber="14" fillColor="#D4042D" lineStyle="dashed" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+</styleDefinitions>
+</setup>

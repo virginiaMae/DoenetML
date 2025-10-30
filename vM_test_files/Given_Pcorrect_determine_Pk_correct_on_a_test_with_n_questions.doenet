@@ -1,0 +1,154 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine probability of k correct in an exam with n questions, where the probability of answering any one question correct is given.
+
+The Worked Example can be hidden from veiw by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="n" from="5" to="10" exclude="7 9"/>
+  <select name="p" type="math">0.6 0.7 0.75 0.8 0.9</select>
+  <selectFromSequence name="k" from="2" to="$n-1"/>
+  <math name="binCoeff">$n!/($k!($n - $k)!)</math>
+  <math name="probOfKCorrect">$binCoeff $p^$k (1 - $p)^($n - $k)</math>
+  <number name="probOfKCorrectNumerical">$probOfKCorrect</number>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>p = $p</p>
+<p>k = $k</p>
+<p>binCoeff = $binCoeff</p>
+<p>probOfKCorrect = $probOfKCorrect = $probOfKCorrect{simplify}</p>
+<p>probOfKCorrectNumerical = $probOfKCorrectNumerical</p> -->
+<!--testing-->
+
+<p>An exam has <m>$n</m> questions.  You will answer any given answer correctly with probability <m>p = $p</m>, independent of the other questions.  What is the probability that you will get exactly <m>$k</m> correct?  Express your answer as a decimal correct to the nearest 0.001.</p>
+
+      
+<p><m>P(\text{$k correct}) = </m>   <answer name="ans11" >
+      <mathInput name="userInput" prefillLatex="0.000"/>
+      
+      <award name="correct" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute credit="1">    
+        <when>
+      $userInput=$probOfKCorrectNumerical
+        </when>
+      </award>
+
+      <award name="roundingError" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">
+        <when>
+      $userInput=$probOfKCorrectNumerical
+        </when>
+      </award>
+      
+      <award name="correctSymbolic" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$probOfKCorrect
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctSymbolic">$correctFeedback</feedback>
+  
+  <feedback condition="$roundingError">It looks like you may have rounded incorrectly. Try again, preserving more decimal places in your intermediate computations.</feedback>
+  
+  <feedback condition="$ans11.numSubmissions > 2 and $ans11.creditAchieved != 1">
+     <div name="helpText">
+       <p>The solution to this question is an application of the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">Binomial Probability formula</ref>. This formula is used when computing probabilities of repeated trials for outcomes that have only two possibilites. Since there is a greater than <m>50\%</m> chance of getting the question correct, we need to use the model for outcomes having arbitrary probabilities, rather than the "fair coin" model.</p> 
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>An exam has <m>$n</m> questions.  You will answer any given answer correctly with probability <m>p = $p</m>, independent of the other questions.  What is the probability that you will get exactly <m>$k</m> correct? </em></p>
+
+<setup>
+  <math name="n">12</math>
+  <math name="p">0.65</math>
+  <math name="k">7</math>
+  <math name="binCoeff">$n!/($k!($n - $k)!)</math>
+  <math name="probOfKCorrect">$binCoeff $p^$k (1 - $p)^($n - $k)</math>
+  <number name="probOfKCorrectNumerical">$probOfKCorrect</number> 
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>We use the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">Binomial Probability formula</ref>:</p>
+  <p>Let <m>X</m> be the random variable that counts the number of questions correct in a test of <m>n</m> independent questions, where each question has a probability <m>p</m> of being correct.</p> 
+  <md>
+    <mrow>P(X = k) \amp= \binom{n}{k} p^k (1 - p)^{n - k} \amp\text{general formula}</mrow>
+    <mrow>P(X = $k) \amp= $probOfKCorrect \amp\text{substitute known information}</mrow>
+    <mrow>\amp= $probOfKCorrectNumerical{displayDecimals='3'} \amp\text{simplify, rounding to 3 decimal places}</mrow>
+  </md>
+    <p>Note, rather than calculating <m>\binom{$n}{$k}</m> from the formula, we could have used the <m>k^{th}</m> entry in the <m>n^{th}</m> row of Pascal's triangle.</p>
+  
+</example>
+
+</hint>
+ 
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>We use the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">Binomial Probability formula</ref>:</p>
+  <p>Let <m>X</m> be the random variable that counts the number of questions correct in a test of <m>n</m> independent questions, where each question has a probability <m>p</m> of being correct.</p> 
+  <md>
+    <mrow>P(X = k) \amp= \binom{n}{k} p^k (1 - p)^{n - k} \amp\text{general formula}</mrow>
+    <mrow>P(X = $k) \amp= $probOfKCorrect \amp\text{substitute known information}</mrow>
+    <mrow>\amp= $probOfKCorrectNumerical{displayDecimals='3'} \amp\text{simplify, rounding to 3 decimal places}</mrow>
+  </md>
+    <p>Note, rather than calculating <m>\binom{$n}{$k}</m> from the formula, we could have used the <m>k^{th}</m> entry in the <m>n^{th}</m> row of Pascal's triangle.</p>
+
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

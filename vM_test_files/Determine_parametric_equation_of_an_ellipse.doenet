@@ -1,0 +1,188 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4"/>
+  <selectFromSequence name="k" from="-4" to="4"/>
+  <selectFromSequence name="a" from="1" to="4"/>
+  <selectFromSequence name="b" from="1" to="4"/>
+  <selectFromSequence name="c" from="2" to="4"/>
+  <math name="t0">0</math>
+  <math name="t1" simplify>pi/(2$c)</math>
+  <math name="t2" simplify>pi/($c)</math>
+  <math name="t3" simplify>3pi/(2$c)</math>
+  <math name="t4" simplify>2pi/($c)</math>
+  <math name="x0" simplify>$h + $a</math>
+  <math name="y0" simplify>$k</math>
+  <point name="p0" styleNumber="5" labelPosition="right">($x0, $y0)
+    <label>$p0.coords</label>
+  </point>
+
+  <math name="x1" simplify>$h</math>
+  <math name="y1" simplify>$k + $b</math>
+  <point name="p1" styleNumber="5" labelPosition="top">($x1, $y1)
+    <label>$p1.coords</label>
+  </point>
+
+  <math name="x2" simplify>$h - $a</math>
+  <math name="y2" simplify>$k</math>
+  <point name="p2" styleNumber="5" labelPosition="left">($x2, $y2)
+    <label>$p2.coords</label>
+  </point>
+
+  <math name="x3" simplify>$h</math>
+  <math name="y3" simplify>$k - $b</math>
+  <point name="p3" styleNumber="5" labelPosition="bottom">($x3, $y3)
+    <label>$p3.coords</label>
+  </point>
+
+  
+  <math name="xOft" simplify="numberspreserveorder">$h + $a cos($c t)</math>
+  <math name="yOft" simplify="numberspreserveorder">$k + $b sin($c t)</math>
+
+  <number name="xmin">min(-1.5, $p0.x - 1.5, $p1.x - 1.5, $p2.x - 1.5, $p3.x - 1.5)</number>
+  <number name="xmax">max(1.5, $p0.x + 1.5, $p1.x + 1.5, $p2.x + 1.5, $p3.x + 1.5)</number>
+  <number name="ymin">min(-1.5, $p0.y - 1.5, $p1.y - 1.5, $p2.y - 1.5, $p3.y - 1.5)</number>
+  <number name="ymax">max(1.5, $p0.y + 1.5, $p1.y + 1.5, $p2.y + 1.5, $p3.y + 1.5)</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>tf = $tf</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>xOft = $xOft</p>
+<p>yOft = $yOft</p> -->
+<!--testing-->
+
+
+<p>Write a set of parametric equations for the ellipse which begins at the point $p0 at time <m>t = 0</m>, then passes through $p1 at time <m>t = $t1</m>, 
+$p2 at time <m>t = $t2</m>, $p3 at time <m>t = $t3</m>, before returning to $p0 at time <m>t = $t4</m>.</p>
+  
+<p>Note: The answers should be functions of <m>t</m>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<setup>
+  <number name="tGraph">0</number>
+  <function name="fx" variable="t">$user_xOftGraph</function>
+  <function name="fy" variable="t">$user_yOftGraph</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p><m>x(t) = </m> <mathInput name="user_xOftGraph" bindValueTo="$user_xOft"/></p>
+<p><m>y(t) = </m> <mathInput name="user_yOftGraph" bindValueTo="$user_yOft"/></p>
+
+<booleanInput name="animationOn"><label>Animate</label></booleanInput>
+
+<animateFromSequence target="tGraph" from="0" to="$t4" animationOn="$animationOn" animationInterval="200" step="pi/32"/>
+</div>
+
+  
+<graph name="g1" grid="1 1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  $p0 $p1 $p2 $p3
+  <curve name="solCurve" variable="t"  parMin="0" parMax="$t4" hide>($xOft, $yOft)</curve>
+  <point name="pGraph" styleNumber="2">($$fx($tGraph), $$fy($tGraph))</point>
+  <curve name="animationCurve" variable="t" styleNumber="2" parMin="0" parMax="$tGraph">($$fx(t), $$fy(t))
+  </curve>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>x(t) = </m> <mathInput name="user_xOft"/></p>
+<p><m>y(t) = </m> <mathInput name="user_yOft"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$user_xOft = $xOft and $user_yOft = $yOft</when>
+    </award>       
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$user_xOft != $xOft and $ans1.justSubmitted">Your response for <m>x(t)</m> is incorrect.</feedback>
+  <feedback condition="$user_yOft != $yOft and $ans1.justSubmitted">Your response for <m>y(t)</m> is incorrect.</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x(t) = $xOft</m></p>
+<p><m>y(t) = $yOft</m></p>
+</solution>
+
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

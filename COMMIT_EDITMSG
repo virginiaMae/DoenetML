@@ -1,0 +1,18 @@
+Created batch conversion script for 0.6 to 0.7, converted all PreCalc library.
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch test_integrated_conversion
+# Your branch is ahead of 'main' by 5 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   package-lock.json
+#	modified:   package.json
+#
+# Untracked files:
+#	batch-convert.mjs
+#	converted_files/
+#	test-convert.mjs
+#	vM_test_files/
+#

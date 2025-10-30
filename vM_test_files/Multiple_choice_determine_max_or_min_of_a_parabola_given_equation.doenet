@@ -1,0 +1,149 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Multiple choice format; determine which of a series of statements about a given parabola's max or min are correct. Parameters are randomized, correct choice is dependent on the sign value of the "a" parameter selected. Optional graphing applet included which requires student to understand the location of the vertex and the direction in which the parabola opens prior to graphing the equation.
+
+
+(BA-Basics #123 BA9009)
+
+*************************************************************-->
+<problem>
+<setup>
+<selectFromSequence name="a" from="-16" to="16" exclude="-1 0 1"/>
+<selectFromSequence name="h" from="-8" to="8"/>
+<selectFromSequence name="k" from="-8" to="8" exclude="$h"/>
+<math name="expr" simplify="numberspreserveorder">$a(x - $h)^2 + $k</math>
+</setup>
+
+<!--*********************************************
+            Begin testing
+**********************************************--> 
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>expr = $expr</p>
+<graph size="small">
+  <point>($h, $k)</point>
+  <function>$expr</function>
+</graph> -->
+<!--*********************************************
+            End testing
+**********************************************-->
+
+<p>The parabola given by
+  <me>y = $expr</me>
+</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1" shuffleOrder>
+  <choice name="choiceA">has a maximum value of <m>$k</m> at 
+    <math simplify="numberspreserveorder">x = -$h</math>
+  </choice>
+  <choice name="choiceB" credit="$a < 0">has a maximum value of <m>$k</m> at <m>x = $h</m></choice>
+  <choice name="choiceC">has a minimum value of <m>$k</m> at 
+    <math simplify="numberspreserveorder">x = -$h</math>
+  </choice>
+  <choice name="choiceD" credit="$a > 0">has a minimum value of <m>$k</m> at <m>x = $h</m></choice>
+  <choice name="choiceE">has a minimum value of 
+    <math simplify="numberspreserveorder">$a $k</math>
+    at 
+    <math simplify="numberspreserveorder">x = -$h</math>
+  </choice>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<p>What is the vertex of the given parabola? :</p>
+<p><m>V = \bigg( </m> <mathInput name="userVx" minWidth="25"/> , <mathInput name="userVy" minWidth="25"/> <m>\bigg)</m>
+  <answer name="userVans" weight="0" matchPartial>
+    <award><when>$userVx = $h and $userVy = $k</when></award>
+  </answer>
+</p>
+  <feedback condition="$userVans.responseHasBeenSubmitted and $userVans.creditAchieved != 1">
+    <p>Here's a helpful hint: the parabola's equation is given to us in <term>vertex</term> form:
+    <me>y = a (x - h)^2 + k</me>
+    In this form, we can simply read off the coordinates of the vertex from the equation. The vertex is located at <m>V = (h, k)</m>. Pay close attention to the signs on the terms in the equation.</p>
+  </feedback>
+
+<p>Based on the given equation, does the parabola open downwards or upwards? 
+  <answer name="directionAns" inline weight="0">
+    <choice credit="$a > 0">upwards</choice>
+    <choice credit="$a < 0">downward</choice>
+  </answer></p>
+
+<p>First answer the 2 questions above, then enter the equation to graph the parabola: 
+  <m>y = </m> <mathInput name="userParabola" disabled="$userVans.creditAchieved != 1 or $directionAns.creditAchieved != 1"/>
+</p>
+  
+<graph name="g1" grid>
+  <point name="userV" fixed coords="($userVx, $userVy)" styleNumber="8"/>
+  <function name="f">$userParabola</function>
+</graph>
+
+  
+</aside>  
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>The parabola 
+<conditionalContent>
+  <case condition="$a < 0">$choiceB.text</case>
+  <case condition="$a > 0">$choiceD.text</case>
+</conditionalContent>
+</p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

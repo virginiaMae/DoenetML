@@ -1,0 +1,73 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Rationalize the denominator. In the given expression, the numerator is just x, and the denominator is a binomial including sqrt(x) (or sometimes just sqrt(x)).
+
+(CA-Deriv #2 CA2000)
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="-3" to="3"/>
+  <math name="expr" simplify="numberspreserveorder">x/(sqrt(x) + $a)</math>
+  <math name="sol" simplify>(x sqrt(x) - $a x)/(x - $a^2)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Rationalize the denominator.</p> 
+  <me>$expr</me>
+
+  <p><m>\displaystyle{$expr} = </m>
+    <answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>
+      <mathInput name="userAns"/>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>$expr = $sol</m>
+</p>
+
+</solution>
+</problem>

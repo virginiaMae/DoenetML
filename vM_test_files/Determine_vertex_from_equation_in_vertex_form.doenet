@@ -1,0 +1,198 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the vertex of a parabola from equation in vertex form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="h1" from="1" to="8"/>
+  <selectFromSequence name="h2" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="a" from="2" to="6"/>
+  <selectFromSequence name="k1" from="1" to="9"/>
+  <selectFromSequence name="k2" from="-1" to="1" exclude="0"/>
+  <math name="h">$h1$h2</math>
+  <math name="k">$k1$k2</math>
+  <math name="xMinusH" simplify>x - $h</math>
+  <math name="factoredExpr">$a($xMinusH)^2 + $k{simplify}</math>
+  
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>h1 = $h1</p>
+<p>h2 = $h2</p>
+<p>a = $a</p>
+<p>k1 = $k1</p>
+<p>k2 = $k2</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>p = $p</p>
+<p>factoredExpr = $factoredExpr</p> -->
+
+<!--testing-->
+
+
+<p>Find the vertex of the parabola</p>
+  <me>y = $factoredExpr</me>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">max($k + 10, 10)</number>
+  <number name="ymin">min($k - 10, -10)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph point at the proposed vertex:</p> 
+  <p><m>(h,k) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="graphH" bindValueTo="$userH"/><m>,</m>
+  <mathInput name="graphK" bindValueTo="$userK"/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" ymax="$ymax{link='false'}" ymin="$ymin{link='false'}">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <point name="graphVertex" coords="($graphH, $graphK)"/>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will appear at the vertex of the parabola.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>(h,k) = \bigg(</m> <mathInput name="userH"/><m>,</m>
+  <mathInput name="userK"/><m> \bigg)</m> 
+  <answer name="ans7">
+    <award name="allCorrect">
+      <when>$userH{isResponse} = $h and $userK{isResponse} = $k</when>
+    </award>
+
+    <award name="hkReverse" credit="0">
+      <when>$userH{isResponse} = $k and $userK{isResponse} = $h</when>
+    </award>
+</answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$userK != $k and $ans7.justSubmitted"><p>Your <m>k</m> value is incorrect.</p></feedback>
+  <feedback condition="$userH != $h and $ans7.justSubmitted"><p>Your <m>h</m> value is incorrect.</p></feedback>
+  <feedback condition="$hkReverse"><p>Check the order of your coordinates, the point should have the format <m>(x,y)</m>.</p>
+  </feedback>
+  <feedback condition="$ans7.numSubmissions > 2 and $ans7.creditAchieved != 1"> 
+  <p>Recall that the vertex of a parabola is denoted by <m>(h,k)</m>.</p>
+  
+<p>We can find the vertex from the vertex form equation <me>y = a(x - h)^2 + k</me> by extracting the values for <m>h</m> and <m>k</m> directly from the equation.</p>
+  </feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection" newNameSpace><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p>   
+  <p><em>Find the vertex of the parabola</em></p>
+  <me>y = 7(x - 12)^2 + 27</me> 
+<p><em><alert>Solution.</alert></em></p>
+  <ul>
+    <li><p>Vertex form is given by <me>y = a(x-h)^2 + k</me>
+    </p>
+    </li>
+    <li><p>Comparing the given equation with the standard form, notice that the <m>h</m> value from the equation is <m>12</m>, and the <m>k</m> value from the equation is <m>27</m>. Therefore, the vertex is located at <m>(12,27)</m>.</p></li>
+    <li><p>As a final check on our work, we can check by graphing the parabola and its vertex.</p>
+
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1" prefill="7(x-12)^2+27"/></p>
+
+  <p>Graph point at the proposed vertex:</p> 
+  <p><m>(h,k) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="graphH" prefill="12"/><m>,</m>
+  <mathInput name="graphK" prefill="27"/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" ymax="20" ymin="50" xmin="7" xmax="17">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <point name="graphVertex" coords="($graphH, $graphK)"/>
+</graph>
+  
+</sideBySide>
+    </li>
+  </ul>
+      
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Given <m>y = $factoredExpr</m> we see that
+  <md>
+    <mrow>y \amp= a(x - h)^2 + k</mrow>
+    <mrow>h \amp= $h{simplify}</mrow>
+    <mrow>k \amp= $k{simplify}</mrow>
+  </md></li>
+  <li>The vertex is located at <m>($h{simplify}, $k{simplify}).</m></li>
+</ul>
+    
+
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,201 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Newton's Law of Cooling application - determine the time for the liquid to cool to a certain temperature, given the original temperature, the temperature of the environment, and the time elapsed to cool to another given temperature.
+
+A graphing tool is provided to help with visualizing the geometry of the problem.
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="64" to="72"/>
+  <selectFromSequence name="b" from="96" to="128"/>
+  <selectFromSequence name="t" from="1" to="4"/>
+  <selectFromSequence name="c" from="75" to="90"/>
+  <math name="initialTemp" simplify>$a + $b</math>
+  <math name="secondTemp" simplify>$a + $c</math>
+  <selectFromSequence name="finalTime" from="5" to="10"/>
+<!--   <math name="finalTime">$t (ln(130 - $a) - ln($b))/(ln($c) - ln($b))</math> -->
+  <math name="delta2">$secondTemp - $a</math>
+  <math name="delta1">$initialTemp - $a</math>
+  <math name="finalTemp" simplify>($initialTemp - $a)e^(-$k $finalTime) + $a</math>
+  <math name="k">-ln($delta2{simplify}/$delta1{simplify})/$t</math>
+  <number name="kNumerical">$k</number>
+  <number name="finalTempN">$finalTemp</number>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>t = $t</p>
+<p>delta1 = $delta1</p>
+<p>delta2 = $delta2</p>
+<p>k = $k</p>
+<p>kNumerical = $kNumerical</p>
+<p>finalTime = $finalTime</p>
+<p>finalTemp = $finalTemp</p>
+<p>finalTempN = $finalTempN</p> -->
+<!--testing-->
+  
+<p>At time <m>t = 0</m>, a cup of hot cocoa at <m>$initialTemp^{\circ} F</m> is placed in a room at <m>$a^{\circ} F</m> .  After <m>t = $t</m> minutes, the cocoa has <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-6-6-newtons-law-of-cooling/">cooled to a temperature</ref> of <m>$secondTemp^{\circ} F</m>.</p>
+
+<p>What is the temperature of the cocoa after it has cooled for <m>$finalTime</m> minutes?</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">-1</number>
+  <number name="xmax">$finalTime + 5</number>
+  <number name="ymin">-5</number>
+  <number name="ymax">$initialTemp + 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Data point at initial amount:</p> 
+  <p><m>(t_0, T_0 - T_m) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="t0_g" /><m>,</m>
+  <mathInput name="T0_g"/><m> \bigg)</m> </p>
+
+  <p>Data point at <m>t = $t</m>:</p> 
+  <p><m>($t, T_3 - T_m) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="tint_g" /><m>,</m>
+  <mathInput name="Tint_g"/><m> \bigg)</m> </p>
+
+  <p>Data point at final time:</p> 
+  <p><m>(t_f, T_f - T_m) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="tf_g" /><m>,</m>
+  <mathInput name="Tf_g"/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <xlabel><m>t</m></xlabel>
+  <ylabel><m>T^*(t) = (T_t - T_m)</m></ylabel>
+  <function name="graphExpFunc" variables="t" styleNumber="5">$eq1</function>
+  <point name="p0" coords="($t0_g, $T0_g)"/>
+  <point name="ph" coords="($tint_g, $Tint_g)"/>
+  <point name="pf" coords="($tf_g, $Tf_g)"/>
+</graph>  
+</sideBySide>
+  
+<p>Enter the exponential decay function:</p>
+  <p><m>T^*(t) = (T_t - T_m) = (T_0 - T_m)e^{-kt}</m>:</p>
+  <p><m>T^*(t) = </m> <mathInput name="eq1"/></p>
+</aside>  
+
+  
+<p><m>\text{Temperature:}\;\; T_{$finalTime} = </m>
+    <mathInput name="userAns" prefillLatex="0.00"/><m>^{\circ}</m> 
+  <answer name="ans1">
+    <award name="correctNumerical" allowedErrorInNumbers="0.02" allowedErrorIsAbsolute>
+      <when>$userAns = $finalTempN</when>
+    </award>
+
+    <award name="correctSymbolic" symbolicEquality simplifyOnCompare>
+      <when>$userAns = $finalTemp</when>
+    </award>
+
+    <award name="roundingError1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0.7">
+      <when>$userAns = $finalTempN</when>
+    </award>
+
+    <award name="answeredWithK" credit="0" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+      <when>$userAns = $k or $userAns = $kNumerical</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correctNumerical or $correctSymbolic">$correctFeedback</feedback>
+  <feedback condition="$roundingError1">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+
+  <feedback condition="$answeredWithK">It looks like you've solved for the decay rate <m>k</m>, but this is only the first step. What is the final answer the problem is asking for?</feedback>
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">We need to use the formula for Newton's Law of Cooling, 
+    <me>(T_t - T_m) = (T_0 - T_m) e^{-k t}</me>
+where <m>T_t</m> is the tempertaure of the substance at time <m>t</m>, <m>T_0</m> is the initial temperature, <m>T_m</m> is the temperature of the medium (the surrounding enviornment) and <m>k</m> is the rate of cooling (or heating)..</feedback>
+
+
+
+
+
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Using Newton's Law of Cooling, we substitute the information given for <m>t = $t</m> to solve for <m>k</m>,
+    <me>(T_t - T_m) = (T_0 - T_m) e^{-k t}</me>
+    we have <m>t = 2</m> minutes and <m>T_t = T_2 = $secondTemp^{\circ}</m>,
+    <md>
+      <mrow>($delta2) \amp= ($delta1)e^{-$t k}\;\; \amp\text{substitute known information}</mrow>
+      <mrow>\frac{\ln(\frac{$delta2{simplify}}{$delta1{simplify}})}{-$t} \amp= k\;\;\amp\text{simplify}</mrow>
+      <mrow>$k \amp= k\;\;\amp\text{simplify}</mrow>
+    <mrow>$kNumerical{displayDecimals="8"} \amp= k\;\amp\text{keep 8 decimal places, or retain symbolic expression}</mrow>
+    </md></li>  
+
+  <li>Use <m>k = $kNumerical{displayDecimals="8"}</m> to solve for the temperature at <m>t = $finalTime</m> minutes:
+    <md>
+      <mrow>(T_t - $a) \amp= ($delta1)e^{-$kNumerical{displayDecimals="8"} t} \quad \text{substitute known information}</mrow>
+      <mrow>T_t \amp= ($delta1)e^{-$kNumerical{displayDecimals="8"} t} + $a \quad\text{simplify}</mrow>
+    <mrow>T_t \amp= $finalTempN{displayDecimals="2"} \quad \text{evaluate, rounding to 2 decimal places}</mrow>
+    </md></li> 
+</ul>
+
+    
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,84 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply trigonometric identities to determine an equivalent expression. The different versions of this problem correspond to different intial expressions. This problem is not randomized.
+
+*************************************************************-->
+<problem>
+
+
+<p>Which of the following is <math>tan(theta)/(sec(theta) - cos(theta))</math> equal to?</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><answer name="ans1" shuffleOrder>
+  <choice credit="1"><math>csc(theta)</math></choice>
+  <choice><math>sin(theta)/(1 + cos(theta))</math></choice>
+  <choice><math>sin(theta)</math></choice>
+  <choice><math>tan(theta)/(1 - cos^2 (theta))</math></choice>
+</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p>Note that there are multiple ways to tackle this problem. Here is one possible approach</p>
+  <ul>
+    <li>Since we have a <math>sec(theta) = 1/cos(theta)</math> in the denominator, and a <math>tan(theta) = sin(theta)/cos(theta)</math> in the numerator, try to cancel out the <math>cos(theta)</math>'s somehow. Multiply both numerator and denominator by <m>\cos(\theta)</m>,
+      <me><math>tan(theta)*cos(theta)/((sec(theta) - cos(theta))cos(theta))</math></me>
+    </li>
+    <li>
+To illustrate how this helps us, rewrite <m>\tan(\theta)</m> and <m>\sec(\theta)</m> from their definitions,
+      <me><math>sin(theta)/cos(theta) cos(theta)/((1/cos(theta) - cos(theta))cos(theta))</math></me>
+    </li>
+    <li>Now, we can cancel out those <m>\cos(\theta)</m>'s in the denominators top and bottom,
+      <me><math>sin(theta)/(1 - cos^2(theta))</math></me>
+    </li>
+    <li>Now, notice that the denominator can be simplified further, since <math>sin^2(theta) + cos^2(theta) = 1</math>,
+      <me><math>sin(theta)/(sin^2(theta)) = 1/sin(theta)</math></me>
+    </li>
+    <li>Finally, by definition, <math>1/sin(theta) = csc(theta)</math></li>
+  </ul>
+ 
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

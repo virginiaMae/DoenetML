@@ -1,0 +1,38 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: True-False question regarding simplification of an expression within a square root. Testing a common misconception.
+Step-by-step solution provided.
+
+(BA-Basics #119 BA9005)
+*************************************************************-->
+<problem>
+
+<setup>
+
+</setup>
+
+<!--testing-->
+
+<!--testing-->
+
+<p>True or False?</p>
+  <me>\sqrt{a^2 + b^2} = a + b</me>
+    <answer name="ans_1" maxNumAttempts="1">
+      <choice>True</choice>
+      <choice credit="1">False</choice>
+    </answer>
+
+
+  
+<solution>
+<p>This is false. Consider what would happen if we square both sides of this expression. </p>
+  <md>
+    <mrow>\bigg( \sqrt{a^2 + b^2}\bigg)^2 &= (a + b)^2\;\;\text{square both sides}</mrow>
+    <mrow>a^2 + b^2 &= a^2 + 2ab + b^2\;\;\text{not true}</mrow>
+  </md>
+<p>The second line is clearly not true. The takeaway is that we cannot separate the terms that are added and subtracted under a square root and consider them individually. We can only apply this process to factors (terms that are multiplied) under a square root.</p>
+
+</solution>
+</problem>

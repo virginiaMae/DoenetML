@@ -1,0 +1,235 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Write equation in slope-intercept form given through-pt and slope.  Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-6" to="6"/>
+  <selectFromSequence name="b" from="-6" to="6"/>
+  <selectFromSequence name="c" from="1" to="6"/>
+  <selectFromSequence name="d" from="1" to="6"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="f" from="-6" to="6"/>
+
+  <math name="m">$c $e/$d</math>
+  <math name="yInt">$b - $m $a</math>
+  <math name="correctEq">$m x + $yInt</math> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>m = $m</p>
+<p>yInt = $yInt</p>
+<p>yInt = $yInt{simplify}</p>
+<p>correctEq = $correctEq{simplify}</p> -->
+<!--testing-->
+
+
+<p>Find the equation of the line through the point <m>($a, $b)</m> with a slope of <m>$m{simplify}</m>. Express the equation of the line in <term>slope-intercept form</term>, <m>y = mx + b</m>.</p>
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Drag the $dragPoint1.styleDescriptionWithNoun to the location of the given point.</p>
+  <p>Drag the $dragPoint2.styleDescriptionWithNoun to a nearby point by counting off the slope's <m>\frac{\text{rise}}{\text{run}}</m></p>
+  
+  <p>Enter proposed equation for the line in slope-intercept form:</p> 
+   <p><m>y = </m><mathInput name="eq1" bindValueTo="$userEq"/></p>
+  
+</div>
+
+  
+<graph name="g1" grid="1 1">
+  <point name="dragPoint1">(1,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_1</m></label>
+  </point>
+  <point name="dragPoint2" styleNumber="2">(5,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_2</m></label>
+  </point>
+  <line name="line1" equation="y=$eq1">
+    <label>y = $eq1</label>
+  </line>
+  <line name="line2" through="$dragPoint1 $dragPoint2" styleNumber="2"/>
+
+</graph>
+  
+</sideBySide>
+  
+<p>A $line2.styleDescriptionWithNoun is automatically drawn between the given two points. Next, enter your proposed equation. If your work is correct, the lines will overlap.</p>
+</aside>  
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  
+
+<p><m>y = </m>
+  <answer name="ans8">
+  
+  <mathInput name="userEq" prefill="( / )x + ( )"/>
+    <award name="basicCorrect">
+      <when>$userEq = $correctEq</when>
+    </award>
+    <award name="correctPattern1">
+    <when> $userEq = $correctEq and 
+      <matchesPattern pattern="()x + ()" allowImplicitIdentities>$userEq</matchesPattern> 
+    </when>
+    </award>
+    <award name="correctPattern2">
+      <when> $userEq = $correctEq and 
+      <matchesPattern pattern="()x - ()" allowImplicitIdentities>$userEq</matchesPattern> 
+      </when>
+    </award>
+    <award name="correctPattern3">
+      <when> $userEq = $correctEq and 
+      <matchesPattern pattern="() + ()x" allowImplicitIdentities>$userEq</matchesPattern> 
+      </when>
+    </award>
+    <award name="correctPattern4">
+      <when> $userEq = $correctEq and 
+      <matchesPattern pattern="() - ()x" allowImplicitIdentities>$userEq</matchesPattern> 
+      </when>
+    </award>
+ 
+  <award name="correctAndZeroIntercept">
+    <conditionalContent condition="$yInt = 0">
+      <when> $userEq = $correctEq and <matchesPattern pattern="()x">$userEq</matchesPattern></when>
+    </conditionalContent>
+  </award>
+  <award name="noIntercept" credit="0">
+    <conditionalContent condition="$yInt != 0">
+      <when>$userEq = $m x</when>
+    </conditionalContent>
+  </award>
+    
+  <award name="notAnEquationInX" symbolicEquality simplifyOnCompare credit="0">  
+        <when>$userEq = $m + $yInt
+        </when>
+      </award>
+</answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$basicCorrect or $correctPattern1 or $correctPattern2 or $correctPattern3 or $correctPattern4 or $correctAndZeroIntercept">$correctFeedback</feedback>
+  <feedback condition="$notAnEquationInX"><p>It looks like this expression is missing an <m>x</m>.</p></feedback>
+  <feedback condition="$noIntercept"><p>It looks like this expression is missing the slope-intercept.</p></feedback>
+
+  <feedback condition="$ans8.numSubmissions > 2 and $ans8.creditAchieved != 1">
+    <p>In this problem, we are given the slope and a known point on the line. In order to write the equation of the line in <term>slope-intercept form</term>, we must first calculate the <m>y</m>-intercept. To accomplish this, we can substitute the coordinates of the known point in for <m>x</m> and <m>y</m> in the equation, and solve for the unknown, <m>b</m>.</p>
+  </feedback>
+    
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>Find the equation of the line through the point <m>(8, 5)</m> with a slope of <m>\frac{1}{2}</m>. Express the equation of the line in <term>slope-intercept form</term>, <m>y = mx + b</m>.</em></p>
+
+<p><em><alert>Solution.</alert></em></p>
+<md>
+  <mrow>5 \amp= \frac{1}{2} (8) + b \amp\text{substitute}\;x\;,y\;\text{values}</mrow>
+  <mrow>5 - 4 \amp= b \amp\text{solve for b}</mrow>
+  <mrow>1 \amp= b \amp\text{simplify}</mrow>
+</md>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line:
+  <me>y = \frac{1}{2} x + 1.</me></p>
+
+<p>We can check by graphing:</p>
+  <graph grid xmin="-4" ymin="-4" size="small">
+    <line fixed>y =x/2 + 1</line>
+    <point name="knownPoint" fixed styleNumber="8" labelPosition="left">(8,5)
+      <label><m>(8,5)</m></label>
+    </point>
+    <point name="yIntDemo" fixed styleNumber="11">(0,1)
+      <label><m>y</m>-intercept</label>
+    </point>
+  </graph>
+</example>
+
+<p><em><alert>How to check your answer</alert></em>: Your final answer should be an equation that defines a line. If you 
+ graph this equation, you should be able to verify that it passes through the given point.</p>
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<md>
+  <mrow>$b \amp= $m{simplify} ($a) + b \amp\text{substitute}\;x\;,y\;\text{values}</mrow>
+  <mrow>$b - <math simplify>$m $a</math>\amp= b \amp\text{solve for b}</mrow>
+  <mrow>$yInt{simplify} \amp= b \amp\text{simplify}</mrow>
+</md>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line:
+  <me>y = $correctEq{simplify}.</me></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

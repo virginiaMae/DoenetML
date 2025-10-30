@@ -1,0 +1,406 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use DeMoivre's Theorem to expand a complex number raised to the third power. Graphing tool provided for visualization of the geometry of the problem.
+There are two versions of this problem:
+
+Version 1: increments of pi/4
+Version 2: increments of pi/6
+
+(TR-Vectors #24 TR4701)
+
+*************************************************************-->
+
+<problem>
+<setup>
+<!-- <selectFromSequence name="p" from="3" to="6"/> -->
+<!-- For ease of solution expression, use a separate file for each of the possible values of p. Variant a is for p=3 -->
+<math name="p">3</math>  
+<select assignNames="(r a nx ny solSimple)">
+<!-- options for r = 1 -->
+  <option>
+    <math>1</math>
+    <math>1</math>
+    <math>sqrt(2)/2</math>
+    <math>sqrt(2)/2</math>
+    <math>-sqrt(2)/2 + sqrt(2)/2 i</math>
+  </option>
+  <option>
+    <math>1</math>
+    <math>3</math>
+    <math>-sqrt(2)/2</math>
+    <math>sqrt(2)/2</math>
+    <math>sqrt(2)/2 + sqrt(2)/2 i</math>
+  </option>
+   <option>
+    <math>1</math>
+    <math>5</math>
+    <math>-sqrt(2)/2</math>
+    <math>-sqrt(2)/2</math>
+    <math>sqrt(2)/2 - sqrt(2)/2 i</math>
+  </option>
+  <option>
+    <math>1</math>
+    <math>7</math>
+    <math>sqrt(2)/2</math>
+    <math>-sqrt(2)/2</math>
+    <math>-sqrt(2)/2 - sqrt(2)/2 i</math>
+  </option>
+
+  <!-- options for r = 2 -->
+  <option>
+    <math>2</math>
+    <math>1</math>
+    <math>sqrt(2)</math>
+    <math>sqrt(2)</math>
+    <math>-4sqrt(2) + 4sqrt(2) i</math>
+  </option>
+  <option>
+    <math>2</math>
+    <math>3</math>
+    <math>-sqrt(2)</math>
+    <math>sqrt(2)</math>
+    <math>4sqrt(2) + 4sqrt(2) i</math>
+  </option>
+  <option>
+    <math>2</math>
+    <math>5</math>
+    <math>-sqrt(2)</math>
+    <math>-sqrt(2)</math>
+    <math>4sqrt(2) - 4sqrt(2) i</math>
+  </option>
+  <option>
+    <math>2</math>
+    <math>7</math>
+    <math>sqrt(2)</math>
+    <math>-sqrt(2)</math>
+    <math>-4sqrt(2) - 4sqrt(2) i</math>
+  </option>
+
+    <!-- options for r = sqrt(2) -->
+  <option>
+    <math>sqrt(2)</math>
+    <math>1</math>
+    <math>1</math>
+    <math>1</math>
+    <math>-2 + 2 i</math>
+  </option>
+  <option>
+    <math>sqrt(2)</math>
+    <math>3</math>
+    <math>-1</math>
+    <math>1</math>
+    <math>2 + 2 i</math>
+  </option>
+  <option>
+    <math>sqrt(2)</math>
+    <math>5</math>
+    <math>-1</math>
+    <math>-1</math>
+    <math>2 - 2 i</math>
+  </option>
+  <option>
+    <math>sqrt(2)</math>
+    <math>7</math>
+    <math>1</math>
+    <math>-1</math>
+    <math>-2 - 2 i</math>
+  </option> 
+
+
+        <!-- options for r = sqrt(8) -->
+  <option>
+    <math>sqrt(8)</math>
+    <math>1</math>
+    <math>2</math>
+    <math>2</math>
+    <math>-16 + 16i</math>
+  </option>
+  <option>
+    <math>sqrt(8)</math>
+    <math>3</math>
+    <math>-2</math>
+    <math>2</math>
+    <math>16 + 16i</math>
+  </option>
+  <option>
+    <math>sqrt(8)</math>
+    <math>5</math>
+    <math>-2</math>
+    <math>-2</math>
+    <math>16 - 16i</math>
+  </option>
+  <option>
+    <math>sqrt(8)</math>
+    <math>7</math>
+    <math>2</math>
+    <math>-2</math>
+    <math>-16 - 16i</math>
+  </option>
+</select>
+
+<math name="px">cos($a $p pi/4)</math>
+<math name="py">sin($a $p pi/4)</math>
+<math name="base" simplify="numberspreserveorder">$nx + $ny i</math>
+<math name="expr">($base)^$p</math>
+<math name="pxSimp" simplify>$px</math>
+<math name="pySimp" simplify>$py</math>
+<math name="sol" simplify>$r^($p)($pxSimp + i $pySimp)</math>
+<matchesPattern name="notSimplified" pattern="(()+())^()">$userExpr</matchesPattern>
+</setup>
+  
+<!-- testing -->
+<!-- <p>r = $r</p>
+<p>a = $a</p>
+<p>p = $p</p>
+<p>nx = $nx</p>
+<p>ny = $ny</p>
+<p>px = $px</p>
+<p>py = $py</p>
+<p>pxSimp = $pxSimp</p>
+<p>pySimp = $pySimp</p>
+<p>base = $base</p>
+<p>expr = $expr</p>
+<p>solSimple = $solSimple</p>
+<p>sol = $sol</p>
+<p>test: <boolean allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute>$userExpr = $sol</boolean></p> -->
+<!--testing-->
+
+<p>Find <m>$expr</m>.</p>
+
+
+
+
+<!--*********************************************
+           Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<p>Let <m>z^$p = $expr.</m> </p>
+<p>We'll start by graphing just the base, <m>z = $base</m>. Drag the $dragPt.styleDescriptionWithNoun to the correct location on the complex plane. (<em>Hint: when you get close to the correct spot the point will snap into place</em>.)</p>
+<p>The point is currently located at: <m>z = $dragPt.x + $dragPt.y i</m>.<nbsp/><nbsp/><nbsp/> 
+  <answer name="anszG" weight="0" submitLabel="Check Point">
+    <award><when>$dragPt.x = $nx and $dragPt.y = $ny</when></award>
+  </answer>
+</p>
+
+<setup>
+  <group name="attractionPts" hide="$n != 1">
+    <point styleNumber="6" fixLocation>(sqrt(2)/2, sqrt(2)/2)</point>
+    <point styleNumber="6" fixLocation>(sqrt(2), sqrt(2))</point>
+    <point styleNumber="6" fixLocation>(1, 1)</point>
+    <point styleNumber="6" fixLocation>(2, 2)</point>
+    <point styleNumber="6" fixLocation>(-sqrt(2)/2, sqrt(2)/2)</point>
+    <point styleNumber="6" fixLocation>(-sqrt(2), sqrt(2))</point>
+    <point styleNumber="6" fixLocation>(-1, 1)</point>
+    <point styleNumber="6" fixLocation>(-2, 2)</point>
+    <point styleNumber="6" fixLocation>(-sqrt(2)/2, -sqrt(2)/2)</point>
+    <point styleNumber="6" fixLocation>(-sqrt(2), -sqrt(2))</point>
+    <point styleNumber="6" fixLocation>(-1, -1)</point>
+    <point styleNumber="6" fixLocation>(-2, -2)</point>
+    <point styleNumber="6" fixLocation>(sqrt(2)/2, -sqrt(2)/2)</point>
+    <point styleNumber="6" fixLocation>(sqrt(2), -sqrt(2))</point>
+    <point styleNumber="6" fixLocation>(1, -1)</point>
+    <point styleNumber="6" fixLocation>(2, -2)</point>
+  </group>
+  <point name="origin" fixed>(0,0)</point>
+  <point name="p1" fixed>(1,0)</point>
+  <math name="thetaSol">$a pi/4</math>
+</setup>
+
+<sideBySide margins="2%">
+<div>
+<p>What is angle <m>\theta</m> as shown on your graph, in radians: 
+  <answer name="ansThetaG" weight="0" disabled="$anszG.creditAchieved != 1" disableAfterCorrect>
+    <mathInput name="userTheta"/>
+    <award>
+      <when>$userTheta = $theta.radians and $userTheta = $thetaSol
+      </when>
+    </award>
+  </answer> <m>\text{radians}</m></p>
+<p>What is the radius <m>r</m>, as shown on your graph: 
+  <answer weight="0" disabled="$anszG.creditAchieved != 1" disableAfterCorrect>
+    <mathInput name="userR"/>
+    <award><when>$userR = $segment.length and $userR = $r</when>
+    </award>
+  </answer> (answer precisely using square roots where necessary)</p>
+  
+<setup>
+<number name="xmin">
+  <conditionalContent>
+    <case condition="$r = 1">-2</case>
+    <else>-($r^$n) - 0.5$n</else>
+  </conditionalContent>
+</number>
+<number name="xmax">
+  <conditionalContent>
+    <case condition="$r = 1">2</case>
+    <else>($r^$n) + 0.5$n</else>
+  </conditionalContent>
+</number>
+<number name="n">1</number>
+</setup>
+
+<p>To visualize <m>z^3</m>, click the buttons below to increment the exponent of <m>z</m>.</p>  
+<updateValue name="retreatTheta" target="n" newValue="$n - 1">
+  <label><m>\leftarrow</m></label>
+</updateValue>
+<updateValue name="advanceTheta" target="n" newValue="$n + 1">
+  <label><m>\rightarrow</m></label>
+</updateValue>
+<updateValue target="labelOfzs" newValue="$labelOfzs * z" triggerWith="$advanceTheta" type="math"/>
+<updateValue target="labelOfzs" newValue="$labelOfzs / z" triggerWith="$retreatTheta" type="math"/>
+<math name="labelOfzs" simplify="numbers">z</math> = <math>z^$n</math>
+
+<!-- Update grid axes for n = 1 -->
+<triggerSet triggerWhen="$n = 1">
+<updateValue target="g1.xmin" newValue="$xmin" type="number"/>
+<updateValue target="g1.xmax" newValue="$xmax" type="number"/>
+<updateValue target="g1.ymin" newValue="$xmin" type="number"/>
+<updateValue target="g1.ymax" newValue="$xmax" type="number"/>
+</triggerSet>
+  
+<!-- Update grid axes for n = 2 -->
+<triggerSet triggerWhen="$n = 2">
+<updateValue target="g1.xmin" newValue="$xmin" type="number"/>
+<updateValue target="g1.xmax" newValue="$xmax" type="number"/>
+<updateValue target="g1.ymin" newValue="$xmin" type="number"/>
+<updateValue target="g1.ymax" newValue="$xmax" type="number"/>
+</triggerSet>
+
+<!-- Update grid axes for n = 3 -->
+<triggerSet triggerWhen="$n = 3">
+<updateValue target="g1.xmin" newValue="$xmin" type="number"/>
+<updateValue target="g1.xmax" newValue="$xmax" type="number"/>
+<updateValue target="g1.ymin" newValue="$xmin" type="number"/>
+<updateValue target="g1.ymax" newValue="$xmax" type="number"/>
+</triggerSet>
+
+</div>
+
+<stack>
+<graph name="g1" xmin="-3" xmax="3" ymin="-3" ymax="3" grid>
+  <xlabel><m>\text{Re}</m></xlabel>
+  <ylabel><m>\text{Im}</m></ylabel>
+  $attractionPts
+  <point name="dragPt" styleNumber="2" showCoordsWhenDragging="false">(0,0)
+    <constraints>
+      <attractTo>$attractionPts</attractTo>
+    </constraints>
+    <label><m>$dragPt.x + $dragPt.y i</m></label>
+  </point>
+  <lineSegment name="segment" endpoints="$origin $dragPt" styleNumber="2" applyStyleToLabel>
+    <label><m>r</m></label>
+  </lineSegment>
+  <angle name="theta" through="$p1 $origin $dragPt" chooseReflexAngle="allowed" radius="$segment.length" emphasizeRightAngle="false">
+    <label><m>\theta</m></label>
+  </angle>
+
+
+  <map name="multiplesOfZ">
+    <template>
+      <point name="pi" styleNumber="$i" applyStyleToLabel>(($userR^$i)cos($i $userTheta), ($userR^$i)sin($i $userTheta))
+        <label><m>z^$i</m></label>
+      </point>
+      <point name="pprev" hide>
+        ($userR^($i - 1)cos(($i - 1)$userTheta), $userR^($i - 1)sin(($i - 1)$userTheta))</point>
+      <lineSegment name="ls" endpoints="$origin $pi" styleNumber="$i"/>
+      <angle through="$pprev $origin $pi" radius="$ls.length" chooseReflexAngle="allowed" emphasizeRightAngle="false" styleNumber="$i"/>
+    </template>
+    <sources alias="i"><sequence from="1" to="$n"/></sources>
+  </map>
+</graph>
+
+</stack>
+</sideBySide>
+
+<p>Note that <m>z^3</m> means multiplying the complex number, <m>z</m>, by itself 2 more times (for a total of <m>3</m> factors of <m>z</m>). Each time this occurs, the polar form is rotated through another <m>\theta = $userTheta \; \text{radians}</m>, and the magnitude of the radius grows by a factor of <m>r = $userR</m>. Click the buttons next to the graph to visualize what this means geometrically.</p>
+
+<p>Use 
+  <updateValue target="deMoivre.hide" newValue="false" type="boolean">
+    <label>DeMoivre's Theorem</label>
+  </updateValue> to compute <m>z^3</m> algebraically, then compare your answer to the geometric, polar representation of <m>z^5</m> that you've determined above.</p>
+
+<div name="deMoivre" hide><alert><ref uri="https://mathbooks.unl.edu/PreCalculus/Complex-Numbers.html">DeMoivre's Theorem</ref> :</alert>
+<p>If  <m>z = r(\cos \theta + i \sin \theta)</m> is a complex number in polar form and <m>n</m> is a positive integer, then
+  <me>z^n = r^n(\cos( n\theta) + i \sin(n \theta))</me></p>
+<updateValue target="deMoivre.hide" newValue="true" type="boolean">
+  <label>Hide</label>
+</updateValue>
+</div>
+
+
+</aside>
+
+
+
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p><m>$expr = </m> <mathInput name="userExpr"/></p>
+
+  <answer name="ans1" allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute>
+     <award name="correct1">
+      <when>$userExpr = $sol and $notSimplified = false</when>
+    </award>
+  </answer>
+
+<p>Your answer should be in the form of a complex number, <m>a + b i</m>. Type a lowercase <c>i</c> to represent the imaginary unit, <m>i</m>, where it is needed.</p>  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$ans1.responseHasBeenSubmitted and $notSimplified = true">To answer this problem, you need to simplify it to one that does not involve an exponent using <ref uri="https://mathbooks.unl.edu/PreCalculus/Complex-Numbers.html">DeMoivre's Theorem</ref></feedback> 
+
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p><m>$expr= $solSimple</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<styleDefinition styleNumber="2" lineWidth="4"/>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

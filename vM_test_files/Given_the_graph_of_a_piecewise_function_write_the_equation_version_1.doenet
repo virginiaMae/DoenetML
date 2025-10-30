@@ -1,0 +1,203 @@
+<problem><title/>
+<setup>
+  <number name="ax" fixed>-8</number>
+  <number name="bx" fixed>-4</number>
+  <number name="cx" fixed>-4</number>
+  <number name="dx" fixed>2</number>
+  <number name="ex" fixed>2</number>
+  <number name="fx" fixed>7</number>
+  <selectFromSequence name="ay" from="-8" to="8"/>
+  <select name="m1">0 1/2 -1/2 1/4 -1/4 3/4 -3/4 1 -1 5/4 -5/4</select>
+  <math name="by" simplify>$m1($bx - $ax) + $ay</math>
+
+  <selectFromSequence name="cy" from="-8" to="8" exclude="$by"/>
+  <select name="m2">0 1/2 -1/2 1 -1 3/2 -3/2</select>
+  <math name="dy" simplify>$m2($dx - $cx) + $cy</math>
+
+  <selectFromSequence name="ey" from="-8" to="8" exclude="$dy"/>
+  <select name="m3">0 1 -1</select>
+  <math name="fy" simplify>$m3($fx - $ex) + $ey</math>
+  
+  <math name="line1Eq" simplify="numberspreserveorder">$line1.slope x + $line1.yIntercept</math>
+  <math name="line2Eq" simplify="numberspreserveorder">$line2.slope x + $line2.yIntercept</math>
+  <math name="line3Eq" simplify="numberspreserveorder">$line3.slope x + $line3.yIntercept</math>
+  <math name="int2">$cx <= x < $dx</math>
+  <math name="ymin">min($ay, $by, $cy, $dy, $ey, $fy, -6) - 2</math>
+  <math name="ymax">max($ay, $by, $cy, $dy, $ey, $fy, 6) + 2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>m1 = $m1</p>
+<p>m2 = $m2</p>
+<p>m3 = $m3</p>
+<p>line1Eq = $line1Eq</p>
+<p>line2Eq = $line2Eq</p>
+<p>line3Eq = $line3Eq</p> -->
+<!--testing-->
+
+<p>Use the graph of the piecewise function shown below to fill in the missing parts of the function's equation.</p>
+  <me>f(x) = \begin{cases}
+              f_1(x) & \text{left interval} \\
+              f_2(x) & \text{middle interval} \\
+              f_3(x) & \text{right interval}
+            \end{cases}
+  </me>
+
+
+
+
+<sideBySide widths="70% 30%" margins="2%">
+<graph grid="1 1" ymin="$ymin" ymax="$ymax" identicalAxisScales fixAxes>
+  <endpoint name="a" open fixLocation>($ax,$ay)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($a.x - 0.5, $a.y - 0.5)" positionFromAnchor="left" styleNumber="13">
+    <m>\large{a}</m>
+  </label>
+  <endpoint name="b" open fixLocation>($bx,$by)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($b.x + 0.5, $b.y + 0.5)" positionFromAnchor="right" styleNumber="13">
+    <m>\large{b}</m>
+  </label>
+  <line name="userLine1" equation="y = $userF1" styleNumber="6"/>
+  <lineSegment name="seg1" endpoints="$a $b"/>
+  <line name="line1" through="$a $b" styleNumber="6" hide/>
+  <endpoint name="c" fixLocation>($bx,$cy)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($c.x - 0.5, $c.y + 0.5)" positionFromAnchor="left" styleNumber="13">
+    <m>\large{c}</m>
+  </label>
+  <endpoint name="d" open fixLocation>($dx,$dy)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($d.x + 0.5, $d.y + 0.5)" positionFromAnchor="right" styleNumber="13">
+    <m>\large{d}</m>
+  </label>
+  <lineSegment name="seg2" endpoints="$c $d"/>
+  <line name="line2" through="$c $d" styleNumber="6" hide/>
+  <endpoint name="e" fixLocation>($dx,$ey)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($e.x + 0.5, $e.y + 0.5)" positionFromAnchor="right" styleNumber="13">
+    <m>\large{e}</m>
+  </label>
+  <endpoint name="f" open fixLocation>($fx,$fy)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($f.x + 0.5, $f.y + 0.5)" positionFromAnchor="right" styleNumber="13">
+    <m>\large{f}</m>
+  </label>
+  <lineSegment name="seg3" endpoints="$e $f" />
+  <line name="line3" through="$e $f" styleNumber="6" hide/>
+  <line name="userLine3" equation="y = $userF3" styleNumber="6"/>
+</graph> 
+
+<div>
+  <p><alert>Point coordinates: </alert></p>
+  <p><m>a = $a</m></p>
+  <p><m>b = $b</m></p>
+  <p><m>c = $c</m></p>
+  <p><m>d = $d</m></p>
+  <p><m>e = $e</m></p>
+  <p><m>f = $f</m></p>
+</div>
+</sideBySide>
+
+
+
+
+<!--******************************************************
+            User Input
+*******************************************************-->  
+
+
+<p><m>f_1(x) = </m><mathInput name="userF1"/><nbsp/><nbsp/><nbsp/> if <m name="leftInt">$a.x < x < $b.x</m></p>
+<p><m>f_2(x) = $line2Eq</m><nbsp/><nbsp/><nbsp/><nbsp/> if <mathInput name="userInt2"/></p>
+<p><m>f_3(x) = </m><mathInput name="userF3"/><nbsp/><nbsp/><nbsp/> if <m name="rightInt">$e.x 
+  \leq x < $f.x</m>
+
+<answer name="ans1">
+  <award><when>$userF1 = $line1Eq and $userInt2 = $int2 and $userF3 = $line3Eq</when>
+  </award>
+</answer>
+</p>
+
+<p><em>The equation you have entered is:</em></p>
+<p><me>f(x) = \begin{cases}
+              $userF1 & \text{if }$leftInt \\
+              $line2Eq & \text{if }$userInt2 \\
+              $userF3 & \text{if }$rightInt
+            \end{cases}
+  </me></p>
+
+
+
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$userF1 != $line1Eq and $ans1.responseHasBeenSubmitted">Your response for <m>f_1(x)</m> is incorrect.</feedback>
+  <feedback condition="$userInt2 != $int2 and $ans1.responseHasBeenSubmitted">Your response for the middle interval is incorrect.</feedback>
+  <feedback condition="$userF3 != $line3Eq and $ans1.responseHasBeenSubmitted">Your response for <m>f_3(x)</m> is incorrect.</feedback>
+
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><me>f(x) = \begin{cases}
+              $line1Eq & \text{if }$leftInt \\
+              $line2Eq & \text{if }$int2 \\
+              $line3Eq & \text{if }$rightInt
+            \end{cases}
+  </me></p>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+  
+<!--black line with white background for labels-->  
+<styleDefinition styleNumber="13" fillColor="white" backgroundColor="white" fillOpacity="0.7" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7"  lineWidth="2"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,77 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.  
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify the square root of a product of perfect squares.
+
+(BA-ExpLog #15 BA5211)
+*************************************************************-->
+
+<problem>
+<setup>
+  <select name="a">64 81 121 144</select>
+  <select name="b">2 4 6 8</select>
+  <select name="c">2 4 6 8</select>
+  <math name="expr" simplify>sqrt($a p^($b) q^($c))</math>
+  <math name="coeff" simplify>sqrt($a)</math>
+  <math name="sol" simplify="numberspreserveorder">$coeff p^($b/2) q^($c/2)</math>
+  <math name="solAlt" simplify="numberspreserveorder">$coeff q^($c/2) p^($b/2)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>solAlt = $solAlt</p> -->
+<!--testing-->
+
+
+<p>Simplify.</p>
+
+<p><m>$expr = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns" />
+    <award name="correct" symbolicEquality>
+      <when>$userAns = $sol</when>
+    </award>
+    <award name="correct2" symbolicEquality>
+      <when>$userAns = $solAlt</when>
+    </award>
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correct2">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>$sol</m></p> 
+</solution>
+</problem>

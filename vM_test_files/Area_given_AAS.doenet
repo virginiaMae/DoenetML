@@ -1,0 +1,143 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem requires the student to use right triangle trigonometry and the Law of sines to calculate the area of a trianble given AAS. Answers are fill-in the blank with an approximate decimal value.
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="c" from="6" to="12"/>
+  <selectFromSequence name="A" from="20" to="74"/>
+  <selectFromSequence name="C" from="20" to="74"/>
+  <math name="a" simplify>$c sin($A pi/180)/sin($C pi/180)</math>
+  <math name="B" simplify>180 - $A - $C</math>
+  <math name="h" simplify>$c sin($A pi/180)</math>
+  <math name="b" simplify>sqrt($a^2 + $c^2 - 2 $a $c cos($B pi/180))</math>
+  <math name="area" simplify>$b $h / 2</math>
+  <number name="areaN">$area</number>
+  <number name="An">$A</number>
+  <number name="Bn">$B</number>
+  <number name="Cn">$C</number>
+  <number name="an">$a</number>
+  <number name="bn">$b</number>
+  <number name="xmin">min(-3, $pB.x - 3)</number>
+  <number name="xmax">max($b + 3, $pB.x + 3)</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>B = $B</p>
+<p>C = $C</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>An = $An</p>
+<p>Bn = $Bn</p>
+<p>Cn = $Cn</p>
+<p>h = $h</p>
+<p>area = $area</p> -->
+<!--testing-->
+
+<p>Find the area of the triangle below.  (Note: <m>b</m> is the length of the entire side connecting <m>A</m> to <m>C</m>.)  Round your answer to the nearest 0.01.</p>
+ 
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="$xmin" xmax="$xmax" ymin="-3" ymax="$pB.y + 3" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5" labelPosition="left">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <point name="pH" fixed hide>($c cos($A pi/180), 0)</point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC">
+    <label><m>b</m></label>
+  </lineSegment>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  <lineSegment name="hSeg" styleNumber="6" endpoints="$pB $pH" labelPosition="lowerleft">
+    <label><m>h</m></label>
+  </lineSegment>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2">
+    <label>$angleA.degrees</label>
+  </angle>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3" emphasizeRightAngle="false"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4" emphasizeRightAngle="false">
+    <label>$angleC.degrees</label>
+  </angle>
+<!-- 
+  <label name="blabel" anchor="($pC.x/2, -1)"><m>b = $b</m></label> -->
+
+  <label name="clabel" anchor="($pB.x/2 - 0.18$b, $pB.y/2)"><m>c = $c</m></label>
+</graph>
+
+<p><m>\text{Area} = </m><mathInput name="userArea" /></p>
+ 
+    <answer name="ans1">
+      <award name="correct" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>   
+        <when>$userArea</when>
+      </award>
+    </answer>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$rounding and $ans1.creditAchieved != 1">Try carrying more decimal places in your computation. It looks like you are close but you made a rounding error!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Area} = $areaN</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

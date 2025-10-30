@@ -1,0 +1,118 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the false equation from a set of statements regarding inverse functions. This problem is not randomized, but the order of responses is shuffled.
+
+(BA-Basics #115 BA9001)
+
+*************************************************************-->
+<problem>
+<setup>
+  <m name="choice1">\;\;g(x) = x\; \text{is the inverse of}\; f(x) = \frac{1}{x}</m>
+  <m name="choice2">\;\;g(x) = x + 4\; \text{is the inverse of}\; f(x) = x - 4</m>
+  <m name="choice3">\;\;g(x) = 4x\; \text{is the inverse of}\; f(x) = \frac{x}{4}</m>
+  <m name="choice4">\;\;g(x) = \frac{x}{2} + 1\; \text{is the inverse of}\; f(x) = 2x - 2</m>
+  <m name="choice5">\;\;g(x) = \ln(x)\; \text{is the inverse of}\; f(x) = e^x</m>
+
+  <row name="ri1">
+    <cell><p>
+      <booleanInput name="bi1">
+        <label>$choice1</label>
+      </booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri2">
+    <cell><p><booleanInput name="bi2">
+      <label>$choice2</label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri3">
+    <cell><p><booleanInput name="bi3">
+      <label>$choice3</label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri4">
+    <cell><p><booleanInput name="bi4">
+      <label>$choice4</label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri5">
+    <cell><p><booleanInput name="bi5">
+      <label>$choice5</label></booleanInput></p>
+    </cell>
+  </row>
+</setup>
+
+
+<p>Which of the following is false?</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+
+<tabular>
+  <shuffle>
+  <row copySource="ri1"/>
+  <row copySource="ri2"/>
+  <row copySource="ri3"/>
+  <row copySource="ri4"/>
+  <row copySource="ri5"/>
+  </shuffle>
+</tabular>
+
+<answer name="ans1">
+  <award><when>$bi1 = true and $bi2 = false and $bi3 = false and $bi4 = false and $bi5 = false</when></award>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><m>g(x) = x</m> is <alert>NOT</alert> the inverse of <m>f(x) = \frac{1}{x}</m>.</p>
+  <p>The inverse of <m>f(x) = \frac{1}{x}</m> is the same as the original function, so <m>g(x) = \frac{1}{x}</m>.</p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,202 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the amplitude of a sine wave from its graph. Variants involve amplitudes ranging from 2 to 8 and vertical shifts ranging from -4 to 4.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="8"/>
+  <selectFromSequence name="b" from="-4" to="4" exclude="0"/>
+  <function name="f">$a sin(x) + $b</function> 
+  <number name="ymin">min(-$a - 2, $b - $a - 2)</number>
+  <number name="ymax">max($a + 2, $b + $a + 2)</number>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p> -->
+<!--testing-->
+
+<p>Find the <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-2-2/">amplitude</ref> of the wave graphed below. </p>
+<p><em>tip: you can drag the $dp1.styleDescription and $fp1.styleDescription points to measure vertical distance. The $fp1.styleDescription line will snap to the midline of the wave.</em></p>
+
+<graph xmin="-8" xmax="8" xTickScaleFactor="pi" ymin="$ymin" ymax="$ymax" aspectRatio="3/2">
+  $f
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3">($dp1.x, 0.75)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3" applyStyleToLabel>
+    <label>Drag to midline</label>
+  </line>
+  <line name="midlineHidden" hide fixed>y = $b</line> 
+</graph>
+
+
+
+<p><m>\text{Amplitude} = </m><answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute>   
+        <when>
+          $userAns = $a
+        </when>
+      </award>
+      <award name="double" credit="0">   
+        <when>
+          $userAns = 2$a
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$double">Recall, the <term>amplitude</term>
+   is defined as the vertical distance from the <em>midline</em> of the <m>
+  \text{sine}</m> wave to its maximum value.</feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example which illustrates how to use the interactive graph:</p> 
+<example newNameSpace>
+<setup>
+  <math name="a">7</math>
+  <math name="b">-3</math>
+  <function name="f">$a sin(x) + $b</function> 
+  <number name="ymin">min(-$a - 2, $b - $a - 2)</number>
+  <number name="ymax">max($a + 2, $b + $a + 2)</number>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>gcd = $gcd</p>
+<p>angle = $angle</p> 
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>solN = $solN</p> -->
+<!--testing-->
+
+<p>Find the amplitude of the wave graphed below. </p>
+<p><em>tip: you can drag the $dp1.styleDescription and $fp1.styleDescription points to measure vertical distance. The $fp1.styleDescription line will snap to the midline of the wave.</em></p>
+
+<graph xmin="-8" xmax="8" xTickScaleFactor="pi" ymin="$ymin" ymax="$ymax" aspectRatio="3/2">
+  $f
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3">($dp1.x, 0.75)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3" applyStyleToLabel>
+    <label>Drag to midline</label>
+  </line>
+  <line name="midlineHidden" hide fixed>y = $b</line> 
+</graph>
+
+
+
+  
+<p><alert><em>Solution.</em></alert></p>
+<p>In this problem, the center of the wave is not located at <m>y = 0</m>, so we have two measuring tools we can use. Let's first drag the midline guide to the center of the wave. Click on the $fp1.styleDescription line and then place it in the center; it will snap into place once it gets close. Click here to check this step of your work: <answer name="exCheck1" weight="0" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute disableAfterCorrect>
+    <award><when>$fp1.y = $b</when></award>
+  </answer>
+</p>
+<p>Next, we drag the $dp1.styleDescription point to the peak of a wave to measure the vertical distance to the center of the wave. The point won't exactly "snap" into place, but you should be able to get it close enough to the peak to read off the answer. Try that above and click here to check your work: 
+  <answer name="exCheck2" weight="0" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute>
+    <award><when>$measure.length = $a</when></award>
+  </answer></p>
+
+<p>Were you able to get it to measure roughly <m>$a</m>? That's good enough for these problems - there aren't any incremental values of amplitude smaller than <m>0.5</m>.</p>
+  
+<p>Here is another technique that doesn't involve using the guides: Read the height of the peak directly off of the <m>y</m>-axis: In our example, that's <m>4</m>. Then, read the height of the trough (the low point) directly off of the <m>y</m>-axis: In our example, that's <m>-10</m>. Subtract the two values to get the total distance, then divide by <m>2</m>:
+  <me>\frac{4 - (-10)}{2} = 7</me>
+
+Our solution is:</p>
+  
+<p><m>\text{Amplitude} = $a</m></p>
+</example>
+
+  
+</hint>
+
+
+
+
+
+
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Amplitude} = $a</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

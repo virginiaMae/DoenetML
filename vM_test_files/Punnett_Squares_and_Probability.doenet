@@ -1,0 +1,437 @@
+<activity><title>Punnett Squares and Probability</title>
+
+<setup>
+<module newNamespace name="punnett">
+  <setup>
+    <customAttribute componentType="math" attribute="prefill_miA2" assignNames="prefill_miA2" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miA2" assignNames="disable_miA2" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miA3" assignNames="prefill_miA3" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miA3" assignNames="disable_miA3" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miB1" assignNames="prefill_miB1" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miB1" assignNames="disable_miB1" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miB2" assignNames="prefill_miB2" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miB2" assignNames="disable_miB2" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miB3" assignNames="prefill_miB3" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miB3" assignNames="disable_miB3" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miC1" assignNames="prefill_miC1" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miC1" assignNames="disable_miC1" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miC2" assignNames="prefill_miC2" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miC2" assignNames="disable_miC2" defaultValue="false"/>
+    
+    <customAttribute componentType="math" attribute="prefill_miC3" assignNames="prefill_miC3" defaultValue=""/>
+    <customAttribute componentType="boolean" attribute="disable_miC3" assignNames="disable_miC3" defaultValue="false"/>
+    
+    <customAttribute componentType="m" attribute="n1" assignNames="n1" defaultValue=""/>
+    <customAttribute componentType="m" attribute="n2" assignNames="n2" defaultValue=""/>
+  </setup>
+<sideBySide widths="15% 70% 15%">
+<div></div>
+<stack>
+<m name="punnettLabel">$n1 \times $n2</m>
+<tabular name="punnettTable" height="300" top="minor" bottom="minor" left="minor" right="minor"> 
+  <row halign="center" name="rowA" bottom="major">
+    <cell right="major"></cell>
+    <cell name="cellA2">
+      <mathInput name="miA2" prefill="$prefill_miA2" disabled="$disable_miA2"/>
+    </cell>
+    <cell name="cellA3">
+      <mathInput name="miA3" prefill="$prefill_miA3" disabled="$disable_miA3"/>
+    </cell>
+  </row>
+  
+  <row halign="center" name="rowB">
+    <cell name="cellB1" right="major">
+      <mathInput name="miB1" prefill="$prefill_miB1" disabled="$disable_miB1"/>
+    </cell>
+    <cell name="cellB2">
+      <mathInput  name="miB2" prefill="$prefill_miB2" disabled="$disable_miB2"/>
+    </cell>
+    <cell name="cellB3">
+      <mathInput name="miB3" prefill="$prefill_miB3" disabled="$disable_miB3"/>
+    </cell>
+  </row>
+  
+  <row halign="center" name="rowC">
+    <cell name="cellC1" right="major">
+      <mathInput name="miC1" prefill="$prefill_miC1" disabled="$disable_miC1"/>
+    </cell>
+    <cell name="cellC2">
+      <mathInput  name="miC2" prefill="$prefill_miC2" disabled="$disable_miC2"/>
+    </cell>
+    <cell name="cellC3">
+      <mathInput name="miC3" prefill="$prefill_miC3" disabled="$disable_miC3"/>
+    </cell>
+  </row>
+</tabular>
+</stack>
+<div></div>
+</sideBySide>
+</module>
+</setup>
+
+<aside startOpen><title>Background</title>
+<p>Pea plants, along with many other plants and animals, inherit traits from their parents. Each parent plant has two genes (alleles) and one of the two is randomly selected to be passed on to any children (offspring).</p>
+
+<p>For example, if a parent has genotype <alert>Gg</alert>, it will pass down the <alert>G</alert> gene with probability <m>\frac{1}{2}</m> and will pass down the <alert>g</alert>  gene with probability <m>\frac{1}{2}</m> . The same is true for the second parent.</p>
+
+<figure suppressFigureNameInCaption>
+  <image source='doenet:cid=bafkreibazxdsbsh7kut4ctt2catb373bpa62nvm7pkxswo76so4jmpr43m' description='a row of pea pods split open showing the peas inside' asfilename='Peas_in_pods_-_Studio.jpg' width='1920' mimeType='image/jpeg' size="small"/>
+  <caption>Image by Bill Ebbesen<footnote>CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=15727721</footnote></caption>
+</figure>
+
+<p>A <ref uri="https://dnalc.cshl.edu/view/16192-Animation-5-Genetic-inheritance-follows-rules-.html">Punnett Square</ref> is a diagram with all of the possibilities for the genes of the offspring. The genes of the first parent are listed above the diagram and the genes of the second parent are listed to the left of the diagram.</p>
+</aside>
+
+
+
+<paginatorControls paginator="questionPages"/>
+<paginator name="questionPages">
+
+  
+<!-- ***************
+Problem 1 - GG and Gg - fill in one of the GGs -->
+
+<question>
+<p>Fill in the genotypes (<alert>GG</alert>, <alert>Gg</alert>, or <alert>gg</alert>) in the Punnett Square below.</p>
+
+<module copySource="punnett" name="modGGTimesGg" 
+  prefill_miA2="G" disable_miA2="true" 
+  prefill_miA3="G" disable_miA3="true"
+  prefill_miB1="G" disable_miB1="true"
+  prefill_miB2="GG" disable_miB2="true"
+  prefill_miB3="GG" disable_miB3="true"
+  prefill_miC1="g" disable_miC1="true"
+  n1="GG" n2="Gg"/>
+<answer name="q1ans" matchPartial>
+  <award>
+    <when>$(modGGTimesGg/miC2) = Gg and
+      $(modGGTimesGg/miC3) = Gg
+    </when>
+  </award>
+</answer>
+
+<boolean symbolicEquality name="reversedCap" hide>$(modGGTimesGg/miC2) = gG or $(modGGTimesGg/miC3) = gG</boolean>
+<feedback condition="$reversedCap">Helpful tip: By convention, genotypes are usually written with the capitol letter appearing first. (So, <alert>Gg</alert> is preferred over <alert>gG</alert>, although they mean the same thing.)</feedback>
+
+<triggerSet triggerWhen="$q1ans.creditAchieved = 1">
+  <updateValue target="modGGTimesGg/miC2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesGg/miC3.disabled" newValue="true" type="boolean"/>
+</triggerSet>
+</question>
+
+<!--Problem 2 - probabilities associated with the first Punnett Square -->
+<question>
+<p>Given that a pea plant will look <m>\color{green}{\textbf{Green}}</m> (phenotype) if its genotype is either <alert>GG</alert> or <alert>Gg</alert>, and will look <m>\color{orange}{\textbf{Yellow}}</m>  if its genotype is <alert>gg</alert>, what is the probability that a pea plant looks Green (or Yellow) if the parents are <alert>GG</alert> and <alert>Gg</alert>?</p>
+
+<p><m>P(\color{green}{\textbf{Green}}) = </m><mathInput name="miGProbifGGxGg"/></p>
+<p><m>P(\color{orange}{\textbf{Yellow}}) = </m><mathInput name="miYProbifGGxGg"/>
+
+  <answer name="ansProbsifGGxGg" matchPartial>
+    <award>
+      <when>$miGProbifGGxGg = 1 and $miYProbifGGxGg = 0</when>
+    </award>
+  </answer></p>
+
+<feedback condition="$miGProbifGGxGg = 100 and $ansProbsifGGxGg.responseHasBeenSubmitted">Allowable values for probability are between <m>0</m> and <m>1</m>, inclusive. (Note, this is not asking for a percent.)</feedback>
+<!-- <feedback condition="$miGProbifGGxGg = 100% and $ansProbsifGGxGg.responseHasBeenSubmitted">Allowable values for probability are between <m>0</m> and <m>1</m>, inclusive. (Note, this is not asking for a percent.)</feedback> -->
+
+<p>Here is your Punnett Square from the previous page:</p> 
+  $(modGGTimesGg/punnettLabel)
+  $(modGGTimesGg/punnettTable)
+</question>
+  
+<question>
+<!-- Problem 3 - Gg and Gg -->
+<p>Fill in the genotypes (<alert>GG</alert>, <alert>Gg</alert>, or <alert>gg</alert>) in the Punnett Square below.</p>
+<module copySource="punnett" name="modGgTimesGg" 
+  prefill_miA2="G" disable_miA2="true" 
+  prefill_miA3="g" disable_miA3="true"
+  prefill_miB1="G" disable_miB1="true"
+  prefill_miC1="g" disable_miC1="true"
+  n1="Gg" n2="Gg"/>
+<answer name="q2ans" matchPartial>
+  <award>
+    <when>
+      $(modGgTimesGg/miB2) = GG and
+      $(modGgTimesGg/miB3) = Gg and
+      $(modGgTimesGg/miC2) = Gg and
+      $(modGgTimesGg/miC3) = gg
+    </when></award>
+</answer>
+
+<triggerSet triggerWhen="$q2ans.creditAchieved = 1">
+  <updateValue target="modGgTimesGg/miB2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGgTimesGg/miB3.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGgTimesGg/miC2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGgTimesGg/miC3.disabled" newValue="true" type="boolean"/>
+</triggerSet>
+</question>
+
+<!--Question 4 - probabilities associated with the second Punnett Square -->
+<question>
+<p>What is the probability that a pea plant looks Green (or Yellow) if the parents are <alert>Gg</alert> and <alert>Gg</alert>?</p>
+
+<p><m>P(\color{green}{\textbf{Green}}) = </m><mathInput name="miGProbifGgxGg"/></p>
+<p><m>P(\color{orange}{\textbf{Yellow}}) = </m><mathInput name="miYProbifGgxGg"/>
+
+  <answer name="ansProbsifGgxGg" matchPartial>
+    <award>
+      <when>$miGProbifGgxGg = 0.75 and $miYProbifGgxGg = 0.25</when>
+    </award>
+  </answer></p>
+
+
+<p>Here is your Punnett Square from the previous page:</p> 
+  $(modGgTimesGg/punnettLabel)
+  $(modGgTimesGg/punnettTable)
+</question>
+
+<question>
+<!-- Question 5 - GG and gg -->
+<p>Fill in the genotypes (<alert>GG</alert>, <alert>Gg</alert>, or <alert>gg</alert>) in the Punnett Square below. Here, you will also need to fill in the Labels for the parents genotypes.</p>
+<module copySource="punnett" name="modGGTimesgg" 
+  n1="GG" n2="gg"/>
+<answer name="q3ans" matchPartial>
+  <award>
+    <when>
+      $(modGGTimesgg/miA2) = G and
+      $(modGGTimesgg/miA3) = G and
+      $(modGGTimesgg/miB1) = g and
+      $(modGGTimesgg/miC1) = g and
+      
+      $(modGGTimesgg/miB2) = Gg and
+      $(modGGTimesgg/miB3) = Gg and
+      $(modGGTimesgg/miC2) = Gg and
+      $(modGGTimesgg/miC3) = Gg
+    </when>
+  </award>
+  <award>
+    <when>
+      $(modGGTimesgg/miA2) = g and
+      $(modGGTimesgg/miA3) = g and
+      $(modGGTimesgg/miB1) = G and
+      $(modGGTimesgg/miC1) = G and
+      
+      $(modGGTimesgg/miB2) = Gg and
+      $(modGGTimesgg/miB3) = Gg and
+      $(modGGTimesgg/miC2) = Gg and
+      $(modGGTimesgg/miC3) = Gg
+    </when>
+  </award>
+</answer>
+
+<triggerSet triggerWhen="$q3ans.creditAchieved = 1">
+  <updateValue target="modGGTimesgg/miA2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miA3.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miB1.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miC1.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miB2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miB3.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miC2.disabled" newValue="true" type="boolean"/>
+  <updateValue target="modGGTimesgg/miC3.disabled" newValue="true" type="boolean"/>
+</triggerSet>
+</question>
+
+<!--Question 6 - probabilities associated with the third Punnett Square -->
+<question>
+<p>What is the probability that a pea plant looks Green (or Yellow) if the parents are <alert>GG</alert> and <alert>gg</alert>?</p>
+
+<p><m>P(\color{green}{\textbf{Green}}) = </m><mathInput name="miGProbifGGxgg"/></p>
+<p><m>P(\color{orange}{\textbf{Yellow}}) = </m><mathInput name="miYProbifGGxgg"/>
+
+  <answer name="ansProbsifGGxgg" matchPartial>
+    <award>
+      <when>$miGProbifGGxgg = 1 and $miYProbifGGxgg = 0</when>
+    </award>
+  </answer></p>
+
+
+<p>Here is your Punnett Square from the previous page:</p> 
+  $(modGGTimesgg/punnettLabel)
+  $(modGGTimesgg/punnettTable)
+</question>
+
+<!--Question 7 - probabilities associated with gg x gg -->
+<question>
+<p>What is the probability that a pea plant looks Green (or Yellow) if the parents are <alert>gg</alert> and <alert>gg</alert>?</p>
+
+<p><m>P(\color{green}{\textbf{Green}}) = </m><mathInput name="miGProbifggxgg"/></p>
+<p><m>P(\color{orange}{\textbf{Yellow}}) = </m><mathInput name="miYProbifggxgg"/>
+
+  <answer name="ansProbsifggxgg" matchPartial>
+    <award>
+      <when>$miGProbifggxgg = 0 and $miYProbifggxgg = 1</when>
+    </award>
+  </answer></p>
+
+
+<p>Here is a blank Punnett square (optional)</p> 
+  <module name="q7BlankPunnett" copySource="punnett" n1="gg" n2="gg"/>
+</question>
+
+<!-- Question 8 - finding probabilities of specific Generation 1 genotypes -->
+<question>
+<p>The process can proceed for more than one generation. The offspring of Generation 1 become the parents in Generation 2.</p>
+<p>If the parents in Generation 1 have genotypes <alert>Gg</alert> and <alert>gg</alert>, find the probability that the offspring have genotypes: <alert>GG</alert>, <alert>Gg</alert>, <alert>gg</alert>.</p>
+<p><m>P(\color{green}{\textbf{GG}}) = </m><mathInput name="miProbOfGGq8"/></p>
+<p><m>P(\color{green}{\textbf{Gg}}) = </m><mathInput name="miProbOfGgq8"/></p>
+<p><m>P(\color{orange}{\textbf{gg}}) = </m><mathInput name="miProbOfggq8"/>
+  
+<answer name="ansProbsifGgxgg" matchPartial>
+    <award>
+      <when>$miProbOfGGq8 = 0 and $miProbOfGgq8 = 0.5 and $miProbOfggq8 = 0.5</when>
+    </award>
+  </answer></p>
+  
+<p>Here is a blank Punnett square (you might want this for the next question...)</p> 
+  <module name="q8BlankPunnett" copySource="punnett" n1="Gg" n2="gg"/>
+</question>
+
+
+<!-- Question 9 - finding probabilities of specific Generation 2 genotypes -->
+<question>
+<p>Using the pairing from the previous problem, <alert>Gg </alert> <m>\times</m> <alert> gg</alert>, two Generation 1 offspring are chosen at random to be the generation 2 parents. Find the probability that the Generation 2 parents are...</p>
+
+
+<!-- <p>Probability of specific pairings for parents</p> -->
+<p><alert>GG + GG</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{green}{\textbf{GG + GG}})</m><mathInput name="mi9a"/></p>
+  
+<p><alert>GG + Gg</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{green}{\textbf{GG + Gg}})</m><mathInput name="mi9b"/></p>
+  
+<p><alert>GG + gg</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{green}{\textbf{GG + }}\color{orange}{\textbf{ gg}})</m><mathInput name="mi9c"/></p>
+  
+<p><alert>Gg + Gg</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{green}{\textbf{Gg + Gg}})</m><mathInput name="mi9d"/></p>
+
+<p><alert>Gg + gg</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{green}{\textbf{Gg + }}\color{orange}{\textbf{ gg}})</m><mathInput name="mi9e"/></p>
+
+<p><alert>gg + gg</alert>: <nbsp/><nbsp/><nbsp/><nbsp/>
+  <m>P(\color{orange}{\textbf{gg + gg}})</m><mathInput name="mi9f"/>
+
+<answer name="probsq9" matchPartial matchByExactPositions allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+  <award>
+    <when>
+      <mathList>$mi9a $mi9b $mi9c $mi9d $mi9e $mi9f</mathList> = <mathList>0 0 0 1/4 1/2 1/4</mathList>
+    </when>
+  </award>
+</answer></p>
+  
+<p>How many unique parent combinations are there? 
+  <answer name="q9NumOfCombinations" inline>
+    <choice>1</choice>
+    <choice>2</choice>
+    <choice credit>3</choice>
+    <choice>4</choice>
+  </answer></p>
+  
+<p>To help you, here is your Punnett Square from the previous page:</p> 
+  $(q8BlankPunnett/punnettLabel)
+  $(q8BlankPunnett/punnettTable)
+</question>
+
+
+<!-- Question 10 - Listing possible combinations of parents -->
+<question>
+<p>What are the <m hide="$q9NumOfCombinations.creditAchieved != 1">3</m> parent combinations that are possible? (See previous question.)</p>
+<!-- <div hide="$q9NumOfCombinations.creditAchieved != 1"><mathInput name="miq10a"/>, <mathInput name="miq10b"/>, <mathInput name="miq10c"/> -->
+
+<!-- <answer name="q10Combinations" unorderedCompare>
+  <award>
+    <when>
+      <mathlist>$miq10a $miq10b $miq10c</mathlist> = 
+      <mathlist>
+        <math>(Gg + Gg)</math> 
+        <math>(Gg + gg)</math> 
+        <math>(gg + gg)</math>
+      </mathlist>
+    </when>
+  </award>
+</answer> -->
+<p>Select as many combinations as apply</p>
+<answer name="q10Combinations" selectMultiple>
+  <choice>GG + GG</choice>
+  <choice>GG + Gg</choice>
+  <choice>GG + gg</choice>
+  <choice credit>Gg + Gg</choice>
+  <choice credit>Gg + gg</choice>
+  <choice credit>gg + gg</choice>
+</answer>
+
+
+</question>
+
+<!-- Question 11 -  -->
+<question>
+<p>If the Generation 1 parents have genotype <alert>Gg</alert> and <alert>gg</alert>, what is the probability that a Generation 2 offspring will have genotype ...</p>
+  
+
+
+<p><m>P(\color{green}{\textbf{GG}}) = </m><mathInput name="miProbOfGGq11"/></p>
+<p><m>P(\color{green}{\textbf{Gg}}) = </m><mathInput name="miProbOfGgq11"/></p>
+<p><m>P(\color{orange}{\textbf{gg}}) = </m><mathInput name="miProbOfggq11"/></p>
+
+<answer name="q11Probabilities">
+  <award>
+    <when>
+      <mathlist>$miProbOfGGq11 $miProbOfGgq11 $miProbOfggq11</mathlist> = 
+      <mathlist>
+        <math>1/16</math> 
+        <math>6/16</math> 
+        <math>9/16</math>
+      </mathlist>
+    </when>
+  </award>
+</answer>
+
+<hint>
+  <p>Recall from question <m>10</m> that there are <m>3</m> cases to consider. However, one of these cases is actually <em>two</em> cases because the order of the parents could be reversed. These 3 (but actually 4) cases are:</p>
+    <ul>
+      <li><m>\textbf{Gg + Gg}</m></li>
+      <li><m>\textbf{Gg + gg}</m></li>
+      <li><m>\textbf{gg + Gg}</m></li>
+      <li><m>\textbf{gg + gg}</m></li>
+    </ul>
+<p>You've already drawn Punnett squares for all of these cases! Each Punnett square yields <answer name="multChoice" inline weight="0">
+  <choice>1</choice>
+  <choice>3</choice>
+  <choice credit>4</choice>
+  <choice>12</choice>
+  <choice><m>\infty</m></choice>
+</answer> offspring. Each one of these offspring can be thought of as an "event". So, for <m>4</m> cases each having <m hide="$multChoice.creditAchieved != 1">4</m> offspring, there are a total of 
+  <answer inline weight="0">
+  <choice>9</choice>
+  <choice credit>16</choice>
+  <choice>37</choice>
+  <choice>84</choice>
+  <choice><m>\infty</m></choice>
+</answer> events in the sample space.</p>
+</hint>
+  
+<p>As a helpful starting point for this question, here are your Punnett squares from previous questions. You can use them to map out all of the possible events in your sample space.</p> 
+<div>
+$(modGgTimesGg/punnettLabel)
+$(modGgTimesGg/punnettTable)  
+
+$(q8BlankPunnett/punnettLabel)
+$(q8BlankPunnett/punnettTable)
+
+$(q7BlankPunnett/punnettLabel)
+$(q7BlankPunnett/punnettTable)
+</div>
+
+</question>
+  
+</paginator>
+<paginatorControls paginator="questionPages"/>
+
+</activity>

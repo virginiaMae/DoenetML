@@ -1,0 +1,115 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given an explicit formula for a sequence, determine the nth term of the sequence.
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="4"/>
+  <selectFromSequence name="b" from="3" to="10"/>
+  <selectFromSequence name="p" from="2" to="3"/>
+  <selectFromSequence name="k" from="3" to="6"/>
+  
+  <math name="expr" format="latex">$a n^$p - $b n</math>
+  <math name="a_k">$a($k^$p) - $b $k</math>
+  <!--maths for incorrect responses-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>k = $k</p>
+<p>p = $p</p>
+<p>expr = $expr</p>
+<p>a_k = $a_k</p>
+<p>a_k{simplify} = $a_k{simplify}</p> -->
+<!--testing-->
+  
+<p>If <m>a_n = $expr</m>, find <m>a_$k</m>.</p>
+  <p><m>a_$k = </m>
+      
+    <answer name="ans1">
+      <mathInput name="userInput"/> 
+      <award name="correct" simplifyOnCompare symbolicEquality credit="1">    
+        <when>
+      $userInput=$a_k{simplify}
+        </when>
+      </award>
+
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Fantastic!</feedback>
+
+   <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+      <p>We are given an <term>explicit formula</term> for an <term>arithemetic sequence</term>. Recall that this formula takes the form:
+    <md>
+      <mrow>\text{Arithmetic Sequence, Explicit Formula:}</mrow>
+      <mrow>a_n = d(n) + a_0</mrow>
+    </md></p>
+  <p>Given an explicit formula, to solve for <m>a_n</m> we need simply to substitute in the value for <m>n</m> into the equation.
+  </p>
+   </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+<p> Here is a similar worked example:</p>
+
+<example>
+  <p><em>If <m>a_n = 5n^2 - 2n</m>, find <m>a_7</m>.</em></p>
+  <p><em><alert>Solution.</alert></em></p>
+  <md>
+    <mrow>a_7 \amp= 5(7)^2 - 2(7)\;\;\;\amp\text{substitute n = 7}</mrow>
+    <mrow>\amp= 231.\;\;\;\amp\text{simplify}</mrow>
+  </md>
+</example>  
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>To solve for <m>a_$k</m>, we substitute <m>n = $k</m> into the given explicit formula:
+  <md>
+    <mrow>a_$k \amp= $a_k\;\;\;\amp\text{substitute n = $k}</mrow>
+    <mrow>\amp= $a_k{simplify}.\;\;\;\amp\text{simplify}</mrow>
+  </md>
+</p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

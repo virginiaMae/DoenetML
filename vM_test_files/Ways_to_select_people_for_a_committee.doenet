@@ -1,0 +1,79 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Number of ways to choose; unsimplified responses accepted.
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="k" from="3" to="5"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <math name="n" simplify>$k + $b</math>
+  <math name="sol" simplify>nCr($n, $k)</math>
+</setup>
+
+
+<!--testing--> 
+<!-- <p>k = $k</p>
+<p>b = $b</p>
+<p>n = $n</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>In how many ways can a committee of <m>$k</m> people be chosen from a group of <m>$n</m> people?</p>  
+
+  <p><m>\text{Number of ways} = </m>
+      
+    <answer name="ans1">$sol</answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+</example>
+
+
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $sol \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+
+</problem>
+

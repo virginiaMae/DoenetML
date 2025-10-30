@@ -1,0 +1,152 @@
+<setup>
+  <text name="source"></text>
+</setup>
+<!--******************************************************
+            Source code
+*******************************************************-->
+<!-- 
+QUESTION:Find the points of intersection of the ellipse  HoldForm [4(x +1)^2 + y^2=36] with the line HoldForm[y =4 - 2x] . The points (Subscript[x, 1],Subscript[y, 1]), (Subscript[x, 2],Subscript[y, 2]) will be listed from left to right (i.e., HoldForm[Subscript[x, 1]<Subscript[x, 2]]). ;;  
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Real]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {"x1", "y1", "x2", "y2"};;
+
+answer = {"-1","6","2","0"};;
+
+tolerance = 0
+-->
+
+<problem>
+<setup>
+  <math name="ellipse">4(x + 1)^2 + y^2 = 36</math>
+  <math name="line">y = 4 - 2x</math>
+  <point name="sol1">(-1, 6)</point>
+  <point name="sol2">(2, 0)</point>
+  <mathList name="solList">$sol1 $sol2</mathList>
+  <mathList name="userSols">$user_P1 $user_P2</mathList>
+</setup>
+
+
+<!--testing-->
+<!-- <p>ellipse = $ellipse</p>
+<p>line = $line</p>
+<p>solList = $solList</p> -->
+<!--testing-->
+
+<p>Find the points of intersection of the ellipse $ellipse  with the line $line. </p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph ellipse with given equation:</p> 
+  <p><mathInput name="userEllipseG"/></p>
+
+  <p>Graph line (enter full equation):</p> 
+  <p><mathInput name="eq1"/></p>
+
+  <p>Check points of intersection:</p>
+  <p><m>P_1 = </m><mathInput name="graphP1" bindValueTo="$user_P1"/></p>
+  <p><m>P_2 = </m><mathInput name="graphP2" bindValueTo="$user_P2"/></p>
+</div>
+ 
+<graph name="g1" ymin="-8" ymax="8" xmin="-8" xmax="8">
+  <curve variable="t" parmin="0" parmax="2pi" hide="$userEllipseG != $ellipse">(3 cos(t) - 1, 6sin(t))</curve>
+  <line fixed>$eq1</line>
+  <point coords="$graphP1" styleNumber="2"/>
+  <point coords="$graphP2" styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>P_1 = </m> <mathInput name="user_P1" prefill="(x,y)"/></p>
+<p><m>P_2 = </m> <mathInput name="user_P2" prefill="(x,y)"/></p>
+
+  <answer name="ans1">
+    <award name="correct" matchPartial>
+      <when unorderedCompare>$userSols = $solList</when>
+    </award>        
+  </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$P1incorrect and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">There is an error in intersection point <m>P_1</m>.</feedback>
+  <feedback condition="$P2incorrect and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">There is an error in intersection point <m>P_2</m>.</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>P_1 = $sol1</m>, <m>P_2 = $sol2</m>. Note that points can be entered in either order.</p>
+ 
+<graph name="gsol" ymin="-8" ymax="8" xmin="-8" xmax="8">
+  <curve variable="t" parmin="0" parmax="2pi">(3 cos(t) - 1, 6sin(t))</curve>
+  <line fixed>$line</line>
+  <point coords="$sol1" styleNumber="2"/>
+  <point coords="$sol2" styleNumber="2"/>
+</graph>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+

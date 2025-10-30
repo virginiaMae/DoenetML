@@ -1,0 +1,74 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Evaluate f(x) for f(x+h) for a rational function.
+
+(CA-Deriv #6 CA2004)
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="1" to="3"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <math name="expr" simplify="numberspreserveorder">f(x) = (x - $a)/($b x^2)</math>
+  <math name="sol" simplify="numberspreserveorder">(x + h - $a)/($b x^2 + 2 $b x h + $b h^2)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>If <m>\displaystyle{$expr}</m>, then <m>f(x + h)</m> is</p> 
+
+  <p><m>f(x + h) = </m>
+    <answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>
+      <mathInput name="userAns"/>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>\displaystyle{f(x + h) = $sol}</m>
+</p>
+
+</solution>
+</problem>

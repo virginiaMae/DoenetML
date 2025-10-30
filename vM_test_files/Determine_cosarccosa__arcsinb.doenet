@@ -1,0 +1,245 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine cos(arccos(A) + arcsin(B)). Graphing tool provided for visualization of the geometry of the problem. Answers are required to be exact, but full simplification is not enforced.
+
+*************************************************************-->
+
+<problem><title/>
+<setup>
+<selectFromSequence assignNames="b c" from="-6" to="6" numToSelect="2" exclude="0"/>
+<selectFromSequence assignNames="a d" from="1" to="6" numToSelect="2" exclude="0"/>
+<math name="p" simplify>sqrt($a^2 + $b^2)</math>
+<math name="q" simplify>sqrt($c^2 + $d^2)</math>
+<math name="sinOfA" simplify>$a/$p</math>
+<math name="cosOfA" simplify>$b/$p</math>
+<math name="sinOfB" simplify>$c/$q</math>
+<math name="cosOfB" simplify>$d/$q</math>
+<math name="r" simplify>$a^2 + $b^2</math>
+<math name="s" simplify>$c^2 + $d^2</math>
+<math name="sol" simplify>($b $d - $a $c)/sqrt($r $s)</math>
+
+<math name="solRaw">$cosOfA $cosOfB - $sinOfA $sinOfB</math>
+  
+<me name="exprDisplay">\cos\bigg(\cos^{-1}\left($cosOfA\right) + \sin^{-1}\left($sinOfB\right)\bigg)</me>
+
+<math name="expr" simplify>cos(arccos($cosOfA) + arcsin($sinOfB))</math>
+
+<boolean name="notSimplified">
+  <matchesPattern pattern="sin()">$userInput</matchesPattern>
+</boolean>
+<number name="zeroFixed" fixed>0</number>
+<boolean name="numCheck1" allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute><number>$expr</number> = <number>$sol</number></boolean>
+<boolean name="numCheck2" allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute><number>$solRaw</number> = <number>$expr</number></boolean>
+
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>cosOfA = $cosOfA</p>
+<p>sinOfA = $sinOfA</p>
+<p>cosOfB = $cosOfB</p>
+<p>sinOfB = $sinOfB</p>
+<p>exprDisplay = $exprDisplay</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>numCheck1 = $numCheck1</p>
+<p>numCheck2 = $numCheck2</p>
+<p>notSimplified = $notSimplified</p> -->
+<!--testing-->
+
+
+<p>Find $exprDisplay</p>
+
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+
+<div newNamespace>
+<p><alert>Triangle 1</alert>: Angle <m>A</m>. Adjust the triangle below to match the given problem.</p>
+
+<setup>
+<number name="zeroFixed" fixed>0</number>
+</setup>
+
+  
+<sideBySide widths="30% 70%">
+<div>
+<p><m>s_1 = </m><mathInput name="A" prefill="5"/></p>
+<p><m>s_2 = </m><mathInput name="B" prefill="5"/></p>
+<p><m>s_3 = </m><mathInput name="C" prefill="5sqrt(2)"/> (hypotenuse)</p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+
+</div>
+
+<div>
+  <p>Check <m>\sin(A)</m>:</p>
+  <p>
+  <m>\sin A = </m><mathInput name="userSinA"/> 
+    <answer name="checkSin" weight="0">
+      <award><when>$userSinA = $(../sinOfA)</when></award>
+      <award name="sinSignError" credit="0"><when>$userSinA = -$(../sinOfA)</when></award>
+    </answer>
+  </p>
+ 
+  <feedback condition="$sinSignError"><p>It looks like you made a sign error. Which quadrant is this triangle located in? What are the signs of its <m>x</m> and <m>y</m>-coordinates?</p>
+       <p>It might be helpful to recall that the range of the <m>\cos^{-1}(x)</m> function is from <m>0</m> to <m>\pi</m> radians.</p>
+  </feedback>
+
+  <graph>
+    <point name="p1" styleNumber="2" coords="($zeroFixed,$zeroFixed)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroFixed)"/>
+    <point name="p3" coords="($A, $B)" layer="2"/>
+
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" styleNumber="2" applyStyleToLabel>
+      <label><m>s_1 = $A{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" styleNumber="3" labelPosition="upperright" applyStyleToLabel>
+      <label><m>s_2 = $B{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1" styleNumber="4" labelPosition="upperleft" applyStyleToLabel>
+      <label><m>s_3 = $C{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="thetaShow" styleNumber="2" through="$p2 $p1 $p3" radius="0.2 $line1.length">
+      <label><m>A</m></label>
+    </angle>
+    <angle name="theta" through="(5,0) $p1 $p3"  chooseReflexAngle="allowed" hide/>
+  </graph>
+</div>
+</sideBySide>
+</div>
+
+
+<div newNamespace>
+<p><alert>Triangle 2</alert>: Angle <m>B</m>. Adjust the triangle below to match the given problem.</p>
+
+<setup>
+<number name="zeroFixed" fixed>0</number>
+</setup>
+
+  
+<sideBySide widths="30% 70%">
+<div>
+<p><m>s_1 = </m><mathInput name="A" prefill="5"/></p>
+<p><m>s_2 = </m><mathInput name="B" prefill="5"/></p>
+<p><m>s_3 = </m><mathInput name="C" prefill="5sqrt(2)"/> (hypotenuse)</p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+
+</div>
+
+<div>
+  <p>Check <m>\cos(B)</m>:</p>
+  <p>
+  <m>\cos B = </m><mathInput name="userCosB"/> 
+    <answer name="checkCos" weight="0">
+      <award><when>$userCosB = $(../cosOfB)</when></award>
+      <award name="cosSignError" credit="0"><when>$userCosB = -$(../cosOfB)</when></award>
+    </answer>
+  </p>
+
+  <feedback condition="$cosSignError"><p>It looks like you made a sign error. Which quadrant is this triangle located in? What are the signs of its <m>x</m> and <m>y</m>-coordinates?</p>
+     <p>It might be helpful to recall that the range of the <m>\sin^{-1}(x)</m> function is from <m>-\frac{\pi}{2}</m> to <m>\frac{\pi}{2}</m> radians.</p>
+  </feedback>
+
+  <graph>
+    <point name="p1" styleNumber="2" coords="($zeroFixed,$zeroFixed)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroFixed)"/>
+    <point name="p3" coords="($A, $B)" layer="2"/>
+
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" styleNumber="2" applyStyleToLabel>
+      <label><m>s_1 = $A{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" styleNumber="3" labelPosition="upperright" applyStyleToLabel>
+      <label><m>s_2 = $B{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1" styleNumber="4" labelPosition="upperleft" applyStyleToLabel>
+      <label><m>s_3 = $C{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="thetaShow" styleNumber="2" through="$p2 $p1 $p3" radius="0.2 $line1.length">
+      <label><m>A</m></label>
+    </angle>
+    <angle name="theta" through="(5,0) $p1 $p3"  chooseReflexAngle="allowed" hide/>
+  </graph>
+</div>
+</sideBySide>
+</div>
+</aside>
+
+
+<!--*********************************************
+          Solution Input
+**********************************************-->
+  
+<p><m>$exprDisplay = </m>
+  <answer name="ans1">
+    <mathInput name="userInput"/>
+    <award name="correct">
+      <when>$userInput = $sol and $notSimplified = false</when>
+    </award>
+    <award name="unsimplified" credit="0">
+      <when>$userInput = $sol and $notSimplified = true</when>
+    </award>
+  </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$notSimplified">Simplify to receive credit. Your answer should not include any trigonometric functions.</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$exprDisplay = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

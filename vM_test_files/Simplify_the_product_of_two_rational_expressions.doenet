@@ -1,0 +1,66 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify a product of two rational expressions.
+
+(BA-Basics #87 BA1441)
+
+*************************************************************-->
+<problem>
+<setup>
+  <math name="a">(x^2 - 9)/(3x^2 + 6x)</math>
+  <math name="b">(x^2 + 3x + 2)/(x^2 + 4x + 3)</math>
+  <math name="expr">$a $b</math>
+  <math name="sol" simplify>(x-3)/(3x)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+  
+<p>Simplify the following expression, expressing the answer as a single reduced fraction.
+  <me>\displaystyle{$expr}</me>
+</p>
+  <p><m>$expr = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userFraction" prefill="/"/> 
+      <award name="correct" symbolicEquality="true" simplifyOnCompare>     
+        <when>
+          $userFraction = $sol
+        </when>
+      </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  
+<feedback condition="$correct">$correctFeedback</feedback>
+ 
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$sol</m></p>
+</solution>
+</problem>

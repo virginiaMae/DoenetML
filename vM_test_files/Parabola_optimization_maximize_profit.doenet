@@ -1,0 +1,138 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the quantity sold to maximize profit given the equation for profit in general form. Graphing tool provided for visualization of the geometry of the problem.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="4" to="10"/>
+  <selectFromSequence name="c" from="8" to="20" />
+  <selectFromSequence name="b" from="8" to="20"/>
+  <math name="p1" simplify="numberspreserveorder">-$a x^2 + 20 $a $b x - 1000 $c</math>
+  <math name="sol_x" simplify>10 $b</math>
+  <math name="sol_P" simplify>100 $a $b^2 - 1000 $c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>p1 = $p1</p>
+<p>sol_x = $sol_x</p>
+<p>sol_P = $sol_P</p> -->
+<!--testing-->
+
+
+<p>A company's profit <m>P</m>, is given by the function
+
+<me>P(x) = $p1</me>
+</p>
+
+<p>where <m>x</m> is the number sold. Find the quantity sold <m>x</m> that maximizes the profit and find the maximum profit <m>P</m>.</p> 
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">$sol_P + 10000</number>
+  <number name="ymin">-0.1*$ymax</number>
+  <number name="xmax">2 $sol_x + 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>P(x) = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph a point at the proposed maximum profit<footnote>How to find the coordinates of the vertex of a parabola from general form? Recall, there is a simple formula for the <m>x</m> value...</footnote>:</p> 
+  <p><m>(x, P(x)) = </m></p>
+  <p><m>\bigg( </m><mathInput name="graphX" bindValueTo="$user_x"/> , <mathInput name="Pmax" bindValueTo="$user_P"/> <m>\bigg)</m></p>
+</div>
+  
+<graph name="g1" xmin="-10" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="givenParabola" domain="[0,infinity]">$eq1</function>
+  <point name="userVertex" fixed styleNumber="5">($graphX, $Pmax)
+    <label>$userVertex.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will occur at the maximum value of the graphed function.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p>Quantity sold, <m>x = </m><mathInput name="user_x"/></p>  
+<p><m>P_{max} = </m> <mathInput name="user_P"/>
+  <answer name="ans1">    
+    <award name="correct">
+      <when>$user_x = $sol_x and $user_P = $sol_P</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+      <p>First, try computing the number sold at maximum profit using the formula for the <m>x</m>-coordinate of the vertex of a parabola. If you are still stuck, review this lesson on <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-6-optimization-using-parabolas/">Optimization Using Parabolas</ref>.</p>
+    </feedback>
+  
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>Quantity sold, <m>x = $sol_x</m></p>  
+<p><m>P_{max} = $sol_P</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

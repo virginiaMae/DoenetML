@@ -1,0 +1,124 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="-1 0 1"/>
+  <selectFromSequence name="p" from="-5" to="5" exclude="0"/>
+  <math name="c" simplify>$a $p^2</math>
+  <math name="b" simplify>2 $a $p</math>
+  <math name="genForm" simplify="numberspreserveorder">$a x^2 + $b x + c</math>
+  <math name="factForm" simplify="numberspreserveorder">$a(x + $p)^2</math>
+  <math name="exprFactForm">a(x + p)^2</math>
+  
+</setup>
+
+
+<!--testing-->
+<!-- <p>p = $p</p>
+<p>a = $a</p>
+<p>c = $c</p>
+<p>genForm = $genForm</p>
+<p>factForm = $factForm</p>
+<p>exprFactForm = $exprFactForm</p> -->
+<!--testing-->
+
+<p>Find <m>c</m> so that <me>$genForm</me> is a perfect square which will factor to $exprFactForm. Find <m>a</m>, <m>c</m>, and <m>p</m>.  Note: <m>a</m>, <m>c</m>, <m>p</m> may be negative.</p>
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation, substituting <m>c</m> in:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph parabola in the form <m>y = a(x + p)^2</m>:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+  <p><booleanInput name="showParabola">
+      <label>Click to show second parabola</label>
+    </booleanInput>
+  </p>
+</div>
+  
+<graph name="g1" >
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="userParabola" hide="!$showParabola">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>c = </m><mathInput name="userC"/></p>
+<p><m>y = </m><mathInput name="userA" prefill="a"/>
+  <m>\bigg(x + </m> <mathinput name="userP" prefill="p"/><m>\bigg)^2</m>
+  <answer name="ans1">
+    <award name="allCorrect" credit="1">
+      <when>$userP = $p and $userC = $c and $userA = $a</when> 
+    </award>    
+</answer></p>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1 and $ans1.responseHasBeenSubmitted">$correctFeedback</feedback>
+  <feedback condition="$userA != $a and $ans1.justSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$userC != $c and $ans1.justSubmitted">Your <m>c</m> value is incorrect.</feedback>
+  <feedback condition="$userP != $p and $ans1.justSubmitted">Your <m>p</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">Try graphing both forms to check your answer.</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>c = $c</m></p>
+<p><m>y = $factForm</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

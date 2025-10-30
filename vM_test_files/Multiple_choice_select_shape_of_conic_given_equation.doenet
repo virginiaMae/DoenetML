@@ -1,0 +1,144 @@
+<setup>
+  <text name="source">Question 30:TR-Conics/TR35/TR3515/11182020160423_TR-Conics_KF2SI8IZ</text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+QUESTION: The graph of (y - 2)^2 = 3(x - 10) is a:
+
+A) left or right opening parabola
+B) up or down opening parabola
+C) ellipse
+D) circle ;; 
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Real]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {"Answer Label"};;
+
+answer = {"a","b","c","d"}
+(*Enter correct answer in first position (answer a). *);;
+SOLUTION = {1};;
+tolerance = 0
+
+-->
+
+
+<div newNamespace>
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <selectFromSequence name="c" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="d" from="-4" to="4" exclude="0"/>
+  <select name="select" assignNames="(expr solSimple index)">
+    <option>
+      <math simplify="numberspreserveorder">(y + $a)^2 = $b(x + $c)</math>
+      <math expand simplify="numberspreserveorder">
+    x = 1/$b y^2 + 2 $a y / $b + $a^2/$b - $c</math>
+      <number>1</number>
+    </option>
+    <option>
+      <math simplify="numberspreserveorder">-(x + $a)^2 + $b(y + $c) = 0</math>
+      <math expand simplify="numberspreserveorder">
+    y = 1/$b x^2 + 2 $a x / $b + $a^2/$b - $c</math>
+      <number>2</number>
+    </option>
+    <option>
+      <math expand simplify="numberspreserveorder">$a^2 + x^2 - 2 $c y = -y^2 + 2 x $a - $c^2 + $b^2</math>
+      <math simplify="numberspreserveorder">(x - $a)^2 + (y - $c)^2 = $b^2</math>
+      <number>3</number>
+    </option>
+    <option>
+      <math expand simplify="numberspreserveorder">$b^2 ($c^2 - 2 x $c + x^2) - $a^2 $b^2 = -$a^2(y^2 - 2 $d y + $d^2)</math>
+      <math simplify="numberspreserveorder">(x - $c)^2 / $a^2 + (y - $d)^2 / $b^2 = 1</math>
+      <number>4</number>
+    </option>
+  </select>
+  <boolean name="check">$solSimple = $expr</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>expr = $expr</p>
+<p>solSimple = $solSimple</p>
+<p>check = $check</p>
+<p>index = $index</p> -->
+<!--testing-->
+
+<p>The graph of $expr is</p>
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+<answer name="ans1" shuffleOrder maxNumAttempts="1">
+  <choice name="c1" credit="$index = 1">a left or right opening parabola</choice> 
+  <choice name="c2" credit="$index = 2">an up or down opening parabola</choice>
+  <choice name="c3" credit="$index = 3">a circle</choice>
+  <choice name="c4" credit="$index = 4">an ellipse</choice>
+</answer>
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+ 
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>Expand and simplify this equation to arrive at: <me>$solSimple.</me> This represents 
+  <em><conditionalContent>
+    <case condition="$index = 1">$c1.text</case>
+    <case condition="$index = 2">$c2.text</case>
+    <case condition="$index = 3">$c3.text</case>
+    <case condition="$index = 4">$c4.text</case>
+  </conditionalContent></em>.</p>
+</solution>
+</problem>
+</div>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

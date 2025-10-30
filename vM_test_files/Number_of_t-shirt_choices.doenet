@@ -1,0 +1,72 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Number of ways to choose; unsimplified responses accepted.
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="7" to="12"/>
+  <selectFromSequence name="b" from="3" to="5"/>
+  <selectFromSequence name="c" from="5" to="10"/>
+  <math name="sol" simplify>$a $b $c</math>
+</setup>
+
+
+<!--testing--> 
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>When making a choice to order a T-shirt online, how many choices do you have if you can pick from <m>$a</m> different colors, <m>$b</m> different shirt materials, and <m>$c</m> different art designs?</p>  
+
+  <p><m>\text{Number of choices} = </m>
+      
+    <answer name="ans1">$sol
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+</example>
+
+
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>There are <m>$a \cdot $b \cdot $c = $sol</m> ways to choose a t-shirt.</p>
+</solution>
+</problem>
+

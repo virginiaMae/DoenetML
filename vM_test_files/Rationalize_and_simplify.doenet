@@ -1,0 +1,78 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of negative and rational exponents to rewrite a given algebraic expression.
+
+(BA-Basics #107 BA6104)
+
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="c" from="3" to="6"/>
+  <math name="a">1/$c</math>
+  <math name="b">-1/$c</math>
+  <m name="expr">\sqrt[$c]{x} + \frac{1}{\sqrt[$c]{x}}</m>
+  <math name="sol" simplify="numberspreserveorder">x^($a) + x^($b)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Rationalize and simplify <m>\displaystyle{f(x) = $expr}</m>. Rewrite the function in the form <m>\displaystyle{f(x) = x^a + x^b}</m>, and enter <m>a</m> and <m>b</m> below.</p>
+
+<p><m>a = </m> <mathInput name="userA"/></p>
+<p><m>b = </m> <mathInput name="userB"/></p>
+
+<p>
+    <answer name="ans1" matchPartial>
+      <award name="correct">
+        <when>$userA = $a and $userB = $b</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>\displaystyle{f(x) = $expr = $sol}</m></p>
+<p>Therefore, <m>a = $a</m>, <m>b = $b</m>.</p>
+
+</solution>
+</problem>

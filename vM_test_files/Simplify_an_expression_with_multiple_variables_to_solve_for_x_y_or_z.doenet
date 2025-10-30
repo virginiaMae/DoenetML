@@ -1,0 +1,143 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given an equation in multiple variables, solve for a randomly selected variable.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <select name="var" assignNames="x y z" numToSelect="3">x y z</select>
+  <selectFromSequence from="-10" to="10" exclude="0" assignNames="a b c d" numToSelect="4"/>
+  <math name="term1">$a $x $z</math>
+  <math name="term2">$b $y</math>
+  <math name="term3">$c $x</math>
+  <math name="term4">$d $y $z</math>
+  <math name="LHS" simplify>$term1 + $term2</math>
+  <math name="RHS" simplify="numbersPreserveOrder">$term3 + $term4</math>
+  <me name="expr">$LHS = $RHS</me>
+  <math name="sol" simplify>($c $x - $b $y)/($a $x - $d $y)</math>
+</setup>
+  
+<!--testing-->
+<!-- <p>x = $x</p>
+<p>y = $y</p>
+<p>z = $z</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>term1 = $term1</p>
+<p>term2 = $term2</p>
+<p>term3 = $term3</p>
+<p>term4 = $term4</p>
+<p>LHS = $LHS</p>
+<p>RHS = $RHS</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Solve for $z: $expr</p>
+  
+<p><m>$z = </m>
+    <answer name="ans1">
+      <mathInput name="userFraction"/>
+      <award name="correct">   
+        <when>$userFraction = $sol</when>
+      </award>
+    </answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="a">11</math>
+  <math name="b">-2</math>
+  <math name="c">14</math>
+  <math name="d">5</math>
+  <math name="term1">$a x z</math>
+  <math name="term2">$b y</math>
+  <math name="term3">$c x</math>
+  <math name="term4">$d y z</math>
+  <math name="LHS" simplify>$term1 + $term2</math>
+  <math name="RHS" simplify="numbersPreserveOrder">$term3 + $term4</math>
+  <me name="expr">$LHS = $RHS</me>
+  <math name="sol" simplify>($term4 - $term2)/($a z - $c)</math>
+</setup>
+  
+<p><em>Solve for x $expr</em></p>
+
+ 
+<p><alert><em>Solution.</em></alert></p>
+<p>First, combine the two terms that contain <m>x</m>. To do this, we subtract <m>($term3)</m> from both sides
+  <me><math simplify="numbersPreserveOrder">$term1 - $term3 + $term2</math> = $term4.</me>
+Next, we add <m>(2y)</m> to both sides so that only terms containing <m>x</m> remain on the left-hand side
+  <me>$term1 - $term3 = <math name="step1"simplify>$term4 - $term2</math>.</me>
+Now, we can factor out an <m>x</m> from the expression on the left hand side
+  <me><m>x</m>(11z - 14) = $step1.</me>
+Finally, divide both sides by <m>(11z - 14)</m> to get <m>x</m> by itself.
+  <me>x = $sol.</me></p>
+ 
+</example>
+
+<p>
+Textbook Link: <ref uri="https://mathbooks.unl.edu/PreCalculus/Expressions.html">Algebraic Expressions</ref>
+</p>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$z = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

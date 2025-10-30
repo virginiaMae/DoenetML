@@ -1,0 +1,230 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the axis of symmetry given equation in general form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <select name="a">2 3</select>
+  <select name="b">1 7</select>
+  <select name="c">1 5</select>
+  <select name="d">6 8 9</select>
+
+  <math name="A" simplify>$a$c</math>
+  <math name="B" simplify>$a$d - $b$c</math>
+  <math name="C" simplify>-$b$d</math>
+  <math name="gcd"><gcd>$A $B $C</gcd></math>
+  <math name="factoredExpr">($a x - $b)($c x + $d)</math>
+  <function name="solFunc">$factoredExpr</function>
+  
+  <math name="axisX">($b/$a + -$d/$c)/2</math>
+  <!--incorrect responses for feedbacks-->
+  <math name="signErrorAns">($a x + $b)($c x - $d)</math>
+
+  <!--maths for incorrect answers-->
+  <math name="subtractedCoords1Ans">($b/$a - -$d/$c)/2</math>
+  <math name="subtractedCoords2Ans">(-$d/$c - $b/$a)/2</math>
+  <math name="reverseSignOfRootsAns">(-$b/$a + $d/$c)/2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>factoredExpr = $factoredExpr</p>
+<p>factoredExpr{expand} = $factoredExpr{expand}</p>
+<p>axisX = $axisX{simplify}</p>
+<p>subtractedCoords1Ans = $subtractedCoords1Ans{simplify}</p>
+<p>subtractedCoords2Ans = $subtractedCoords2Ans{simplify}</p>
+<p>usedKAns = $usedKAns{simplify}</p>
+<p>reverseSignOfRootsAns = $reverseSignOfRootsAns{simplify}</p> -->
+<!--testing-->
+
+
+<p>Find the axis of symmetry of the parabola</p>
+  <me>y = $factoredExpr{expand}</me>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <math name="k">$$solFunc($axisX)</math>
+  <number name="ymax">$k + 10</number>
+  <number name="ymin">$k - 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph proposed axis of symmetry:</p> 
+  <p><m>x = </m><mathInput name="axisOfSym" bindValueTo="$userAxis"/></p>
+</div>
+  
+<graph name="g1" ymax="$ymax{link='false'}" ymin="$ymin{link='false'}">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <line name="graphUserAxis">x = $axisOfSym</line>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the axis of symmetry will be a vertical line passing through the vertex of the parabola.</p>
+
+</aside>  
+
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+  
+<p><m>x = </m> 
+  <answer name="ans2">
+    <mathInput name="userAxis"/>
+    <award name="correct">
+      <when>$userAxis = $axisX</when>
+    </award>
+
+    <award name="subtractedCoords1" credit="0">
+      <when>$userAxis = $subtractedCoords1Ans</when>
+    </award>
+
+    <award name="subtractedCoords2" credit="0">
+      <when>$userAxis = $subtractedCoords2Ans</when>
+    </award>
+
+    <award name="reverseSignOfRoots" credit="0">
+      <when>$userAxis = $reverseSignOfRootsAns
+      </when>
+    </award>
+</answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$subtractedCoords1 or $subtractedCoords2"><p>It looks like you may have subtracted the roots rather than adding when calculating the midpoint.</p></feedback>
+
+  <feedback condition="$usedK"><p>It looks like you may have used the <m>y</m>-coordinate of the vertex rather than the <m>x</m>-coordinate when calculating the axis of symmetry.</p></feedback>
+
+  <feedback condition="$reverseSignOfRoots"><p>It looks like you may have reversed the signs of your roots when calculating the midpoint. Remember, if a fully factored equation has factor <m>(x - a)</m> this implies that the equation has a root at <m>x = a</m>.</p></feedback>
+
+<feedback condition="$ans2.numSubmissions > 2 and $ans2.creditAchieved != 1"> 
+<p>Recall that the graph of a parabola is symmetric, and that the vertex of a parabola is located halfway between its roots in the <m>x</m>-direction.</p>
+
+  <image source='doenet:cid=bafkreict6eau65xq3rxxhadnmznzqt22lb2ccce3adlxoxjimuojuvqbw4' description='graphic showing a parabola with the axis of symmetry' asfilename='verticalAxisOfSymmetry.png' size="small" mimeType='image/png' />
+  
+<p>The key to this problem is to find the roots of the quadratic by factoring, and then to compute the midpoint of the two roots. The line 
+  <me>x = \frac{r + s}{2}</me>
+  is the axis of symmetry, where <m>r, s </m> are the two roots of the parabola. Alternatively, one can calculate the vertex. The <m>x</m>-coordinate of the vertex defines the axis of symmetry.</p>
+</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection" newNameSpace><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p>    
+<example newNameSpace>
+  <setup>
+  <math name="a">-4</math>
+  <math name="b">-1</math>
+  <math name="factoredExpr">(x + $a)(x + $b)</math>
+  <math name="axisX">(-$b + -$a)/2</math>
+</setup>
+
+<p><em>Find the axis of symmetry of the parabola</em></p>
+  <me>$factoredExpr{expand}</me>
+
+<p><em><alert>Solution.</alert></em></p>
+  <ul>
+    <li>First, we factor the quadratic to obtain <m>y = $factoredExpr</m></li>
+    <li>Next, we sketch the roots and a rough graph of the parabola; noting that, if expanded, the coefficient <m>a</m> of the quadratic equation would be equal to <m>1</m>, so the parabola will open upwards and pass through the two roots as shown below:
+  <graph xmin="-4" xmax="10" ymin="-4" ymax="10">
+    <function name="f1">$factoredExpr</function>
+    <point name="A" fixed>(1,0)</point>
+    <point name="B" fixed>(4,0)</point>
+    <line fixed styleNumber="8">x = 5/2</line>
+  </graph></li>
+<li>The roots are <m>x = <math simplify name="r">-$a</math></m> and <m>x = <math simplify name="s">-$b</math></m></li>
+<li>Computing the midpoint between the roots,
+  <md>
+  <mrow>x \amp= \frac{r + s}{2}</mrow>
+    <mrow>\amp= \frac{$r + $s}{2}</mrow>
+    <mrow>\amp= $axisX{simplify}.</mrow>
+  </md></li>
+<li>The axis of symmetry is given by
+  <me>x = $axisX{simplify}.</me></li>
+  </ul>
+</example>
+
+<p><em><alert>How to check your answer</alert></em>: If you found the midpoint between the roots to calculate the axis of symmetry, try calculating the vertex to see if it matches. (Reverse this process if you used the vertex method.) Of course, you can always verify the axis of symmetry by graphing the given parabola  with the graphing tool above.</p>
+     
+
+  </hint>
+  
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>The factored form of the parabola is </p>
+  <me>y = $factoredExpr{simplify}</me>
+<p>The roots are <m>x = <math simplify name="r">$b/$a</math></m> and <m>x = <math simplify name="s">-$d/$c</math></m></p>
+<p>Computing the midpoint between the roots,</p>
+  <md>
+  <mrow>x \amp= \frac{r + s}{2}</mrow>
+    <mrow>\amp= \frac{$r + $s}{2}</mrow>
+    <mrow>\amp= $axisX{simplify}.</mrow>
+  </md>
+<p>The axis of symmetry is given by
+  <me>x = $axisX{simplify}.</me></p>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<!-- <variantControl nVariants="100" variantsToExclude="i"/> -->
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,141 @@
+<problem><title/>
+<setup>
+  <select name="sol1">(0,5) (0,-5) (5,0) (-5,0)</select>
+  <select name="sol2">(3,4) (-3,4) (-3,-4) (3,-4) (4,3) (-4,3) (-4,-3) (4,-3)</select>
+  <circle name="circle" styleNumber="5" radius="5" fixed/>
+  <point name="p1" coords="$sol1" styleNumber="2" fixed>
+    <label><m>P_1</m></label>
+  </point>
+  <point name="p2" coords="$sol2" styleNumber="2" fixed>
+    <label><m>P_2</m></label>
+  </point>
+  <line name="line" through="$p1 $p2" fixed/>
+  <math name="eq" simplify>$line.coeffVar2 y = -$line.coeff0 - $line.coeffVar1 x</math>
+  <mathlist name="solList" unordered>$sol1 $sol2</mathlist>
+  <mathlist name="userSols" unordered>$user_P1 $user_P2</mathlist>
+
+  <boolean name="P1incorrect">$user_P1 != $sol1 and $user_P1 != $sol2</boolean>
+  <boolean name="P2incorrect">$user_P2 != $sol1 and $user_P2 != $sol2</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p>
+<p>eq = $eq</p>
+<p>P1incorrect = $P1incorrect</p>
+<p>P2incorrect = $P2incorrect</p>   -->
+<!--testing-->
+
+<p>Find the points of intersection of the circle <m>x^2+y^2 = 25</m> with the line <m>$eq</m>.</p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph circle with given equation:</p> 
+  <p><m>x^2 + y^2 = </m> <mathInput name="userRSq"/></p>
+
+  <p>Graph line (enter full equation):</p> 
+  <p><mathInput name="eq1"/></p>
+
+  <p>Check points of intersection:</p>
+  <p><m>P_1 = </m><mathInput name="graphP1" bindValueTo="$user_P1"/></p>
+  <p><m>P_2 = </m><mathInput name="graphP2" bindValueTo="$user_P2"/></p>
+</div>
+ 
+<graph name="g1" ymin="-7" ymax="7" xmin="-7" xmax="7">
+  <circle styleNumber="5" radius="sqrt($userRSq)" fixed/>
+  <line fixed>$eq1</line>
+  <point coords="$graphP1" styleNumber="2"/>
+  <point coords="$graphP2" styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>P_1 = </m> <mathInput name="user_P1" prefill="(x,y)"/></p>
+<p><m>P_2 = </m> <mathInput name="user_P2" prefill="(x,y)"/></p>
+
+  <answer name="ans1">
+    <award name="correct">
+      <when>$userSols = $solList</when>
+    </award>        
+  </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$P1incorrect and $ans1.justSubmitted">There is an error in intersection point <m>P_1</m>.</feedback>
+  <feedback condition="$P2incorrect and $ans1.justSubmitted">There is an error in intersection point <m>P_2</m>.</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>P_1 = $sol1</m>, <m>P_2 = $sol2</m>. Note that points can be entered in either order.</p>
+ 
+<graph name="gsol" grid="1 1" ymin="-7" ymax="7" xmin="-7" xmax="7">
+  $circle $line $p1 $p2
+</graph>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+

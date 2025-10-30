@@ -1,0 +1,108 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="-2" to="3" exclude="0"/>
+  <select name="n">5 6 7 8</select>
+  <math name="eq" simplify="numberspreserveorder">$a k + $b</math>
+  <number name="sol">$n($a + 2$b + $a $n)/2</number>
+  <me name="expr">\displaystyle \sum_{k = 1}^{$n} $eq</me>
+
+  <map name="indSums">
+    <template>
+      <p><math format="latex">$a \cdot $i + $b = 
+        <number>$a $i + $b</number>
+      </math></p>
+    </template>
+    <sources alias="i"><sequence from="1" to="$n"/>
+    </sources>
+  </map>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>n = $n</p>
+<p>sol = $sol</p>
+indSums = $indSums -->
+<!--testing-->
+  
+<p>Find $expr</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+
+
+
+<!--*********************************************
+           User Input of solution
+**********************************************-->
+  
+  <p><m>$expr = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userInput"/> 
+      <award name="correct" credit="1">    
+        <when>$userInput=$sol</when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$expr = $sol</m></p>
+<p>The individual values to sum are: $indSums</p>
+<p>Adding all of these values together gives <m>$sol</m>.</p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

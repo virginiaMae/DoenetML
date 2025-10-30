@@ -1,0 +1,159 @@
+
+<problem>
+<setup>
+  <selectFromSequence name="b" from="8" to="10"/>
+  <selectFromSequence name="c" from="11" to="14"/>
+  <number name="C">90</number>
+  <math name="A">arcsin($a/$c) (180/pi)</math>
+  <math name="B">180 - $A - $C</math>
+  <math name="a">sqrt($c^2 - $b^2)</math>
+ 
+  <number name="An" displayDecimals="1" padZeros>$A</number>
+  <number name="Bn" displayDecimals="1" padZeros>$B</number>
+  <number name="an" displayDecimals="2" padZeros>$a</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>B = $B</p>
+<p>C = $C</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>An = $An</p>
+<p>Bn = $Bn</p>
+<p>bn = $bn</p> -->
+<!--testing-->
+
+<p>Given the following right triangle, determine the missing lengths and angles.  Express angles in degrees and round angles to the nearest <m>0.1</m> degree. Round lengths to the nearest <m>0.01</m>.  </p>
+
+<p>In the triangle below:</p>
+  <md>
+    <mrow>b &= $b</mrow>
+    <mrow>c &= $c</mrow>
+    <mrow>C &= $C^{\circ}</mrow>
+  </md>
+
+  
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="-$b/2" xmax="$b + $b/2" ymin="-0.5$a" ymax="$pB.y + 0.5$a" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC"/>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2"/>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4"/>
+
+
+  <textInput name="Ainput" anchor="($pA.x - 0.15$b, $pA.y + 0.2$a)" width="25px">
+    <label><m>A = </m></label>
+  </textInput>
+
+  <textInput name="Binput" anchor="($pB.x - 0.25$b, $pB.y)" width="25px">
+    <label><m>B = </m></label>
+  </textInput>
+  
+  <label name="bLabel" anchor="($pC.x/2, -1)"><m>b = $b</m></label>
+  <textInput name="ainput" anchor="($pC.x + 0.25$b, $a/2)" width="30px">
+    <label><m>a = </m></label>
+  </textInput>
+  <label name="c_label" anchor="($pB.x/2 - 0.18$b, $pB.y/2)"><m>c = $c</m></label>
+</graph>
+
+  
+<p><m>A = </m><mathInput name="userA" bindValueTo="$Ainput"/><m>^{\circ}</m></p>
+<p><m>B = </m><mathInput name="userB" bindValueTo="$Binput"/><m>^{\circ}</m></p>
+<p><m>a = </m><mathInput name="usera" bindValueTo="$ainput"/></p>  
+  
+
+<setup>  
+<boolean name="Atrue" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userA = $A</boolean>
+<boolean name="Btrue" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userB = $B</boolean>  
+<boolean name="atrue" allowedErrorInNumbers="0.2" allowedErrorIsAbsolute>$usera = $a</boolean>
+
+<boolean name="Aclose" allowedErrorInNumbers="2" allowedErrorIsAbsolute>$userA = $A and $Atrue = false</boolean>
+<boolean name="Bclose" allowedErrorInNumbers="2" allowedErrorIsAbsolute>$userB = $B and $Btrue = false</boolean>  
+<boolean name="aclose" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$usera = $a and $atrue = false</boolean>
+<boolean name="someRoundingError">$Aclose or $Bclose or $aclose</boolean>
+</setup>
+  
+<answer name="ans1">
+      <award name="correct">   
+        <when>$Atrue and $Btrue and $atrue</when>
+      </award>
+      <award name="rounding" credit="0">
+        <when>$Aclose or $Bclose or $aclose</when>
+      </award>
+    </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$someRoundingError and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">Try carrying more decimal places throughout your computations. It looks like you are close but you made a rounding error in one or more of your results!</feedback>
+
+  <feedback condition="!$atrue and $ans1.justSubmitted">Your value for <m>a</m> is incorrect (or contains a rounding error).</feedback>
+
+  <feedback condition="!$Atrue and $ans1.justSubmitted">Your value for angle <m>A</m> is incorrect (or contains a rounding error).</feedback>
+
+  <feedback condition="!$Btrue and $ans1.justSubmitted">Your value for angle <m>B</m> is incorrect (or contains a rounding error).</feedback>
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>A \approx $An^{\circ}</m></p>
+<p><m>B \approx $Bn^{\circ}</m></p>
+<p><m>a \approx $an</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,222 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given x-intercepts/roots of a parabola, determine the coefficients b, c of the equation in general form, a = 1. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence assignNames="r s" numToSelect="2" from="-10" to="10"/>
+  <math name="expr" simplify="numbersPreserveOrder">(x - $r)(x - $s)</math>
+  <function name="f">$expr</function>
+  <math name="b" simplify>-$r + -$s</math>
+  <math name="c" simplify>$r$s</math>
+  <math name="vx">-$b/2</math>
+  <math name="fy">$$f($vx)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>s = $s</p>
+<p>yIntercept = $yIntercept{simplify}</p>
+<p>b = $b</p>
+<p>c = $c</p> -->
+<!--testing-->
+
+<p>A quadratic polynomial of the form <me>y = x^2 + bx +c</me> has <m>x</m>-intercepts at <m>x = $r</m> and <m>x = $s</m>. Find the coefficients <m>b</m> and <m>c</m>.</p>
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($fy - 10, -10)</number>
+  <number name="xmin">min($r - 10, $s - 10, -10)</number>
+  <number name="ymax">max($fy + 10, 10)</number>
+  <number name="xmax">max($r + 10, $s + 10, 10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The roots of the parabola are: <mathInput name="r1"/>, <mathInput name="r2"/></p>
+
+<p>Since we know that the equation takes the form
+   <m>y = x^2 +bx + c</m>, we also
+  know that <m>a = </m>
+  <answer inline weight="0">
+    <choice credit="1">1</choice>
+    <choice>0</choice>
+    <choice>100</choice>
+  </answer>
+    .</p>  
+  <p>Therefore, the equation of the
+  parabola in <term>root form</term> is:
+  <m>y = </m> <mathInput name="eq1" prefill="(x - r)(x - s)"/></p>
+
+<p>Graph parabola with given equation:</p> 
+  <p><m>y = $eq1</m></p>
+
+  <p>Graph parabola with proposed equation in general form:
+    <m>y = </m> <mathInput name="eq2" /></p>
+</div>
+
+<div>
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <point name="r1Pt" styleNumber="2">($r1, $zeroFixed)</point>
+  <point name="r2Pt" styleNumber="2">($r2, $zeroFixed)</point>
+  <function name="overlayParabola" styleNumber="2">$eq2</function>
+</graph>
+
+<me>\text{General Form:} y = ax^2 + bx + c</me>
+</div>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay each other.</p>
+
+</aside>  
+
+
+
+
+
+  
+<p><m>y = x^2 + </m> <mathInput name="userB"/><m>x + </m> <mathInput name="userC" />
+  <answer name="ans12">
+    <award name="allCorrect">
+      <when>$userB{isResponse} = $b and $userC{isResponse} = $c</when>
+    </award>
+
+    <award name="bCorrect" credit="0">
+      <when>$userB{isResponse} = $b and $userC{isResponse} != $c</when>
+    </award>
+
+    <award name="cCorrect" credit="0">
+      <when>$userB{isResponse} != $b and $userC{isResponse} = $c</when>
+    </award>
+
+    <award name="noChange" credit="0">
+      <when>$userB{isReponse} = b and $userC{isResponse} = c</when>
+    </award>
+    
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$bCorrect">Your <m>c</m> value is incorrect</feedback>
+  <feedback condition="$cCorrect">Your <m>b</m> value is incorrect</feedback>
+  <feedback condition="$noChange">Substitute numerical values in for the parameters <m>b</m> and <m>c</m>.</feedback>
+  <feedback condition="$ans12.numSubmissions > 2 and $ans12.creditAchieved != 1">
+    <div name="helpText">
+      <p>Since we are given that <m>a = 1</m>, we can write the given equation in root form (recall that an <m>x</m>-intercept is the same thing as a root). Expand the root form equation to obtain a quadratic equation in general form.</p>
+    </div>
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<section newNameSpace><title></title>
+
+<p>Here is a similar worked example:</p>  
+<p><em>A quadratic polynomial of the form <m>y = x^2 + bx +c</m> has <m>x</m>-intercepts at <m>x = 12</m> and <m>x = -2</m>. Find the coefficients <m>b</m> and <m>c</m>.</em></p>
+
+
+<setup>
+  <math name="r">12</math>
+  <math name="s">-2</math>
+  <math name="expr" simplify="numbersPreserveOrder">(x - $r)(x - $s)</math>
+  <math name="b" simplify>-$r + -$s</math>
+  <math name="c" simplify>$r$s</math>
+  <math name="yIntercept" simplify>$r$s</math>
+</setup>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>Since we are told that the parabola has an equation of the form <m>y = x^2 + bx + c</m>, we know that <m>a = 1</m> and therefore the equation can be expressed in root form as 
+  <me>y = $expr</me></p></li>
+  <li><p>Expand the expression to obtain the quadratic equation in general form:</p>
+    <md>
+      <mrow>y \amp= $expr</mrow>
+      <mrow> \amp=$expr{expand}</mrow>
+    </md></li>
+</ul>
+ 
+</section>
+
+  
+<p><em><alert>How to check your answer</alert></em>: Graph two parabolas. Express the first parabola using the root form equation. Graph the second parabola using your final, general form equation. The two parabolas should overlay.</p>
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li><p>Since we are told that the parabola has an equation of the form <m>y = x^2 + bx + c</m>, we know that <m>a = 1</m> and therefore the equation can be expressed in root form as 
+  <me>y = $expr</me></p></li>
+
+  <li><p>The final equation in general form is then
+    <me>y = <math simplify>x^2 + $b x + $c</math>.</me>
+  </p>
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

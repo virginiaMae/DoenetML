@@ -1,0 +1,107 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor and simplify a difference of squares quadratic; leading coefficient not equal to 1, no GCF.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <select name="a">1 3 5 7 9</select>
+  <select name="b">2 4 8</select>
+  <math name="c">$b^2</math>
+  <math name="d">$a^2</math>
+  <math name="factoredExpr">($b x + $a)($b x - $a)</math>
+  <!--expressions for feedback for incorrect responses-->
+  <math name="signErrorAns">($b x-$a)($b x-$a)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>factoredExpr = $factoredExpr</p> -->
+<!--testing-->
+
+
+<p>Factor 
+    <me>$factoredExpr{expand}</me></p>
+
+<p><m>$factoredExpr{expand} = </m>
+
+  <answer name="ans1">
+  <mathInput name="userExpr"/>
+    <award symbolicEquality simplifyOnCompare>
+      <when>
+        <hasSameFactoring>$userExpr $factoredExpr</hasSameFactoring>
+      </when>
+    </award>
+    <award name="signError" credit="0">
+      <when>$userExpr = $signErrorAns</when>
+    </award>
+    <award name="noFactoring" credit="0">
+        <when>$userExpr = $factoredExpr{expand}</when>
+    </award>
+  </answer></p>
+
+
+  
+  
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$noFactoring" >
+  <p>Sometimes we can leave a difference of squares as it is, and sometimes we want to factor it, depending on the problem. In this case, the problem is asking you to factor it one step further into its two linear factors. Here is a simple example:
+    <md>
+      <mrow>25x^2 - 100 \amp= 5^2x^2 - 10^2</mrow>
+      <mrow>\amp=(5x - 10)(5x+10)</mrow>
+    </md> 
+  </p>  
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+  </feedback>
+  
+    <feedback condition="$signError">
+    <p>It looks like you have a sign error somewhere.</p>
+  <p><em>How to check</em>: FOIL out your factored answer to see if it matches your original, expanded quadratic expression.</p></feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    <p>The key to this problem is to recognize that it is a difference of squares. Here is a similar worked example:
+    <md>
+      <mrow>9x^2 - 100 \amp= 3^2x^2 - 10^2</mrow>
+      <mrow>\amp=(3x - 10)(3x+10)</mrow>
+    </md> 
+  </p>  
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+  </hint>
+ 
+  
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>  
+<p>Recognize that $factoredExpr{expand} is a difference of squares. You can factor a difference of squares as follows: 
+  <me>$factoredExpr{simplify}.</me> 
+</p>
+</solution>
+</problem>

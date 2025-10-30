@@ -1,0 +1,144 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: A randomized multiple-choice problem in which the student determines which x value satisfies a given inequality. The algebraic manipulations never result in the need to reverse the direction of inequality for this version (if x is solved for on the LHS). There are 3 versions of the problem.
+
+Version 1: ax + c >= bx + d ; always reverse direction of inequality
+Version 2: c - ax >= d  - bx ; never reverse direction of inequality
+Version 3: ax + c <= d + bx ; sometimes reverse direction of inequality
+
+(BA-Basics #102 BA1751)
+
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="6" to="10"/>
+  <selectFromSequence name="c" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="f" from="-5" to="5" exclude="0"/>
+  <math name="q" simplify>($a - $b)*$f</math>
+  <math name="d" simplify>$q + $c</math>
+  <math name="expr" simplify="numberspreserveorder">$c - $a x >= $d - $b x</math>
+  <math name="choice1" simplify="numberspreserveorder">x >= ($d - $c)/($b - $a)</math>
+  <math name="choice2" simplify="numberspreserveorder">x <= ($d - $c)/($b - $a)</math>
+  <math name="choice3" simplify="numberspreserveorder">x <= -($d - $c)/($b - $a) </math>
+  <math name="choice4" simplify="numberspreserveorder">x >= ($d + $c)/($b - $a)</math>
+  <math name="choice5" simplify="numberspreserveorder">x <= ($d + $c)/($b - $a)</math>
+
+  <row name="ri1">
+    <cell><p><booleanInput name="bi1">
+      <label><m>\displaystyle{$choice1}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri2">
+    <cell><p><booleanInput name="bi2">
+      <label><m>\displaystyle{$choice2}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri3">
+    <cell><p><booleanInput name="bi3">
+      <label><m>\displaystyle{$choice3}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri4">
+    <cell><p><booleanInput name="bi4">
+      <label><m>\displaystyle{$choice4}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri5">
+    <cell><p><booleanInput name="bi5">
+      <label><m>\displaystyle{$choice5}</m></label></booleanInput></p>
+    </cell>
+  </row>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>f = $f</p>
+<p>q = $q</p>
+<p>expr = $expr</p>
+<p>choice1 = $choice1</p>
+<p>choice2 = $choice2</p>
+<p>choice3 = $choice3</p>
+<p>choice4 = $choice4</p>
+<p>choice5 = $choice5</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+<p>Which <m>x</m> value satisfies the following inequality? </p>
+  <me>$expr</me>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+
+<tabular>
+  <shuffle>
+  <row copySource="ri1"/>
+  <row copySource="ri2"/>
+  <row copySource="ri3"/>
+  <row copySource="ri4"/>
+  <row copySource="ri5"/>
+  </shuffle>
+</tabular>
+
+<answer name="ans1">
+  <award><when>$bi1 = true and $bi2 = false and $bi3 = false and $bi4 = false and $bi5 = false</when></award>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><m>$choice1</m></p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

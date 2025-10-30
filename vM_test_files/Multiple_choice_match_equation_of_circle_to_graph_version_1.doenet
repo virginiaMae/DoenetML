@@ -1,0 +1,108 @@
+<setup>
+  <text name="source">Question 6:TR-Conics/TR31/TR3106/04302021110801_TR-Conics_48WMVJF7</text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+
+QUESTION:The graph below has equation HoldForm[(x+2)^2] + HoldForm[(y - 1)^2]= 9
+
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Choice]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {""};;
+
+answer = {"True","False"}
+(*Enter correct answer in first position (answer a). *);;
+SOLUTION={2};;
+tolerance = 0
+
+-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4"/>
+  <selectFromSequence name="k" from="-4" to="4" />
+  <selectFromSequence name="r" from="2" to="5"/>
+  <selectFromSequence name="styleNumber" from="7" to="12"/>
+  <math name="exprRHS" simplify="numbersPreserveOrder">$r^2</math>
+  <math name="exprLHS" simplify="numbersPreserveOrder">(x +  $h)^2 + (y + $k)^2</math> 
+  <math name="sol" simplify="numberspreserveorder">(x - $h)^2 + (y - $k)^2 = $r^2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>r = $r</p>
+<p>k = $k</p> -->
+<!--testing-->
+
+<p>The graph below has equation <m>$exprLHS = $exprRHS</m>.</p>
+
+<div>
+<answer name="ans1" maxNumAttempts="1">
+  <choice>True</choice>
+  <choice credit="1">False</choice>
+</answer>
+</div>
+  
+  <graph grid="1 1" name="g1">
+    <circle name="circle" center="($h, $k)" radius="$r" styleNumber="$styleNumber"/>
+    <point name="center" styleNumber="$styleNumber" coords="$circle.center"/> 
+  </graph>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>False. The correct equation is $sol.</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

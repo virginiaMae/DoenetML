@@ -1,0 +1,88 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given similar triangles, find a missing side length. 
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="$r + 1" to="12"/>
+  <selectFromSequence name="b" from="$a + 1" to="15"/>
+  <selectFromSequence name="r" from="2" to="6"/>
+  <math name="sol" simplify>$r $b/$a</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+  
+<p>Given that the triangles are similar, find the length of side <m>s</m>.
+</p>
+
+<ul>
+  <li><m>a = $a</m></li>
+  <li><m>b = $b</m></li>
+  <li><m>r = $r</m></li>
+</ul>
+
+<graph xmin="-2" xmax="20" ymin="-3" ymax="6" identicalAxisScales size="large" displayXAxis="false" displayYAxis="false" showBorder="false" showNavigation="false">
+  <point name="p1" fixed hide>(0,0)</point>
+  <point name="p2" fixed hide>(9,0)</point>
+  <point name="p3" fixed hide>(6,4)</point>
+  <triangle name="tri1" vertices="$p1 $p2 $p3" styleNumber="5"/>
+  <label name="aLabel" anchor="1/2($p2 + $p3)" positionFromAnchor="upperright"><m>\huge{a}</m></label>
+  <label name="bLabel" anchor="1/2($p1 + $p2)" positionFromAnchor="bottom"><m>\huge{b}</m></label>
+  <label name="cLabel" anchor="1/2($p3 + $p1)" positionFromAnchor="upperleft"><m>\huge{c}</m></label>
+
+  <point name="p4" fixed hide>(11,0)</point>
+  <point name="p5" fixed hide>(17,0)</point>
+  <point name="p6" fixed hide>(15,8/3)</point>
+  <triangle name="tri2" vertices="$p4 $p5 $p6" styleNumber="5"/>
+  <label name="rLabel" anchor="1/2($p5 + $p6)" positionFromAnchor="upperright"><m>\huge{r}</m></label>
+  <label name="sLabel" anchor="1/2($p4 + $p5)" positionFromAnchor="bottom"><m>\huge{s}</m></label>
+  <label anchor="(16,-2.5)" fixed>Not to scale</label>
+</graph>
+<p>
+<m>s = </m>
+  <answer name="ans1">
+    <award name="correct">$sol</award>
+    <award name="decimal" allowedErrorInNumbers="0.05" allowedErrorIsAbsolute credit="0">$sol</award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$decimal">Answer using a precise fraction rather than a decimal approximation.</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>s = $sol</m></p>
+</solution>
+</problem>

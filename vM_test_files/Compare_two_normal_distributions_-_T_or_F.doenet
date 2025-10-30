@@ -1,0 +1,71 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: 
+*************************************************************-->
+
+<problem>
+<setup>
+<select name="p">1 -1</select>
+<number name="q">-$p</number>
+<selectFromSequence name="m0a" from="12" to="20"/>
+<number name="m0">$p $m0a</number>
+<selectFromSequence name="m1a" from="12" to="20" exclude="$m0a"/>
+<number name="m1">$q $m1a</number>
+<selectFromSequence name="s" from="2" to="9"/>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>m0 = $m0</p>
+<p>m1 = $m1</p>
+<p>s = $s</p> -->
+<!--testing-->
+
+<p>Consider two normal distributions, one with mean <m>$m0</m> and standard deviation <m>$s</m>,
+the other with mean <m>$m1</m> and standard deviation <m>$s</m>.</p>
+  
+<p>Determine whether the following statements are <em>true</em> or <em>false</em>.</p>
+
+<p>a)  The two distributions have the same shape. <answer name="ans1" inline>
+  <choice credit>true</choice>
+  <choice>false</choice>
+</answer>.</p>
+
+<p>a)  The two distributions are centered at the same place. <answer name="ans2" inline>
+  <choice>true</choice>
+  <choice credit>false</choice>
+</answer>.</p>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>True, False.
+</p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

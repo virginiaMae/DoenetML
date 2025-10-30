@@ -1,0 +1,123 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Construct a line with a given slope. The available slopes include m = 0, but are never undefined.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-6" to="6"/>
+  <selectFromSequence name="b" from="-6" to="6"/>
+  <selectFromSequence name="c" from="1" to="6"/>
+  <selectFromSequence name="d" from="-6" to="6"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+  <math name="m" simplify>($d - $b)/($c$e)</math>
+  <function name="f">$m x</function> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>m = $m</p> -->
+<!--testing-->
+
+
+<p>Construct a line with slope <m>$m</m>.</p>
+
+
+<!--*********************************************
+            User-input of answer
+**********************************************-->
+
+  
+<graph name="g1" grid="1 1">
+  <point name="dragPoint1">(0,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_1</m></label>
+  </point>
+  <point name="dragPoint2" styleNumber="2">(5,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_2</m></label>
+  </point>
+  <line name="userLine" through="$dragPoint1 $dragPoint2" styleNumber="2"/>
+
+</graph>
+
+
+<answer name="ans1">
+  <award><when>$userLine.slope = $m</when></award>
+</answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1 and $ans1.justSubmitted">$correctFeedback</feedback>
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>There are an infinite number of solutions corresponding to where you place your <m>y</m>-intercept. The boring example, where the <m>y</m>-intercept is <m>0</m>, is shown below. See if you can find more interesting ones!</p>
+    <graph grid="1 1">
+      <line fixed>y = $m x</line>
+      <point name="solPt1" fixed>(0,0)
+        <label><m>P_1</m></label>
+      </point>
+      <point name="solPt2" fixed styleNumber="2">($c$e, $$f($c$e))
+        <label><m>P_2</m></label>
+      </point>
+    </graph>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

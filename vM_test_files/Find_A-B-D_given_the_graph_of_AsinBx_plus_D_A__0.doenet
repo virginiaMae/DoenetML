@@ -1,0 +1,162 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the equation parameters A, B, and D given the graph of Asin(Bx) + D. Variants involve amplitudes ranging from -4 to -1 and vertical shifts ranging from -4 to 4. The coeficient on the angle also varies between 1/4 to 4.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-4" to="-1"/>
+  <selectFromSequence name="d" from="-4" to="4" exclude="0"/>
+  <select name="b">1/3 1/2 2/3 3/2 2 3 4 4/3 1/4</select>
+  <function name="f">$a sin($b x) + $d</function> 
+  <function name="g" styleNumber="4">$userEq</function>
+  <number name="ymin">min($a - 4, $d + $a - 4, $d - $a - 4)</number>
+  <number name="ymax">max($a + 4, $d + $a + 4, $d - $a + 4)</number>
+  <number name="xmin">-$twoLambda - 0.5</number>
+  <number name="xmax">$twoLambda + 0.5</number>
+  <number name="n">0</number>
+  <number name="zeroFixed" fixed>0</number>
+  <math name="lambda" simplify>2pi / $b</math>
+  <math name="halfLambda" simplify>pi/$b</math>
+  <math name="threeHalfLambda" simplify>3pi/$b</math>
+  <math name="twoLambda" simplify>4pi/$b</math>
+  <m name="xDistlabel">
+    <conditionalContent>
+      <case condition="$wavePointRight.x = -$twoLambda">x = -$twoLambda</case>
+      <case condition="$wavePointRight.x = -$threeHalfLambda">x = -$threeHalfLambda</case>
+      <case condition="$wavePointRight.x = -$lambda">x = -$lambda</case>
+      <case condition="$wavePointRight.x = -$halfLambda">x = -$halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda/2">x = $halfLambda</case>
+      <case condition="$wavePointRight.x = $lambda">x = $lambda</case>
+      <case condition="$wavePointRight.x = $threeHalfLambda">x = $threeHalfLambda</case>
+      <case condition="$wavePointRight.x = $twoLambda">x = $twoLambda</case>
+    </conditionalContent>
+  </m>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p>
+<p>f = $f.formula</p>
+<p>g = $g.formula</p>
+<p>n = $n</p>
+<p>lambda = $lambda</p> -->
+<!--testing-->
+
+
+<p>Find the equation of the graph below.  Your answer should be in the form
+
+	<me name="format">y = A\sin(Bx) + D,</me>
+	
+Note: <m>A</m>, <m>D</m> may be negative.</p> 
+   
+<p><em>tip: you can drag the $dp1.styleDescription and $fp1.styleDescription points to measure vertical distance. You can use the $wavePointRight.styleDescription point to trace out one wavelength. </em></p>
+
+<graph xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" xTickScaleFactor="pi" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" aspectRatio="3/2" size="large">
+  $f $g
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3">($dp1.x, 0.75)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3" applyStyleToLabel>
+    <label>Drag to midline</label>
+  </line>
+  <line name="midlineHidden" hide fixed>y = $d</line> 
+
+  <map name="maxMinMap" hide>
+    <template>
+      <point name="wvPt">($lambda $i, $$f($lambda $i))
+      </point>
+    </template>
+    <sources alias="i">
+      <sequence from="-6" to="6" step="0.5"/>
+    </sources>
+  </map>
+  <point name="wavePointLeft"  styleNumber="4">($zeroFixed,$wavePointRight.y)</point>
+  <point name="wavePointRight" styleNumber="4">($n, $$f($n))
+    <constraints>
+      <attractTo>$maxMinMap</attractTo>
+    </constraints>
+  </point>
+  <lineSegment endpoints="$wavePointLeft $wavePointRight" styleNumber="6" labelPosition="lowerright">
+    <label>$xDistlabel</label>
+  </lineSegment>
+  <line name="vert" styleNumber="4">x = $wavePointRight.x</line>
+  <regionBetweenCurveXAxis function="$f" styleNumber="1" boundaryValues="$wavePointLeft.x $wavePointRight.x"/>
+</graph>
+<p>$format</p>
+
+<p><m>y = </m><mathInput name="userEq"/>
+  <answer name="ans1">
+      <award name="correct">   
+        <when>
+          $userEq = $f.formula
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>y = $f.formula</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

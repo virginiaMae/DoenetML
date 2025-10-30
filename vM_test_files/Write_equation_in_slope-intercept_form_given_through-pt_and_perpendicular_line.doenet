@@ -1,0 +1,218 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Write equation in slope-intercept form given through-pt and perpendicular line.  Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-6" to="6"/>
+  <selectFromSequence name="b" from="-6" to="6"/>
+  <selectFromSequence name="c" from="1" to="6"/>
+  <selectFromSequence name="d" from="1" to="6"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="f" from="-6" to="6"/>
+  <math name="mPerp" simplify>$c$e/$d</math>
+  <math name="m" simplify>-$d/($c$e)</math>
+  <math name="yInt">$a$d/($c$e) + $b</math>
+  <math name="correctEq" simplify="numbersPreserveOrder">$m x + $yInt</math> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>m = $m</p>
+<p>mPerp = $mPerp</p>
+<p>yInt = $yInt</p>
+<p>yInt = $yInt{simplify}</p>
+<p>correctEq = $correctEq{simplify}</p> -->
+<!--testing-->
+
+
+<p>Find the equation of the line through the point <m>($a, $b)</m> and perpendicular to the line <m>y = <math simplify="numbersPreserveOrder">$mPerp x + $f</math></m>.  Express the equation of the line in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-4-5-slope-intercept-form-of-a-line/"><term>slope-intercept form</term></ref>, <m>y = mx + b</m>.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Enter the given equation of the perpendicular line:</p> 
+  <p><mathInput name="eq1"/></p>
+
+  <p>Enter the given point that the solution line passes through:</p> 
+  <p><m>P = </m> <mathInput name="pCoords"/></p>
+
+   <p>Enter proposed equation for the solution line in slope-intercept form:</p> 
+   <p><mathInput name="eq2" bindValueTo="$userEq"/></p>
+</div>
+
+  
+<graph name="g1">
+  <line name="line1" equation="$eq1">
+    <label>Line 1</label>
+  </line>
+  <point name="P" fixed coords="$pCoords" styleNumber="2">
+    <label>$P.coords</label>
+  </point>
+  <line name="line2" equation="$eq2" styleNumber="2">
+    <label>Line 2</label>
+  </line>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+
+
+
+<p>
+  <m>y = </m><answer name="ans16">
+    <mathInput name="userEq"/>
+    <award name="correct">
+      <when>$userEq = $correctEq</when>
+    </award>
+</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$ans16.nSubmissions > 2 and $ans16.creditAchieved != 1">
+    <div name="helpText">
+      <p>In this problem, we are given a known point on the line, along with the equation for a perpendicular line. Since the two lines are perpendicular, this means that their slopes are of opposite sign and are the reciprocal of each other in value. Therefore, in order to write the equation of the line in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-4-5-slope-intercept-form-of-a-line/"><term>slope-intercept form</term></ref>, we need only calculate the <m>y</m>-intercept. To accomplish this, we can substitute the coordinates of the known point into the slope-intercept equation and solve for the unknown <m>b</m>.</p>
+    </div>
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p>
+
+<example newNameSpace>
+<p><em>Find the equation of the line through the point <m>($a, $b)</m> and perpendicular to the line <m>y = <math simplify="numbersPreserveOrder">$mPerp{simplify} x + $f</math></m></em></p>
+
+
+<setup>
+  <math name="a">4</math>
+  <math name="b">3</math>
+  <math name="c">5</math>
+  <math name="d">5</math>
+  <math name="e">2</math>
+  <math name="f">5</math>
+   <math name="mPerp" simplify>$c$e/$d</math>
+  <math name="m" simplify>-$d/($c$e)</math>
+  <math name="yInt" simplify>$a$d/($c$e) + $b</math>
+  <math name="correctEq">$m x + $yInt</math> 
+</setup>
+
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Since we are given the perpendicular line, we know that the slope must be the negative reciprocal of that line's slope, or <m>m = <math>-1/$mPerp</math></m>.
+  <li>Determine the <m>y</m>-intercept, using the given point <m>($a,$b)</m>:
+    <md>
+  <mrow>y \amp= $m x + b \amp\text{slope-intercept form}</mrow>
+  <mrow>$b \amp= $m \cdot $a + b\amp\text{substitute known values}</mrow>
+  <mrow>$yInt{simplify} \amp= b \amp\text{simplify}</mrow>
+</md></li>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line:
+  <me>y = $correctEq{simplify}.</me></p>
+  </li>
+</ul>
+
+<p>We can check by graphing:
+  <graph grid xmin="-4" ymin="-4" xmax="10" ymax="10">
+    <line name="l1" fixed applyStyleToLabel labelPosition="left">y = $correctEq
+      <label><m>y = $correctEq{simplify}</m></label>
+    </line>
+    <point name="knownPoint" fixed styleNumber="8" labelPosition="lowerright" applyStyleToLabel>($a,$b)
+      <label><m>($a,$b)</m></label>
+    </point>
+    <point name="yIntDemo" fixed styleNumber="11" applyStyleToLabel labelPosition="left">(0,$yInt)
+      <label><m>(0,$yInt)</m></label>
+    </point>
+    <line name="l2" fixed applyStyleToLabel labelPosition="lowerRight" styleNumber="9">y = $mPerp x + $f
+      <label><m>y = $mPerp x + $f</m></label>
+    </line>
+    <angle betweenLines="$l1 $l2"/>
+  </graph></p>
+</example>
+
+<p><em><alert>How to check your answer</alert></em>: Your final answer should be an equation that defines a line.</p>
+  <p>If you graph this equation, you should be able to verify that it is perpendicular to the given line and that it passes through the given point.</p>
+
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Since we are given the perpendicular line, we know that the slope must be the negative reciprocal of that line's slope, or <m>m = <math>-1/$mPerp</math> = $m{simplify}</m>.
+  <li>Determine the <m>y</m>-intercept, using the given point <m>($a,$b)</m>:
+    <md>
+  <mrow>y \amp= $m x + b \amp\text{slope-intercept form}</mrow>
+  <mrow>$b \amp= $m \cdot $a + b\amp\text{substitute known values}</mrow>
+  <mrow>$yInt{simplify} \amp= b \amp\text{simplify}</mrow>
+</md></li>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line:
+  <me>y = $correctEq.</me></p>
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

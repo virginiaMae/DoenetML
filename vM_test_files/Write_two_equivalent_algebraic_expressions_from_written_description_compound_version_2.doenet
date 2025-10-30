@@ -1,0 +1,102 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given an algebraic expression in words, write two equivalent expressions. There are 4 versions of the compound problem.
+Version 1: a sum and a product
+Version 2: a quotient and a difference
+Version 3: product with a quantity involving a sum, extra summand
+Version 4: quotient with a quantity involving a difference, times another factor
+*************************************************************-->
+
+<problem>
+
+<setup>
+  <select name="var">a b c x y z p q r s t w</select>
+  <selectFromSequence name="a" from="-10" to="10" exclude="0 1 -1"/>
+  <selectFromSequence name="b" from="2" to="10"/>
+  <math name="expr">$a - $var/$b</math>
+  <boolean name="expr1Correct">$expr = $userExpr1</boolean>
+  <boolean name="expr2Correct">$expr = $userExpr2</boolean>
+  <boolean name="different" symbolicEquality>$userExpr1 != $userExpr2</boolean>
+  <math name="sol1">$expr</math>
+  <math name="sol2">-$var/$b + $a</math>
+  <math name="c" simplify>$b + 5</math>
+  <math name="sol3">$a - $var/($c - 5)</math>
+  <math name="sol4">$a - (1/$b)$var</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>var = $var</p>
+<p>expr = $expr</p>
+<p>expr1Correct = $expr1Correct</p>
+<p>expr2Correct = $expr2Correct</p>
+<p>different = $different</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Write two <alert>equivalent</alert>, but <alert>not identical</alert> algebraic expressions that represent the following statement:</p>
+<sideBySide widths="20% 60% 20%">
+  <div></div>
+  <div><p>"The difference of <m>$a</m> and the quotient of <m>$var</m> and <m>$b</m>."</p></div>
+  <div></div>
+</sideBySide>
+
+<p>Expression 1: <mathInput name="userExpr1"/><nbsp/><nbsp/><nbsp/><nbsp/>
+  Expression 2: <mathInput name="userExpr2"/></p>
+
+  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<answer name="ans1">
+    <award><when>$expr1Correct and $expr2Correct and $different</when>
+    </award>
+</answer>
+
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<feedback condition="$ans1.creditAchieved != 1 and $expr1Correct and $expr2Correct and $ans1.justSubmitted">Remember, they cannot be identical expressions. Can you break up the number <m>$a</m>, for example, into a sum or a difference?
+</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>There are many possible answers; how many can you think of? Several are:</p>
+  <ul>
+    <li>$sol1</li>
+    <li>$sol2</li>
+    <li>$sol3</li>
+    <li>$sol4</li>
+  </ul>
+</solution>
+</problem>
+
+
+
+
+
+

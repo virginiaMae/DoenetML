@@ -1,0 +1,151 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Convert from Cartesian to polar coordinates. Graphing tool provided for visualization of the geometry of the problem. Approximate answers.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+<selectFromSequence name="x" from="-10" to="10" exclude="-1 0 1"/>
+<selectFromSequence name="y" from="-10" to="10" exclude="0"/>
+<number name="shift">
+  <conditionalContent>
+    <case condition="$x > 0 and $y > 0">0</case>
+    <case condition="$x < 0 and $y < 0">180</case>
+    <case condition="$x < 0 and $y > 0">180</case>
+    <case condition="$x > 0 and $y < 0">360</case>
+  </conditionalContent>
+</number>
+<math name="r" simplify>sqrt($x^2 + $y^2)</math>
+<math name="baseTheta" simplify>arctan($y/$x)(180/pi)</math>
+<math name="Theta" simplify>$shift + $baseTheta</math>
+<number name="zeroFixed" fixed>0</number>
+<number name="baseThetaN">$baseTheta</number>
+<number name="ThetaN" displayDecimals="1" padZeros>$Theta</number>
+<number name="rN" displayDecimals="2" padZeros>$r</number>
+<boolean name="rCorrect" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userR = $r</boolean>
+<boolean name="thetaCorrect" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userTheta = $Theta</boolean>
+</setup>
+  
+<!-- testing -->
+<!-- <p>x = $x</p>
+<p>y = $y</p>
+<boolean>$x < 0 and $y < 0</boolean>
+<p>shift = $shift</p>
+<p>baseTheta = $baseTheta</p>
+<p>tan(Theta) = <number>tan($Theta)</number></p>
+<p>baseThetaN = $baseThetaN</p>
+<p>Theta = $Theta</p>
+<p>ThetaN = $ThetaN</p>
+<p>r = $r</p>
+<p>rN = $rN</p> -->
+<!--testing-->
+
+<p>Convert <m>($x, $y)</m> from Cartesian coordinates to polar coordinates.  Round the length to the nearest <m>0.01</m>.  Express the angle <m>\theta</m> in degrees where <m>\theta</m> is between <m>0^{\circ}</m> and <m>360^{\circ}</m>, and round to the nearest <m>0.1</m> degree.  Do not enter the degree symbol in the answer.</p>
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+
+<sideBySide widths="30% 70%">
+
+<div>
+<p><m>x = </m><mathInput name="userX"/></p>
+<p><m>y = </m><mathInput name="userY"/></p>
+<p>Check <m>r</m>: <mathInput name="userRGraph" bindValueTo="$userR"/></p>
+<p>Check <m>\theta</m>: <mathInput name="userThetaGraph" bindValueTo="$userTheta"/><m>^{\circ}</m></p>
+</div>
+  <graph xmin="-26" xmax="26" ymin="-26" ymax="26" >
+    <point name="pT" hide coords="($zeroFixed, $zeroFixed)"/>
+    <point name="pH" styleNumber="5" coords="($userX, $userY)"/>
+    <vector name="userV" head="($userRGraph cos($userThetaGraph pi/180), $userRGraph sin($userThetaGraph pi/180))" tail="$pT" />
+    <angle name="userThetaG" degrees="$userThetaGraph" radius="0.2 $userR"/>
+    <circle name="userRCirc" styleNumber="6" center="$pT" fixed radius="$userR"/>
+    <map name="radii">
+      <template><circle center="$pT" radius="$i" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="2" to="40" step="2"/>
+      </sources>
+    </map>
+    <map name="diagonalsQ1">
+      <template><line slope="tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    <map name="diagonalsQ2">
+      <template><line slope="-tan($i pi/12)" through="$pT" styleNumber="6"/></template>
+      <sources alias="i"><sequence from="1" to="5"/></sources> 
+    </map>
+    <lineSegment name="userXSeg" endpoints="$pT ($userX, 0)" fixLocation styleNumber="2"/>
+    <lineSegment name="userYSeg" endpoints="($userX,0) ($userX, $userY)" fixLocation styleNumber="3"/>
+  </graph>
+
+</sideBySide>
+
+
+</aside>
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p><m>r = </m><mathInput name="userR"/></p>
+<p><m>\theta = </m><mathInput name="userTheta"/><m>^{\circ}</m></p>
+  <answer name="ans1">
+     <award name="correct1">
+      <when>$rCorrect and $thetaCorrect</when>
+    </award>
+  </answer>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p><m>r = $r</m> or <m>$rN</m></p>
+<p><m>\theta = $ThetaN^{\circ}</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

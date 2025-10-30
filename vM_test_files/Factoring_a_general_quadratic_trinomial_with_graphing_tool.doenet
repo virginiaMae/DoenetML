@@ -1,0 +1,209 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a quadratic trinomial. Graphical tool provided for visualization of the geometry of the problem. The quadratic term coefficient, a, ranges from 1 to 5, with 1 being most heavily weighted for selection. The "a" can always be factored out of the entire trinomial expression to obtain a quadratic with a coefficient of 1. 
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <select name="a">
+    <option selectWeight="5"><math>1</math></option>
+    <option selectWeight="2"><math>2</math></option>
+    <option><math>3</math></option>
+    <option><math>4</math></option>
+    <option><math>5</math></option>
+  </select>
+  <selectFromSequence name="b" from="2" to="10"/>
+  <selectFromSequence name="c" from="1" to="8"/>
+  <math name="factoredExpr">$a(x + $b)(x - $c)</math>
+  <!--expressions for feedback for incorrect responses-->
+  <math name="noGCF1Ans">($a x + $a $b)(x - $c)</math>
+  <math name="noGCF2Ans">(x + $b)($a x - $a $c)</math>
+  <math name="GCFbutUnfactoredTrinomialAns" simplify>$a(x^2 + ($b - $c)x - $c $b)</math>
+  <math name="signErrorAns">$a(x - $b)(x + $c)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a (GCF) = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>factoredExpr = $factoredExpr</p>
+<p>noGCF1Ans = $noGCF1Ans</p>
+<p>noGCF2Ans = $noGCF2Ans</p>
+<p>signErrorAns = $signErrorAns</p>
+<p>GCFbutUnfactoredTrinomialAns = $GCFbutUnfactoredTrinomialAns</p> -->
+<!--testing-->
+
+  <p>Factor 
+    <me>$factoredExpr{expand}.</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <math name="h">-$b/(2 $a)</math>
+  <function name="solFun">$factoredExpr</function>
+  <math name="k">$$solFun($h)</math>
+  <number name="xmin">min($h - 10, -10)</number>
+  <number name="xmax">max($h + 10, 10)</number>
+  <number name="ymin">min($k - 10, -10)</number>
+  <number name="ymax">max($k + 10, 10)</number>
+</setup>
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+  <p>Enter <m>GCF</m>, (or <m>1</m>): <mathInput name="GCFmi"/></p>
+  <p>Enter factored form:</p> 
+  <p><m>(x \pm a)(x \pm b) = </m></p>
+  <p><m>\bigg(</m><mathInput name="binom1"/><m>\bigg) \bigg(</m> <mathInput name="binom2"/><m>\bigg)</m></p>
+  <p>Which yields <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/">roots</ref> of $r1, $r2.</p>
+</div>
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="givenParabola">$eq1</function>
+  <point name="r1" fixed styleNumber="5">(-($binom1 - x), 0)
+    <label>$r1.coords</label>
+  </point>
+  <point name="r2" fixed styleNumber="5">(-($binom2 - x), 0)
+    <label>$r2.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solutions are correct the graphed roots will occur at the intersection points of the given parabola with the <m>x-</m>axis.</p>
+
+</aside>  
+
+
+
+
+
+
+  
+<p><m>$factoredExpr{expand} = </m>
+  <answer name="ans1">
+  <mathInput name="userExpr"/>
+    <award symbolicEquality simplifyOnCompare>
+      <when>
+        <hasSameFactoring allowOnlySignDifferences>$userExpr $factoredExpr</hasSameFactoring>
+      </when>
+    </award>
+    <award name="noGCF1" credit="0.5">
+        <when>
+          <hasSameFactoring>$userExpr $noGCF1Ans</hasSameFactoring> and $a != 1
+        </when>
+      </award>
+      <award name="noGCF2" credit="0.5">
+        <when>
+          <hasSameFactoring>$userExpr $noGCF2Ans</hasSameFactoring> and $a != 1 
+        </when>
+      </award>
+    <award name="noFactoring" credit="0">
+        <when>$userExpr = $factoredExpr{expand}</when>
+      </award>
+    <award name="signError" credit="0">
+      <when>$userExpr = $signErrorAns</when>
+    </award>
+    <award name="GCFbutUnfactoredTrinomial" credit="1/4" symbolicEquality simplifyOnCompare>
+      <when>$userExpr = $GCFbutUnfactoredTrinomialAns and $a !=1</when>
+    </award>
+  </answer></p>
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+  
+   <feedback condition="$noGCF1 or $noGCF2">
+  <p>It looks like this quadratic expression has a greatest common factor that can be factored out as well. Factor out the <m>GCF</m> for full credit. Here is a simple example of when a <m>GCF</m> can be factored out:</p>
+<md>
+  <mrow>2x^2 + 8x - 10 \amp= 2(x^2 + 4x - 5)</mrow>
+  <mrow>\amp=2(x-1)(x+5)</mrow>
+</md>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. First, find the GCD and factor it out of the entire expression. Then, look at the remaining quadratic and choose a possible factoring, and then FOIL it out (don't forget to multiply by the GCD at the final step) to see if it matches your original, expanded quadratic expression.</p>
+  </feedback>
+
+  <feedback condition="$signError">
+    <p>It looks like you have a sign error somewhere.</p>
+  <p><em>How to check</em>: FOIL out your factored answer to see if it matches your original, expanded quadratic expression.</p></feedback>
+
+  <feedback condition="$GCFbutUnfactoredTrinomial and $a !=1">
+    <p>Great job factoring out the <m>GCF</m>. For full credit, also factor the remaining trinomial.</p>
+  <p><em>How to check</em>: FOIL out your factored answer, including the <m>GCF</m> you factored out first, to see if it matches your original, expanded quadratic expression.</p></feedback>
+
+  <feedback condition="$noFactoring">
+  <p>To factor the quadratic expression <m>($factoredExpr{expand})</m>, means to split it into two factors, if possible. Generally, this means to separate it into two binomial terms, or a monomial term and a binomial term. Here are two simple examples:</p>
+<ul>
+  <li><m>x^2 + 4x - 5 = (x - 1)(x + 5)</m></li>
+  <li><m>2x^2 + 4x = 2x(x + 2)</m></li>
+</ul>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. Choose a possible factoring, and then FOIL it out to see if it matches your original, expanded quadratic expression.</p>
+  </feedback>
+
+  
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+    <p>First, check to see if the terms in the expression have a greatest common factor that can be factored out first. Then, tackle the remaining polynomial. Here is a similar worked example:
+    <md>
+      <mrow>6x^2 - 24x + 24 \amp= 6(x^2 - 4x + 4)\;\;\text{factor out GCF}</mrow>
+      <mrow>\amp=6(x - 2)(x - 2)\;\;\text{factor remaining expression}</mrow>
+    </md> 
+  </p>  
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+
+<solution>
+<p>First, check to see what the greatest common factor of all three terms is. In this case, the <m>GCF = $a</m>.</p>
+<p>Factoring out the <m>GCF</m> if necessary, consider the remaining trinomial: 
+  <me><math name="GCF_factoredOut" simplify>($a x^2)/$a + ($b - $c)x - $c$b</math>.</me></p>
+  
+<p>Now we need to find two factors of <math simplify>-$c$b</math> that sum to <math simplify>($b - $c)</math>. The two factors are <m>-$c</m> and <m>$b</m>.</p>
+<p>We can now factor the trinomial as
+  <conditionalContent>
+    <case condition="$a = 1">
+      <me><math>(x + $b)(x - $c)</math>.</me>
+    </case>
+    <case condition="$a !=1">
+      <me><math>$a(x + $b)(x - $c)</math>.</me>
+    </case>
+  </conditionalContent>
+</p>
+
+</solution>
+</problem>

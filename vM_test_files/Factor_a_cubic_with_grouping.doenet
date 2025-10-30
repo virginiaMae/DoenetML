@@ -1,0 +1,121 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a cubic polynomial by grouping.  
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-9" to="9" exclude="0 -4 -9 -1"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="0 $a"/>
+  <math name="factor1" simplify="numberspreserveorder">(x^2 + $a)</math>
+  <math name="factor2" simplify="numberspreserveorder">(x + $b)</math>
+  <math name="factoredExpr">$factor1 $factor2</math>
+  <math name="expr" expand>$factoredExpr</math>
+  <!--maths for feedbacks-->
+  <math name="groupedNotFactoredAns">x^2(x + $b) + $a(x + $b)</math>
+</setup>
+
+
+
+<!--testing-->
+<!-- <p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>bd = <math simplify>$b*$d</math></p>
+<p>ce = <math simplify>$c*$e</math></p>
+<p>factoredExpr = $factoredExpr{simplify}</p>
+<p>factoredExpr = $factoredExpr{expand}</p> -->
+<!--testing-->
+
+
+
+
+  
+<p>Factor 
+  <me>$expr</me></p>
+
+  
+<p><m>$expr = </m>
+  <answer name="ans1">
+    <mathInput name="userExpr"/>
+    <award>
+      <when>
+        <hasSameFactoring>$userExpr $factoredExpr</hasSameFactoring>
+      </when>
+    </award>
+    <award name="noFactoring" symbolicEquality simplifyOnCompare credit="0">
+      <when>$userExpr = $expr</when>
+    </award>
+    <award name="groupedNotFactored" symbolicEquality simplifyOnCompare credit="1/4">
+      <when>$userExpr = $groupedNotFactoredAns</when>
+    </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+    <setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+  <feedback condition="$noFactoring">
+  <p>To factor the cubic expression <m>($factoredExpr{expand})</m>, means to split it into two factor or more irreducible factors, if possible. The first thing to check in a cubic expression is if the expression can be factored by grouping. Here are two simple examples:</p>
+<ul>
+  <li><m>x^3 + x^2 + x= x(x^2 - 1) = x(x-1)(x+1)</m></li>
+  <li><m>x^3 + 2x^2 - 12x - 24 = (x + 2)(x^2 - 12)</m></li>
+</ul>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. Choose a possible factoring, and then FOIL it out to see if it matches your original, expanded cubic expression.</p>
+  </feedback>
+
+<feedback condition="$groupedNotFactored">
+    <p>Looks like you started the process of grouping, but this expression is not fully factored. Do you see any binomial terms that are repeated in this expression? These can be factored out for a fully-factored final response.</p>
+     
+  <p><em>How to check</em>: FOIL out your factored answer, including the <m>GCF</m> you factored out first, to see if it matches your original, expanded quadratic expression.</p></feedback> 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+ <hint name="helpSection"><title>Worked Example</title>
+    <p>Since we have a cubic polynomial first check to see if it can be factored by grouping. Here is a similar worked example:</p>
+      <md>
+        <mrow>x^3 - 4x^2 + 11x - 44 \amp= x^2(x - 4) + 11(x - 4)</mrow>
+        <mrow>\amp= (x - 4)(x^2 + 11)</mrow>
+      </md> 
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+
+
+  </hint>
+
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>In factoring a cubic polynomial its helpful to check the easiest method first. Therefore, check to see if it is possible to factor by grouping. To check this, factor an <m>x^2</m> out of the first two terms and a <math simplify>$a</math> out of the second two terms:
+  <me><math>x^2<math name="xPlus_ce" simplify>(x + $b)</math> + (<math simplify>$a</math>)($xPlus_ce)</math></me>
+</p>
+<p>At this point, if you see a repeated binomial factor, you can proceed with the grouping method. We do have a repeated factor, it's $xPlus_ce. Therefore, we can factor this $xPlus_ce out of the expression as a whole, leaving
+  <me>($xPlus_ce)(<math name="xSquaredPlus_bd" simplify>x^2 + $a</math>)</me></p>
+<p>It does not matter in which order the two factors are entered.</p>
+</solution>
+</problem>

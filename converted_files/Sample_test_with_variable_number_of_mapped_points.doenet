@@ -1,0 +1,6 @@
+<title>This is a graph</title>
+
+<p>Enter number of points: <mathInput name="n" prefill="100" /></p>
+<graph xmin="-1" xmax="$n + 1">
+  <repeatForSequence from="0" to="$n" valueName="i"><point>($i,0)</point></repeatForSequence>
+</graph>

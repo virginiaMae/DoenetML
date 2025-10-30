@@ -1,0 +1,146 @@
+<exercise><title>Pascal's Triangle</title>
+<p><alert>Instructions:</alert> Complete Pascal's Triangle below by filling in each cell with the sum of the two adjacent cells in the row above. If there is only one adjacent cell in the row above, imagine that the hidden cell is equal to zero.</p> 
+
+<graph size="full" identicalAxisScales ymax="20" ymin="-10" xmax="20" xmin="-20" displayXAxis="false" displayYAxis="false" showNavigation="false">
+
+  <group name="row0Group">
+    <circle name="circ0_0" center="(0,18)" fixLocation/>
+    <label anchor="$circ0_0.center" fixLocation>1</label>
+    <lineSegment name="row0bottom" endpoints="(-18,16) (18,16)" fixLocation styleNumber="5"/>
+    <label anchor="$row0bottom.endpoints[2]" positionFromAnchor="upperleft">Row 0</label>
+  </group>
+
+  <group name="row1Group">
+    <textInput name="mi1_0" anchor="(-2,14)" width="25" prefill="   " hide="$mi1_0 = 1"/>
+    <circle name="circ1_0" center="(-2,14)" hide="$mi1_0 != 1" fixLocation styleNumber="2"/>
+    <label hide="$mi1_0 != 1" anchor="$circ1_0.center" fixLocation>1</label>
+    
+    <textInput name="mi1_1" anchor="(2,14)" width="25" prefill="   " hide="$mi1_1 = 1"/>
+    <circle name="circ1_1" center="(2,14)" hide="$mi1_1 != 1" fixLocation styleNumber="2"/>
+    <label hide="$mi1_1 != 1" anchor="$circ1_1.center" fixLocation>1</label>
+    
+    <lineSegment name="row1bottom" endpoints="(-18,12) (18,12)" fixLocation styleNumber="5"/>
+    <label anchor="$row1bottom.endpoints[2]" positionFromAnchor="upperleft">Row 1</label>
+  </group>
+
+  <group name="row2Group">
+    <textInput name="mi2_0" anchor="(-4,10)" width="25" prefill="  " hide="$mi2_0 = 1"/>
+    <circle name="circ2_0" center="(-4,10)" hide="$mi2_0 != 1" fixLocation styleNumber="3"/>
+    <label hide="$mi2_0 != 1" anchor="$circ2_0.center" fixLocation>1</label>
+    
+    <textInput name="mi2_1" anchor="(0,10)" width="25" prefill="  " hide="$mi2_1 = 2"/>
+    <circle name="circ2_1" center="(0,10)" hide="$mi2_1 != 2" fixLocation styleNumber="3"/>
+    <label hide="$mi2_1 != 2" anchor="$circ2_1.center" fixLocation>2</label>
+    
+    <textInput name="mi2_2" anchor="(4,10)" width="25" prefill="  " hide="$mi2_2 = 1"/>
+    <circle name="circ2_2" center="(4,10)" hide="$mi2_2 != 1" fixLocation styleNumber="3"/>
+    <label hide="$mi2_2 != 1" anchor="$circ2_2.center" fixLocation>1</label>
+    <lineSegment name="row2bottom" endpoints="(-18,8) (18,8)" fixLocation styleNumber="5"/>
+    <label anchor="$row2bottom.endpoints[2]" positionFromAnchor="upperleft">Row 2</label>
+  </group>
+
+  <group name="row3Group">
+    <textInput name="mi3_0" anchor="(-6,6)" width="25" prefill="  " hide="$mi3_0 = 1"/>
+    <circle name="circ3_0" center="(-6,6)" hide="$mi3_0 != 1" fixLocation styleNumber="4"/>
+    <label hide="$mi3_0 != 1" anchor="$circ3_0.center" fixLocation>1</label>
+  
+    <textInput name="mi3_1" anchor="(-2,6)" width="25" prefill="  " hide="$mi3_1 = 3"/>
+    <circle name="circ3_1" center="(-2,6)" hide="$mi3_1 != 3" fixLocation styleNumber="4"/>
+    <label hide="$mi3_1 != 3" anchor="$circ3_1.center" fixLocation>3</label>
+    
+    <textInput name="mi3_2" anchor="(2,6)" width="25" prefill="  " hide="$mi3_2 = 3"/>
+    <circle name="circ3_2" center="(2,6)" hide="$mi3_2 != 3" fixLocation styleNumber="4"/>
+    <label hide="$mi3_2 != 3" anchor="$circ3_2.center" fixLocation>3</label>
+    
+    <textInput name="mi3_3" anchor="(6,6)" width="25" prefill="  " hide="$mi3_3 = 1"/>
+    <circle name="circ3_3" center="(6,6)" hide="$mi3_3 != 1" fixLocation styleNumber="4"/>
+    <label hide="$mi3_3 != 1" anchor="$circ3_3.center" fixLocation>1</label>
+    <lineSegment name="row3bottom" endpoints="(-18,4) (18,4)" fixLocation styleNumber="5"/>
+    <label anchor="$row3bottom.endpoints[2]" positionFromAnchor="upperleft">Row 3</label>
+  </group>
+
+  <group name="row4Group">
+    <textInput name="mi4_0" anchor="(-8,2)" width="25" prefill="  " hide="$mi4_0 = 1"/>
+    <circle name="circ4_0" center="(-8,2)" hide="$mi4_0 != 1" fixLocation styleNumber="1"/>
+    <label hide="$mi4_0 != 1" anchor="$circ4_0.center" fixLocation>1</label>
+    
+    <textInput name="mi4_1" anchor="(-4,2)" width="25" prefill="  " hide="$mi4_1 = 4"/>
+    <circle name="circ4_1" center="(-4,2)" hide="$mi4_1 != 4" fixLocation styleNumber="1"/>
+    <label hide="$mi4_1 != 4" anchor="$circ4_1.center" fixLocation>4</label>
+    
+    <textInput name="mi4_2" anchor="(0,2)" width="25" prefill="  " hide="$mi4_2 = 6"/>
+    <circle name="circ4_2" center="(0,2)" hide="$mi4_2 != 6" fixLocation styleNumber="1"/>
+    <label hide="$mi4_2 != 6" anchor="$circ4_2.center" fixLocation>6</label>
+    
+    <textInput name="mi4_3" anchor="(4,2)" width="25" prefill="  " hide="$mi4_3 = 4"/>
+    <circle name="circ4_3" center="(4,2)" hide="$mi4_3 != 4" fixLocation styleNumber="1"/>
+    <label hide="$mi4_3 != 4" anchor="$circ4_3.center" fixLocation>4</label>
+    
+    <textInput name="mi4_4" anchor="(8,2)" width="25" prefill="  " hide="$mi4_4 = 1"/>
+    <circle name="circ4_4" center="(8,2)" hide="$mi4_4 != 1" fixLocation styleNumber="1"/>
+    <label hide="$mi4_4 != 1" anchor="$circ4_4.center" fixLocation>1</label>
+    <lineSegment name="row4bottom" endpoints="(-18,0) (18,0)" fixLocation styleNumber="5"/>
+    <label anchor="$row4bottom.endpoints[2]" positionFromAnchor="upperleft">Row 4</label>
+  </group>
+
+  <group name="row5Group">
+    <textInput name="mi5_0" anchor="(-10,-2)" width="25" prefill="  " hide="$mi5_0 = 1"/>
+    <circle name="circ5_0" center="(-10,-2)" hide="$mi5_0 != 1" fixLocation styleNumber="2"/>
+    <label hide="$mi5_0 != 1" anchor="$circ5_0.center" fixLocation>1</label>
+    
+    <textInput name="mi5_1" anchor="(-6,-2)" width="25" prefill="  " hide="$mi5_1 = 5"/>
+    <circle name="circ5_1" center="(-6,-2)" hide="$mi5_1 != 5" fixLocation styleNumber="2"/>
+    <label hide="$mi5_1 != 5" anchor="$circ5_1.center" fixLocation>5</label>
+    
+    <textInput name="mi5_2" anchor="(-2,-2)" width="25" prefill="  " hide="$mi5_2 = 10"/>
+    <circle name="circ5_2" center="(-2,-2)" hide="$mi5_2 != 10" fixLocation styleNumber="2"/>
+    <label hide="$mi5_2 != 10" anchor="$circ5_2.center" fixLocation>10</label>
+    
+    <textInput name="mi5_3" anchor="(2,-2)" width="25" prefill="  " hide="$mi5_3 = 10"/>
+    <circle name="circ5_3" center="(2,-2)" hide="$mi5_3 != 10" fixLocation styleNumber="2"/>
+    <label hide="$mi5_3 != 10" anchor="$circ5_3.center" fixLocation>10</label>
+    
+    <textInput name="mi5_4" anchor="(6,-2)" width="25" prefill="  " hide="$mi5_4 = 5"/>
+    <circle name="circ5_4" center="(6,-2)" hide="$mi5_4 != 5" fixLocation styleNumber="2"/>
+    <label hide="$mi5_4 != 5" anchor="$circ5_4.center" fixLocation>5</label>
+    
+    <textInput name="mi5_5" anchor="(10,-2)" width="25" prefill="  " hide="$mi5_5 = 1"/>
+    <circle name="circ5_5" center="(10,-2)" hide="$mi5_5 != 1" fixLocation styleNumber="2"/>
+    <label hide="$mi5_5 != 1" anchor="$circ5_5.center" fixLocation>1</label>
+    <lineSegment name="row5bottom" endpoints="(-18,-4) (18,-4)" fixLocation styleNumber="5"/>
+    <label anchor="$row5bottom.endpoints[2]" positionFromAnchor="upperleft">Row 5</label>
+  </group>
+
+  <group name="row6Group">
+    <textInput name="mi6_0" anchor="(-12,-6)" width="25" prefill="  " hide="$mi6_0 = 1"/>
+    <circle name="circ6_0" center="(-12,-6)" hide="$mi6_0 != 1" fixLocation styleNumber="3"/>
+    <label hide="$mi6_0 != 1" anchor="$circ6_0.center" fixLocation>1</label>
+    
+    <textInput name="mi6_1" anchor="(-8,-6)" width="25" prefill="  " hide="$mi6_1 = 6"/>
+    <circle name="circ6_1" center="(-8,-6)" hide="$mi6_1 != 6" fixLocation styleNumber="3"/>
+    <label hide="$mi6_1 != 6" anchor="$circ6_1.center" fixLocation>6</label>
+    
+    <textInput name="mi6_2" anchor="(-4,-6)" width="25" prefill="  " hide="$mi6_2 = 15"/>
+    <circle name="circ6_2" center="(-4,-6)" hide="$mi6_2 != 15" fixLocation styleNumber="3"/>
+    <label hide="$mi6_2 != 15" anchor="$circ6_2.center" fixLocation>15</label>
+    
+    <textInput name="mi6_3" anchor="(0,-6)" width="25" prefill="  " hide="$mi6_3 = 20"/>
+    <circle name="circ6_3" center="(0,-6)" hide="$mi6_3 != 20" fixLocation styleNumber="3"/>
+    <label hide="$mi6_3 != 20" anchor="$circ6_3.center" fixLocation>20</label>
+    
+    <textInput name="mi6_4" anchor="(4,-6)" width="25" prefill="  " hide="$mi6_4 = 15"/>
+    <circle name="circ6_4" center="(4,-6)" hide="$mi6_4 != 15" fixLocation styleNumber="3"/>
+    <label hide="$mi6_4 != 15" anchor="$circ6_4.center" fixLocation>15</label>
+    
+    <textInput name="mi6_5" anchor="(8,-6)" width="25" prefill="  " hide="$mi6_5 = 6"/>
+    <circle name="circ6_5" center="(8,-6)" hide="$mi6_5 != 6" fixLocation styleNumber="3"/>
+    <label hide="$mi6_5 != 6" anchor="$circ6_5.center" fixLocation>6</label>
+    
+    <textInput name="mi6_6" anchor="(12,-6)" width="25" prefill="  " hide="$mi6_6 = 1"/>
+    <circle name="circ6_6" center="(12,-6)" hide="$mi6_6 != 1" fixLocation styleNumber="3"/>
+    <label hide="$mi6_6 != 1" anchor="$circ6_6.center" fixLocation>1</label>
+    <lineSegment name="row6bottom" endpoints="(-18,-8) (18,-8)" fixLocation styleNumber="5"/>
+    <label anchor="$row6bottom.endpoints[2]" positionFromAnchor="upperleft">Row 6</label>
+  </group>
+</graph>
+</exercise>

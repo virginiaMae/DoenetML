@@ -1,0 +1,215 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the upper and lower limits of a 90%, 95%, or 99% confidence interval for a given normally distributed population.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <select assignNames="(w z)">
+    <option>
+      <math displayDecimals="2" padZeros>0.90</math>
+      <math>1.645</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.95</math>
+      <math>1.960</math>
+    </option>
+    <option>
+      <math displayDecimals="2" padZeros>0.99</math>
+      <math>2.576</math>
+    </option>
+  </select>
+  <selectFromSequence name="m" from="65" to="90"/>
+  <selectFromSequence name="s" from="5" to="25"/>
+
+  <math name="lowerLimit">$m - $s$z</math>
+  <math name="upperLimit">$m + $s$z</math>
+  <number name="lowerNumerical" displayDecimals="2" padZeros>$lowerLimit</number>
+  <number name="upperNumerical" displayDecimals="2" padZeros>$upperLimit</number>
+  <function name="f">1/($s sqrt(2 pi)) e^(-(1/2)((x - $m)/$s)^2)</function>
+  <number name="fAtll">$$f($lowerLimit)</number> 
+  <number name="fAtul">$$f($upperLimit)</number> 
+  <number name="fAtmean">$$f($m)</number> 
+  <number name="xmin">$lowerLimit - 3$s</number>
+  <number name="xmax">$upperLimit + 3$s</number>
+  <number name="ymin">-0.15*$fAtmean</number>
+  <number name="ymax">$fAtmean + 0.1*$fAtmean</number>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>w = $w</p>
+<p>z = $z</p>
+<p>m = $m</p>
+<p>s = $s</p>
+<p>lowerLimit = $lowerLimit</p>
+<p>lowerNumerical = $lowerNumerical</p>
+<p>upperLimit = $upperLimit</p>
+<p>upperNumerical = $upperNumerical</p>
+<p>f = $f.formula</p>
+<p>fAtll = $fAtll</p>
+<p>fAtul = $fAtul</p>
+<p>fAtmean = $fAtmean</p> -->
+<!--testing-->
+
+<p>Find the upper and lower limits of a two sided, <m><math simplify name="confInt">$w *100</math> \%</m> confidence interval for a <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-7/">normally distributed population</ref> with a mean <m>$m</m> and standard deviation <m>$s</m>.  Round your answer to the nearest <m>0.01</m>.</p>
+
+
+<graph ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" displayYAxisTickLabels="false">
+  <label anchor="($m, $fAtmean + 0.05*$fAtmean)" fixed>Sampling Distribution of Means</label>
+  $f
+  <line name="meanLine" styleNumber="6">x = $m</line>
+  <lineSegment name="lowerLimitLine" styleNumber="8" endpoints="($userLower, 0) ($userLower, $$f($userLower))"/>
+  <lineSegment name="upperLimitLine" styleNumber="8" endpoints="($userUpper, 0) ($userUpper, $$f($userUpper))"/>
+  <regionBetweenCurveXAxis boundaryValues="$lowerLimit $upperLimit" function="$f"/>
+</graph>
+
+
+  
+<p><m>\text{Lower limit} = </m>   
+      <mathInput name="userLower" prefillLatex="0.00"/></p>
+
+<p><m>\text{Upper limit} = </m>   
+      <mathInput name="userUpper" prefillLatex="0.00"/></p>
+
+  <answer name="ans2" >
+      <award name="correct" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute credit="1" matchPartial>    
+        <when>
+      $userLower{isResponse}=$lowerNumerical and $userUpper{isResponse}=$upperNumerical
+        </when>
+      </award>
+
+      <award name="roundingError" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0.6" matchPartial>
+        <when>
+      $userLower{isResponse}=$lowerNumerical and $userUpper{isResponse}=$upperNumerical 
+        </when>
+      </award>
+      
+      <award name="correctSymbolic" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userLower{isResponse}=$lowerLimit and $userUpper{isResponse}="$upperLimit
+        </when>
+      </award>
+
+    </answer>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans2.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$ans2.creditAchieved = 0.5">One of your limits is incorrect or contains a rounding error.</feedback>
+  
+  <feedback condition="$ans2.creditAchieved = 0.6">It looks like you may have rounded incorrectly on one or both of the limits. Try again for full credit, preserving more decimal places in your intermediate computations.</feedback>
+
+  
+  <feedback condition="$ans2.numSubmissions > 2 and $ans2.creditAchieved != 1">
+     <div name="helpText">
+       In this problem, we are given the mean and standard deviation of a <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-3/">random variable</ref> that is normally distributed, i.e, its distribution has the shape of a <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-7/">Bell Curve</ref>. To determine the limits of the requested confidence interval, we need to know the <m>z</m>-score corresponding to that confidence interval. The common <ref uri="https://open.lib.umn.edu/app/uploads/sites/218/2018/08/Trim-Bell-Curve.pdf"> <m>z</m>-scores</ref> (see slide #17) for standard confidence intervals are:
+       <md>
+         <mrow>90\% \text{confidence interval} \amp= -1.645 < z < 1.645</mrow>
+         <mrow>95\% \text{confidence interval} \amp= -1.960 < z < 1.960</mrow>
+         <mrow>99\% \text{confidence interval} \amp= -2.576 < z < 2.576</mrow>
+       </md>
+      The formula for computing the upper and lower limits of the confidence interval is:
+       <me>X = \mu \pm z \sigma</me>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>Find the upper and lower limits of a two sided, <m><math simplify>$w *100</math> \%</m> confidence internal for a normally distributed population with a mean <m>$m</m> and standard deviation <m>$s</m>.</em></p>
+
+<setup> 
+  <select assignNames="(w z)">
+    <option>
+      <math displayDecimals="2" padZeros>0.90</math>
+      <math>1.645</math>
+    </option>
+  </select>
+  <math name="m">125</math>
+  <math name="s">20</math>
+
+  <math name="lowerLimit">$m - $s$z</math>
+  <math name="upperLimit">$m + $s$z</math>
+  <number name="lowerNumerical" displayDecimals="2" padZeros>$lowerLimit</number>
+  <number name="upperNumerical" displayDecimals="2" padZeros>$upperLimit</number>
+  
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Using the table values for  <ref uri="https://open.lib.umn.edu/app/uploads/sites/218/2018/08/Trim-Bell-Curve.pdf">standard <m>z</m>-scores</ref>, we have
+  <md>
+    <mrow>z \amp= \pm $z \amp\text{determine z from table}</mrow>
+    <mrow>X \amp= \mu \pm \sigma z \amp\text{general formula}</mrow>
+    <mrow>X \amp= $m \pm <math>$s$z</math> \amp\text{compute limits of the <m><math simplify >$w *100</math> %</m> confidence interval}</mrow>
+    <mrow>\text{Lower limit} \amp= $lowerNumerical</mrow>
+    <mrow>\text{Upper limit} \amp= $upperNumerical</mrow>
+  </md>
+</p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Using the table values for  <ref uri="https://open.lib.umn.edu/app/uploads/sites/218/2018/08/Trim-Bell-Curve.pdf">standard <m>z</m>-scores</ref> (see slide #17), we have
+  <md>
+    <mrow>z \amp= \pm $z \amp\text{determine z from table}</mrow>
+    <mrow>X \amp= \mu \pm z \sigma \amp\text{general formula}</mrow>
+    <mrow>X \amp= $m \pm <math>$z$s</math> \amp\text{compute limits of the $confInt % confidence interval}</mrow>
+    <mrow>\text{Lower limit} \amp= $lowerNumerical</mrow>
+    <mrow>\text{Upper limit} \amp= $upperNumerical</mrow>
+  </md>
+</p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

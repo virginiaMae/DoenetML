@@ -1,0 +1,144 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the domain of a function that involves a square root and a logarithm. Graphing tool provided to help visualize the geometry of the problem. Response format is multiple choice.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="10"/> 
+  <selectFromSequence name="b" from="1" to="5"/> 
+  <number name="zeroF" fixed>0</number>
+  <math name="expr">(x + $a)/(x - $b)</math>
+  <math name="sol" simplify>(x$b + $a)/(x-1)</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Find the inverse of
+  <me>f(x) = y = $expr</me></p>
+
+<hint><title>Process:</title>
+
+<p><alert>Process 1</alert>: Switch <m>x</m> and <m>y</m> and solve for <m>y</m>.</p>
+<ul>
+	<li>Step 1 - Switch <m>x</m> and <m>y</m>.</li>
+	<li>Step 2 - Cross-multiply and distribute.</li>
+	<li>Step 3 - Move all terms with y to one side and all terms without <m>y</m> to the other side.</li>
+	<li>Step 4 - Factor out common factor of <m>y</m>.</li>
+	<li>Step 5 - Divide to get <m>y</m> alone.</li>
+</ul>
+	
+<p>or, <alert>Process 2</alert>: Into the original function, plug in a simple value of <m>x</m> and compute <m>y</m> (Don't pick 1 for <m>x</m>).  Plug the <m>y</m> answer into each possible answer, and choose the one that outputs the original <m>x</m>.  To verify, find the composition by plugging the answer in for <m>x</m> in the original function, and then simplify to get <m>x</m>.</p>
+
+</hint>
+
+<!--*********************************************
+           Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function: </p>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <p>Graph inverse: </p>
+  <p><m>\;f^{-1}(x) = </m><mathInput name="mi2" styleNumber="2"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  <function name="mi2Function" styleNumber="2">$mi2</function>
+  </setup>
+</div>
+  
+<graph>
+  $miFunction $mi2Function
+  <line fixed styleNumber="6">y = x</line>
+</graph>
+</sideBySide>
+</aside>  
+
+
+<p><m>f^{-1}(x) = </m>
+  <answer name="ans1" shuffleOrder>
+     <choice> <math>(x - $a)/(x + $b)</math></choice>
+     <choice><math>- (x + $a)/(x - $b)</math></choice>
+     <choice> <math>(x - $b)/(x + $a)</math></choice>
+     <choice credit="1"> $sol</choice>
+     <choice><m>\displaystyle $a</m></choice>
+  </answer></p>
+
+
+    
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>f^{-1}(x) = $sol</m></p>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

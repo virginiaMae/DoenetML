@@ -1,0 +1,100 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Riddle about the ages of children in a family; application of an arithmetic sequence.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="x" from="3" to="5"/>
+  <selectFromSequence name="n" from="2" to="4"/>
+  <selectFromSequence name="y" from="2" to="11"/>
+  <math name="A" simplify>$x($y + ($x - 1)$n / 2)</math>
+  <math name="youngest" simplify>$y</math>
+  <math name="oldest" simplify>$y + ($x - 1) $n</math>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>x =$x</p>
+<p>n =$n</p>
+<p>y =$y</p>
+<p>A =$A</p>
+<p>youngest =$youngest</p>
+<p>oldest =$oldest</p> -->
+  
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+<p>There are <m>$x</m> children in a family. They were all born <m>$n</m> years apart from one another, and the sum of their ages is $A.</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+
+  
+<p>What is the age of the youngest? <mathInput name="user_youngest"/></p>
+  
+<p>What is the age of the oldest? <mathInput name="user_oldest"/></p>
+
+<answer name="ans1">
+  <award name="correct" matchPartial>
+    <when>$user_youngest = $youngest and $user_oldest = $oldest</when>
+  </award>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p>Youngest: $youngest</p>
+  <p>Oldest: $oldest</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

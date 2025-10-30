@@ -1,0 +1,60 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify the product of two square roots.
+
+*************************************************************-->
+<problem>
+<setup>
+<select name="a">2 3 6</select>
+<select name="b">5 7 11</select>
+<math name="expr">sqrt($a) sqrt($b)</math>
+<math name="sol" simplify>sqrt($a $b)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+
+<!--testing-->  
+
+  
+<p>Simplify.
+  <me>$expr</me></p>
+
+  <p><m>\displaystyle $expr = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userAns"/> 
+      <award name="correct" symbolicEquality>
+        <when>$userAns = $sol
+        </when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<feedback condition="$correct or $numeratorNegative or $denominatorNegative">Nice work!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+    <p>Here is a similar worked example:</p>
+
+  </hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$sol</p>
+</solution>
+</problem>

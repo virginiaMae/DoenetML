@@ -1,0 +1,152 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="1" to="4"/>
+  <selectFromSequence name="b" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="d" from="1" to="6"/>
+  <math name="c" simplify>$a $b</math>
+  <function name="f" styleNumber="5">x^2 + $c</function>
+  <math name="linear" simplify>2 x - 1 + $d^2 + $c</math>
+  <function name="g">$linear</function>
+  <math name="sol1" simplify>1 - $d</math>
+  <math name="sol2" simplify>1 + $d</math>
+  <mathlist name="solList" unordered>$sol1 $sol2</mathlist>
+  <mathlist name="userSols" unordered>$user_x1 $user_x2</mathlist>
+  <point name="P1" styleNumber="2" fixLocation>($sol1, $$f($sol1))</point>
+  <point name="P2" styleNumber="2" fixLocation>($sol2, $$f($sol2))</point>
+  <math name="ymin" simplify>min(-3, $$f($sol1)-3, $$f($sol2)-3)</math>
+  <math name="ymax" simplify>max(3, $$f($sol1)+3, $$f($sol2)+3)</math>
+  <boolean name="x1incorrect">$user_x1 != $sol1 and $user_x1 != $sol2</boolean>
+  <boolean name="x2incorrect">$user_x2 != $sol1 and $user_x2 != $sol2</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>linear = $linear</p>
+<p>g = $g</p>
+<p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p>
+<p>P1incorrect = $P1incorrect</p>
+<p>P2incorrect = $P2incorrect</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p> -->
+  
+<!--testing-->
+
+<p>Find the <m>x</m>-coordinate of the points of intersection of the parabola <m>y = $f.formula</m> and the line <m>y = $linear</m>.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph line:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+
+  <p>Check <m>x</m>-coordinates of intersections:</p>
+  <p><m>x_1 = </m><mathInput name="graphL1" bindValueTo="$user_x1"/></p>
+  <p><m>x_2 = </m><mathInput name="graphL2" bindValueTo="$user_x2"/></p>
+</div>
+ 
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="givenLine">$eq2</function>
+  <line equation="x = $graphL1" styleNumber="2"/>
+  <line equation="x = $graphL2" styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>x_1 = </m> <mathInput name="user_x1"/></p>
+<p><m>x_2 = </m> <mathInput name="user_x2"/></p>
+
+  <answer name="ans1">
+    <award name="correct">
+      <when>$userSols = $solList</when>
+    </award>        
+  </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$x1incorrect and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">There is an error in your first entered <m>x</m>-coordinate.</feedback>
+  <feedback condition="$x2incorrect and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">There is an error in your second entered <m>x</m>-coordinate.</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x_1 = $sol1</m>, <m>x_2 = $sol2</m>. Note that <m>x</m>-coordinates can be entered in either order.</p>
+ 
+<graph name="gsol" ymin="$ymin" ymax="$ymax">
+  $f $g
+  <point copySource="P1">
+    <label><m>$P1.coords</m></label>
+  </point>
+  <point copySource="P2">
+    <label><m>$P2.coords</m></label>
+  </point>
+  <line equation="x = $sol1" styleNumber="2"/>
+  <line equation="x = $sol2" styleNumber="2"/>
+</graph>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

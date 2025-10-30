@@ -1,0 +1,113 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve an inequality in x, express answer in interval notation. The response is always of the form (-infinity, u) or (u, infinity) . Parameters are randomized. 
+
+This problem has two versions: 
+Version 1: solutions are (-infinity, u)
+Version 2: solutions are (u, infinity)
+
+*************************************************************-->
+<problem>
+<setup>
+  <select name="a">2 3 4</select>
+  <selectFromSequence name="b" from="2" to="4"/>
+  <selectFromSequence name="c" from="6" to="9"/>
+  <math name="d" simplify>($b + 1)/($c - $a)</math>
+  <math name="expr">$a x + $b < $c x - 1</math>
+  <math name="interval">($d, infinity)</math>
+  <math name="incorrect1">[$d, infinity)</math>
+  <math name="incorrect2">[$d, infinity]</math>
+  <math name="incorrect3">($d, infinity]</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>interval = $interval</p> -->
+<!--testing-->
+
+ 
+<p>Solve the inequality $expr.  Express your answer in <ref uri="https://open.lib.umn.edu/precalculus/chapter/a-1-interval-notation/">interval notation</ref>.</p>  
+  
+<p>Make sure to express any fractions exactly (don't use a calculator to approximate the value).  To get the <m>\infty</m> symbol remember you can either use the math keyboard or type "infinity".</p>
+
+
+
+<p><m>\text{Answer} =  </m> <mathInput name="userAns"/>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userAns = $interval</when>
+    </award>
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+  <boolean name="answeredWithIneq">$userAns = <subsetOfReals displayMode="inequalities">$interval</subsetOfReals></boolean>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$userAns = $incorrect1 and $ans1.justSubmitted">One or both of your interval brackets is incorrect. Use a parentheses " ( " for an open endpoint and a square bracket " [ " for a closed endpoint.</feedback>
+  <feedback condition="$userAns = $incorrect2 and $ans1.justSubmitted">One or both of your interval brackets is incorrect. Use a parentheses " ( " for an open endpoint and a square bracket " [ " for a closed endpoint.</feedback>
+  <feedback condition="$userAns = $incorrect3 and $ans1.justSubmitted">One or both of your interval brackets is incorrect. Use a parentheses " ( " for an open endpoint and a square bracket " [ " for a closed endpoint.</feedback>
+  <feedback condition="$ans1.creditAchieved != 1 and $ans1.numSubmissions > 2">For a refresher on interval notation, see the lesson <ref uri="https://open.lib.umn.edu/precalculus/chapter/a-1-interval-notation/">here</ref>.</feedback>
+  <feedback condition="$ans1.justSubmitted and $answeredWithIneq">While this answer is the correct <em>inequality</em>, the question is about using interval notation.</feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>$interval</m></p>
+
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

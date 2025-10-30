@@ -1,0 +1,96 @@
+<problem><title/>
+<setup>
+  <select name="r" type="math">1/2 1/3 1/4 1/5 1/10 2/3 3/4 2/5 9/10</select>
+  <selectFromSequence name="g" from="1" to="4"/>
+  <math name="sol" simplify>$g/(1 - $r)</math>
+  <math name="term1" simplify>$g</math>
+  <math name="term2" simplify>$g $r</math>
+  <math name="term3" simplify>$g $r^2</math>
+  <math name="term4" simplify>$g $r^3</math>
+  <me name="expr">S = $term1 + $term2 + $term3 + $term4 + \dots</me>
+
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>g = $g</p>
+<p>term1 = $term1</p>
+<p>term2 = $term2</p>
+<p>term3 = $term3</p>
+<p>term4 = $term4</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+  
+<p>Find the sum <me>$expr</me></p>
+
+
+
+<!--*********************************************
+            User-input
+**********************************************-->
+  
+  <p><m>S = </m>
+    <answer name="ans1">
+      <award name="correct">$sol</award>
+      <award name="rounded" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">$sol</award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$rounded">For credit, do not round your answer. Provide an exact, fractional response.</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>S = $sol</m></p>  
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

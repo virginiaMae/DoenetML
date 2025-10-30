@@ -1,0 +1,88 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of negative exponents and practice multiplying binomials to rewrite a given algebraic expression.
+
+(BA-Basics #109 BA6106)
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="e" from="1" to="5"/>
+  <selectFromSequence assignNames="f g h" from="-5" to="5" exclude="0" numToSelect="3"/>
+  <math name="expr" simplify="numberspreserveorder">($e/x^2 + $f)($g x + $h)</math>
+  <math name="sol" simplify="numberspreserveorder">$a x + $b + $c x^(-1) + $d x^(-2)</math>
+  <math name="a" simplify>$f $g</math>
+  <math name="b" simplify>$f $h</math>
+  <math name="c" simplify>$e $g</math>
+  <math name="d" simplify>$e $h</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>g = $g</p>
+<p>h = $h</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>The quantity <m>\displaystyle{$expr}</m> can be written in the form <m>a x + b  + c x^{-1} + d x^{-2}</m>.</p>
+<p>Enter <m>a</m>, <m>b</m>, <m>c</m>, <m>d</m> below.</p>
+
+<p><m>a = </m> <mathInput name="userA"/></p>
+<p><m>b = </m> <mathInput name="userB"/></p>
+<p><m>c = </m> <mathInput name="userC"/></p>
+<p><m>d = </m> <mathInput name="userD"/></p>
+
+<p>
+    <answer name="ans1" matchPartial>
+      <award name="correct">
+        <when>$userA = $a and $userB = $b and $userC = $c and $userD = $d</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>\displaystyle{$expr = $sol}</m></p>
+<p>Therefore, <m>a = $a</m>, <m>b = $b</m>, <m>c = $c</m>, and <m>d = $d</m>.</p>
+
+</solution>
+</problem>

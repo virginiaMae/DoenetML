@@ -1,0 +1,74 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the derivative of a polynomial function
+
+(CA-Deriv #1 CA1011)
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="2" to="8"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="0"/>
+  <selectFromSequence name="c" from="3" to="12"/>
+  <math name="expr" simplify="numberspreserveorder">f(x) = $a x^2 + $b x + $c</math>
+  <math name="sol" simplify="numberspreserveorder">2 $a x + $b</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>If <m>$expr</m>, then
+</p>
+
+<p><m>f'(x) = </m>
+    <answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>
+      <mathInput name="userAns" minWidth="150"/>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>f'(x) = $sol</m>
+</p>
+
+</solution>
+</problem>

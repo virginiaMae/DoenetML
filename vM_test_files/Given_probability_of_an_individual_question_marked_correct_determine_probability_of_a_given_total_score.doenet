@@ -1,0 +1,171 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the probability that an individual question is correct on a test of n questions, determine the probability that a score of k total correct is achieved. Decimal response format. 
+
+The Worked Example can be hidden from veiw by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="4"/>
+  <selectFromSequence name="b" from="60" to="90" step="5"/>
+  <selectFromSequence name="c" from="4" to="6"/>
+  <math name="p" simplify>$b/100</math>
+  <math name="q" simplify>1 - $p</math>
+  <math name="n" simplify>$a + $c</math>
+  <math name="binomN_k">$n!/($c!($n - $c)!)</math>
+  <math name="probOfNCorrect">$binomN_k($pNumerical^$c) ($qNumerical^$a)</math>
+  <number name="pNumerical">$p</number>
+  <number name="qNumerical">$q</number>
+  <number name="probOfNCorrectNumerical" displayDecimals="5" padZeros>$probOfNCorrect</number>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>n = $n</p>
+<p>probOfNCorrect = $probOfNCorrect = $probOfNCorrect{simplify}</p>
+<p>probOfNCorrectNumerical = $probOfNCorrectNumerical</p> -->
+<!--testing-->
+
+<p>A TRUE/FALSE test has <m>$n</m> questions. You will answer each question correctly with probability <m>$b\%</m>, independent of the other questions. What is the probability that you will get exactly <m>$c</m> questions correct? </p>
+  
+<p><em>Enter your answer as a decimal (between 0 and 1). Do not enter the answer as percent and do not include the percent symbol. Round your answer to five decimal places.</em></p>
+
+      
+<p><m>P(\text{$c correct}) = </m>   <answer name="ans13" >
+      <mathInput name="userInput" prefillLatex="0.00000"/>
+      
+      <award name="correct" allowedErrorInNumbers="0.001" allowedErrorIsAbsolute credit="1">    
+        <when>
+      $userInput=$probOfNCorrectNumerical
+        </when>
+      </award>
+
+      <award name="roundingError" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">
+        <when>
+      $userInput=$probOfNCorrectNumerical
+        </when>
+      </award>
+      
+      <award name="correctSymbolic" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$probOfNCorrect
+        </when>
+      </award>
+    </answer>
+  </p>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctSymbolic">$correctFeedback</feedback>
+  
+  <feedback condition="$roundingError">It looks like you may have rounded incorrectly. Try again for full credit, preserving more decimal places in your intermediate computations.</feedback>
+  
+  <feedback condition="$ans13.numSubmissions > 2 and $ans13.creditAchieved != 1">
+     <div name="helpText">
+       To compute the probability of getting <m>k</m> successes in <m>n</m> attempts, where the probability of an individual attempt's success is <em>not</em>  <m>\;50 \%</m>, we use the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">binomial probability formula</ref> given in section 2.6:
+<p><m>\text{Let}\;p = \text{probability of success on a single trial}</m></p>
+<p><m>\text{Let}\;q = 1 - p\;\;\text{probability of failure on a single trial}</m></p>
+<p><m>\text{Let}\;X = \text{a random variable that counts the number of successes in n independent trials}</m>. Then,</p>
+         <me>P(X = k) = \binom{n}{k}p^k q^{n - k}</me>
+In this equation, <m>\binom{n}{k}</m> is the <m>k^{\text{th}}</m> entry in row <m>n</m> of Pascal's triangle.
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>A TRUE/FALSE test has <m>$n</m> questions. You will answer each question correctly with probability <m>$b\%</m>, independent of the other questions. What is the probability that you will get exactly <m>$c</m> questions correct?</em></p> 
+
+<setup>
+  <math name="a">5</math>
+  <math name="b">75</math>
+  <math name="c">15</math>
+  <math name="p" simplify>$b/100</math>
+  <math name="q" simplify>1 - $p</math>
+  <math name="n" simplify>$a + $c</math>
+  <math name="binomN_k">$n!/($c!($n - $c)!)</math>
+  <math name="probOfNCorrect">$binomN_k($pNumerical^$c) ($qNumerical^$a)</math>
+  <number name="pNumerical">$p</number>
+  <number name="qNumerical">$q</number>
+  <number name="probOfNCorrectNumerical">$probOfNCorrect</number>
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Using the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">binomial probability formula</ref>, we have
+  <md>
+    <mrow>P(X = k) \amp= \binom{n}{k}p^k q^{n - k}\amp\text{general formula}</mrow>
+    <mrow>P(X = $k) \amp= $probOfNCorrect\amp\text{substitute known information}</mrow>
+  <mrow>\amp=$probOfNCorrectNumerical{displayDecimals="5"}\amp\text{evaluate, rounding to 5 decimal places}</mrow>
+  </md>
+</p>
+  
+</example>
+
+<p><em>How to check</em>: Ask yourself whether the probability you computed means that success is likely or unlikely, and does that match the situation in the problem? Make sure your answer is a value between <m>0</m> and <m>1</m>, because the chance of an event occuring cannot be higher than <m>100 \%</m>.</p>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Using the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-6/">binomial probability formula</ref>, we have
+  <md>
+    <mrow>P(X = k) \amp= \binom{n}{k}p^k q^{n - k}\amp\text{general formula}</mrow>
+    <mrow>P(X = $k) \amp= $probOfNCorrect\amp\text{substitute known information}</mrow>
+  <mrow>\amp=$probOfNCorrectNumerical{displayDecimals="5" padZeroes}\amp\text{evaluate, rounding to 5 decimal places}</mrow>
+  </md>
+</p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

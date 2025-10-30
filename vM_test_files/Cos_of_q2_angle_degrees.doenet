@@ -1,0 +1,430 @@
+<problem>
+
+<setup>
+  <select assignNames="(theta sol)">
+<!--  Q1   variants a,b,c,d -->
+<!--     <option>
+      <math>0</math>
+      <math>1</math>
+    </option>
+     <option>
+      <math>30</math>
+      <math>sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>45</math>
+      <math>sqrt(2)/2</math>
+    </option>
+     <option>
+      <math>60</math>
+      <math>1/2</math>
+    </option> -->
+<!--  Q2   variants e,f,g,h -->
+    <option>
+      <math>90</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>120</math>
+      <math>-1/2</math>
+    </option>
+    <option>
+      <math>135</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>150</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+<!--  Q3+   variants i,j,k,l -->
+<!--     <option>
+      <math>180</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>210</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>225</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>240</math>
+      <math>-1/2</math>
+    </option> -->
+<!--  Q3-   variants m,n,o,p -->
+<!--     <option>
+      <math>-180</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>-150</math>
+      <math>-sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>-135</math>
+      <math>-sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>-120</math>
+      <math>-1/2</math>
+    </option> -->
+<!--  Q4+   variants q,r,s,t,u -->
+<!--     <option>
+      <math>270</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>300</math>
+      <math>1/2</math>
+    </option>
+    <option>
+      <math>315</math>
+      <math>sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>330</math>
+      <math>sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>360</math>
+      <math>1</math>
+    </option> -->
+<!--  Q4-   variants v,w,x,y,z -->
+<!--     <option>
+      <math>-90</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>-60</math>
+      <math>1/2</math>
+    </option>
+    <option>
+      <math>-45</math>
+      <math>sqrt(2)/2</math>
+    </option>
+    <option>
+      <math>-30</math>
+      <math>sqrt(3)/2</math>
+    </option>
+    <option>
+      <math>-360</math>
+      <math>1</math>
+    </option> -->
+  </select>
+<vector name="choices">
+  (-1, -sqrt(3)/2, -sqrt(2)/2, -1/2, 0, 1/2, sqrt(2)/2, sqrt(3)/2, 1)
+</vector>      
+  
+</setup>
+  
+<!--testing-->
+<!-- <p>theta = $theta</p>
+<p>sol = $sol</p>
+<p>choices.displacement[1] = $choices.displacement[1]</p> 
+<p><boolean>$sol = $choices.displacement[1]</boolean></p> 
+<p><boolean>cos($theta pi/180) = $sol</boolean></p> -->
+<!--testing-->
+
+<sideBySide margins="0% 3% 0%">
+<p>Find <m>\cos($theta ^{\circ})</m>. <nbsp/><nbsp/><nbsp/>  
+  <answer name="ans1" inline>
+    <choice credit="$sol = $choices.displacement[1]">a</choice>
+    <choice credit="$sol = $choices.displacement[2]">b</choice>
+    <choice credit="$sol = $choices.displacement[3]">c</choice>
+    <choice credit="$sol = $choices.displacement[4]">d</choice>
+    <choice credit="$sol = $choices.displacement[5]">e</choice>
+    <choice credit="$sol = $choices.displacement[6]">f</choice>
+    <choice credit="$sol = $choices.displacement[7]">g</choice>
+    <choice credit="$sol = $choices.displacement[8]">h</choice>
+    <choice credit="$sol = $choices.displacement[9]">i</choice>
+  </answer></p>
+
+  
+  <tabular bottom="minor" top="minor" left="minor" right="minor" width="200">
+    <row>
+      <cell>a.</cell><cell halign="center"><m>\displaystyle $choices.displacement[1]</m></cell>
+    </row>
+    <row>
+      <cell>b.</cell><cell halign="center"><m>\displaystyle $choices.displacement[2]</m></cell>
+    </row>
+    <row>
+      <cell>c.</cell><cell halign="center"><m>\displaystyle $choices.displacement[3]</m></cell>
+    </row>
+    <row>
+      <cell>d.</cell><cell halign="center"><m>\displaystyle $choices.displacement[4]</m></cell>
+    </row>
+    <row>
+      <cell>e.</cell><cell halign="center"><m>\displaystyle $choices.displacement[5]</m></cell>
+    </row>
+    <row>
+      <cell>f.</cell><cell halign="center"><m>\displaystyle $choices.displacement[6]</m></cell>
+    </row>
+    <row>
+      <cell>g.</cell><cell halign="center"><m>\displaystyle $choices.displacement[7]</m></cell>
+    </row>
+    <row>
+      <cell>h.</cell><cell halign="center"><m>\displaystyle $choices.displacement[8]</m></cell>
+    </row>
+    <row>
+      <cell>i.</cell><cell halign="center"><m>\displaystyle $choices.displacement[9]</m></cell>
+    </row>
+  </tabular>
+    
+</sideBySide>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Unit Circle Widget
+**********************************************-->
+<aside><title>Unit Circle Widget</title>
+<activity newNamespace><title></title>
+
+
+<!--*************************************************************************************
+
+Functions of the widget: Visualize angles in radians, and check their conversion to degrees or vice versa. Check sin/cos/tan of standard unit circle angles. 
+  
+**************************************************************************************-->
+ 
+<setup name="problemParameters">
+<math name="sinSol">
+  <conditionalContent>
+    <case condition="$thetaRad = 0">0</case>
+    <case condition="$thetaRad = pi/6 or $thetaRad = 5pi/6">1/2</case>
+    <case condition="$thetaRad = pi/4 or $thetaRad = 3pi/4">sqrt(2)/2</case>
+    <case condition="$thetaRad = pi/3 or $thetaRad = 2pi/3">sqrt(3)/2</case>
+    <case condition="$thetaRad = pi/2">1</case>
+    <case condition="$thetaRad = pi or $thetaRad = -pi">0</case>
+    <case condition="$thetaRad = -pi/6 or $thetaRad = -5pi/6">-1/2</case>
+    <case condition="$thetaRad = -pi/4 or $thetaRad = -3pi/4">-sqrt(2)/2</case>
+    <case condition="$thetaRad = -pi/3 or $thetaRad = -2pi/3">-sqrt(3)/2</case>
+    <case condition="$thetaRad = -pi/2">-1</case>   
+  </conditionalContent>
+</math>
+
+<math name="cosSol">
+  <conditionalContent>
+    <case condition="$thetaRad = 0">1</case>
+    <case condition="$thetaRad = pi/6 or $thetaRad = -pi/6">sqrt(3)/2</case>
+    <case condition="$thetaRad = pi/4 or $thetaRad = -pi/4">sqrt(2)/2</case>
+    <case condition="$thetaRad = pi/3 or $thetaRad = -pi/3">1/2</case>
+    <case condition="$thetaRad = pi/2">0</case>
+    <case condition="$thetaRad = pi or $thetaRad = -pi">-1</case>
+    <case condition="$thetaRad = 5pi/6 or $thetaRad = -5pi/6">-sqrt(3)/2</case>
+    <case condition="$thetaRad = 3pi/4 or $thetaRad = -3pi/4">-sqrt(2)/2</case>
+    <case condition="$thetaRad = 2pi/3 or $thetaRad = -2pi/3">-1/2</case>
+    <case condition="$thetaRad = -pi/2">0</case>   
+  </conditionalContent>
+</math>
+
+<math name="tanSol">
+  <conditionalContent>
+    <case condition="$thetaRad = 0">0</case>
+    <case condition="$thetaRad = pi/6 or $thetaRad = -5pi/6">sqrt(3)/3</case>
+    <case condition="$thetaRad = pi/4 or $thetaRad = -3pi/4">1</case>
+    <case condition="$thetaRad = pi/3 or $thetaRad = -2pi/3">sqrt(3)</case>
+    <case condition="$thetaRad = pi/2 or $thetaRad = -pi/2">undefined</case>
+    <case condition="$thetaRad = 2pi/3 or $thetaRad = -pi/3">-sqrt(3)</case>
+    <case condition="$thetaRad = 3pi/4 or $thetaRad = -pi/4">-1</case>
+    <case condition="$thetaRad = 5pi/6 or $thetaRad = -pi/6">-sqrt(3)/3</case>
+    <case condition="$thetaRad = pi or $thetaRad = -pi">0</case>
+  </conditionalContent>
+</math>
+
+  
+<circle name="unitCircle" center="(0,0)" radius="1" fixed styleNumber="14"/>
+<group name="circleFixedPoints">
+<point name="A" fixed coords="(1,0)" styleNumber="16"/>
+<point name="B" fixed coords="(sqrt(3)/2, 1/2)" styleNumber="15"/>
+<point name="C" fixed coords="(sqrt(2)/2, sqrt(2)/2)" styleNumber="16"/>
+<point name="D" fixed coords="(1/2,sqrt(3)/2)" styleNumber="15"/>
+<point name="E" fixed coords="(0, 1)" styleNumber="16"/>
+<point name="F" fixed coords="(-1/2, sqrt(3)/2)" styleNumber="15"/>
+<point name="G" fixed coords="(-sqrt(2)/2, sqrt(2)/2)" styleNumber="16"/>
+<point name="H" fixed coords="(-sqrt(3)/2, 1/2)" styleNumber="15"/>
+<point name="I" fixed coords="(-1,0)" styleNumber="16"/>
+<point name="J" fixed coords="(-sqrt(3)/2, -1/2)" styleNumber="15"/>
+<point name="K" fixed coords="(-sqrt(2)/2, -sqrt(2)/2)" styleNumber="16"/>
+<point name="L" fixed coords="(-1/2,-sqrt(3)/2)" styleNumber="15"/>
+<point name="M" fixed coords="(0, -1)" styleNumber="16"/>
+<point name="N" fixed coords="(1/2, -sqrt(3)/2)" styleNumber="15"/>
+<point name="P" fixed coords="(sqrt(2)/2, -sqrt(2)/2)" styleNumber="16"/>
+<point name="Q" fixed coords="(sqrt(3)/2, -1/2)" styleNumber="15"/>
+</group>
+
+<group name="graphElements1">
+<endpoint name="dragPoint1" open="true" coords="(-1/2, sqrt(3)/2)" showCoordsWhenDragging="false" styleNumber="8" isResponse>
+  <constraints>
+    <constrainTo>$unitCircle</constrainTo>
+    <attractTo>$circleFixedPoints</attractTo>
+  </constraints>
+</endpoint>
+<point name="projectedPoint1" styleNumber="9" draggable="false" showCoordsWhenDragging="false">($dragPoint1.x, 0)
+  <constraints>
+    <constrainTo><line>y = 0</line></constrainTo>
+  </constraints>
+</point>
+<endpoint name="O"  fixed coords="(0,0)" styleNumber="11"/>
+<ray name="constrRay1" styleNumber="6" endpoint="$O" through="$dragPoint1"/>
+<lineSegment name="hypotenuse1" endpoints="$O $dragPoint1" styleNumber="10"/>
+<lineSegment name="vertical1" endpoints="$dragPoint1 $projectedPoint1" styleNumber="13"/>
+<lineSegment name="horizontal1" endpoints="$O $projectedPoint1" styleNumber="9"/>
+<angle name="dragAngle1" through="(1,0) $O $dragPoint1" radius="1/3" >
+  <label><m>\theta</m></label>
+</angle>
+<angle name="cutAngle" through="(-1,0) $O $dragPoint1" radius="1/3" styleNumber="8"/>
+</group>
+<math name="thetaDeg" simplify>
+  <conditionalContent>
+    <case condition="$dragPoint1.y >= 0">$dragAngle1.degrees</case>
+    <case condition="$dragPoint1.y < 0">-$dragAngle1.degrees</case>
+  </conditionalContent>
+</math>
+  
+<math name="thetaRad" simplify>
+  <conditionalContent>
+    <case condition="$dragPoint1.y = 0 and $dragAngle1.radians = 0">0</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = pi/6">pi/6</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = pi/6">-pi/6</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = pi/4">pi/4</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = pi/4">-pi/4</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = pi/3">pi/3</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = pi/3">-pi/3</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = pi/2">pi/2</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = pi/2">-pi/2</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = 2pi/3">2pi/3</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = 2pi/3">-2pi/3</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = 3pi/4">3pi/4</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = 3pi/4">-3pi/4</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = 5pi/6">5pi/6</case>
+    <case condition="$dragPoint1.y < 0 and $dragAngle1.radians = 5pi/6">-5pi/6</case>
+    <case condition="$dragPoint1.y >= 0 and $dragAngle1.radians = pi">pi</case>
+    <case condition="$dragPoint1.y = 0 and $dragAngle1.radians = pi">pi</case>  
+  </conditionalContent>
+</math>
+
+</setup>
+
+
+<p><alert>Check angle <m>\theta</m>:</alert> <m>$theta = </m> 
+  <answer name="degAns" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+  <mathInput name="userThetaDeg"/>
+  <award>   
+    <when>$userThetaDeg = $thetaDeg</when>
+  </award>
+</answer><m>^{\circ}</m><nbsp/><nbsp/><nbsp/> or <nbsp/><nbsp/><nbsp/>
+
+
+<m>$theta = </m> 
+<answer name="radAns" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+  <mathInput name="userThetaRad"/>
+  <award>  
+    <when>$userThetaRad = $dragAngle1.radians and $dragPoint1.y >= 0</when>
+  </award>
+  <award>  
+    <when>$userThetaRad = -$dragAngle1.radians and $dragPoint1.y < 0</when>
+  </award>
+</answer><m>\;\;\text{radians}</m> 
+</p>
+
+<sideBySide widths="40% 60%" margins="0% 2% 0%">
+<div>
+<p><alert>Check <m>\sin \theta</m>, <m>\cos \theta</m>, <m>\tan \theta</m>:</alert></p>
+<p><m>\sin \theta = </m><answer name="sinAns">sin($thetaRad)</answer></p>
+<p><m>\cos \theta = </m><answer name="cosAns">cos($thetaRad)</answer></p>
+<p><m>\tan \theta = </m>
+  <conditionalContent>
+    <case condition="$thetaRad != pi/2 and $thetaRad != -pi/2">
+      <answer name="tanAns1">tan($thetaRad)</answer>
+    </case>
+    <case condition="$thetaRad = pi/2 or $thetaRad = -pi/2">
+      <answer name="tanAns2">undefined</answer>
+    </case>
+  </conditionalContent>
+</p>
+</div>
+
+
+<graph name="g1_cos" xmin="-1.5" xmax="1.5" ymin="-1.5" ymax="1.5" showNavigation="false" displayXAxisTickLabels="false" displayYAxisTickLabels="false">
+$unitCircle
+$circleFixedPoints
+$graphElements1
+<label fixed anchor="(1.1,0.1)"><m>1</m></label>
+<label fixed anchor="(0.1,1.1)"><m>1</m></label>
+<label fixed anchor="(-1.1,0.1)"><m>-1</m></label>
+<label fixed anchor="(0.1,-1.1)"><m>-1</m></label>
+</graph>
+
+
+</sideBySide>
+<solution>
+<p><m>\theta = $thetaDeg ^{\circ} \;\;\text{or}\;\;$thetaRad \;\;\text{radians}</m></p>
+
+<p><m>\sin \theta = $sinSol</m></p>
+<p><m>\cos \theta = $cosSol</m></p>
+<p><m>\tan \theta = $tanSol</m></p>
+</solution>
+
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary, with dotted line-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7" lineStyle="dotted" lineWidth="2"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--gray, styleNumber 6 corrolary-->
+<styleDefinition styleNumber="12" fillColor="gray" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="gray"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="13" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<!--blue, thin dotted-->
+<styleDefinition styleNumber="14" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF" lineColor="#648FFF" lineOpacity="0.7" lineWidth="1" lineStyle="dotted"/>
+
+<!--small black point-->
+<styleDefinition styleNumber="15" fillColor="gray" fillOpacity="0.1" markerSize="3" markerStyle="circle" markerColor="gray" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--small blue point-->
+<styleDefinition styleNumber="16" fillColor="#648FFF" fillOpacity="0.1" markerSize="3" markerStyle="circle" markerColor="#648FFF" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>  
+</activity>
+
+    
+</aside>
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<m>\cos($theta ^{\circ}) = $sol</m>
+</solution>
+</problem>
+
+

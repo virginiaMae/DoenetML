@@ -1,0 +1,216 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given two populations of an exponentially growing bacteria and different times, compute the population at a third time.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="r" from="2" to="4"/>
+  <selectFromSequence name="p0" from="2" to="7"/>
+  <selectFromSequence name="t1" from="1" to="4"/>
+  <selectFromSequence name="t2" from="$t1 + 2" to="$t1 + 4"/>
+  <selectFromSequence name="t3" from="$t2 + 1" to="$t2 + 5"/>
+
+  <math name="p1" simplify>$p0 $r^($t1)</math>
+  <math name="p2" simplify>$p0 $r^($t2)</math>
+  <math name="p3" simplify>$p0 $r^($t3)</math>
+ 
+  <math name="formula">$p0 $r^n</math>
+  <!--maths for incorrect responses-->
+
+  <number name="xmin1">-2</number>
+  <number name="xmax1">$t3 + 2</number>
+  <number name="ymin1">-0.1*$ymax1</number>
+  <number name="ymax1">$p3 + 0.1*$p3</number>
+
+</setup>
+
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>r = $r</p>
+<p>p0 = $p0</p>
+<p>t1 = $t1</p>
+<p>t2 = $t2</p>
+<p>t3 = $t3</p>
+<p>p1 = $p1</p>
+<p>p2 = $p2</p>
+<p>p3 = $p3</p> -->
+  
+<!--******************************************************
+            End testing
+*******************************************************-->
+<p>A bacteria population grows exponentially every hour. If the population is at $p1 cells after <m>$t1</m> hours and $p2 cells after <m>$t2</m> hours, then what will the population be after <m>$t3</m> hours?</p>
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<setup>
+  <function name="graphFunc" variables="n" styleNumber="6">$graphExpr</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<stack>
+  <p>Plot known points of the sequence:</p>
+  <p>1. Term number <mathInput name="userIndex1" minWidth="30"/> of the sequence has value: <mathInput name="userValue1"/></p>
+  <p>2. Term number <mathInput name="userIndex2" minWidth="30"/> of the sequence has value: <mathInput name="userValue2"/></p>
+  <p>Plot general expression for <m>p_n</m></p>
+  <p><m>p_n = </m><mathInput name="graphExpr" bindValueTo="$userInput"/></p>
+  <p><em>Note, the above expression should contain the variable <m>n</m></em>.</p>
+<!--   <p>Check <m>g_{$n} = </m><mathInput name="graph_x_n" bindValueTo="$user_g_n"/></p> -->
+</stack>
+
+
+  
+<graph xmin="$xmin1{link='false'}" xmax="$xmax1{link='false'}" ymin="$ymin1{link='false'}" ymax="$ymax1{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>g_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>p_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>p_0</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>p_0</m></label>
+  </point>
+  $graphFunc
+  <point layer="2" coords="($grapht3, $graphP3)" labelPosition="lowerright">
+    <label><m>p_{$grapht3}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="$n_m + 2"/></sources>
+  </map>
+</graph>
+
+</sideBySide>
+
+<p>Check population after <m>$t3</m> hours: <m>\bigg( </m><mathInput name="grapht3" />, <mathInput name="graphP3" bindValueTo="$userP3"/><m>\bigg) </m></p>
+
+</aside>
+
+<!--*********************************************
+            User solution input
+**********************************************-->    
+<p><m>p_{$t3} = </m>     
+    <answer name="ans1">
+      <mathInput name="userP3"/>
+      <award><when>$userP3 = $p3</when></award>
+    </answer> cells
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$notAnEquationInN"><p>It looks like this expression is missing an exponent <m>n</m>.</p></feedback>
+  <feedback condition="$noG_0"><p>It looks like this expression is missing a <m>g_0</m> term.</p></feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <div name="helpText">
+      The explicit formula for a geometric sequence has the form 
+    <me>g_n = g_0 \cdot r^n</me>
+    where <m>g_n</m> is the <m>n^{\text{th}}</m> term in the sequence, <m>g_0</m> is the <m>0^{\text{th}}</m> term in the sequence, and <m>r</m> is the common ratio.
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <setup>
+    <math name="step" simplify>$t2 - $t1</math>
+    <math name="p2Overp1" simplify>$p2/$p1</math>
+    <math name="stepBack" simplify>-$t1</math>
+  </setup>
+<ul>
+    <li>The explicit formula for the geometric sequence describing this growth takes the form <me>p_n = p_0 \cdot r^n</me></li>
+    <li>First, use the given information to solve for <m>r</m>. There are <m>$t2 - $t1 = $step</m> steps between the <m>p_{$t2}</m> term and the <m>p_{$t1}</m> term. Each step correponds to multiplication by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>p_{$t2} \amp= p_{$t1} \cdot r^{$step} \quad\quad\text{general formula, starting from n = $t1}</mrow>
+        <mrow>$p2 \amp= $p1 \cdot r^{$step}  \quad\quad\text{substitute given values}</mrow>
+        <mrow>\frac{$p2}{$p1} \amp= r^{$step} \quad\quad\text{simplify}</mrow>
+        <mrow>
+        <conditionalContent>
+          <case condition="$step = 2">\sqrt{$p2Overp1} \amp= \sqrt{r^2} \quad\quad\text{solve for }\;r</case>
+          <else>\sqrt[$step]{$p2Overp1} \amp= \sqrt[$step]{r^{$step}} \quad\quad\text{solve for }\;r</else>
+        </conditionalContent>
+        </mrow>
+        <mrow>$r \amp= r \quad\quad\text{simplify}</mrow>
+      </md>
+    </li>
+    <li>Calculate <m>p_0</m>. There are <m>0 - $t1 = $stepBack</m> steps between the <m>p_{$t1}</m> term and the <m>p_0</m> term. Each step backward in the sequence corresponds to division by <m>r</m> one time. Therefore,
+      <md>
+        <mrow>p_0 \amp= <math>$p1  r^$stepBack</math> \quad\quad\text{general formula}</mrow>
+        <mrow>p_0 \amp= <math>$p1/r^($t1)</math>\quad\quad\text{simplify}</mrow>
+        <mrow>p_0 \amp= <math>$p1/$r^($t1)</math>\quad\quad\text{substitute known values}</mrow>
+        <mrow>p_0 \amp= $p0</mrow>
+      </md>
+    </li>
+    <li>The explicit formula, substituting the values we computed for <m>r</m> and <m>p_0</m> is
+      <me>p_n = $formula</me></li>
+  <li>Using the explicit formula, we can calculate the population at <m>$t3</m> hours,
+    <me>p_3 = $p0 \cdot $r^{$t3} = $p3\quad\text{cells}</me>
+  </li>
+  </ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

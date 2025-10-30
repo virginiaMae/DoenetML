@@ -1,0 +1,146 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the range of a parabola. Intervals may be entered using a graphical tool, or using inequalities or intervals in the input box.
+*************************************************************-->
+
+<problem newNameSpace><title/>
+  <setup>
+    <selectFromSequence name="a" from="-4" to="4"/>
+    <select name="b">-1 -1/2 -1/3 -1/4 1 1/2 1/3 1/4</select>
+    <function name="f" simplify="numbersPreserveOrder" styleNumber="5">$b x^2 + $a
+      <label><m>f(x)</m></label>
+    </function>
+     <math name="interval">
+      <conditionalContent>
+        <case condition="$b < 0">
+          (-infinity, $a]
+        </case>
+        <case condition="$b > 0">
+          [$a,infinity)
+        </case>
+      </conditionalContent>
+    </math>
+  </setup>
+  
+  
+  <!--testing-->
+  <!-- <p>a = $a</p>
+  <p>b = $b</p>
+  <p>f = $f</p>
+  <p>interval = $interval</p> -->
+  
+  <!--testing-->
+  
+    
+
+    <graph size="small" showNavigation="false" showBorder="false" >
+      $f
+    </graph>
+
+  
+  
+  <p>What is the <alert>range</alert> of the function:</p>
+  <m>\large{f(x) = $f.formula{simplify="numbersPreserveOrder"}}</m>
+  
+
+  <p><alert>Range:</alert> <mathInput name="userDomain" />
+    <answer name="ans1">
+      <award name="allCorrect">
+        <when>$userDomain = $interval or $userDomain = <subsetOfReals name="ineq" displayMode="inequalities" variable="y">$interval</subsetOfReals>
+        </when>
+      </award>
+    </answer>
+  </p>
+
+  
+  
+  <!--*********************************************
+              Feedbacks
+  **********************************************-->
+  <setup>
+    <select name="correctFeedback" type="text">
+      <option>Awesome!</option>
+      <option>Great job!</option>
+      <option>Fantastic!</option>
+      <option>Nice work!</option>
+      <option>Amazing!</option>
+      <option>Excellent!</option>
+      <option>Right on!</option>
+      <option>Perfect!</option>
+    </select>
+  </setup>
+    <feedback condition="$allCorrect">$correctFeedback</feedback>
+  
+    
+  
+  <!--*********************************************
+              Hint
+  **********************************************-->
+  <hint name="helpSection"><title>Worked Example</title>
+  
+  <p>Here is a similar worked example:</p> 
+  
+  <example newNameSpace>
+  <setup>
+    <math name="a">2</math>
+    <function name="f" simplify="numbersPreserveOrder">(x - 3)^4 + $a
+      <label><m>f(x)</m></label>
+    </function>
+    <math name="interval">(-infinity,infinity)</math>
+  </setup>
+  
+  <p><em>The range of the function, <m>f(x) = $f.formula{simplify="numbersPreserveOrder"}</m> <nbsp/><nbsp/> is:</em></p>
+  
+  <graph size="small" showNavigation="false">
+      $f
+  </graph>
+  
+    
+  <p><em><alert>Solution.</alert></em></p>
+  <ul>
+    <li><p>The <term>range</term> of a function consists of the interval of output values mapped by the function over its entire domain. Since the function is a <m>4^{\text{th}}</m> degree polynomial, its <em>domain</em> is all real numbers (to see this, imagine plugging in any values for <m>x</m>, and notice that all real numbers result in a real value for <m>f(x))</m>.</p> 
+  <p>Next, observe the graph of the function and determine its range. The function appears to be at its minimum value at around <m>x = 3</m>. Looking at the equation for the function, we see that if <m>x > 3</m> or if <m>x < 3</m>, the expression <m>(x-3)^4</m> is some positive number. However, if <m>x = 3</m>, the expression <m>(x-3)^4 = 0</m>.  Therefore, let's evaluate the function at <m>x = 3</m>
+      <me>f(3) =  (3 - 3)^4 + $a = $a.</me>
+  The minimum value of the function occurs at <m>x = 3</m> and is equal to <m>$a</m>. This is the low end of our range interval.</p>
+  <p>Since we can always evaluate the function at larger and larger values of <m>x</m> to obtain larger function output, the upper value for our range interval is infinity.</p>
+    </li>
+  
+    <li><p>In interval notation, we can write this as <math>[$a,infinity)</math>.</p>
+    </li>
+  </ul>
+  </example>
+  
+  </hint>
+    
+  
+  <!--*********************************************
+              Solution
+  **********************************************-->
+  <solution>
+  <p>$interval or $ineq</p>
+  </solution>
+  </problem>
+  
+  <!--******************************************************
+          Style Definitions
+  *******************************************************-->  
+  
+  <setup>
+  <styleDefinitions>
+  <!--blue, styleNumber 1 corrolary-->
+  <styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+  <!--red, styleNumber 2 corrolary-->
+  <styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+  <!--orange, styleNumber 3 corrolary-->
+  <styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+  <!--purple, styleNumber 4 corrolary-->
+  <styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+  <!--black, styleNumber 5 corrolary-->
+  <styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+  <!--green, styleNumber 1 but green corrolary-->
+  <styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+  </styleDefinitions>
+  </setup>
+  

@@ -1,0 +1,74 @@
+<problem><title/>
+<setup>
+  <math name="expr">(x + 1)^5</math>
+  <math name="sol" expand simplify>(x+1)^4(x+1)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+  
+<p>Expand $expr.</p>
+<p><m>$expr = </m>       
+    <answer name="ans1" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality credit="1">    
+        <when>
+      $userInput=$sol
+        </when>
+      </award>
+
+       <award name="correctNotSimplified"credit="0">  
+        <when>
+      $userInput=$sol
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Fantastic!</feedback>
+  <feedback condition="$correctNotSimplified"><p>For full credit, simplify your expression further. Combine like terms and arrange terms in descending powers of <m>x</m> (i.e. an <m>x^2</m> term should appear before a term involving only <m>x</m>.)</p></feedback>
+   
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$expr = $sol</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

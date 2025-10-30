@@ -1,0 +1,9 @@
+<title>This is a graph</title>
+
+<p>Enter number of points: <mathInput name="n" prefill="100"/></p>
+<graph xmin="-1" xmax="$n + 1">
+  <map>
+    <template><point>($i,0)</point></template>
+    <sources alias="i"><sequence from="0" to="$n"/></sources>
+  </map>
+</graph>

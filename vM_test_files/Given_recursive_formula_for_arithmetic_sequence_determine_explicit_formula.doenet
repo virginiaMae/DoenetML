@@ -1,0 +1,155 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a recursive formula for an arithmetic sequence, determine the explicit formula.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="3" to="20"/>
+  <selectFromSequence name="m" from="3" to="10"/>
+  <math name="b">$a - $m</math>
+  <math name="expr">$m n + $b</math>
+  <boolean name="containsN"><matchesPattern pattern="()n+()" allowImplicitIdentities>$userInput</matchesPattern></boolean>
+  <!--maths for incorrect responses-->
+  <math name="noA_0Ans">$m n</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>m = $m</p>
+<p>expr = $expr</p>
+<p>expr{simplify} = $expr{simplify}</p>
+<p>containsN = $containsN</p>
+<p>$ans1.responseHasBeenSubmitted</p>
+<p>noA_0Ans = $noA_0Ans</p> -->
+<!--testing-->
+  
+<p>An arithmetic sequence is defined by the recursive formula</p>
+  <p><md>
+    <mrow>a_{1} \amp= $a</mrow>
+    <mrow>a_{n+1} \amp= a_n + $m</mrow>
+  </md></p>
+<p>Find an explicit formula for <m>a_n</m>.</p>
+<p>Your answer will include the variable <m>n</m>.</p>
+<p><m>a_n = </m>     
+    <mathInput name="userInput"/> 
+    <answer name="ans1" >
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$expr
+        </when>
+      </award>
+
+       <award name="notAnEquationInN" symbolicEquality simplifyOnCompare credit="0">  
+        <when>
+      $ans1.responseHasBeenSubmitted = true and $containsN = false
+        </when>
+      </award>
+
+      <award name="noA_0" symbolicEquality simplifyOnCompare credit="0">  
+        <when>
+      $userInput = $noA_0Ans
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct and $ans1.justSubmitted">Excellent!</feedback>
+  <feedback condition="$notAnEquationInN  and $ans1.justSubmitted"><p>It looks like this expression is missing an <m>n</m>.</p></feedback>
+  <feedback condition="$noA_0  and $ans1.justSubmitted"><p>It looks like this expression is missing an <m>a_0</m> term.</p></feedback>
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <p>In this problem, we are given a <term>recursive formula</term> for an arithmetic sequence, and tasked with finding an <term>explicit formula</term>. Recall that a <term>recursive formula</term> takes the form: 
+      <md>
+      <mrow>\text{Arithmetic Sequence, Recursive Formula:}</mrow>
+      <mrow>a_{n + 1} \amp= a_n + d \;\;\;\text{or, equivalently,}</mrow>
+      <mrow>a_{n} \amp= a_{n - 1} + d</mrow>
+    </md></p>
+      
+<p>By contrast, an <term>explicit formula</term> looks like:
+    <md>
+      <mrow>\text{Arithmetic Sequence, Explicit Formula:}</mrow>
+      <mrow>a_n = d(n) + a_0</mrow>
+    </md></p>
+
+<p>Note that the given recursive formula tells us the common difference, <m>d</m>, directly. We can then use the additional information we are given about <m>a_1</m> to solve for <m>a_0</m>. With <m>a_0</m> and <m>d</m>, we will then have everything we need to write the explicit formula.</p>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    
+<p>Here is a similar worked example:</p>
+<example>
+<p><em>An arithmetic sequence is defined by the recursive formula
+  <md>
+    <mrow>a_{1} \amp= 2</mrow>
+    <mrow>a_{n+1} \amp= a_n + 12</mrow>
+  </md>
+Find an explicit formula for <m>a_n</m>.</em></p>
+
+<p><alert><em>Solution.</em></alert></p>
+  <ul>
+    <li>First, use the given <m>d = 12</m> from the recursive formula to find <m>a_0</m> by substituting known information about <m>a_1</m> into the equation for the explicit formula.
+      <md>
+        <mrow>a_n \amp= d(n) + a_0 \amp\text{general explicit formula}</mrow>
+        <mrow>a_1 \amp= d(1) + a_0 \amp\text{explicit formula for}\;a_1</mrow>
+        <mrow>2 \amp= 12(1) + a_0\;\;\amp\text{substitute given values}</mrow>
+        <mrow>-10 \amp= a_0\;\;\amp\text{solve for}\;a_0</mrow>
+      </md></li>
+    <li>Write the explicit formula, substituting given value for <m>d</m> and the value we calculated for <m>a_0</m>.
+      <me>a_n = 12n - 10</me></li>
+  </ul>
+</example> 
+<p><em>How to check</em>: Use the recursive formula to calculate one or more additional terms in the sequence. Then, use the explicit formula you derived to solve for the same value. If your explicit formula is correct, the sequence values will match.</p>
+
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+    <li>First, use the given <m>d = $m</m> from the recursive formula to find <m>a_0</m> by substituting known information about <m>a_1</m> into the equation for the explicit formula.
+      <md>
+        <mrow>a_1 \amp= d(1) + a_0 \amp\text{explicit formula for}\;a_1</mrow>
+        <mrow>$a \amp= $m(1) + a_0 \amp\text{substitute given values}</mrow>
+        <mrow>$b{simplify} \amp= a_0</mrow>\;\;\amp\text{solve for}\;a_0</md></li>
+    <li>Write the explicit formula, substituting given value for <m>d</m> and the value we calculated for <m>a_0</m>.
+      <me>a_n = $expr{simplify}</me></li>
+  </ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,120 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the domain of a function with a square root. Users can answer using a graphical numberline, enter the interval in the input box using inequalities, or interval notation.
+
+A graphing tool is provided to help visualize the geometry of the problem, and a worked example. To remove the graphing tool, comment out the <aside> portion of the document. To remove the worked example, comment out the <hint>.
+
+(BA-Fns #23 BA1705)
+
+*************************************************************-->
+
+
+<problem><title/>
+<setup>
+  <select name="a">2 3 4</select>
+  <selectFromSequence name="b" from="2" to="6"/>
+  <function name="f" simplify="numbersPreserveOrder" styleNumber="5">$a sqrt(-$b - x)
+    <label><m>f(x)</m></label>
+  </function>
+   <math name="interval" simplify="numberspreserveorder">(-infinity, -$b]
+  </math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>interval = $interval</p> -->
+<!--testing-->
+
+ 
+<p>What is the <alert>domain</alert><footnote>To enter a symbol for "less than or equal to" you can enter a " < " symbol followed by a " = " symbol.</footnote> of the function:</p>
+<m>\large{f(x) = $f.formula{simplify="numbersPreserveOrder"}}</m>
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function: <m>\;f(x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup></div>
+  
+<graph>
+  $miFunction
+</graph>
+</sideBySide>
+</aside>  
+
+<p><alert>Domain:</alert> <mathInput name="userDomain" />
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userDomain = $interval or $userDomain = $ineq
+      </when>
+    </award>
+  </answer>
+</p>
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review the definition for the domain of a function, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-3-the-domain-and-range-of-a-function/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/Domain-Range.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>$interval or <subsetOfReals name="ineq" displayMode="inequalities">$interval</subsetOfReals></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

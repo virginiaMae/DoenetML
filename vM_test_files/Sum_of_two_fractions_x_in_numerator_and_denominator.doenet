@@ -1,0 +1,70 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Add two fractions, with x in numerator and denominator.
+*************************************************************-->
+<problem><title></title>
+<setup>
+  <selectFromSequence assignNames="a b c d" numToSelect="5" from="2" to="13"/>
+  <math name="fullExpr">($a x)/ $b + $c /($d x)</math>
+  <math name="t1" simplify>$a $d</math>
+  <math name="t2" simplify>$c $b</math>
+  <math name="t3" simplify>$b $d</math>
+  <math name="q" simplify><gcd>$t1 $t2 $t3</gcd></math>
+  <math name="A" simplify>$t1 / $q</math>
+  <math name="B" simplify>$t2 / $q</math>
+  <math name="C" simplify>$t3 / $q</math>
+  <math name="solExpr" simplify="numberspreserveorder">
+    ($A x^2 + $B)/($C x)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>q = $q</p>
+<p>fullExpr = $fullExpr</p>
+<p>solExpr = $solExpr</p> -->
+<!--testing-->
+
+
+<p>Rewrite the following expression as a single fraction.</p>
+  <me>$fullExpr</me>
+  
+<p><m>$fullExpr = </m>
+  <answer name="ans1">
+    <mathInput name="userAns"/>
+    <award name="fullSimplify" symbolicEquality simplifyOnCompare>
+      <when>$userAns = $solExpr</when>
+    </award>
+
+    <award name="noSimplify" credit="0" symbolicEquality>
+      <when>$userAns = $fullExpr</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+<solution>
+<p><m>$fullExpr = $solExpr</m></p>
+</solution>
+</problem>

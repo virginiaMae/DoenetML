@@ -1,0 +1,276 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve an absolute value inequality for x. There are 1 versions of this problem. Optional graphing tool provided.
+
+Version 1: Inequalities have form |k x +/- a| <= b
+
+(BA-Basics #139 unsorted JNEGSY1X)
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-4" to="-2"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="0"/>
+  <selectFromSequence name="c" from="11" to="17"/>
+  <math name="lhs">|$a x + $b|</math>
+  <math name="expr" simplify="numberspreserveorder">|$a x + $b| <= $c</math>
+<!--   <math name="innerExpr" simplify="numberspreserveorder">$a x + $b</math> -->
+  <math name="epR" simplify>-($c + $b)/$a</math>
+  <math name="epL" simplify>($c - $b)/$a</math>
+  <math name="interval">[$epL, $epR]</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>epL = $epL</p>
+<p>epR = $epR</p>
+<p>interval = $interval</p>
+<graph ymax="$c + 2" grid>
+  <function>$lhs</function>
+  <line>y = $c</line>
+  <point>($epL, $c)<label>L</label></point>
+  <point>($epR, $c)<label>R</label></point>
+</graph> -->
+<!--testing-->
+
+
+<p>Solve the inequality 
+  <me>$expr</me>
+</p>
+
+<p>Express your answer in interval notation. Answer precisely, using fractions where necessary rather than a decimal approximation.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+
+<aside><title>Graphing tool</title>
+<p>Here is one way to understand this problem graphically: imagine a "<m>\color{red}{y = }</m> ", to the left of the inequality you are given.</p>
+  <p>Then, we would have
+    <me>\color{red}{y = } $expr.</me>
+  In words, this is saying that there is a relation between <m>x</m> and <m>y</m>, whose value <m>$lhs</m> is always less than or equal to <m>y = $c</m>. </p>
+  <p>This is just a trick for turning our linear inequality (<em>a 1-dimensional picture</em>) into a graphical (<em>2-dimensional picture</em>), so we can plot our familiar absolute value function and find the region along the <m>x</m>-axis where it falls below the line given by <m>y = $c</m>.</p>
+
+<setup>
+  <number name="innerClickedOn">1</number>
+  <number name="outerClickedOn">1</number>
+
+  <updateValue target="innerClickedOn" newValue="$innerClickedOn +1" triggerWhenObjectsClicked="innerFunc"/>
+  <number name="innerStyle">
+    <conditionalContent>
+      <case condition="mod($innerClickedOn, 2) = 0">11</case>
+      <case condition="mod($innerClickedOn, 2) = 1">5</case>
+    </conditionalContent>
+  </number>
+  
+  <updateValue target="outerClickedOn" newValue="$outerClickedOn +1" triggerWhenObjectsClicked="outerFuncL outerFuncR"/>
+  <number name="outerStyle">
+    <conditionalContent>
+      <case condition="mod($outerClickedOn, 2) = 0">11</case>
+      <case condition="mod($outerClickedOn, 2) = 1">5</case>
+    </conditionalContent>
+  </number>
+</setup>
+
+<!-- testing -->
+<!-- <p>innerClickedOn = $innerClickedOn</p>
+<p>outerClickedOn = $outerClickedOn</p>
+<p>innerStyle = $innerStyle</p>
+<p>outerStyle = $outerStyle</p> -->
+<!-- /testing -->
+
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given expression to the left of the inequality:</p> 
+  <p><m>\color{red}{y = }</m><mathInput name="graphEq1"/></p>
+
+  
+  <p>Enter the given number to the right of the inequality:</p> 
+  <p><m>\color{red} {y = }</m><mathInput name="graphEq2"/></p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="-3" ymax="$c + 5">
+  <function name="innerFunc" domain="[$p1.x, $p2.x]" layer="2" styleNumber="$innerStyle" >$graphEq1</function>
+  <function name="outerFuncL" domain="(-infinity, $p1.x)" layer="2" styleNumber="$outerStyle">$graphEq1</function>
+  <function name="outerFuncR" domain="($p2.x, infinity)" layer="2" styleNumber="$outerStyle">$graphEq1</function>
+  <function name="f" styleNumber="5">$graphEq1</function>
+  <line name="line2" equation="y = $graphEq2" fixed styleNumber="2"/>
+  <point name="p1" coords="(-1, $graphY1)" styleNumber="5">
+    <constraints>
+      <constrainTo>$line2</constrainTo>
+    </constraints>
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" coords="(1, $graphY2)" styleNumber="5">
+    <label>$p2.coords</label>
+    <constraints>
+      <constrainTo>$line2</constrainTo>
+    </constraints>
+  </point>
+  <point name="shadowLeft" styleNumber="12" fixLocation coords="($p1.x, 0)"/>
+  <point name="shadowRight" styleNumber="12" fixLocation coords="($p2.x, 0)"/>
+  <line name="leftVert" styleNumber="6" fixLocation>x = $p1.x</line>
+  <line name="rightVert" styleNumber="6" fixLocation>x = $p2.x</line>
+  <lineSegment name="graphSeg" hide="$checkInterval.creditAchieved != 1" styleNumber="12" layer="2" endpoints="$shadowLeft $shadowRight" fixLocation/>
+</graph>
+  
+</sideBySide>
+
+<sideBySide>
+<stack>
+<p>Left endpoint of interval (drag or type):</p>
+<p><m>(x_1,y_1) =  </m></p>
+<p><m>\bigg(</m> <mathInput name="graphX1" bindValueTo="$p1.x"/> , <mathInput name="graphY1" bindValueTo="$graphEq2"/><m> \bigg)</m></p>
+</stack>
+
+<stack>
+<p>Right endpoint of interval (drag or type):</p>
+<p><m>(x_2,y_2) =  </m></p>
+<p><m>\bigg(</m> <mathInput name="graphX2" bindValueTo="$p2.x"/> , <mathInput name="graphY2" bindValueTo="$graphEq2"/><m> \bigg)</m></p>
+</stack>
+</sideBySide>
+
+<p><alert>Click on the region</alert> of the absolute value function described by the given inequality. 
+  <answer name="checkInterval" weight="0">
+    <award><when>$innerFunc.styleNumber = 11 and $outerFuncL.styleNumber = 5</when></award>
+  </answer>
+</p>
+   
+
+  <p>Note, although the graphing tool uses decimal numbers, it's important to give your answer to the problem in exact fractions.</p>
+
+
+</aside>  
+
+<setup>
+  <number name="xmin">min($epL - 2, -10)</number>
+  <number name="xmax">max($epR + 2, 10)</number>
+</setup>
+  
+<p><m>x = \bigg[ </m><mathInput name="userSol1"/> , <mathInput name="userSol2"/> <m> \bigg]\;\;</m>
+  
+<graph aspectRatio="5" showBorder="false" fixAxes displayMode="inline" displayYAxis="false" xmin="$xmin" xmax="$xmax">
+  <vector styleNumber="11" tail="(0,0)" head="($xmin,0)" fixLocation/>
+  <vector styleNumber="11" tail="(0,0)" head="($xmax,0)" fixLocation/>
+  <point name="userLeftAns" fixLocation styleNumber="12" layer="2">($userSol1, 0)</point>
+  <point name="userRightAns" fixLocation styleNumber="12" layer="2">($userSol2, 0)</point>
+  <lineSegment name="userSeg" styleNumber="12" layer="2" endpoints="$userSol1 $userSol2" fixLocation/>
+</graph>
+  
+</p>
+
+
+  <answer name="ans1">
+    <award name="correct" matchPartial>
+      <when>
+        <mathList>$userSol1 $userSol2</mathList> = <mathList>$epL $epR</mathList>
+      </when>
+    </award>
+    <award name="numerical" matchPartial allowedErrorInNumbers="0.01" allowedErrorIsAbsolute credit="0.5">
+      <when>
+        <mathList>$userSol1 $userSol2</mathList> = <mathList>$epL $epR</mathList>
+      </when>
+    </award>
+</answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$numerical">For full credit, use exact fractions rather than a decimal approximation.</feedback>
+ 
+  
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x = $interval \;\;</m> 
+  <graph aspectRatio="5" showBorder="false" fixAxes displayMode="inline" displayYAxis="false" xmin="$xmin" xmax="$xmax">
+  <vector styleNumber="11" tail="(0,0)" head="($xmin,0)" fixLocation/>
+  <vector styleNumber="11" tail="(0,0)" head="($xmax,0)" fixLocation/>
+  <point name="leftAns" fixLocation styleNumber="12" layer="2">($epL, 0)</point>
+  <point name="rightAns" fixLocation styleNumber="12" layer="2">($epR, 0)</point>
+  <lineSegment name="seg" styleNumber="12" layer="2" endpoints="$epL $epR" fixLocation/>
+</graph></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.9" lineWidth="6"/>
+
+<!--white for masking-->
+<styleDefinition styleNumber="13" fillColor="white" fillOpacity="1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="black" lineOpacity="0.7" lineWidth="2"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,244 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Express an equation for a parabola given in general form in vertex form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <select name="a">
+    <option><math>-3</math></option>
+    <option><math>-2</math></option>
+    <option><math>2</math></option>
+    <option><math>3</math></option>
+  </select>
+  <select name="h">
+    <option><math>-4</math></option>
+    <option><math>-3</math></option>
+    <option><math>-2</math></option>
+    <option><math>-1</math></option>
+    <option><math>1</math></option>
+    <option><math>2</math></option>
+    <option><math>3</math></option>
+    <option><math>4</math></option>
+  </select>
+  <selectFromSequence name="k" from="-6" to="6"/>
+
+  <math name="xMinusH" simplify>x - $h</math>
+  <math name="vertexForm">$a ($xMinusH)^2 + $k</math>
+  <math name="standardForm">$a x^2 + $b x + $c</math>
+  <math name="b" simplify>-2 $a $h</math>
+  <math name="c" simplify>$a($h)^2 + $k</math>
+  <math name="combinedUserAns">$userA(x - $userH)^2 + $userK</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>b = $b</p>
+<p>c = $c</p>
+
+<p>vertexForm = $vertexForm</p>
+<p>standardForm = $standardForm</p> -->
+
+<!--testing-->
+
+
+<p>Rewrite the parabola <m>y = $standardForm</m> in the form <m>y = a(x - h)^2 + k</m>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">$k + 10</number>
+  <number name="ymin">$k - 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph parabola in vertex form:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+  <p><booleanInput name="showParabola">
+      <label>Click to show second parabola</label>
+    </booleanInput>
+  </p>
+</div>
+
+  
+<graph name="g1" ymax="$ymax{link='false'}" ymin="$ymin{link='false'}">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="userParabola" hide="!$showParabola">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>y = </m> <mathInput name="userA" prefill="a"/><m>
+  \bigg( x - </m> <mathInput name="userH" prefill="h"/><m>\bigg)^2 + </m> <mathInput name="userK" prefill="k"/></p>
+<p>Your equation is: <m>y = $combinedUserAns{simplify="numbersPreserveOrder"}</m></p>
+
+  <answer name="ans6">
+    <award name="allCorrect">
+      <when>$a = $userA{isResponse} and $h = $userH{isResponse} and $k = $userK{isResponse}</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>a = $userA{isResponse} and h = $userH{isResponse} and k = $userK{isResponse}</when>
+    </award>
+  </answer>
+
+  
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans6.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$symbolic">Please enter numerical values for <m>a, h, k</m> that correspond to the given parabola.</feedback>
+  <feedback condition="$userA != $a and $ans6.justSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans6.justSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userH = -$h and $a < 0">...the incorrect <m>h</m> term could likely be the result of a sign error. Check to see if you factored out a negative <m>a</m>? If so, what should the sign on the <m>h</m> term inside the parentheses be?</feedback>
+  <feedback condition="$userK != $k and $ans6.justSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans6.numSubmissions > 2 and $ans6.creditAchieved != 1"> 
+  <p>Given an equation in general form, 
+  <me>ax^2 +bx + c</me>
+  we can rewrite the equation in vertex form <me>a(x - h)^2 + k</me> by completing the square.</p>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<setup>
+  <math name="expr">2x^2 + 12x + 11</math>
+  <math name="vertexForm">2(x+3)^2-7</math>
+</setup>
+
+
+<p><em>Rewrite the parabola <m>y = $expr</m> in the form <m name="vertexFormula">y = a(x - h)^2 + k</m>.</em></p>
+  
+<p><me>y = $expr</me></p>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+
+<ul>
+  <li><p>The goal is to manipulate the given equation until we have a form that looks like $vertexFormula.</p> 
+    <p>We start by trying to rewrite the first two terms on the left-hand side as a sum or a difference of squares.</p>
+  </li>
+  <li><p>First notice that the two terms have a common factor of <m>2</m>.</p>
+    <md>
+      <mrow>y &= $expr</mrow>
+      <mrow>&= 2(x^2 + 6x) + 11</mrow>    
+    </md>
+  </li>
+  <li><p>Next, we "complete the square" for the first two terms <m>(x^2 + 6x)</m>. In order to make this binomial a perfect square, we need to add <m>3^2</m>, because <m>(x^2 +6x + 3^2) = (x +3)^2</m>.</p>
+    <p>We have to be careful here to keep our original expression unchanged. So, if we add a <m>3^2</m> inside the parentheses, we need to <em>subtract</em> a <m>2 \cdot 3^2</m> outside the parentheses.</p>
+    <md>
+      <mrow>y &= 2(x^2 + 6x + 3^2) + 11  - 2(3^2)</mrow>
+      <mrow>&= 2(x + 3)^2 - 7</mrow>
+    </md>
+  <p>The equation is now in vertex form.</p>
+  </li>
+  <li><p>As a final check, we can graph the parabola in both forms to verify that the resulting graphs overlay one another</p>
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1" prefill="$expr"/></p>
+
+  <p>Graph parabola in vertex form:</p> 
+  <p><m>y = </m> <mathInput name="eq2" prefill="$vertexForm"/></p>
+  <p><booleanInput name="showParabola">
+      <label>Click to show second parabola</label>
+    </booleanInput>
+  </p>
+</div>
+
+  
+<graph name="g1" xmin="-12" xmax="4">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="userParabola" hide="!$showParabola">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+<p>Click the checkbox to view the second graph. The equations represent the same graph when the parabolas overlap exactly. </p>
+  </li>  
+</ul>
+      
+</example>
+
+</hint>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>Complete the square to transform the equation of the parabola in general form to vertex form:
+  <md>
+    <mrow>y \amp= $standardForm</mrow>
+    <mrow><math simplify name="yMinusC">y - $c</math> \amp= $a x^2 + $b x \amp\text{move the constant term to opposite side}</mrow>
+    <mrow><math name="step2">$yMinusC + $a($step1)</math> \amp= $a \bigg(x^2 + <math name="bOverA" simplify>($b/$a) </math>x + <math name="step1">($bOverA/2)^2</math>\bigg) \amp\text{form a perfect square}</mrow>
+    <mrow>$step2{simplify} \amp= $a($xMinusH{simplify})^2 \amp\text{factor the perfect square}</mrow>
+    <mrow>y \amp= $vertexForm \amp\text{simplify and isolate }\;\;y</mrow>
+  </md></li>
+</ul>
+    
+
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

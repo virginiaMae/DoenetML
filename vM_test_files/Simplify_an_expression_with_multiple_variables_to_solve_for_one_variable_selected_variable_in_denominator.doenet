@@ -1,0 +1,93 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve an algebraic expression involving multiple variables for a randomly selected variable. In this version of the problem, the desired variable is in the denominator.
+*************************************************************-->
+<problem>
+<setup>
+  <select name="var" assignNames="x y z" numToSelect="3">x y z</select>
+  <selectFromSequence from="-10" to="10" exclude="0" assignNames="a b c" numToSelect="4"/>
+  <math name="term1">$a $z^2/$x</math>
+  <math name="term2">$b $y</math>
+  <math name="LHS" simplify>$term1 + $term2</math>
+<!--   <math name="RHS" simplify="numbersPreserveOrder">$term3 + $term4</math> -->
+  <me name="expr">$LHS = $c</me>
+  <math name="sol" simplify>$a $z^2 / ($c - $b $y)</math>
+</setup>
+  
+<!--testing-->
+<!-- <p>x = $x</p>
+<p>y = $y</p>
+<p>z = $z</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>term1 = $term1</p>
+<p>term2 = $term2</p>
+<p>LHS = $LHS</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Solve for $x: $expr</p>
+  
+<p><m>$x = </m>
+    <answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct">   
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$x = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

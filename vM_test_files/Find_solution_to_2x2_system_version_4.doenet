@@ -1,0 +1,215 @@
+<setup>
+  <text name="source"></text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+QUESTION: Find the solution to the system of equations:
+
+With[{aa=$$a$$*x,bb=$$b$$*y},HoldForm[aa+bb]] = $$m$$
+With[{cc=$$c$$*x,dd=$$d$$*y},HoldForm[cc+dd]] = $$n$$
+
+Enter your answer as a fraction of integers, using the slash \.18/\.19 symbol. 
+ ;; 
+
+VARIABLES: {$$a$$[{-3,-2,-1,1,2,3,4,5,6}, Choice], $$b$$[{-3,-2,-1,1,2,3,4,5,6}, Choice], $$c$$[{-3,-2,-1,1,2,3,4,5,6}, Choice], $$d$$[{-3,-2,-1,1,2,3,4,5,6}, Choice],  $$m$$[{-12,20}, Integer], $$n$$[{-12,20}, Integer]}  ;;
+
+ComputedVariables: {};;
+
+answerLabel = {"x =", "y ="};;
+
+answer = {(($$m$$)*($$d$$)-(($$n$$)*($$b$$)))/(($$a$$)*($$d$$)-(($$c$$)*($$b$$))),(($$a$$)*($$n$$)-(($$c$$)*($$m$$)))/(($$a$$)*($$d$$)-(($$c$$)*($$b$$)))};;
+
+tolerance = 0
+-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="b" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="c" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="d" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="m" from="-12" to="20"/>
+  <selectFromSequence name="n" from="-12" to="20"/>
+  <math name="lhs1" simplify="numberspreserveorder">$a x + $b y</math>
+  <math name="lhs2" simplify="numberspreserveorder">$c x + $d y</math>
+  <math name="eq1">$lhs1 = $m</math>
+  <math name="eq2">$lhs2 = $n</math>
+  <math name="x" simplify>($m $d - $n $b) / ($a $d - $c $b)</math>
+  <math name="y" simplify>($a $n - $c $m) / ($a $d - $c $b)</math>
+  <boolean name="infSol">$lineEq1 = $lineEq2</boolean>
+  <line name="lineEq1">$eq1</line>
+  <line name="lineEq2">$eq2</line>
+  <boolean name="noSol">$lineEq1.slope = $lineEq2.slope and $infSol = false</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>m = $m</p>
+<p>n = $n</p>
+<p>lhs1 = $lhs1</p>
+<p>lhs2 = $lhs2</p>
+<p>eq1 = $eq1</p>
+<p>eq2 = $eq2</p>
+<p>x = $x</p>
+<p>y = $y</p>
+<p>infSol = $infSol</p>
+<p>noSol = $noSol</p> -->
+<!--testing-->
+
+
+<p>Find the solution to the system of equations:</p>
+  <md>
+    <mrow>$lhs1 \amp= $m</mrow>
+    <mrow>$lhs2 \amp= $n</mrow>
+  </md>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given equation of the first line:</p> 
+  <p><mathInput name="graphEq1"/></p>
+
+  <p>Enter the given equation of the second line:</p> 
+  <p><mathInput name="graphEq2"/></p>
+
+
+</div>
+
+  
+<graph name="g1">
+  <point name="ip" coords="($graphX, $graphY)" fixed styleNumber="5">
+    <label>$ip.coords</label>
+  </point>
+  <line name="line1" equation="$graphEq1" fixed/>
+  <line name="line2" equation="$graphEq2" fixed styleNumber="2"/>
+</graph>
+  
+  
+</sideBySide>
+
+  <p>Please answer the multiple-choice portion of the question before checking a proposed intersection point:</p>
+  <p><m>(x,y) =  </m></p>
+  <p><m>\bigg(</m> <mathInput name="graphX" bindValueTo="$userX" disabled="$otherSolutions.selectedIndices != 1"/> , <mathInput name="graphY" bindValueTo="$userY" disabled="$otherSolutions.selectedIndices != 1"/><m> \bigg)</m></p>
+
+</aside>  
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+
+
+<p>First, how many solutions are there for this system?</p>
+  <choiceInput name="otherSolutions">
+    <choice name="oneSolChoice">There is <alert>one solution</alert>; the point shown below.</choice>
+    <choice name="infSolChoice">There are <alert>infinitely many solutions</alert> - the lines coincide.</choice>
+    <choice name="noSolChoice">There are <alert>no solutions</alert> - the lines are separate but parallel.</choice>
+  </choiceInput>
+
+<p><m>(x, y) = \bigg(</m> <mathInput name="userX" disabled="$otherSolutions.selectedIndices != 1"/><m>,</m>
+  <mathInput name="userY" disabled="$otherSolutions.selectedIndices != 1"/><m> \bigg)</m></p>
+  
+  <answer name="ans3">
+    <award name="allCorrect">
+      <when>$userX{isResponse} = $x and $userY{isResponse} = $y</when>
+    </award>
+    <award name="infAward">
+      <when>$otherSolutions.selectedIndices = 2 and $infSol = true</when>
+    </award>
+    <award name="noSolAward">
+      <when>$otherSolutions.selectedIndices = 3 and $noSol = true</when>
+    </award>
+    <award name="xIncorrect" credit="0.5">
+      <when>$userX{isResponse} != $x and $userY{isResponse} = $y</when>
+    </award>
+
+    <award name="yIncorrect" credit="0.5">
+      <when>$userX{isResponse} = $x and $userY{isResponse} != $y</when>
+    </award>
+    <award name="reverseXY" credit="0">
+      <when>$userX{isResponse} = $y and $userY{isResponse} = $x</when>
+    </award>
+  </answer>
+
+<p>Note, if a single solution exists, your values for <m>x</m> and <m>y</m> should be in the form of an exact fraction or an integer, not a decimal approximation.</p>
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$xIncorrect"><p>Your <m>x</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$yIncorrect"><p>Your <m>y</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$reverseXY"><p>Your <m>x</m> and <m>y</m>-coordinates are in the wrong spot. The ordered pair should be written as <m>(x,y)</m>.</p></feedback>
+  <feedback condition="$ans3.numSubmissions > 2 and $ans3.creditAchieved != 1">
+  <p>In this problem, we are given a system of two linear equations and are asked to find the solution. Graphically, this can be represented by two lines. The solution, if it exists, is their point of intersection.</p>
+<p>To solve this problem algebraically, one can use several different techniques. Two of these methods are:</p>
+  <ul>
+    <li>Substitution</li>
+    <li>Elimination</li>
+  </ul>
+  
+<p>You might find it easiest to use the method of elimination, if: when the two equations are added together, one variable immediately drops out.</p>
+  </feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<conditionalContent>
+  <case condition="$infSol = true">There are infinitely many solutions.</case>
+  <case condition="$noSol = true">There are no solutions.</case>
+  <case condition="$infSol = false and $noSol = false">
+    Use the method of substitution, or the method of elimination to obtain <m>(x,y) = ($x, $y)</m>
+  </case>
+</conditionalContent>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

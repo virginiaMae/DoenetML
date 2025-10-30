@@ -1,0 +1,144 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the domain of a parabola. Intervals may be entered using a graphical tool, or using inequalities or intervals in the input box.
+*************************************************************-->
+
+<problem newNameSpace><title/>
+  <setup>
+    <selectFromSequence name="a" from="-4" to="4"/>
+    <select name="b">-1 -1/2 -1/3 -1/4 1 1/2 1/3 1/4</select>
+    <function name="f" simplify="numbersPreserveOrder" styleNumber="5">$b x^2 + $a
+      <label><m>f(x)</m></label>
+    </function>
+    <math name="interval">(-infinity,infinity)</math>
+    <interval name="interval2">-infinity < x < infinity</interval>
+  </setup>
+  
+  
+  <!--testing-->
+  <!-- <p>a = $a</p>
+  <p>b = $b</p>
+  <p>f = $f</p>
+  <p>interval = $interval</p> -->
+  
+  <!--testing-->
+  
+  
+
+    <graph size="small" showNavigation="false" showBorder="false">
+      $f
+    </graph>
+
+  <p>What is the <alert>domain</alert> of the function:</p>
+  <m>\large{f(x) = $f.formula{simplify="numbersPreserveOrder"}}</m>
+    
+
+
+  <p><alert>Domain:</alert> <mathInput name="userDomain" />
+    <answer name="ans1">
+      <award name="allCorrect">
+        <when>$userDomain = $interval or $userDomain = R or $userDomain = $interval2
+        </when>
+      </award>
+    </answer>
+  </p>
+
+  
+
+  
+  <!--*********************************************
+              Feedbacks
+  **********************************************-->
+  <setup>
+    <select name="correctFeedback" type="text">
+      <option>Awesome!</option>
+      <option>Great job!</option>
+      <option>Fantastic!</option>
+      <option>Nice work!</option>
+      <option>Amazing!</option>
+      <option>Excellent!</option>
+      <option>Right on!</option>
+      <option>Perfect!</option>
+    </select>
+  </setup>
+    <feedback condition="$allCorrect">$correctFeedback</feedback>
+  
+   
+  <!--*********************************************
+              Hint
+  **********************************************-->
+  <hint name="helpSection"><title>Worked Example</title>
+  
+  <p>Here is a similar worked example:</p> 
+  
+  <example newNameSpace>
+  <setup>
+    <math name="a">2</math>
+    <select name="b">1</select>
+    <function name="f" simplify="numbersPreserveOrder">$b x^3 + $a
+      <label><m>f(x)</m></label>
+    </function>
+    <math name="interval">(-infinity,infinity)</math>
+  </setup>
+  
+  <p><em>The domain of the function, <m>f(x) = $f.formula{simplify="numbersPreserveOrder"}</m> <nbsp/><nbsp/> is:</em></p>
+  
+  <graph size="small" showNavigation="false">
+      $f
+  </graph>
+  
+    
+  <p><em><alert>Solution.</alert></em></p>
+  <ul>
+    <li><p>The <term>domain</term> of a function consists of the interval of input values over which the function is defined. Notice that the given function is a cubic polynomial. Are there any values of <m>x</m> that you can think of for which this function is <em>undefined</em>? Test it out by evaluating <m>f</m> at several values of <m>x</m> below!</p>
+      <p><m>f( </m><mathInput name="x"/><m>) = $x^3 + $a = $$f($x)</m></p>
+    <p>Based on your tests, what is your conjecture for the domain of a cubic polynomial?
+      <answer weight="0">
+        <mathInput name="hintAns"/>
+        <award name="allCorrect">
+          <when>$hintAns = $interval or $hintAns = R
+          </when>
+        </award>
+      </answer></p>
+    </li>
+  
+    <li><p>Note, another way to say "the domain is all real numbers", is to simply write <m>R</m>.</p>
+    </li>
+  </ul>
+  </example>
+  
+
+  </hint>
+    
+  
+  <!--*********************************************
+              Solution
+  **********************************************-->
+  <solution>
+  <p>$interval or <m>R</m></p>
+  </solution>
+  </problem>
+  
+  <!--******************************************************
+          Style Definitions
+  *******************************************************-->  
+  
+  <setup>
+  <styleDefinitions>
+  <!--blue, styleNumber 1 corrolary-->
+  <styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+  <!--red, styleNumber 2 corrolary-->
+  <styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+  <!--orange, styleNumber 3 corrolary-->
+  <styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+  <!--purple, styleNumber 4 corrolary-->
+  <styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+  <!--black, styleNumber 5 corrolary-->
+  <styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+  <!--green, styleNumber 1 but green corrolary-->
+  <styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+  </styleDefinitions>
+  </setup>
+  

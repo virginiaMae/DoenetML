@@ -1,0 +1,529 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Thomas, Sec 1.2
+This version works with DoenetML version 0.6
+*************************************************************-->
+
+<problem><title/>
+
+
+<!--testing-->
+
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>In exercises 1-7, plot the given point <m>P</m> and the points <m>Q, R, S, T</m> as described below. Then, answer the follow-up questions.</p>
+  <ol level="2">
+    <li>The point <m>Q</m> such that <m>QP</m> is perpendicular to the <m>x</m>-axis and is bisected by it.</li>
+    <li>The point <m>R</m> such that <m>PR</m> is perpendicular to the <m>y</m>-axis and is bisected by it.</li>
+    <li>The point <m>S</m> such that <m>PS</m> is bisected by the origin.</li>
+    <li>The point <m>T</m> such that <m>PT</m> is perpendicular to and is bisected by the <m>45^{\circ}</m> line <m>L</m> through the origin bisecting the first and third quadrants.</li>
+  </ol>
+
+<!--*********************************************
+          Exercise 1
+**********************************************-->
+<aside name="exercise1"><title>Exercise 1.</title>
+<p><m>P = (1, -2)</m></p>
+<graph name="g1" grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p1" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q1" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq1" endpoints="$p1 $q1" styleNumber="8" hide="$q1 = (-3,-4)"/>
+  <point name="r1" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr1" endpoints="$p1 $r1" styleNumber="9" hide="$r1 = (-2,-4)"/>
+  
+  <point name="s1" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps1" endpoints="$p1 $s1" styleNumber="10" hide="$s1 = (-1,-4)"/>
+  
+  <point name="t1" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt1" endpoints="$p1 $t1" styleNumber="11" hide="$t1 = (0,-4)"/>
+  <line name="diag"  styleNumber="6" fixed hide="$t1 = (0,-4)">y = x</line> 
+</graph>
+<p><em>Drag each point to the correct location.</em></p>  
+<p>Your graphed points are located at:</p>
+<p><m>P = $p1</m>, <m>Q = $q1</m></p>
+<p><m>R = $r1</m>, <m>S = $s1</m></p>
+<p><m>T = $t1</m></p>
+
+  
+<!--*********************************************
+            Solution input - Exercise 1
+**********************************************-->
+<answer name="ans1">
+  <award>
+    <when>$p1 = (1,-2) and $q1 = (1, 2) and
+    $r1 = (-1, -2) and $s1 = (-1, 2) and $t1 = (-2, 1)
+  </when>
+  </award>
+</answer>
+
+<feedback condition="$ans1.creditAchieved">Nice work!</feedback>
+<feedback condition="$p1 != (1,-2) and $ans1.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q1 != (1,2) and $ans1.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r1 != (-1,-2) and $ans1.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s1 != (-1,2) and $ans1.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t1 != (-2,1) and $ans1.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+  
+
+<conditionalContent condition="$ans1.creditAchieved">
+<!--*********************************************
+          Exercise 2
+**********************************************-->
+<aside name="exercise2"><title>Exercise 2.</title>
+<p><m>P = (2,-1)</m></p>
+<graph name="g2" grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p2" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q2" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq2" endpoints="$p2 $q2" styleNumber="8" hide="$q2 = (-3,-4)"/>
+  <point name="r2" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr2" endpoints="$p2 $r2" styleNumber="9" hide="$r2 = (-2,-4)"/>
+  
+  <point name="s2" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps2" endpoints="$p2 $s2" styleNumber="10" hide="$s2 = (-1,-4)"/>
+  
+  <point name="t2" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt2" endpoints="$p2 $t2" styleNumber="11" hide="$t2 = (0,-4)"/>
+  <line name="diag2"  styleNumber="6" fixed hide="$t2 = (0,-4)">y = x</line> 
+</graph>
+<p><em>Drag each point to the correct location.</em></p>
+  
+<p>Your graphed points are located at:</p>
+<p><m>P = $p2</m>, <m>Q = $q2</m></p>
+<p><m>R = $r2</m>, <m>S = $s2</m></p>
+<p><m>T = $t2</m></p>
+
+
+
+<!--*********************************************
+            Solution input - Exercise 2
+**********************************************-->
+<answer name="ans2">
+  <award>
+    <when>$p2 = (2,-1) and $q2 = (2,1) and
+    $r2 = (-2,-1) and $s2 = (-2, 1) and $t2 = (-1, 2)
+  </when>
+  </award>
+</answer>
+
+<feedback condition="$ans2.creditAchieved">Great job!</feedback>
+<feedback condition="$p2 != (2,-1) and $ans2.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q2 != (2,1) and $ans2.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r2 != (-2,-1) and $ans2.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s2 != (-2,1) and $ans2.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t2 != (-1,2) and $ans2.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+<conditionalContent condition="$ans2.creditAchieved">
+<!--*********************************************
+          Exercise 3
+**********************************************-->
+<aside name="exercise3"><title>Exercise 3.</title>
+<p><m>P = (-2, 2)</m></p>
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p3" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q3" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq3" endpoints="$p3 $q3" styleNumber="8" hide="$q3 = (-3,-4)"/>
+  <point name="r3" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr3" endpoints="$p3 $r3" styleNumber="9" hide="$r3 = (-2,-4)"/>
+  
+  <point name="s3" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps3" endpoints="$p3 $s3" styleNumber="10" hide="$s3 = (-1,-4)"/>
+  
+  <point name="t3" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt3" endpoints="$p3 $t3" styleNumber="11" hide="$t3 = (0,-4)"/>
+  <line name="diag3"  styleNumber="6" fixed hide="$t3 = (0,-4)">y = x</line> 
+</graph>
+<p>Your graphed points are located at:</p>
+<p><m>P = $p3</m>, <m>Q = $q3</m></p>
+<p><m>R = $r3</m>, <m>S = $s3</m></p>
+<p><m>T = $t3</m></p>
+    
+<!--*********************************************
+            Solution input - Exercise 3
+**********************************************-->
+<answer name="ans3">
+  <award>
+    <when>$p3 = (-2,2) and $q3 = (-2,-2) and
+    $r3 = (2,2) and $s3 = (2, -2) and $t3 = (2,-2)
+  </when>
+  </award>
+</answer> 
+
+<feedback condition="$ans3.creditAchieved">Awesome!</feedback>
+<feedback condition="$p3 != (-2,2) and $ans3.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q3 != (-2,-2) and $ans3.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r3 != (2,2) and $ans3.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s3 != (2,-2) and $ans3.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t3 != (2,-2) and $ans3.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+
+  
+<conditionalContent condition="$ans3.creditAchieved">
+<!--*********************************************
+          Exercise 4
+**********************************************-->
+<aside name="exercise4"><title>Exercise 4.</title>
+<p><m>P = (-1, -3)</m></p>
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p4" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q4" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq4" endpoints="$p4 $q4" styleNumber="8" hide="$q4 = (-3,-4)"/>
+  <point name="r4" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr4" endpoints="$p4 $r4" styleNumber="9" hide="$r4 = (-2,-4)"/>
+  
+  <point name="s4" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps4" endpoints="$p4 $s4" styleNumber="10" hide="$s4 = (-1,-4)"/>
+  
+  <point name="t4" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt4" endpoints="$p4 $t4" styleNumber="11" hide="$t4 = (0,-4)"/>
+  <line name="diag4"  styleNumber="6" fixed hide="$t4 = (0,-4)">y = x</line> 
+</graph>
+<p>Your graphed points are located at:</p>
+<p><m>P = $p4</m>, <m>Q = $q4</m></p>
+<p><m>R = $r4</m>, <m>S = $s4</m></p>
+<p><m>T = $t4</m></p>
+    
+<!--*********************************************
+            Solution input - Exercise 4
+**********************************************-->
+<answer name="ans4">
+  <award>
+    <when>$p4 = (-1,-3) and $q4 = (-1,3) and
+    $r4 = (1,-3) and $s4 = (1,3) and $t4 = (-3,-1)
+  </when>
+  </award>
+</answer> 
+<feedback condition="$ans4.creditAchieved">Right on!</feedback>
+<feedback condition="$p4 != (-1,-3) and $ans4.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q4 != (-1,3) and $ans4.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r4 != (1,-3) and $ans4.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s4 != (1,3) and $ans4.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t4 != (-3,-1) and $ans4.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+<conditionalContent condition="$ans4.creditAchieved">
+<!--*********************************************
+          Exercise 5
+**********************************************-->
+<aside name="exercise5"><title>Exercise 5.</title>
+<p><m>P = (2, 2)</m></p>
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p5" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q5" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq5" endpoints="$p5 $q5" styleNumber="8" hide="$q5 = (-3,-4)"/>
+  <point name="r5" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr5" endpoints="$p5 $r5" styleNumber="9" hide="$r5 = (-2,-4)"/>
+  
+  <point name="s5" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps5" endpoints="$p5 $s5" styleNumber="10" hide="$s5 = (-1,-4)"/>
+  
+  <point name="t5" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt5" endpoints="$p5 $t5" styleNumber="11" hide="$t5 = (0,-4)"/>
+  <line name="diag5"  styleNumber="6" fixed hide="$t5 = (0,-4)">y = x</line> 
+</graph>
+
+
+<p>Your graphed points are located at:</p>
+<p><m>P = $p5</m>, <m>Q = $q5</m></p>
+<p><m>R = $r5</m>, <m>S = $s5</m></p>
+<p><m>T = $t5</m></p>
+    
+<!--*********************************************
+            Solution input - Exercise 5
+**********************************************-->
+<answer name="ans5">
+  <award>
+    <when>$p5 = (2,2) and $q5 = (2,-2) and
+    $r5 = (-2,2) and $s5 = (-2,-2) and $t5 = (2,2)
+  </when>
+  </award>
+</answer> 
+
+<feedback condition="$ans5.creditAchieved">Mathematical!</feedback>
+<feedback condition="$p5 != (2,2) and $ans5.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q5 != (2,-2) and $ans5.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r5 != (-2,2) and $ans5.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s5 != (-2,-2) and $ans5.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t5 != (2,2) and $ans5.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+<conditionalContent condition="$ans5.creditAchieved">
+<!--*********************************************
+          Exercise 6
+**********************************************-->
+<aside name="exercise6"><title>Exercise 6.</title>
+<p><m>P = (-2, 0)</m></p>
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p6" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q6" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq6" endpoints="$p6 $q6" styleNumber="8" hide="$q6 = (-3,-4)"/>
+  <point name="r6" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr6" endpoints="$p6 $r6" styleNumber="9" hide="$r6 = (-2,-4)"/>
+  
+  <point name="s6" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps6" endpoints="$p6 $s6" styleNumber="10" hide="$s6 = (-1,-4)"/>
+  
+  <point name="t6" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt6" endpoints="$p6 $t6" styleNumber="11" hide="$t6 = (0,-4)"/>
+  <line name="diag6"  styleNumber="6" fixed hide="$t6 = (0,-4)">y = x</line> 
+</graph>
+<p>Your graphed points are located at:</p>
+<p><m>P = $p6</m>, <m>Q = $q6</m></p>
+<p><m>R = $r6</m>, <m>S = $s6</m></p>
+<p><m>T = $t6</m></p>
+    
+<!--*********************************************
+            Solution input - Exercise 6
+**********************************************-->
+<answer name="ans6">
+  <award>
+    <when>$p6 = (-2,0) and $q6 = (-2,0) and
+    $r6 = (2,0) and $s6 = (2,0) and $t6 = (0,-2)
+  </when>
+  </award>
+</answer> 
+
+<feedback condition="$ans6.creditAchieved">Perfect!</feedback>
+<feedback condition="$p6 != (-2,0) and $ans6.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q6 != (-2,0) and $ans6.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r6 != (2,0) and $ans6.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s6 != (2,0) and $ans6.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t6 != (0,-2) and $ans6.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+<conditionalContent condition="$ans6.creditAchieved">
+<!--*********************************************
+          Exercise 7
+**********************************************-->
+<aside name="exercise7"><title>Exercise 7.</title>
+<p><m>P = (0,3)</m></p>
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <point name="p7" showCoordsWhenDragging="false" styleNumber="7">(-4,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>P</m></label>
+  </point>
+  <point name="q7" showCoordsWhenDragging="false" styleNumber="8">(-3,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>Q</m></label>
+  </point>
+  <lineSegment name="pq7" endpoints="$p7 $q7" styleNumber="8" hide="$q7 = (-3,-4)"/>
+  <point name="r7" showCoordsWhenDragging="false" styleNumber="9">(-2,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>R</m></label>
+  </point>
+  <lineSegment name="pr7" endpoints="$p7 $r7" styleNumber="9" hide="$r7 = (-2,-4)"/>
+  
+  <point name="s7" showCoordsWhenDragging="false" styleNumber="10">(-1,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>S</m></label>
+  </point>
+  <lineSegment name="ps7" endpoints="$p7 $s7" styleNumber="10" hide="$s7 = (-1,-4)"/>
+  
+  <point name="t7" showCoordsWhenDragging="false" styleNumber="11">(0,-4)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>T</m></label>
+  </point>
+  <lineSegment name="pt7" endpoints="$p7 $t7" styleNumber="11" hide="$t7 = (0,-4)"/>
+  <line name="diag7"  styleNumber="6" fixed hide="$t7 = (0,-4)">y = x</line> 
+</graph>
+<p>Your graphed points are located at:</p>
+<p><m>P = $p7</m>, <m>Q = $q7</m></p>
+<p><m>R = $r7</m>, <m>S = $s7</m></p>
+<p><m>T = $t7</m></p>
+    
+<!--*********************************************
+            Solution input - Exercise 7
+**********************************************-->
+<answer name="ans7">
+  <award>
+    <when>$p7 = (0,3) and $q7 = (0,-3) and
+    $r7 = (0,3) and $s7 = (0,-3) and $t7 = (3,0)
+  </when>
+  </award>
+</answer> 
+
+<feedback condition="$ans7.creditAchieved">Fantastic!</feedback>
+<feedback condition="$p7 != (0,3) and $ans7.justSubmitted">Point <m>P</m> is not in the correct location.</feedback>
+<feedback condition="$q7 != (0,-3) and $ans7.justSubmitted">Point <m>Q</m> is not in the correct location.</feedback>
+<feedback condition="$r7 != (0,3) and $ans7.justSubmitted">Point <m>R</m> is not in the correct location.</feedback>
+<feedback condition="$s7 != (0,-3) and $ans7.justSubmitted">Point <m>S</m> is not in the correct location.</feedback>
+<feedback condition="$t7 != (3,0) and $ans7.justSubmitted">Point <m>T</m> is not in the correct location.</feedback>
+</aside>
+</conditionalContent>
+
+<conditionalContent condition="$ans7.creditAchieved">
+<aside><title>Follow-up questions</title>
+<p>Point <m>P</m> and point <m>Q</m> are
+  <answer name="ans8" inline>
+    <choice>symmetric with respect to the origin</choice>
+    <choice>symmetric about the line <m>y = x</m></choice>
+    <choice>symmetric with respect to the <m>y</m>-axis</choice>
+    <choice credit="1">symmetric with respect to the <m>x</m>-axis</choice>
+  </answer></p>
+
+<p>Point <m>P</m> and point <m>R</m> are
+  <answer name="ans9" inline>
+    <choice>symmetric with respect to the origin</choice>
+    <choice>symmetric about the line <m>y = x</m></choice>
+    <choice credit="1">symmetric with respect to the <m>y</m>-axis</choice>
+    <choice>symmetric with respect to the <m>x</m>-axis</choice>
+  </answer></p>
+
+<p>Point <m>P</m> and point <m>S</m> are
+  <answer name="ans10" inline>
+    <choice credit="1">symmetric with respect to the origin</choice>
+    <choice>symmetric about the line <m>y = x</m></choice>
+    <choice>symmetric with respect to the <m>y</m>-axis</choice>
+    <choice>symmetric with respect to the <m>x</m>-axis</choice>
+  </answer></p>
+
+<p>Point <m>P</m> and point <m>T</m> are
+  <answer name="ans11" inline>
+    <choice>symmetric with respect to the origin</choice>
+    <choice credit>symmetric about the line <m>y = x</m></choice>
+    <choice>symmetric with respect to the <m>y</m>-axis</choice>
+    <choice>symmetric with respect to the <m>x</m>-axis</choice>
+  </answer></p>
+
+<p>If <m>P = (a,b)</m>, give the general rule for finding each of the other points in terms of <m>a</m> and  <m>b</m>. (Look back at your sketches for help.)</p>
+
+
+<p><m>Q = </m><mathInput name="mi1" prefill="( , )"/></p>
+<p><m>R = </m><mathInput name="mi2" prefill="( , )"/></p>
+<p><m>S = </m><mathInput name="mi3" prefill="( , )"/></p>
+<p><m>T = </m><mathInput name="mi4" prefill="( , )"/></p>
+
+<answer name="ans12">
+  <award><when>$mi1 = (a,-b) and $mi2 = (-a,b) and
+    $mi3 = (-a,-b) and $mi4 = (b,a)</when>
+  </award>
+</answer>
+</aside>
+</conditionalContent>  
+
+<p><em>Subsequent exercises will be revealed as you complete each one.</em></p>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

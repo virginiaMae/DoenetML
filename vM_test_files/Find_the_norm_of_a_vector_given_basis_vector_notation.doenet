@@ -1,0 +1,174 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the components of a vector in standard basis notation, find its norm. Graphing tool provided for visualization of the geometry of the problem.
+
+(TR-Vectors #13 TR2805)
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="b" from="-4" to="4" exclude="0 1 -1"/>
+  <vector name="v" >($a, $b)</vector>
+  <math name="ans" simplify>sqrt($a^2 + $b^2)</math>
+  <math name="ansN" simplify>$v.magnitude</math>
+  <math name="expr" format="latex" simplify="numbersPreserveOrder">\vec{u} =  $a \vec{i} + $b \vec{j}</math>
+</setup>
+  
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>aDisp = $aDisp</p>
+<p>bDisp = $bDisp</p>
+<p>v = $v</p>
+<p>ans = $ans</p>
+<p>ansN = $ansN</p>
+<p>expr = $expr</p>
+<p>test = $test</p> -->
+<!--testing-->
+
+<p>If <m>\vec{i} = \langle 1, 0 \rangle</m> and <m>\vec{j} = \langle 0, 1 \rangle</m> are the usual standard basis vectors, find the <term>norm</term> <m>\left \| u \right \|</m> of the vector
+  <me>$expr</me>
+</p>
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<setup>
+  <number name="t1">1</number>
+  <number name="t2">1</number>
+  <number name="t3">0</number>
+  <number name="s">0</number>
+  <number name="zeroFixed" fixed>0</number>
+  <conditionalContent assignNames="mode">
+    <case condition="$aGraph > 0"><text>increase once</text></case>
+    <case condition="$aGraph < 0"><text>decrease once</text></case>
+  </conditionalContent>
+  <conditionalContent assignNames="to">
+    <case condition="$aGraph > 0"><number>$aGraph</number></case>
+    <case condition="$aGraph < 0"><number>0</number></case>
+  </conditionalContent>
+  <conditionalContent assignNames="from">
+    <case condition="$aGraph > 0"><number>0</number></case>
+    <case condition="$aGraph < 0"><number>$aGraph</number></case>
+  </conditionalContent>
+</setup>
+
+<!-- testing -->
+<!-- <p>from = $from</p>
+<p>to = $to</p>
+<p>mode = $mode</p> -->
+<!-- /testing -->
+  
+<p>The standard basis vectors <m>\vec{i} = \langle 1, 0 \rangle</m> and <m>\vec{j} = \langle 0, 1 \rangle</m> are shown on the graph. Enter the appropriate scale factors for the  given vector <m>$expr</m>.</p>
+
+<p><m>\vec{u} = </m><mathInput name="aGraph" prefill="1"/><m>\vec{i} + </m><mathInput name="bGraph" prefill="1"/><m>\vec{j}</m>
+</p>
+
+  <animateFromSequence name="shift_j" target="t3" from="$from" to="$to" animationMode="$mode" animationOn="false" animationInterval="100"/>
+  <animateFromSequence name="resultant" target="s" from="0" to="1" step="0.1" animationMode="increase once" animationOn="false" animationInterval="100"/>
+
+  <triggerSet>
+  <callAction actionName="startAnimation" target="shift_j"/>
+    <label>Animate/Update <m>\vec{u}</m></label>
+  </triggerSet>
+  
+  <callAction name="animateResult" actionName="startAnimation" target="resultant" triggerWhen="$t3 = $aGraph"/>
+  <updateValue target="resultLabel.hide" newValue="false" type="boolean" triggerWith="$animateResult"/>
+
+ 
+<graph grid="1 1" xmin="-5" xmax="5" ymin="-5" ymax="5">
+  <vector name="vi" fixed styleNumber="13">($aGraph, 0)
+    <label><math simplify format="latex">$aGraph \vec{i}</math></label>
+  </vector>
+  <vector name="vj" styleNumber="14" fixed head="($t3, $bGraph)" tail="($t3, $zeroFixed)">
+    <label><math simplify format="latex">$bGraph \vec{j}</math></label>
+  </vector>
+  <vector name="uResultant" styleNumber="10" head="$s($aGraph, $bGraph)" tail="($zeroFixed, $zeroFixed)"/>
+  <label name="resultLabel" anchor="($aGraph/2 - 0.5, $bGraph/2 - 0.5)" hide><m>\vec{u}</m></label>
+
+  <legend position="lowerleft">
+    <label><m>$aGraph \vec{i}</m> component</label>
+    <label><m>$bGraph \vec{j}</m> component</label>
+    <label><m>\vec{u}</m></label>
+  </legend>
+</graph>
+
+
+</aside>
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p><m>\left \| u \right \|</m> = <mathInput name="userNorm"/></p>
+
+  <answer name="ans1">
+     <award name="correct1">
+      <when>$userNorm = $ans</when>
+    </award>
+    <award name="numerical" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute credit="0.5">
+      <when>$userNorm = $ansN</when>
+    </award>
+  </answer>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$numerical">For full credit, answer precisely, using a square root if necessary (rather than a decimal approximation.)</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p>The <term>norm</term> of a vector is its length (or magnitude). If you consider each component as one side of a right triangle, the vector's length can be found from the Pythagorean Theorem.</p>
+<p><m>\left \| u \right \| = $ans</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--blue, styleNumber 1 corrolary but dashed-->
+<styleDefinition styleNumber="13" lineStyle="dashed" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary, but dashed-->
+<styleDefinition styleNumber="14" fillColor="#D4042D" lineStyle="dashed" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+</styleDefinitions>
+</setup>

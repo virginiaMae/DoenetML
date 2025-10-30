@@ -1,0 +1,115 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a set of mathematical statements, sort them into their appropriate category of inequality, expression, or equation
+*************************************************************-->
+
+<problem>
+
+<setup>
+  <select assignNames="x1 x2 x3" numToSelect="3">-6.8 0 6.8</select>
+  <select assignNames="y1 y2 y3 y4" numToSelect="4">6.5 7.5 8.5 9.5</select>
+  <selectFromSequence assignNames="a b c d e" numToSelect="5" from="1" to="10"/>
+
+  <math name="eq1" simplify="numberspreserveorder" anchor="($x1{link='false'}, $y1{link='false'})">$a x + $b x^2 = $e</math>
+  <math name="eq2" simplify="numberspreserveorder" anchor="($x2{link='false'}, $y2{link='false'})">$d - y = 2 $a</math>
+  <math name="eq3" simplify="numberspreserveorder" anchor="($x3{link='false'}, $y3{link='false'})">sqrt($b z) = $a^2</math>
+  <math name="eq4" simplify="numberspreserveorder" anchor="($x1{link='false'}, $y4{link='false'})">$a $b t = -s^2</math>
+
+  <math name="expr1" simplify="numberspreserveorder" anchor="($x2{link='false'}, $y1{link='false'})">-$a $e x - 2 $d y</math>
+  <math name="expr2" simplify="numberspreserveorder" anchor="($x3{link='false'}, $y2{link='false'})">1/z + $d z^2</math>
+  <math name="expr3" simplify="numberspreserveorder" anchor="($x3{link='false'}, $y4{link='false'})">sqrt($a) + y^2</math>
+  <math name="expr4" simplify="numberspreserveorder" anchor="($x1{link='false'}, $y3{link='false'})">-$c x y^2</math>
+
+  <math name="ineq1" simplify="numberspreserveorder" anchor="($x2{link='false'}, $y4{link='false'})">$e^2 /3 <= $a + x</math>
+  <math name="ineq2" simplify="numberspreserveorder" anchor="($x3{link='false'}, $y1{link='false'})">x > $d/y</math>
+  <math name="ineq3" simplify="numberspreserveorder" anchor="($x1{link='false'}, $y2{link='false'})">-$b x - $d < $a</math>
+  <math name="ineq4" simplify="numberspreserveorder" anchor="($x2{link='false'}, $y3{link='false'})">sqrt($b) < t < $b^2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>eq1.anchor = $eq1.anchor</p>
+<p>eq2.anchor = $eq2.anchor</p>
+<p>eq3.anchor = $eq3.anchor</p>
+<p>eq4.anchor = $eq4.anchor</p>
+<p>eqsCorrect = $eqsCorrect</p>
+
+<p>expr1.anchor = $expr1.anchor</p>
+<p>expr2.anchor = $expr2.anchor</p>
+<p>expr3.anchor = $expr3.anchor</p>
+<p>expr4.anchor = $expr4.anchor</p>
+<p>exprsCorrect = $exprsCorrect</p>
+
+<p>ineq1.anchor = $ineq1.anchor</p>
+<p>ineq2.anchor = $ineq2.anchor</p>
+<p>ineq3.anchor = $ineq3.anchor</p>
+<p>ineq4.anchor = $ineq4.anchor</p>
+<p>ineqsCorrect = $ineqsCorrect</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Sort each statement in the chart into its correct description, determining whether it is an <term>Inequality</term>, <term>Expression</term>, or <term>Equation</term>.</p>
+
+<graph displayXAxis="false" displayYAxis="false" showNavigation="false">
+  $eq1 $eq2 $eq3 $eq4 
+  $expr1 $expr2 $expr3 $expr4
+  $ineq1 $ineq2 $ineq3 $ineq4
+  <rectangle fixed styleNumber="5" vertices="(-20, 6) (20, 20)"/>
+  <lineSegment fixed styleNumber="5" endpoints="(-10/3, -20) (-10/3, 6)"/>
+  <lineSegment fixed styleNumber="5" endpoints="(10/3, -20) (10/3, 6)"/>
+  <label anchor="(-6.8, -9)" fixed><m>\large{\text{Inequalities}}</m></label>
+  <label anchor="(0, -9)" fixed><m>\large{\text{Expressions}}</m></label>
+  <label anchor="(6.8, -9)" fixed><m>\large{\text{Equations}}</m></label>
+</graph>
+
+  
+<!--*********************************************
+            Solution input
+**********************************************-->
+<answer name="ans1">
+    <award><when>$eq1.anchor.x > 10/3 and $eq2.anchor.x > 10/3 and
+    $eq3.anchor.x > 10/3 and $eq4.anchor.x > 10/3 and $ineq1.anchor.x < -10/3 and $ineq2.anchor.x < -10/3 and
+    $ineq3.anchor.x < -10/3 and $ineq4.anchor.x < -10/3 and $expr1.anchor.x < 10/3 and $expr1.anchor.x > -10/3 and
+    $expr2.anchor.x < 10/3 and $expr2.anchor.x > -10/3 and
+    $expr3.anchor.x < 10/3 and $expr3.anchor.x > -10/3 and
+    $expr4.anchor.x < 10/3 and $expr4.anchor.x > -10/3</when>
+    </award>
+</answer>
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><alert>Inequalities</alert>: $ineq1, $ineq2, $ineq3, $ineq4</p>
+<p><alert>Expressions</alert>: $expr1, $expr2, $expr3, $expr4</p>
+<p><alert>Inequalities</alert>: $eq1, $eq2, $eq3, $eq4</p>
+</solution>
+</problem>
+
+
+
+
+
+

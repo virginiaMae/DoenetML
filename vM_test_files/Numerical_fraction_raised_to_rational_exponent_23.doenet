@@ -1,0 +1,161 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem involves application of laws of exponents and properties of rational exponents to simplify a numerical fraction.
+
+
+Full simplification and symbolic equality is enforced for answer checking.
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <select name="a">
+    <option><math>1</math></option>
+    <option><math>27</math></option>
+    <option><math>125</math></option>
+  </select>
+  <select name="b">
+    <option><math>8</math></option>
+    <option><math>64</math></option>
+  </select>
+  <math name="c">2/3</math>
+  <math name="expr">($a/$b)^$c</math>
+      <number name="solN">$expr</number>
+  <!--maths for incorrect answers-->
+  <math name="multipliedAns">($a/$b)$c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>expr{simplify} = $expr{simplify}</p>
+<p>multipliedAns = $multipliedAns</p> -->
+<!--testing-->
+
+
+<p>Simplify.</p>
+
+<p><m>$expr = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns" prefill="/"/>
+    <award name="correct" symbolicEquality>
+      <when>$userAns = $expr{simplify}</when>
+    </award>
+
+    <award name="correctN" symbolicEquality>
+      <when>$userAns = $solN</when>
+    </award>
+
+    <award name="multiplied" symbolicEquality simplifyOnCompare credit="0">
+      <when>$userAns = $multipliedAns{simplify}</when>
+    </award>
+
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctN">$correctFeedback</feedback>
+  
+  <feedback condition="$multiplied">It looks like you took the product of <math>$a/$b</math> and $c. Note that <m>$c</m> is an exponent. </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="a">216</math>
+  <math name="b">343</math>
+  <math name="c">2/3</math>
+  <math name="expr">($a/$b)^$c</math>
+</setup>
+
+<p><em>Simplify.</em></p>
+  <me>$expr</me>
+
+<p><em><alert>Solution.</alert></em></p>
+  <setup>
+    <math name="aSqrd" simplify>$a^2</math>
+    <math name="bSqrd" simplify>$b^2</math>
+    <math name="aCubeRoot" simplify>$a^(1/3)</math>
+    <math name="bCubeRoot" simplify>$b^(1/3)</math>
+  </setup>
+<ul>
+  <li>There are two possible strategies, depending on whether the cube root or the exponent is applied first. Below, the exponent is applied first,
+    <md>
+      <mrow>$expr \amp= \sqrt[3]{\frac{$a^2}{$b^2}}\amp\text{apply definition of rational exponents}</mrow>
+      <mrow>\amp= \frac{\sqrt[3]{$a^2}}{\sqrt[3]{$b^2}} \amp\text{simplify}</mrow>
+      <mrow>\amp= \frac{\sqrt[3]{$aSqrd}}{\sqrt[3]{$bSqrd}} \amp\text{simplify}</mrow>
+      <mrow>\amp= $expr{simplify}</mrow>
+    </md>  </li>
+  <li>In this example, the cube root is applied first,
+    <md>
+      <mrow>$expr \amp= \bigg(\sqrt[3]{\frac{$a}{$b}}\bigg)^2 \amp\text{apply definition of rational exponents}</mrow>
+      <mrow>\amp= \bigg(\frac{\sqrt[3]{$a}}{\sqrt[3]{$b}}\bigg)^2 \amp\text{simplify}</mrow>
+      <mrow>\amp= \bigg(\frac{$aCubeRoot}{$bCubeRoot}\bigg)^2 \amp\text{simplify}</mrow>
+      <mrow>\amp= $expr{simplify}</mrow>
+    </md></li>
+</ul> 
+</example>
+
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+  <setup>
+    <math name="aSqrd" simplify>$a^2</math>
+    <math name="bSqrd" simplify>$b^2</math>
+    <math name="aCubeRoot" simplify>$a^(1/3)</math>
+    <math name="bCubeRoot" simplify>$b^(1/3)</math>
+  </setup>
+<ul>
+  <li>There are two possible strategies, depending on whether the cube root or the exponent is applied first. Below, the exponent is applied first,
+    <md>
+      <mrow>$expr \amp= \sqrt[3]{\frac{$a^2}{$b^2}}\amp\text{apply definition of rational exponents}</mrow>
+      <mrow>\amp= \frac{\sqrt[3]{$a^2}}{\sqrt[3]{$b^2}} \amp\text{simplify}</mrow>
+      <mrow>\amp= \frac{\sqrt[3]{$aSqrd}}{\sqrt[3]{$bSqrd}} \amp\text{simplify}</mrow>
+      <mrow>\amp= $expr{simplify}</mrow>
+    </md>  </li>
+  <li>In this example, the cube root is applied first,
+    <md>
+      <mrow>$expr \amp= \bigg(\sqrt[3]{\frac{$a}{$b}}\bigg)^2 \amp\text{apply definition of rational exponents}</mrow>
+      <mrow>\amp= \bigg(\frac{\sqrt[3]{$a}}{\sqrt[3]{$b}}\bigg)^2 \amp\text{simplify}</mrow>
+      <mrow>\amp= \bigg(\frac{$aCubeRoot}{$bCubeRoot}\bigg)^2 \amp\text{simplify}</mrow>
+      <mrow>\amp= $expr{simplify}</mrow>
+    </md></li>
+</ul>
+    
+</solution>
+</problem>
+

@@ -1,0 +1,119 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply trigonometric formulas (angle sum, half-angle, double-angle) to determine the number of solutions to a trigonometric equation. This problem has 9 distinct variants but only one solution. Graphing tool is provided to help visualize the geometry of the problem. 
+The graphing tool can be hidden by commenting out the <aside> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+<select assignNames="(a b)">
+  <option><math>8</math><math>4</math></option>
+  <option><math>2 sqrt(3)</math><math>3</math></option>
+  <option><math>6</math><math>3</math></option>
+  <option><math>6</math><math>3 sqrt(2)</math></option>
+  <option><math>10</math><math>5</math></option>
+  <option><math>4 sqrt(3)</math><math>6</math></option>
+  <option><math>3 sqrt(2)</math><math>3</math></option>
+  <option><math>10</math><math>5 sqrt(3)</math></option>
+  <option><math>16</math><math>8 sqrt(2)</math></option>
+</select>
+  <math name="expr">$a cos(2 theta) = $b</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p> -->
+<!--testing-->
+  
+
+<p>How many solutions are there in the interval <m>0 \leq \theta \leq 2\pi</m> for the equation <me>$expr</me></p>
+
+<aside><title>Graphing Tool</title>
+
+<setup>
+  <function name="userF" variables="theta">$userEq</function>
+  <line name="userLine" styleNumber="8">y = $userRHS</line>
+  <function name="onePeriodF" domain="[0, 2pi]" styleNumber="9">$userF</function>
+</setup>
+
+<p>First, simplify the given equation to get <math>cos(2 theta)</math> by itself on the left-hand side.</p>
+<sideBySide widths="30% 70%">
+<div>
+  <p>Enter the left-hand side of the <alert>simplified equation</alert> as a function of <m>\theta</m><footnote>To enter the greek letter, type "theta"</footnote>:</p>
+  <p><m>f(\theta) = </m><mathInput name="userEq"/></p>
+  <p>Graph the right-hand side of the <alert>simplified equation</alert> as a line.</p>
+  <p><m>y = </m><mathInput name="userRHS"/></p>
+  
+  <p>Note, <m>f(\theta) = y</m> at the intersection points.</p>
+</div>
+
+<div>  
+  <graph xmin="-pi/6" xmax="3pi" ymin="-2" ymax="2"  aspectRatio="4/3">
+   $userF $userLine 
+    <line styleNumber="6" fixLocation>x = 2 pi
+      <label><m>\theta = 2 \pi</m></label>
+    </line>
+    <function copySource="onePeriodF" hide="!$highlight"/>
+    <regionBetweenCurveXAxis name="region" function="$onePeriodF" styleNumber="3" boundaryValues="0 2pi"  hide="!$highlight"/>
+  </graph>
+  <booleanInput name="highlight" prefill="true">
+    <label>Highlight one period</label>
+  </booleanInput><footnote>Enter the function value, and a value for the first point to activate this feature.</footnote>
+</div>
+</sideBySide>
+
+  
+</aside>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><answer name="ans1">4</answer> solutions
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p>There are <m>4</m> solutions.</p>
+ 
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

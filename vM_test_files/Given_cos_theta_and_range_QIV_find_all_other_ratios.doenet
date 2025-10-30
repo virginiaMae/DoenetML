@@ -1,0 +1,236 @@
+<problem>
+<setup>
+<math name="expr" simplify="numberspreserveorder">cos(theta) = $b / $c</math>
+   <math name="solSin" simplify>-$a / $c</math>
+   <math name="solCsc" simplify>-$c / $a</math>
+   <math name="solTan" simplify>-$a / $b</math>
+   <math name="solSec" simplify>$c / $b</math>
+   <math name="solCot" simplify>-$b / $a</math>
+   <select assignNames="(a b c)">
+    <option>
+      <math>2</math>
+      <math>sqrt(5)</math>
+      <math>3</math>
+    </option>
+    <option>
+      <math>1</math>
+      <math>2sqrt(2)</math>
+      <math>3</math>
+    </option>
+     <option>
+      <math>3</math>
+      <math>sqrt(7)</math>
+      <math>4</math>
+    </option>
+    <option>
+      <math>1</math>
+      <math>sqrt(15)</math>
+      <math>4</math>
+    </option>
+    <option>
+      <math>3</math>
+      <math>4</math>
+      <math>5</math>
+    </option>
+    <option>
+      <math>4</math>
+      <math>3</math>
+      <math>5</math>
+    </option>
+    <option>
+      <math>2</math>
+      <math>sqrt(21)</math>
+      <math>5</math>
+    </option>
+    <option>
+      <math>5</math>
+      <math>sqrt(11)</math>
+      <math>6</math>
+    </option>
+    <option>
+      <math>6</math>
+      <math>sqrt(13)</math>
+      <math>7</math>
+    </option>
+    <option>
+      <math>5</math>
+      <math>2 sqrt(6)</math>
+      <math>7</math>
+    </option>
+    <option>
+      <math>4</math>
+      <math>sqrt(33)</math>
+      <math>7</math>
+    </option>
+     <option>
+      <math>3</math>
+      <math>2 sqrt(10)</math>
+      <math>7</math>
+    </option>
+  <option>
+      <math>2</math>
+      <math>3 sqrt(5)</math>
+      <math>7</math>
+    </option>
+  </select>
+
+  <number name="zeroF" fixed>0</number>
+
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>solSin = $solSin</p>
+<p>solCos = $solCos</p>
+<p>solTan = $solTan</p>
+<p>solCot = $solCot</p>
+<p>solCsc = $solCsc</p> -->
+<!--testing-->
+
+
+
+
+<p>If $expr and <m>\frac{3 \pi}{2} < \theta < 2 \pi</m>, find the values of the other five trig functions.</p>
+
+<p>Enter your answer as an exact value using <alert>square roots</alert><footnote>To enter a square root symbol, type "sqrt"</footnote> when necessary.  Do not use a calculator to give a decimal approximation.</p>
+
+
+<aside><title>Graphing Tool</title>
+<p>Answer the following question to open the tool:</p>
+<p>In which quadrant is <m>\theta</m> ? <nbsp/>
+  <answer name="pickQ" inline weight="0">
+    <choice>Quadrant I</choice>
+    <choice>Quadrant II</choice>
+    <choice>Quadrant III</choice>
+    <choice credit="1">Quadrant IV</choice>
+  </answer></p>
+
+<div hide="$pickQ.creditAchieved != 1">
+<p>Adjust the triangle to match the problem at hand. (Note triangle distances are always positive.)</p>
+<sideBySide widths="30% 70%" >
+<div>
+<p><m>a = </m><mathInput name="A" prefill="5"/></p>
+<p><m>b = </m><mathInput name="B" prefill="5"/></p>
+<p><m>c = </m><mathInput name="C" prefill="5sqrt(2)"/></p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+</div>
+
+
+ <graph grid="1 1" xmin="-2" xmax="12" ymin="-12" ymax="2">
+    <point name="p1" styleNumber="2" fixed coords="(0,0)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroF)">
+    </point>
+    <point name="p3" styleNumber="5" coords="($A, -$B)" layer="2">
+    </point>
+    <point name="p3UserC">($C cos($theta), -$C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2">
+      <label><m>a = $A</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3">
+      <label><m>b = $B</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1">
+      <label><m>c = $C</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="theta" through="$p2 $p1 $p3">
+      <label><m>\theta</m></label>
+    </angle>
+  </graph>
+</sideBySide>
+</div>
+</aside>
+  
+<p><m>\sin \theta = </m> <mathInput name="userSin"/></p>
+<p><m>\tan \theta = </m> <mathInput name="userTan"/></p>
+<p><m>\cot \theta = </m> <mathInput name="userCot"/></p>
+<p><m>\sec \theta = </m> <mathInput name="userSec"/></p>
+<p><m>\csc \theta = </m> <mathInput name="userCsc"/></p>
+
+   <answer name="ans1" >
+      <award name="correct">   
+        <when>
+          $userSin = $solSin and $userCsc = $solCsc and $userTan = $solTan and $userCot = $solCot and $userSec = $solSec
+        </when>
+      </award>
+      <award name="numerical" credit="0" allowedErrorInNumbers="0.001" allowedErrorIsAbsolute>
+        <when>$userSin = $solSin or $userCsc = $solCsc or $userTan = $solTan or $userCot = $solCot or $userSec = $solSec</when>
+      </award>
+    </answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+    <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$userSin != $solSin and $ans1.justSubmitted">Your value for <m>\sin \theta</m> is incorrect.</feedback>
+  
+  <feedback condition="$userCsc != $solCsc and $ans1.justSubmitted">Your value for <m>\csc \theta</m> is incorrect.</feedback>
+
+  <feedback condition="$userTan != $solTan and $ans1.justSubmitted">Your value for <m>\tan \theta</m> is incorrect.</feedback>
+
+  <feedback condition="$userCot != $solCot and $ans1.justSubmitted">Your value for <m>\cot \theta</m> is incorrect.</feedback>
+  
+  <feedback condition="$userSec != $solSec and $ans1.justSubmitted">Your value for <m>\sec \theta</m> is incorrect.</feedback>
+
+  <boolean hide name="signError">$userSin = -$solSin or $userCsc = -$solCsc 
+    or $userTan = -$solTan or $userCot = -$solCot
+    or $userSec = -$solSec
+  </boolean>
+  
+  <feedback condition="$signError and $ans1.justSubmitted">One or more of your responses has the incorrect sign.</feedback>
+
+  <feedback condition="$numerical and $ans1.justSubmitted">All of your answers should be integers or exact rational numbers, rather than decimal approximations. (For example, <m>\frac{1}{3}</m> rather than <m>0.333</m>.)
+  <p>This message may also appear if an input is left blank or has the incorrect sign.</p>
+  </feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\sin \theta = $solSin</m></p>
+<p><m>\tan \theta = $solTan</m></p>
+<p><m>\cot \theta = $solCot</m></p>
+<p><m>\sec \theta = $solSec</m></p>
+<p><m>\csc \theta = $solCsc</m></p>
+<p><em>Note, if the denominator of any of your responses contains a square root you do not need to rationalize the denominator. If you did rationalize the denominator those responses will also be accepted.</em></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

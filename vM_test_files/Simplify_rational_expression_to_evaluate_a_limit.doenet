@@ -1,0 +1,241 @@
+<!--************************************************************
+Author: Virginia Mae
+Reviewed/Remixed by: Doenet team
+About the problem: This problem involves functions whose limit can be evaluated after factoring and cancelling common factors from a rational expression.
+This problem is randomized, and different variants can be viewed using the variant dropdown menu at the upper-left of the screen.
+Optional graphing tool provided to aid visualization.
+*************************************************************--> 
+
+<problem>
+  <setup>
+    <selectFromSequence name="a" from="-8" to="8"/>
+    <selectFromSequence assignNames="b c d" numToSelect="3" from="-10" to="10" exclude="$a -$a"/>
+    <math name="n1" expand simplify>(x - $a)(x + $a)</math>
+    <math name="n2" expand simplify>(x - $a)(x + $b)</math>
+    <math name="n3" expand simplify>2(x - $a)(x - $b)</math>
+    <math name="n4" expand simplify>(x - $a)^2</math>
+    <math name="n5" expand simplify>(x - $a)(x + $c)</math>
+    <math name="d1" expand simplify>(x - $a)(x + $c)</math>
+    <math name="d2" expand simplify>(x - $a)(x + $a)</math>
+    <math name="d3" expand simplify>(x - $a)(x + $d)</math>
+    <math name="d4" expand simplify>-(x - $a)(x - $d)</math>
+    <math name="d5" expand simplify>-(x - $a)</math>
+    
+    <select assignNames="(f)">
+      <option><function>$n1 / $d1</function></option>
+      <option><function>$n2 / $d2</function></option>
+      <option><function>$n3 / $d3</function></option>
+      <option><function>$n4 / $d4</function></option>
+      <option><function>$n5 / $d5</function></option>
+    </select>
+
+    <function name="fun">$f</function>
+    <math name="formula" simplify="numbersPreserveOrder">$fun.formula</math>
+    <me name="expr">\lim_{x\to $a} $formula</me>
+    <number name="ymin">min(($sol-4),-10)</number>
+    <number name="ymax">max(($sol+4),10)</number>
+    <math name="sol1" simplify="full">2$a/($a + $c)</math>
+    <math name="sol2" simplify="full">($a + $b)/(2 $a)</math>
+    <math name="sol3" simplify="full">2 ($a - $b)/($a + $d)</math>
+    <math name="sol4" simplify="full">0</math>
+    <math name="sol5" simplify="full">-($a + $c)</math>
+
+    <math name="sol">
+      <conditionalContent>
+        <case condition="$fun = $n1/$d1">
+          $sol1    
+        </case>
+        <case condition="$fun = $n2/$d2">
+          $sol2
+        </case>
+        <case condition="$fun = $n3/$d3">
+          $sol3
+        </case>
+        <case condition="$fun = $n4/$d4">
+          $sol4
+        </case>
+        <case condition="$fun = $n5/$d5">
+          $sol5
+        </case>
+      </conditionalContent>
+    </math>
+    
+  </setup>
+
+  
+<!--testing-->
+<!-- <p>n1 = $n1</p>
+<p>n2 = $n2</p>
+<p>n3 = $n3</p>
+<p>n4 = $n4</p>
+<p>n5 = $n5</p>
+<p>d1 = $d1</p>
+<p>d2 = $d2</p>
+<p>d3 = $d3</p>
+<p>d4 = $d4</p>
+<p>d5 = $d5</p>
+
+<p>formula = $formula</p>
+<p>fun = $fun</p>
+<p>f(x) = $$fun(x)</p>
+<p>f = $f</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>expr = $expr</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p>
+<p>sol1 = $sol1</p>
+<p>sol2 = $sol2</p>
+<p>sol3 = $sol3</p>
+<p>sol4 = $sol4</p>
+<p>sol5 = $sol5</p>
+<p>sol = $sol</p> -->
+<!--/testing-->
+
+
+
+
+  
+<p>Determine the limit.
+<me>\large{$expr}</me></p>
+
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function:</p>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup>
+  <p>What value is <m>x</m> approaching? </p>
+  <p><m>x \rightarrow </m><mathInput name="mi2"/></p>
+  <p>Note, the vertical line and the $p1.styleDescriptionWithNoun can be dragged along the function to explore its behavior near the limit.</p>
+  <p><booleanInput name="showTip" asToggleButton>
+        <label>No $p1.styleDescriptionWithNoun ? </label>
+  </booleanInput></p>
+</div>
+
+<stack>
+<graph ymin="$ymin" ymax="$ymax">
+  $miFunction
+  <line name="slider" styleNumber="2">x = $mi2</line>
+  <point name="p1" styleNumber="2">($mi2, $$miFunction($mi2))
+    <label>$p1.coords{displayDecimals="10"}</label>
+  </point>
+</graph>
+<p><m>f($p1.x{displayDecimals="10"}) = $p1.y{displayDecimals="10"}</m></p>
+</stack>
+</sideBySide>
+
+<p name="missingPt" hide="!$showTip">If you do not see a $p1.styleDescriptionWithNoun, did you check to make sure that the function is defined at that point? The missing point may be due to a point discontinuity in the graph. If this is the case, try substituting in a value that is very very close, but not quite exactly at, the value for <m>a</m>. This will allow you to see a draggable point in order to observe the behavior near the limit.</p>
+</aside> 
+
+<p><m>$expr = </m> <mathInput name="userLimit"/>
+  <answer name="ans1" weight="0.9">
+    <award><when>$userLimit = $sol</when></award>
+  </answer>
+</p>
+
+<p hide="$ans1.creditAchieved != 1">
+  Is the function defined at <m>x = $a</m>?
+  <answer name="ans1b" weight="0.1">
+    <choice>yes</choice>
+    <choice credit="1">no</choice>
+  </answer>
+</p>
+
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<div newNameSpace>
+<p>Here is a similar worked example:</p>
+
+<setup>
+  <number name="a">9</number>
+  <number name="c">3</number>
+  <math name="n1" expand simplify>(x - $a)(x + $a)</math>
+  <math name="d1" expand simplify>(x - $a)(x + $c)</math>
+  <function name="fun">$n1 / $d1</function>
+  <math name="formula" simplify="numbersPreserveOrder">$fun.formula</math>
+  <me name="expr">\lim_{x\to $a} $formula</me>
+</setup>
+  
+<p><em>Determine the limit.</em>
+<me>\large{$expr}</me></p>  
+
+<p>If we try to evalute this limit, we'll find that the expression is undefined at <m>x = 9</m>. There is a point discontinuity here, or a hole in the graph of the function. </p>
+
+<p>As always, its a good idea to graph the function to get a feel for its behavior.</p>
+
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function:</p>
+  <p><m>\;f(x) = </m><mathInput name="mi" prefill="(x^2 - 81)/(x^2 - 6x - 27)"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup>
+  <p>What value is <m>x</m> approaching? </p>
+  <p><m>x \rightarrow </m><mathInput name="mi2" prefill="9"/></p>
+</div>
+
+<stack>
+<graph>
+  $miFunction
+  <line name="slider" styleNumber="2">x = $mi2</line>
+  <point name="p1" styleNumber="2">($mi2, $$miFunction($mi2))
+    <label>$p1.coords{displayDecimals="10"}</label>
+  </point>
+</graph>
+<p><m>f($p1.x{displayDecimals="10"}) = $p1.y{displayDecimals="10"}</m></p>
+</stack>
+</sideBySide>
+
+<p>Notice that when you try to plug in <m>x = 9</m>, no red square appears because the function is undefined at that location, but if you try something close to the limiting value, say <m>x = 9.00001</m> or <m>x = 8.99999</m>, the function values appear to get close to <m>1.5</m>.</p>
+<p>Factoring the function yields
+    <me>f(x) = <math>(x - $a)(x + $a)/((x - $a)(x + $c))</math></me>
+from which we can factor out the <m>(x - 9)</m> factor. Although the original function is still not defined at <m>x = 9</m>, we can now use this simplified function (let's call it <m>g(x)</m>) to determine the location of the point discontinuity
+  <md>
+    <mrow>g(x) &= <math>(x+9)/(x+3)</math></mrow>
+    <mrow>g(9) &= <math>3/2</math>.</mrow>
+  </md>
+The limit of the function <m>f</m> as <m>x</m> approaches the point discontinuity is therefore <m>\frac{3}{2}</m>.
+  <me>\large{$expr} = \frac{3}{2}.</me>
+</p>
+</div>
+
+
+<p>Textbook Link: <ref uri="https://activecalculus.org/single/sec-1-2-lim.html">The notion of limit</ref></p>
+
+  </hint>
+
+
+
+
+
+<solution>
+<p><m>$expr = $sol</m></p>
+<graph ymin="$ymin" ymax="$ymax">
+  $fun
+  <endpoint name="p1Sol" styleNumber="2" open fixed>($a, $sol)
+    <label>$p1Sol.coords</label>
+  </endpoint>
+</graph>
+</solution>
+
+
+</problem>
+
+
+<!-- <aside startOpen><title>Attribution</title> -->
+<!-- <p>Author: <ref uri="https://www.doenet.org/publicportfolio/oM0X1zIdsyx7wMKishUWT">Virginia Mae</ref></p> -->
+<!-- <p>Adapted for Doenet by: NA</p> -->
+<!-- </aside> -->

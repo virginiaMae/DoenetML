@@ -1,0 +1,151 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="r" from="26" to="38"/>
+  <selectFromSequence name="n" from="1" to="4"/>
+  <number name="d">2 $r</number>
+  <number name="sol">(2 $n pi $r)(1/100)(1/1000)(3600)</number>
+  <number name="arcLength">2 $n pi $r</number>
+
+  <number name="xmin">-1.5 $r</number>
+  <number name="xmax">$arcLength + pi $r</number>
+  <number name="ymin">-0.5 $r</number>
+  <number name="ymax">4 $r</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>d = $d</p>
+<p>n = $n</p>
+<p>arcLength = $arcLength</p>
+<p>sol = $sol</p> -->
+
+<!--testing-->
+
+<p>A bicycle tire has a diameter of <m>$d\;\text{cm}</m>. If the tire is rotating at <m>$n</m> revolutions per second how fast is the bicycle travelling in kilometers per hour? Round your answer to the nearest <m>0.01 \text{km/hr}</m>. Do not include units in your answer.</p> 
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <math name="t">$sliderPt.x</math>
+
+  <function name="fx" variable="t">$graph_r(t - sin(t))</function>
+  <function name="fy" variable="t">$graph_r(1 - cos(t))</function>
+  <number name="zero" fixed>0</number>
+  <number name="graph_r">$graph_d/2</number>
+</setup>
+
+<sideBySide>
+<div>
+<p>Tire diameter: <mathInput name="graph_d"/> <m>\text{cm}</m></p>
+
+<p>Angle traveled in 1 second <alert>in radians</alert>: <mathInput name="user_arc"/> <m>\text{radians}</m></p>
+</div>
+  
+<div>
+<p>
+<booleanInput name="animationOn"><label>Animate</label></booleanInput></p>
+</div>
+</sideBySide>
+
+
+<animateFromSequence target="t" from="0" to="$user_arc" animationOn="$animationOn" animationInterval="50" step="$user_arc/50" animationMode="increase once"/>
+  
+<graph name="g1"  xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" identicalAxisScales size="large" showNavigation="false">
+  <point name="center" styleNumber="5">($graph_r $t, $graph_r)</point>
+
+  <point name="animationPt" styleNumber="2" layer="2">($graph_r($t - sin($t)), $graph_r(1 - cos($t)))
+    <label><m>P</m></label>
+  </point>
+  <point name="fixedB" styleNumber="2" layer="3">($graph_r $t, 0)</point>
+  <circle name="tire" radius="$graph_r" center="$center" styleNumber="11" filled/>
+  <curve variable="t" parMin="0" parMax="$t" styleNumber="6">($graph_r(t - sin(t)), $graph_r(1 - cos(t)))</curve>
+  <angle through="$fixedB $center $animationPt" styleNumber="2" radius="$graph_r" emphasizeRightAngle="false" chooseReflexAngle="never"/>
+  <circle name="tireOutline" radius="$graph_r" center="(0,$graph_r)" styleNumber="6" filled fixLocation/>
+  <point name="centerStart" styleNumber="6" fixLocation>(0, $graph_r)</point>
+  <lineSegment endpoints="(0,0) $fixedB" styleNumber="9"/>
+  <curve  hide="$t != $user_arc" parMin="-pi/2" parMax="- pi/2 - $user_arc" variable="t" layer="2" styleNumber="9">($graph_r cos(t) + $graph_r $user_arc, $graph_r sin(t) + $graph_r)</curve>
+</graph>
+
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>\text{speed} = </m> <mathInput name="user_s"/> <m>\text{km/hr}</m></p> 
+<answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+    <award name="allCorrect">
+      <when>$user_s = $sol</when>
+    </award>       
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>\text{speed} = $sol \; \text{km/hr}</m></p>
+</solution>
+
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="1"  lineWidth="5"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+

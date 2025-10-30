@@ -1,0 +1,69 @@
+<problem><title/>
+<setup>
+<select name="b">-pi -pi/2 0 pi/2 pi 3pi/2 2pi</select>
+<selectFromSequence name="a" from="1" to="6"/>
+<selectFromSequence name="d" from="-5" to="5"/>
+<function name="f">$a sin(x) + $d</function>
+<selectFromSequence name="styleNumber" from="7" to="12"/>
+<math name="lim" simplify>$$f($b)</math>
+<number name="limN" displayDecimals="0">$lim</number>
+<number name="ymax">max($$f1($b) + 3, 3, $d + $a + 1)</number>
+<number name="ymin">min($$f1($b) - 3, -3, $d - $a - 1)</number>
+</setup>
+
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>lim = $lim</p> -->
+<!-- /testing -->
+
+<p>Determine <m>\lim\limits_{x \to $b} f(x)</m> for the function <m>f(x)</m> shown in the figure below</p>
+
+<graph xmin="-3pi" xmax="3pi"  xTickScaleFactor="pi" ymin="$ymin" ymax="$ymax" grid="1 1">
+  <function name="f1" copySource="f" domain="(-infinity,$b]" styleNumber="$styleNumber"/>
+  <function name="f2" copySource="f" domain="[$b,infinity)" styleNumber="$styleNumber"/>
+  <endpoint name="epB" open fixLocation styleNumber="$styleNumber">
+    ($b, $limN)
+  </endpoint>
+  <label anchor="$epB + (0.2, 0.2)" positionFromAnchor="upperright" styleNumber="13">
+    <m>$epB.coords</m>
+  </label>
+</graph>
+
+<p>The limit as <m>x \to $b</m> is <answer name="ans1">$lim</answer></p>
+</problem>
+
+<solution>
+  <p><m>\lim\limits_{x \to $b} f(x) = $limN</m></p>
+</solution>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--black, for labels-->
+<styleDefinition styleNumber="13" fillColor="black" fillOpacity="0.9" backgroundColor="white" markerSize="4" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+

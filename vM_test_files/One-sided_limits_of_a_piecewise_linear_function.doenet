@@ -1,0 +1,277 @@
+<problem sectionWideCheckWork aggregateScores><title/>
+
+<setup>
+<selectFromSequence name="a" from="-3" to="3"/>
+<selectFromSequence name="b" from="-2" to="3" exclude="0"/>
+<selectFromSequence name="c" from="-3" to="2"/>
+<selectFromSequence name="m1" from="-1" to="1" step="0.5"/>
+<math name="m2" simplify>($b - $a)/2</math>
+<math name="m3" simplify>($c - $b - 1)/2</math>
+<selectFromSequence name="m4" from="-1" to="1" step="0.5"/>
+<math name="ap1" simplify>1 + $a</math>
+<math name="bp1" simplify>1 + $b</math>
+<selectFromSequence name="styleNumber" from="7" to="12"/>
+</setup> 
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p> -->
+<!-- /testing -->
+
+<p>Let <m>F</m> be the function below.</p>
+<graph xmin="-3" xmax="5" ymin="-6" ymax="6" grid="1 1">
+  <function name="f1" domain="[-2,-1)" styleNumber="$styleNumber">
+    $m1 (x + 1) + $a
+  </function>
+  <point name="f1Left" styleNumber="$styleNumber" fixLocation>(-2, $$f1(-2))</point>
+  <function name="f2" domain="[-1,1]" styleNumber="$styleNumber">
+    $m2 (x - 1) + $b
+  </function>
+  <endpoint name="f2Left" styleNumber="$styleNumber" fixLocation open>
+    (-1, $$f2(-1))
+  </endpoint>
+  <endpoint name="f2Right" styleNumber="$styleNumber" fixLocation open>
+    (1, $$f2(1))
+  </endpoint>
+  <function name="f3" domain="[1,3]" styleNumber="$styleNumber">
+    $m3 (x - 3) + $c
+  </function>
+  <point name="f3Left" styleNumber="$styleNumber" fixLocation>
+    (1, $$f3(1))
+  </point>
+  <endpoint name="f3Right" styleNumber="$styleNumber" fixLocation open>
+    (3, $$f3(3))
+  </endpoint>
+  <point name="f4" styleNumber="$styleNumber">(-1, 1 + $a)</point>
+  <function name="f5" domain="(3,4]" styleNumber="$styleNumber">
+    $m4(x - 3) + $c
+  </function>
+  <point name="f5Right" styleNumber="$styleNumber">(4, $$f5(4))</point>
+</graph>
+
+<p>Evaluate each of the following expressions:</p>
+
+
+<p>a) <m>\displaystyle \lim_{x \to -1^-} F(x)  = </m>
+    <answer name="ans1a">$a</answer></p>
+  
+<p>b) <m>\displaystyle \lim_{x \to -1^+} F(x)  =</m>
+    <answer name="ans1b">$a</answer></p>
+  
+<p>c) <m>\displaystyle \lim_{x \to -1} F(x)  =</m>
+    <answer name="ans1c">$a</answer></p>
+  
+<p>d) <m> F(-1)  =</m>
+    <answer name="ans1d">$ap1</answer>
+</p>
+
+<p>e) <m>\displaystyle \lim_{x \to 1^-} F(x)  = </m>
+    <answer name="ans1e">$b</answer></p>
+ 
+<p>f) <m>\displaystyle \lim_{x \to 1^+} F(x)  = </m>
+    <answer name="ans1f">$bp1</answer></p>
+
+<p>g) <m>\displaystyle \lim_{x \to 1} F(x)  = </m>
+    <answer name="ans1g">
+      <award>DNE</award>
+      <award>dne</award>
+    </answer></p>
+
+<p>h) <m>\displaystyle \lim_{x \to 3} F(x)  = </m>
+    <answer name="ans1h">$c</answer></p>
+
+<p>i) <m>F(3)  = </m>
+    <answer name="ans1i">
+      <award>DNE</award>
+      <award>dne</award>
+    </answer></p>
+<p><em>Note, if a limit or a function value does not exist, type "DNE" in the answer blank.</em></p>
+  
+<feedback condition="$ans1a.creditAchieved != 1 and $ans1a.justSubmitted">Your response for part (a) is incorrect.</feedback>
+<feedback condition="$ans1b.creditAchieved != 1 and $ans1b.justSubmitted">Your response for part (b) is incorrect.</feedback>
+<feedback condition="$ans1c.creditAchieved != 1 and $ans1c.justSubmitted">Your response for part (c) is incorrect.</feedback>
+<feedback condition="$ans1d.creditAchieved != 1 and $ans1d.justSubmitted">Your response for part (d) is incorrect.</feedback>
+<feedback condition="$ans1e.creditAchieved != 1 and $ans1e.justSubmitted">Your response for part (e) is incorrect.</feedback>
+<feedback condition="$ans1f.creditAchieved != 1 and $ans1f.justSubmitted">Your response for part (f) is incorrect.</feedback>
+<feedback condition="$ans1g.creditAchieved != 1 and $ans1g.justSubmitted">Your response for part (g) is incorrect.</feedback>
+<feedback condition="$ans1h.creditAchieved != 1 and $ans1h.justSubmitted">Your response for part (h) is incorrect.</feedback>
+<feedback condition="$ans1i.creditAchieved != 1 and $ans1i.justSubmitted">Your response for part (i) is incorrect.</feedback>
+</problem>
+
+<solution>
+<p><m>$a, \; $a, \; $a, \; $ap1, \; $b, \; $bp1, \; DNE, \; $c, \; DNE</m></p>  
+
+</solution>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+<div hide>Webwork source code: Library/Rochester/setLimitsRates1_5Graphs/ur_lr_1-5_1_mo.pg
+  
+##Tagged by ynw2d
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Finding limits using graphs)
+## Level(2)
+## MO(1)
+## KEYWORDS('Calculus')
+## MO(1)-TF-12/18/2014
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGchoicemacros.pl",
+  "PGgraphmacros.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl"
+);
+
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$a=Real( random(-3,3,1) );
+$b=Real( non_zero_random(-2,3,1) );
+$c=Real( random(-3,2,1) );
+$m1=Real( random(-1,1,0.5) );
+$m2=($b - $a)/2;
+$m3=($c - $b - 1)/2;
+$m4=Real( random(-1,1,0.5) );
+
+$ap1 = 1 + $a;
+$bp1 = 1 + $b;
+
+
+# this randomizes the color used in the graph
+# just for fun
+$ind = random(0,2,1);
+@colors = ("blue", "red", "black");
+$sc = @colors[$ind];  #scrambled colors
+
+$g1 = Formula("${m1}*(x+1)+$a ");
+$g2 = Formula("${m2}*(x-1)+$b ");
+$g3 = Formula("${m3}*(x-3)+$c");
+$g4 = Formula("1+$a");
+$g5 = Formula("${m4}*(x-3)+$c");
+
+$f1 = "$g1 for x in [-2,-1) using color:$sc and weight:2";
+$f2 = "$g2 for x in (-1,1) using color:$sc and weight:2";
+$f3 = "$g3 for x in [1,3) using color:$sc and weight:2";
+$f4 = "$g4 for x in [-1,-1] using color:$sc and weight:2";
+$f5 = "$g5 for x in (3,4] using color:$sc and weight:2";
+
+$graph = init_graph(-3,-6,5,6,'axes'=>[0,0],'grid'=>[8,12]);
+
+($f1Ref,$f2Ref,$f3Ref,$f4Ref,$f5Ref) = plot_functions($graph,$f1,$f2,$f3,$f4,$f5);
+
+
+##############################################################
+#
+#  Text
+#
+#
+
+BEGIN_TEXT
+Let \(F\) be the function below.$PAR
+\{ image( insertGraph($graph) , height=>200, width=>200 );\}
+
+$BR
+Evaluate each of the following expressions:  $PAR
+
+
+a) \( \displaystyle \lim_{x \to -1^-} F(x) \) = \{ans_rule(4)\} \{ AnswerFormatHelp("limits") \}
+$PAR
+
+b) \( \displaystyle \lim_{x \to -1^+} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+c) \( \displaystyle \lim_{x \to -1} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+d) \( F(-1) \) = \{ans_rule(4)\}
+$PAR
+
+e) \( \displaystyle \lim_{x \to 1^-} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+f) \( \displaystyle \lim_{x \to 1^+} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+g) \( \displaystyle \lim_{x \to 1} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+h) \( \displaystyle \lim_{x \to 3} F(x) \) = \{ans_rule(4)\}
+$PAR
+
+i) \( F(3) \) = \{ans_rule(4)\}
+$PAR
+
+END_TEXT
+
+
+
+##############################################################
+#
+#  Answers
+#
+#
+
+# ANS(num_cmp($a, strings=>['DNE']))  ;
+# ANS(num_cmp($a, strings=>['DNE']))  ;
+# ANS(num_cmp($a, strings=>['DNE']))  ;
+# ANS(num_cmp($ap1, strings=>['DNE']));
+# ANS(num_cmp($b, strings=>['DNE']))  ;
+# ANS(num_cmp($bp1, strings=>['DNE']));
+# ANS(num_cmp('DNE', strings=>['DNE'])) ;
+# ANS(num_cmp($c, strings=>['DNE']))  ;
+# ANS(num_cmp('DNE', strings=>['DNE'])) ;
+
+$dne = String("DNE");
+ANS($a->cmp)  ;
+ANS($a->cmp)  ;
+ANS($a->cmp)  ;
+ANS($ap1->cmp);
+ANS($b->cmp)  ;
+ANS($bp1->cmp);
+ANS($dne->cmp) ;
+ANS($c->cmp)  ;
+ANS($dne->cmp) ;
+
+
+;
+
+;
+ENDDOCUMENT();
+</div>

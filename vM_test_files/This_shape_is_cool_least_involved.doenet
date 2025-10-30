@@ -1,0 +1,160 @@
+<activity>
+<setup>
+  <group name="funcAndDeriv">
+    <function name="f" domain="[-1,9]" styleNumber="8">sqrt(4x + 4)</function>
+  <derivative name="fPrime" hide>$f</derivative>
+  <line name="tangent" through="$dp1" slope="$$fPrime($dp1.x)" styleNumber="11"/>
+  </group>
+  <point name="dp1" styleNumber="9">(2,3.5)
+    <constraints>
+      <constrainTo>$f</constrainTo>
+    </constraints>
+  </point>
+  <circle fixLocation center="(0,0)" radius="0.35" filled styleNumber="9"/>
+  <lineSegment styleNumber="10" endpoints="(0,0) -0.2($dp1)"/>
+<!--   <regularPolygon name="light" numSides="3" vertices="(0,0)"/> -->
+<!--   <image source='doenet:cid=bafkreifad5k7fleewli7hinqqdy4hrmci352xmz3pzqmgktqae5d7xmmhm' description='a flashlight' asfilename='3671760_flashlight_icon (1).png' width="1.5" mimeType='image/png' layer="2" anchor="(0,-0.75)"/> -->
+  
+  <lineSegment name="beam1" endpoints="(0,0) $dp1" styleNumber="9"/>
+  <ray name="beam2" endpoint="$dp1" through="($dp1.x + 1, $dp1.y)" styleNumber="9"/>
+  <graph name="baseGraph" xmin="-5" xmax="10" ymin="-3" ymax="8" identicalAxisScales size="full"></graph>
+
+</setup>
+
+
+  
+  
+<graph copySource="baseGraph">
+  $funcAndDeriv
+  $dp1
+  $beam1
+  $beam2
+</graph>
+
+<!-- testing -->
+<!-- <p>P.x = $dp1.x</p>
+<p>P.y = $dp1.y</p> -->
+<!-- /testing -->
+  
+<p>A parabolic mirror (in red) has the equation <me>y = $f.formula</me> A lightbulb is placed at the origin. A ray of light shines upward toward the parabola and reflects off the tangent line so the <ref>the angle of incidence</ref> equals the <ref uri="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_all.html">angle of reflection</ref>.</p>
+
+<ol>
+  <li><p>Find the derivative <m>\frac{dy}{dx}</m>.</p>
+    <p><m>\displaystyle{\frac{dy}{dx}} = </m>
+      <answer name="derivAns">$fPrime.formula</answer></p>
+    <hint></hint>
+  </li>
+  
+  <li><p>Recall that the angle <m>\theta</m> formed by a line with slope <m>m</m> and the <m>x</m>-axis has the property <me>\tan \theta = m</me> Suppose a light beam shines to the point <math>(a, sqrt(4a+4))</math>, find the slope <m>m</m> of the light beam. </p>
+    <graph copySource="baseGraph" xmin="-1" xmax="6" ymin="-1" ymax="$dp1.y + 1" size="small">
+      $beam1
+      $dp1
+      <label anchor="$dp1 + (0.1,0.1)" positionFromAnchor="upperright">
+        <m>(a, \sqrt{4a + 4})</m></label>
+      <angle name="theta" through="(5,0) (0,0) $dp1">
+        <label><m>\theta</m></label>
+      </angle>
+    </graph>
+    <p><m>m = </m>
+      <answer name="slopeAns">
+        <mathInput name="userSlope"/>
+        <award>sqrt(4a + 4)/a</award>
+      </answer></p>
+  </li>
+
+  <li><p>Let <m>\alpha</m> be the angle formed by the tangent line (in black) and the <m>x</m>-axis. Find <m>\tan \alpha</m> as a function of <m>x</m>.</p>
+    <sideBySide margins="3%" widths="60% 40%">
+    <graph name="angleGraph" copySource="baseGraph" size="medium" xmin="-10">
+      $funcAndDeriv
+      $dp1
+      <label anchor="$dp1 + (0.2,-0.1)" positionFromAnchor="lowerright"><m>P</m></label>
+      <line name="xaxis" fixLocation hide>y=0</line>
+      <intersection name="xInt" hide>$xaxis $tangent</intersection>
+      <angle name="alpha" through="(5,0) $xInt $dp1" styleNumber="8" radius="1.5">
+        <label><m>\alpha</m></label>
+      </angle>
+    </graph>
+    <stack>
+    <p>Drag <m>P</m> to check your formula</p>
+    <p><alert>graphical slope:</alert> <m>m = $tangent.slope</m></p>
+    <p><alert>Your formula, evaluated at <m>x</m>:</alert>  
+    <function name="userSlopeFunc" hide>$userTanEq</function>
+    <m>f($dp1.x) = $$userSlopeFunc($dp1.x)</m></p>
+    </stack>
+    </sideBySide>
+    <p><m>f(x) = \tan(\alpha) = </m>
+      <answer name="tanAlphaAns">
+        <mathInput name="userTanEq"/>
+        <award>$fPrime.formula</award>
+      </answer> 
+    </p>
+  </li> 
+
+  <li><p>Use a <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-3-7/">double angle formula</ref> to find <m>\tan(2 \alpha)</m>.</p>
+    <p><m>\tan(2\alpha) = </m>
+      <answer name="tan2AlphaAns">
+        <mathInput name="userTan2Alpha"/>
+        <award>2sqrt(x+1)/x</award>
+      </answer>
+    </p>
+    
+  </li>
+
+  <li><p>Compare your results for part <m>4</m> with those from part <m>2</m>.</p>
+    <sideBySide>
+      <stack>
+        <p><alert>Your results:</alert></p>
+        <p><m>\tan(\theta) = m = $userSlope</m></p>
+        <p><m>\tan(2\alpha) = $userTan2Alpha</m></p>
+      </stack>
+    <graph copySource="angleGraph">
+      $beam1 $beam2 $theta
+    </graph>
+    </sideBySide>
+    
+    <p>You have now shown that 
+    <m>\tan(2 \alpha) = \tan (</m> <answer name="thetaAns">theta</answer><m>)</m></p></li>
+
+  <li><p>Prove that the angle of incidence (and therefore the angle of reflection) is also <m>\alpha</m>.</p>
+    <p><answer name="alphaProofAns" handGraded expanded type="text" forceFullCheckworkButton/></p>
+  </li>
+
+  <li>What is the slope of the <em>reflected</em> light beam?
+   <m>\text{Slope} = </m><answer name="reflectedSlopeAns">0</answer></li>
+</ol>
+
+
+<p>What is your main conclusion?</p>
+    <p><answer name="conclusionAns" handGraded expanded type="text" forceFullCheckworkButton/></p>
+</activity>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="7"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+
+<!--white for masking-->
+<styleDefinition styleNumber="13" fillColor="white" fillOpacity="1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="black" lineOpacity="0.7" lineWidth="2"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+

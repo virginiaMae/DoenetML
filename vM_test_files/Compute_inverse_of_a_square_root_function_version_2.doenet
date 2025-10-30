@@ -1,0 +1,137 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the inverse of a function involving a square rrot. Graphing tool provided to help visualize the geometry of the problem. Response format is an input box. This problem has two versions
+Version 1: sqrt(ax + b)
+Version 2: sqrt(ax) + b
+The worked example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="4" />
+  <selectFromSequence name="b" from="1" to="5"/>
+  <function name="f" simplify="numbersPreserveOrder">sqrt($a x) + $b
+    <label><m>f(x)</m></label>
+  </function>
+   <math name="sol" simplify="numbersPreserveOrder">(x - $b)^2/$a</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>sol = $sol</p>
+ -->
+<!--testing-->
+
+ 
+<p>Find the <alert>inverse</alert> of the function:</p>
+<m>f(x) = $f.formula{simplify="numbersPreserveOrder"}</m>
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph inverse function: <m>\;f^{-1}(x) = </m><mathInput name="mi"/></p>
+  <setup>
+    <function name="miFunction" styleNumber="2" >$mi</function>
+    <function name="restrictedFunc" styleNumber="2" hide domain="[$b,infinity)">$mi</function>
+  </setup>
+  <p>Restrict domain of inverse to match range of the original function:
+    <updateValue name="update1" target="miFunction.hide" newValue="true" type="boolean">
+      <label>Update Graph</label>
+    </updateValue>
+    <updateValue triggerWith="$update1" target="restrictedFunc.hide" newValue="false" type="boolean"/>
+  </p>
+
+  <p>Recall, <em>graphically</em> the inverse of a function is the same as the original function when it has been reflected about the diagonal line <m>y = x</m>.</p>
+  <p>If you graph your computed inverse, it should look as if the original function has been mirrored across this diagonal line.</p>
+</div>
+
+  
+<graph>
+  $miFunction
+  $restrictedFunc
+  <line name="diagonal" styleNumber="6" fixed>y = x</line>
+  $f
+  <legend position="lowerright">
+    <label><m>f^{-1}(x)</m></label>
+    <label><m>y = x</m></label>
+    <label><m>f(x) = $f.formula</m></label>
+  </legend>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+<p><m>f^{-1}(x) = </m> <mathInput name="userInverse" bindValueTo="$mi"/>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userInverse = $sol</when>
+    </award>
+  </answer>
+</p>
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review how to find the <term>inverse</term> of a function, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-4-inverse-functions/">here</ref> or the text lesson <ref uri="https://mathbooks.unl.edu/PreCalculus/Inverse-Functions.html">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>f^{-1} (x) = $sol</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

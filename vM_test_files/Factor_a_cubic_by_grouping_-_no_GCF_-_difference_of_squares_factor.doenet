@@ -1,0 +1,119 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a cubic polynomial by grouping; no GCF and difference of squares factor.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="1" to="9"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="0"/>
+  <math name="factor1" simplify="numberspreserveorder">x^2 - $a^2</math>
+  <math name="factor2" simplify="numberspreserveorder">x + $b</math>
+  <math name="factor3" simplify="numberspreserveorder">x - $a</math>
+  <math name="factor4" simplify="numberspreserveorder">x + $a</math>
+  <math name="expr" expand>$factoredExpr1</math>
+  <math name="expr2" expand>$factoredExpr2</math>
+  <math name="factoredExpr1">$factor1 $factor2</math>
+  <math name="factoredExpr2">$factor3 $factor4 $factor2</math>
+  <math name="signErrorAns1">(x^2 + $a^2)(x + $b)</math>
+  <math name="signErrorAns2">(x^2 - $a^2)(x - $b)</math>
+  <math name="signErrorAns3">(x^2 + $a^2)(x - $b)</math>
+  <boolean name="signError">$userExpr = $signErrorAns1 or $userExpr = $signErrorAns2 or $userExpr = $signErrorAns3</boolean>
+</setup>
+
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>factor1 = $factor1</p>  
+<p>factor2 = $factor2</p>  
+<p>expr = $expr</p>  
+<p>factoredExpr = $factoredExpr</p> 
+<p>check = <boolean>$expr = $expr2</boolean></p> -->
+<!--testing-->
+  
+
+<p>Factor 
+    <me>$expr</me></p>
+
+<p><m>$expr = </m>
+
+
+  <answer name="ans1">
+  <mathInput name="userExpr"/>
+    <award symbolicEquality simplifyOnCompare>
+      <when>
+         <hasSameFactoring allowOnlySignDifferences>$userExpr $factoredExpr1</hasSameFactoring>
+      </when>
+    </award>
+
+    <award symbolicEquality simplifyOnCompare>
+      <when>
+         <hasSameFactoring allowOnlySignDifferences>$userExpr $factoredExpr2</hasSameFactoring>
+      </when>
+    </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+  <feedback condition="$noFactoring">
+  <p>To factor the expression <m>($expr)</m>, means to split it into two factor or more irreducible factors, if possible. First, do all terms have a greatest common factor? </p>
+  <p>After factoring out the <m>GCF</m>, you can tackle factoring the remaining cubic expression. Here are two simple examples:</p>
+<ul>
+  <li><m>2x^3 + 2x^2 - 4x= 2x(x^2 + x - 2) = 2x(x+2)(x-1)</m></li>
+  <li><m>4x^3 + 36x^2 - 8x -72 = 4(x^2 - 2)(x+9)</m></li>
+</ul>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. Choose a possible factoring, and then FOIL it out to see if it matches your original, expanded cubic expression.</p>
+  </feedback>
+  
+  <feedback condition="$signError and $ans1.justSubmitted">
+    <p>It looks like you have a sign error somewhere.</p>
+  <p><em>How to check</em>: FOIL out your factored answer to see if it matches your original, expanded quadratic expression.</p></feedback>
+  
+   <feedback condition="$groupedNotFactored">
+    <p>Looks like you started the process of grouping, but this expression is not fully factored. Do you see any binomial terms that are repeated in this expression? Is there a greatest common factor remaining to be factored out? These can be factored out for a fully-factored final response.</p>
+     
+  <p><em>How to check</em>: FOIL out your factored answer, including the <m>GCF</m> you factored out first, to see if it matches your original, expanded quadratic expression.</p></feedback> 
+
+
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+  
+  </hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+<solution>  
+<p><md>
+  <mrow>$expr &= $factoredExpr1 \;\text{or}</mrow>
+  <mrow>&= $factoredExpr2</mrow>
+</md>
+</p>
+</solution>
+</problem>

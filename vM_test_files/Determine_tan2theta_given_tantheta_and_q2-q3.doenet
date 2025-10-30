@@ -1,0 +1,144 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine tan(2theta)) given tan(theta) and Q2-Q3. Graphing tool provided for visualization of the geometry of the problem. Answers are required to be exact, but full simplification is not enforced.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+<select assignNames="a">1/3 2/3 1/4 3/4 1/5 2/5 3/5 4/5 1/6 5/6 1/7 2/7 3/7 4/7 5/7 6/7 1/8 3/8 5/8 7/8 1/9 2/9 4/9 5/9 7/9 8/9 1/10 3/10 7/10 9/10</select>
+<select assignNames="c">-1 1</select>
+<math name="tanA" simplify>$a $c</math>
+<number name="n_l1">3 + $c</number>
+<number name="n_r1">5 + $c</number>
+<number name="gl1"><gcd>$n_l1 4</gcd></number>
+<number name="gr1"><gcd>$n_r1 4</gcd></number>
+  
+<math name="leftInt1" simplify>(pi $n_l1/$gl1)/(4/$gl1)</math>
+<math name="rightInt1" simplify>(pi $n_r1/$gr1)/(4/$gr1)</math>
+<math name="int1" simplify>$leftInt1 < theta < $rightInt1</math>
+
+
+<math name="sol" simplify>2 $a $c/(1 - $a^2)</math>
+<number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<!--testing-->
+<!-- <number name="x1">1 - $c</number>
+<gcd>$x1 4</gcd>
+<p>a = $a</p>
+<p>c = $c</p>
+<p>int1 = $int1</p>
+<p>tanA = $tanA</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+  
+
+<p>If <m>\tan(\theta) = $tanA</m> and $int1,
+	find <m>\tan(2\theta)</m>.</p>
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+
+<div newNamespace>
+<p><alert>Triangle 1</alert>: Angle <m>\theta</m>. Adjust the triangle below to match the given problem.</p>
+<number name="zeroFixed" fixed hide>0</number>
+
+<sideBySide widths="30% 70%">
+<div>
+<p><m>s_1 = </m><mathInput name="A" prefill="5"/></p>
+<p><m>s_2 = </m><mathInput name="B" prefill="5"/></p>
+<p><m>s_3 = </m><mathInput name="C" prefill="5sqrt(2)"/> (hypotenuse)</p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+
+</div>
+
+<div>
+  <graph>
+    <point name="p1" styleNumber="2" coords="($zeroFixed,$zeroFixed)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroFixed)"/>
+    <point name="p3" coords="($A, $B)" layer="2"/>
+
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" styleNumber="2" applyStyleToLabel>
+      <label><m>s_1 = $A{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" styleNumber="3" labelPosition="upperright" applyStyleToLabel>
+      <label><m>s_2 = $B{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1" styleNumber="4" labelPosition="upperleft" applyStyleToLabel>
+      <label><m>s_3 = $C{displayDecimals="2"}</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="thetaShow" styleNumber="2" through="$p2 $p1 $p3" radius="0.2 $line1.length">
+      <label><m>\theta</m></label>
+    </angle>
+    <angle name="theta" through="(5,0) $p1 $p3"  chooseReflexAngle="allowed" hide/>
+  </graph>
+</div>
+</sideBySide>
+</div>
+
+</aside>
+
+<p><m>\tan(2 \theta) = </m>
+  <answer name="ans1">
+    <mathInput name="userInput"/>
+    <award name="correct1">
+      <when>$userInput = $sol</when>
+    </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\tan(2 \theta) = $sol</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

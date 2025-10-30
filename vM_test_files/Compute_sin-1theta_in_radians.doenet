@@ -1,0 +1,662 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Student computes the inverse sine of a given value (ranging through standard sine values on the unit circle). Precise answers in radians are required.
+
+*************************************************************--> 
+
+<problem>
+<setup>
+  <select assignNames="(a sol)">
+    <option>
+      <math>-1</math>
+      <math>-pi/2</math>
+    </option>
+    <option>
+      <math>-sqrt(3)/2</math>
+      <math>-pi/3</math>
+    </option>
+    <option>
+      <math>-sqrt(2)/2</math>
+      <math>-pi/4</math>
+    </option>
+    <option>
+      <math>-1/2</math>
+      <math>-pi/6</math>
+    </option>
+    <option>
+      <math>0</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>1/2</math>
+      <math>pi/6</math>
+    </option>
+    <option>
+      <math>sqrt(3)/2</math>
+      <math>pi/3</math>
+    </option>
+    <option>
+      <math>sqrt(2)/2</math>
+      <math>pi/4</math>
+    </option>
+    <option>
+      <math>1</math>
+      <math>pi/2</math>
+    </option>
+  </select>
+  <number name="solN">$sol</number>
+  <number name="zeroF" fixed>0</number>
+  <boolean name="invalid">sin($userAns) = $a and $userAns != $sol</boolean>
+  <matchesPattern name="same1" pattern="sin^(-1)( )">$userAns</matchesPattern>
+  <matchesPattern name="same2" pattern="arcsin( )">$userAns</matchesPattern>
+  <boolean name="same">$same1 or $same2</boolean>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>sol = $sol</p>
+<p>solN = $solN</p>
+<p>invalid = $invalid</p> -->
+<!--testing-->
+
+<p><m name="eq">\sin^{-1} \left($a \right) = </m> <mathInput name="userAns"/> radians.
+  <answer name="ans1">
+    <award name="correct">
+      <when>$sol = $userAns and !$same</when>
+    </award>
+    <award name="notInRange" credit="0">
+      <when>$invalid</when>
+    </award>
+    <award name="numerical" credit="0" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+      <when>$solN = $userAns and !$same</when>
+    </award>
+  </answer>
+</p>
+
+<p>Your answer should be in the form of an exact fraction in radians, not a decimal approximation. Type "pi" to enter the <m>\pi</m> symbol.</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$notInRange"><p>Recall that the range of the function <m>y = \sin^{-1}(x)</m> is <math>[-pi/2, pi/2]</math>.</p>
+    
+  <graph size="small" xmin="-2" xmax="2" ymin="-pi" ymax="pi">
+    <function>arcsin(x)</function>
+    <line fixed styleNumber="6">y = pi/2</line>
+    <line fixed styleNumber="6">y = -pi/2</line>
+  </graph>
+  </feedback>
+
+  <feedback condition="$numerical">It looks like your answer is close to the correct value, but not exact. Make sure you are using an exact fraction, rather than a decimal approximation (for example, <m>\frac{\pi}{3}</m> is an exact response but <m>1.05</m> is an approximation...)</feedback>
+
+  <feedback condition="$same and $ans1.justSubmitted">Make sure you are responding with the function's value, rather than the expression of function evaluation. (Your answer will not contain the word "arcsin" or "sin^-1").</feedback>
+
+
+<!--*********************************************
+            Inverse Sine Widget
+**********************************************-->
+
+<aside name="arcsinWidget" newNamespace>
+    <title>Inverse Sine Widget</title>
+    <setup>
+         <number name="fp1x">pi/6</number> <number name="sN">
+             <conditionalContent>
+                 <case condition="$dragPoint1.y >=0">1</case> <case
+                    condition="$dragPoint1.y &lt;0"
+                >2</case>
+            </conditionalContent>
+        </number>
+    </setup>
+
+    <p>
+        <em>
+            Drag the $fp1.styleDescriptionWithNoun along the inverse sine
+            function on the left.
+        </em>
+    </p>
+    <sideBySide>
+         <div>
+            <graph
+                xmin="-1.2"
+                xmax="1.2"
+                ymin="-3 pi / 5"
+                ymax="3 pi / 5"
+                yTickScaleFactor="pi"
+                displayXAxisTickLabels="false"
+            >
+                <function name="f">arcsin(x)</function>
+                <label anchor="(-0.5,0.75)">
+                     <math name="eq">f(x)=sin^(-1)(x)</math>
+                </label>
+                <point name="pA" fixed coords="(1,$$f(1))" styleNumber="16" />
+                <point
+                    name="pB"
+                    fixed
+                    coords="(1/2,$$f(1/2))"
+                    styleNumber="15"
+                />
+                <point
+                    name="pC"
+                    fixed
+                    coords="(sqrt(2)/2, $$f(sqrt(2)/2))"
+                    styleNumber="16"
+                />
+                <point
+                    name="pD"
+                    fixed
+                    coords="(sqrt(3)/2,$$f(sqrt(3)/2))"
+                    styleNumber="15"
+                />
+                <point name="pE" fixed coords="(0, $$f(0))" styleNumber="16" />
+                <point
+                    name="pF"
+                    fixed
+                    coords="(-sqrt(3)/2,$$f(-sqrt(3)/2))"
+                    styleNumber="15"
+                />
+                <point
+                    name="pG"
+                    fixed
+                    coords="(-sqrt(2)/2, $$f(-sqrt(2)/2))"
+                    styleNumber="16"
+                />
+                <point
+                    name="pH"
+                    fixed
+                    coords="(-1/2, $$f(-1/2))"
+                    styleNumber="15"
+                />
+                <point name="pI" fixed coords="(-1,$$f(-1))" styleNumber="16" />
+
+                <endpoint
+                    name="fp1"
+                    open="true"
+                    coords="($fp1x, $$f($fp1x))"
+                    showCoordsWhenDragging="false"
+                    styleNumber="8"
+                    layer="2"
+                    labelPosition="top"
+                >
+                     <constraints>
+                         <attractTo>
+                             $pA $pB $pC $pD $pE $pF $pG $pH $pI
+                        </attractTo>
+
+
+                    </constraints> <label>
+                         <m>x = </m> <conditionalContent>
+                             <case condition="$fp1.x = -1"><m>-1</m></case> <case
+                                condition="$fp1.x = -sqrt(3)/2"
+                            ><m>-\frac{\sqrt{3}}{2}</m></case> <case
+                                condition="$fp1.x = -sqrt(2)/2"
+                            ><m>-\frac{\sqrt{2}}{2}</m></case> <case
+                                condition="$fp1.x = -1/2"
+                            ><m>-\frac{1}{2}</m></case> <case
+                                condition="$fp1.x = 0"
+                            ><m>0</m></case> <case condition="$fp1.x = 1/2">
+                                 <m>\frac{1}{2}</m>
+                            </case> <case condition="$fp1.x = sqrt(2)/2">
+                                 <m>\frac{\sqrt{2}}{2}</m>
+                            </case> <case condition="$fp1.x = sqrt(3)/2">
+                                 <m>\frac{\sqrt{3}}{2}</m>
+                            </case> <case condition="$fp1.x = 1"><m>1</m></case>
+
+
+                        </conditionalContent>
+
+
+                    </label>
+                </endpoint>
+                <line name="vNeg1" styleNumber="14" fixLocation>x = -1</line>
+                <line name="vNegSqrt3Over2" styleNumber="14" fixLocation>
+                    x = -sqrt(3)/2
+                </line>
+                <line name="vNegSqrt2Over2" styleNumber="14" fixLocation>
+                    x = -sqrt(2)/2
+                </line>
+                <line name="vNegHalf" styleNumber="14" fixLocation>
+                    x = -1/2
+                </line>
+                <line name="vHalf" styleNumber="14" fixLocation>x = 1/2</line>
+                <line name="vSqrt2Over2" styleNumber="14" fixLocation>
+                    x = sqrt(2)/2
+                </line>
+                <line name="vSqrt3Over2" styleNumber="14" fixLocation>
+                    x = sqrt(3)/2
+                </line>
+                <line name="v1" styleNumber="14" fixLocation>x = 1</line>
+                <ylabel><m>f(x) = \theta</m></ylabel>
+                <xlabel><m>x</m></xlabel>
+            </graph>
+            <caption>Graph of <m>$eq</m></caption>
+        </div>
+
+        <div>
+            <graph
+                name="gL"
+                xmin="-1.5"
+                xmax="1.5"
+                ymin="-1.5"
+                ymax="1.5"
+                showNavigation="false"
+                displayXAxisTickLabels="false"
+                displayYAxisTickLabels="false"
+            >
+                <circle
+                    name="unitCircle"
+                    center="(0,0)"
+                    radius="1"
+                    fixed
+                    styleNumber="14"
+                />
+
+                <point name="A" fixed coords="(1,0)" styleNumber="16" />
+                <point
+                    name="B"
+                    fixed
+                    coords="(sqrt(3)/2, 1/2)"
+                    styleNumber="15"
+                />
+                <point
+                    name="C"
+                    fixed
+                    coords="(sqrt(2)/2, sqrt(2)/2)"
+                    styleNumber="16"
+                />
+                <point
+                    name="D"
+                    fixed
+                    coords="(1/2,sqrt(3)/2)"
+                    styleNumber="15"
+                />
+                <point name="E" fixed coords="(0, 1)" styleNumber="16" />
+                <point name="M" fixed coords="(0, -1)" styleNumber="16" />
+                <point
+                    name="N"
+                    fixed
+                    coords="(1/2, -sqrt(3)/2)"
+                    styleNumber="15"
+                />
+                <point
+                    name="P"
+                    fixed
+                    coords="(sqrt(2)/2, -sqrt(2)/2)"
+                    styleNumber="16"
+                />
+                <point
+                    name="Q"
+                    fixed
+                    coords="(sqrt(3)/2, -1/2)"
+                    styleNumber="15"
+                />
+
+                <!--
+                
+                
+                
+        Labels for positive angles in Radians
+
+
+
+                -->
+                <conditionalContent condition="$radShow = true">
+                     <label
+                        hide="$dragPoint1.coords != $A.coords"
+                        anchor="$A + (0,0.2)"
+                        positionFromAnchor="upperright"
+                    ><m>0</m></label> <label
+                        hide="$dragPoint1.coords != $B.coords"
+                        anchor="$B + (0,0.2)"
+                        positionFromAnchor="upperright"
+                    ><math>pi/6</math></label> <label
+                        hide="$dragPoint1.coords != $C.coords"
+                        anchor="$C + (0,0.2)"
+                        positionFromAnchor="upperright"
+                    ><math>pi/4</math></label> <label
+                        hide="$dragPoint1.coords != $D.coords"
+                        anchor="$D + (0,0.2)"
+                        positionFromAnchor="upperright"
+                    ><math>pi/3</math></label>
+
+                    <label
+                        hide="$dragPoint1.coords != $E.coords"
+                        anchor="$E + (-0.1,0.1)"
+                        positionFromAnchor="upperleft"
+                    ><math>pi/2</math></label>
+
+
+                </conditionalContent>
+
+                <!--
+                
+                
+                
+        Labels for negative angles in Radians
+
+
+
+                -->
+                <conditionalContent condition="$radShow = true">
+                     <label
+                        hide="$dragPoint1.coords != $M.coords"
+                        anchor="$M + (-0.1,-0.1)"
+                        positionFromAnchor="lowerleft"
+                    ><math>-pi/2</math></label>
+
+                    <label
+                        hide="$dragPoint1.coords != $N.coords"
+                        anchor="$N + (0,-0.1)"
+                        positionFromAnchor="lowerleft"
+                    ><math>-pi/3</math></label>
+                    <label
+                        hide="$dragPoint1.coords != $P.coords"
+                        anchor="$P + (0,-0.1)"
+                        positionFromAnchor="lowerleft"
+                    ><math>-pi/4</math></label>
+                    <label
+                        hide="$dragPoint1.coords != $Q.coords"
+                        anchor="$Q + (0,-0.1)"
+                        positionFromAnchor="lowerleft"
+                    ><math>-pi/6</math></label>
+
+
+                </conditionalContent>
+
+                <!--
+                
+                
+                
+        Labels for positive angles in Degrees
+
+
+
+                -->
+                <conditionalContent condition="$degShow = true">
+                     <label
+                        hide="$dragPoint1.coords != $A.coords"
+                        anchor="$A + (0.25,0.1)"
+                        positionFromAnchor="upperright"
+                    ><m>0^{\circ}</m></label> <label
+                        hide="$dragPoint1.coords != $B.coords"
+                        anchor="$B + (0.25,0.1)"
+                        positionFromAnchor="upperright"
+                    ><m>30^{\circ}</m></label> <label
+                        hide="$dragPoint1.coords != $C.coords"
+                        anchor="$C + (0.25,0.1)"
+                        positionFromAnchor="upperright"
+                    ><m>45^{\circ}</m></label> <label
+                        hide="$dragPoint1.coords != $D.coords"
+                        anchor="$D + (0.25,0.1)"
+                        positionFromAnchor="upperright"
+                    ><m>60^{\circ}</m></label>
+
+                    <label
+                        hide="$dragPoint1.coords != $E.coords"
+                        anchor="$E + (0.1,0.1)"
+                        positionFromAnchor="upperright"
+                    ><m>90^{\circ}</m></label>
+
+
+                </conditionalContent>
+
+                <!--
+                
+                
+                
+         Labels for negative angles in radians
+
+
+
+                -->
+                <conditionalContent condition="$degShow = true">
+                     <label
+                        hide="$dragPoint1.coords != $M.coords"
+                        anchor="$M + (0.1,-0.1)"
+                        positionFromAnchor="lowerright"
+                    ><m>-90^{\circ}</m></label>
+
+                    <label
+                        hide="$dragPoint1.coords != $N.coords"
+                        anchor="$N + (0.2,0.1)"
+                        positionFromAnchor="lowerright"
+                    ><m>-60^{\circ}</m></label>
+                    <label
+                        hide="$dragPoint1.coords != $P.coords"
+                        anchor="$P + (0.2,0.1)"
+                        positionFromAnchor="lowerright"
+                    ><m>-45^{\circ}</m></label>
+                    <label
+                        hide="$dragPoint1.coords != $Q.coords"
+                        anchor="$Q + (0.2,0.1)"
+                        positionFromAnchor="lowerright"
+                    ><m>-30^{\circ}</m></label>
+
+
+                </conditionalContent>
+
+                <point
+                    name="dragPoint1"
+                    coords="(cos($fp1.y), sin($fp1.y))"
+                    showCoordsWhenDragging="false"
+                    styleNumber="8"
+                    layer="2"
+                >
+                     <constraints>
+                         <constrainTo>$unitCircle</constrainTo>
+                    </constraints>
+                </point>
+                <point
+                    name="projectedPoint1"
+                    styleNumber="9"
+                    draggable="false"
+                    showCoordsWhenDragging="false"
+                >
+                     ($dragPoint1.x, 0) <constraints>
+                         <constrainTo><line>y = 0</line></constrainTo>
+                    </constraints>
+
+
+                </point>
+                <endpoint name="O" fixed coords="(0,0)" styleNumber="11" />
+                <ray
+                    name="constrRay1"
+                    styleNumber="6"
+                    endpoint="$O"
+                    through="$dragPoint1"
+                />
+                <lineSegment
+                    name="hypotenuse1"
+                    endpoints="$O $dragPoint1"
+                    styleNumber="10"
+                />
+                <lineSegment
+                    name="vertical1"
+                    endpoints="$dragPoint1 $projectedPoint1"
+                    styleNumber="13"
+                />
+                <lineSegment
+                    name="horizontal1"
+                    endpoints="$O $projectedPoint1"
+                    styleNumber="9"
+                />
+                <angle
+                    name="dragAngle1"
+                    through="(1,0) $O $dragPoint1"
+                    radius="1/3"
+                    chooseReflexAngle="never"
+                    styleNumber="$sN"
+                > <label><m>\theta</m></label> </angle>
+
+                <label fixed anchor="(0.9,0.1)" styleNumber="6"><m>1</m></label>
+                <label fixed anchor="(0.13,0.9)" styleNumber="6">
+                     <m>1</m>
+                </label>
+                <label fixed anchor="(-0.9,0.1)" styleNumber="6">
+                     <m>-1</m>
+                </label>
+                <label fixed anchor="(0.13,-0.9)" styleNumber="6">
+                     <m>-1</m>
+                </label>
+
+                <booleanInput
+                    name="degShow"
+                    anchor="(-1.1,-1.25)"
+                    prefill="true"
+                > <label>Degrees</label> </booleanInput>
+
+                <booleanInput name="radShow" anchor="(1,-1.25)" prefill="true">
+                     <label>Radians</label>
+                </booleanInput>
+            </graph>
+            <caption>
+                Graph of Unit Circle with angles restricted to the range of
+                <m>$eq</m>
+            </caption>
+        </div>
+
+
+    </sideBySide>
+</aside>
+
+<setup>
+     <styleDefinitions>
+         <!--blue, styleNumber 1 corrolary--> <styleDefinition
+            styleNumber="7"
+            fillColor="#648FFF"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#648FFF"
+        /> <!--red, styleNumber 2 corrolary, with dotted line--> <styleDefinition
+            styleNumber="8"
+            fillColor="#D4042D"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#D4042D"
+            lineColor="#D4042D"
+            lineOpacity="0.7"
+            lineStyle="dotted"
+            lineWidth="2"
+            lineColorWord="red"
+            markerColorWord="red"
+            markerStyleWord="circle"
+        /> <!--orange, styleNumber 3 corrolary--> <styleDefinition
+            styleNumber="9"
+            fillColor="#F19143"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#F19143"
+            lineColor="#F19143"
+            lineOpacity="0.7"
+            lineWidth="4"
+        /> <!--purple, styleNumber 4 corrolary--> <styleDefinition
+            styleNumber="10"
+            fillColor="#644CD6"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#644CD6"
+            lineColor="#644CD6"
+            lineOpacity="0.7"
+            lineWidth="4"
+        /> <!--black, styleNumber 5 corrolary--> <styleDefinition
+            styleNumber="11"
+            fillColor="black"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="black"
+            lineColor="black"
+            lineOpacity="0.7"
+            lineWidth="4"
+        /> <!--gray, styleNumber 6 corrolary--> <styleDefinition
+            styleNumber="12"
+            fillColor="gray"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="gray"
+        /> <!--green, styleNumber 1 but green corrolary--> <styleDefinition
+            styleNumber="13"
+            fillColor="#469152"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#469152"
+            lineColor="#469152"
+            lineOpacity="0.7"
+            lineWidth="4"
+        /> <!--blue, thin dotted--> <styleDefinition
+            styleNumber="14"
+            fillColor="#648FFF"
+            fillOpacity="0.1"
+            markerSize="6"
+            markerStyle="circle"
+            markerColor="#648FFF"
+            lineColor="#648FFF"
+            lineOpacity="0.7"
+            lineWidth="1"
+            lineStyle="dotted"
+        />
+
+        <!--small black point-->
+        <styleDefinition
+            styleNumber="15"
+            fillColor="gray"
+            fillOpacity="0.1"
+            markerSize="3"
+            markerStyle="circle"
+            markerColor="gray"
+            lineColor="#469152"
+            lineOpacity="0.7"
+            lineWidth="4"
+        />
+
+        <!--small blue point--> <styleDefinition
+            styleNumber="16"
+            fillColor="#648FFF"
+            fillOpacity="0.1"
+            markerSize="3"
+            markerStyle="circle"
+            markerColor="#648FFF"
+            lineColor="#469152"
+            lineOpacity="0.7"
+            lineWidth="4"
+        />
+
+
+    </styleDefinitions>
+</setup>
+
+
+
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>$eq $sol</m> radians</p>
+</solution>
+
+</problem>
+
+

@@ -1,0 +1,267 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the vertex of a parabola given factored form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-8" to="8" exclude="-1 0 1"/>
+  <selectFromSequence name="h" from="-6" to="6" exclude="0"/>
+  <selectFromSequence name="d" from="1" to="4" exclude="$h -$h"/>
+  <math name="p1" simplify="numbersPreserveOrder">x - ($h - $d)</math>
+  <math name="r" simplify>$h - $d</math>
+  <math name="s" simplify>$h + $d</math>
+  <math name="p2" simplify="numbersPreserveOrder">x - ($h + $d)</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a($p1)($p2)</math>
+  <math name="k" simplify>-$a $d^2</math>
+  <point name="vertex">($h, $k)</point>
+  <math name="solExpr">$a($h - $r)($h - $s)</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>d = $d</p>
+<p>k = $k</p>
+<p>r = $r</p>
+<p>s = $s</p>
+<p>vertex = $vertex</p>
+<p>expr = $expr</p>
+<p>generalForm = $generalForm</p>
+<p>factoredGeneralForm = $factoredGeneralForm</p> -->
+<!--testing-->
+
+<p>Find the vertex of the parabola <m>y = $expr.</m></p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">max($k + 10, 10)</number>
+  <number name="ymin">min($k - 10, -10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>The roots of the parabola are: <mathInput name="r1"/>, <mathInput name="r2"/></p>
+
+  <p>Graph point at the proposed vertex:</p> 
+  <p><m>(h,k) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="graphH" bindValueTo="$userH"/><m>,</m>
+  <mathInput name="graphK" bindValueTo="$userK"/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" ymax="$ymax{link='false'}" ymin="$ymin{link='false'}">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <point name="graphVertex" coords="($graphH, $graphK)"/>
+  <point name="r1Pt" styleNumber="2">($r1, $zeroFixed)</point>
+  <point name="r2Pt" styleNumber="2">($r2, $zeroFixed)</point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will appear at the vertex of the parabola.</p>
+
+</aside>  
+
+
+  
+
+  
+<p><m>V = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/><m>\bigg).</m>
+
+  <answer name="ans14">
+
+    <award name="allCorrect">
+      <when>$userH = $h and $userK = $k
+      </when>
+    </award>
+
+    <award name="hIncorrect" credit="0">
+      <when>$userH != $h and $userK = $k
+      </when>
+    </award>
+
+    <award name="kIncorrect" credit="0">
+      <when>$userH = $h and $userK != $k
+      </when>
+    </award>
+
+    <award name="noChange" credit="0">
+      <when>$userH = h and $userK = k</when>
+    </award>
+    
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$hIncorrect">Your <m>h</m> value is incorrect</feedback>
+  
+  <feedback condition="$kIncorrect">Your <m>k</m> value is incorrect</feedback>
+
+  <feedback condition="$noChange">Determine numerical values for <m>h</m> and <m>k</m>.</feedback>
+  
+  <feedback condition="$ans14.numSubmissions > 2 and $ans14.creditAchieved != 1">
+    <div name="helpText">
+      <p>We are given the equation of a parabola in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/"><term>root form</term></ref>
+        <me>y = a(x - r)(x - s) \;\;\;\text{root form}.</me>
+    Since quadratic equations are symmetric, we can determine the <m>x</m>-coordinate of the vertex, <m>h</m>, from the equation
+        <me>\frac{r + s}{2}.</me>
+    Once we know the <m>x</m>-coordinate of the vertex, we can simply substitute this value for <m>x</m> into the original equation to solve for the corresponding <m>y</m>-coordinate of the vertex.</p>
+    </div>
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<p><em>Find the vertex of the parabola <m>y = $expr.</m></em></p>
+
+<setup>
+  <math name="a">8</math>
+  <math name="h">-3</math>
+  <math name="d">5</math>
+  <math name="p1" simplify="numbersPreserveOrder">x - ($h - $d)</math>
+  <math name="r" simplify>$h - $d</math>
+  <math name="s" simplify>$h + $d</math>
+  <math name="p2" simplify="numbersPreserveOrder">x - ($h + $d)</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a($p1)($p2)</math>
+  <math name="k" simplify>-$a $d^2</math>
+  <point name="vertex">($h, $k)</point>
+  <math name="solExpr">$a($h - $r)($h - $s)</math>
+</setup>
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Solve for <m>h</m> by taking the average of the two roots, $r and $s:
+    <md>
+      <mrow>h \amp= \frac{r + s}{2}</mrow>
+      <mrow>\amp= \frac{<math>$r + $s</math>}{2}</mrow>
+      <mrow>\amp= $vertex.x</mrow>
+    </md></li>
+
+  <li>Substitute <m>x = h</m> into the original equation, and solve for <m>y</m> to determine <m>k</m>:
+        <md>
+          <mrow>y\amp= $expr</mrow>
+          <mrow>y \amp= $a($h + <abs>$r</abs>)($h - $s)</mrow>
+          <mrow>\amp= $k</mrow>
+        </md>
+  </li>
+  <li>The vertex is <m>V = $vertex.</m></li>
+</ul>
+</example>
+
+  
+<p><em><alert>How to check your answer</alert></em>: Graph the parabola and verify its vertex.</p>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Solve for <m>h</m> by taking the average of the two roots, $r and $s:
+    <md>
+      <mrow>h \amp= \frac{r + s}{2}</mrow>
+      <mrow>\amp= \frac{<math>$r + $s</math>}{2}</mrow>
+      <mrow>\amp= $vertex.x</mrow>
+    </md></li>
+
+  <li>Substitute <m>x = h</m> into the original equation, and solve for <m>y</m> to determine <m>k</m>:
+    <conditionalContent>
+      <case condition="$r > 0 and $s > 0">
+        <md>
+          <mrow>y\amp= $expr</mrow>
+          <mrow>y \amp= $a($h - $r)($h - $s)</mrow>
+          <mrow>\amp= $k</mrow>
+        </md>
+      </case>
+      
+      <case condition="$r > 0 and $s < 0">
+        <md>
+          <mrow>y\amp= $expr</mrow>
+          <mrow>y \amp= $a($h - $r)($h + <abs>$s</abs>)</mrow>
+          <mrow>\amp= $k</mrow>
+        </md>
+      </case>
+      
+      <case condition="$r < 0 and $s > 0">
+        <md>
+          <mrow>y\amp= $expr</mrow>
+          <mrow>y \amp= $a($h + <abs>$r</abs>)($h - $s)</mrow>
+          <mrow>\amp= $k</mrow>
+        </md>
+      </case>
+      
+      <case condition="$r < 0 and $s < 0">
+        <md>
+          <mrow>y\amp= $expr</mrow>
+          <mrow>y \amp= $a($h + <abs>$r</abs>)($h + <abs>$s</abs>)</mrow>
+          <mrow>\amp= $k</mrow>
+        </md>
+      </case>
+    </conditionalContent> 
+  </li>
+  <li>The vertex is <m>V = $vertex.</m></li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

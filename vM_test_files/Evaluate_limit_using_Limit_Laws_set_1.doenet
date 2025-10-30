@@ -1,0 +1,220 @@
+<problem sectionWideCheckWork><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="9"/>
+  <select name="b">2 3 4</select>
+  <selectFromSequence name="c" from="1000" to="10000" step="1000"/> 
+  <math name="expra">(x^($b) - ($a^x)/$c)</math>
+  <math name="sola">-1/$c</math>
+  <select assignNames="d e f" numToSelect="3">2 3 4 5</select>
+  <function name="funcb">
+    <math name="exprb">((1 + $d x)/ (1 + $e x^2 + $f x^4))^3</math>
+  </function>
+  <math name="solb" simplify>$$funcb(1)</math>
+  <math name="exprc">$a ln(x)</math>
+  <selectFromSequence name="g" from="1" to="8"/>
+  <math name="h" simplify>-$g</math>
+  <math name="exprd">|x + $g|</math>
+  <math name="sold">0</math>
+</setup>
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>sola = $sola</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>exprb = $exprb</p>
+<p>solb = $solb</p> -->
+<!-- /testing -->
+
+  
+
+  
+<p>Evaluate the limit, if it exists.</p>
+
+<p>a) <m>\displaystyle \lim_{x \to 0} \bigg( $expra \bigg)  = </m> 
+  <answer name="ans1a">$sola</answer>
+</p>
+
+<p>b) <m>\displaystyle \lim_{x \to 1} $exprb = </m> 
+  <answer name="ans1b">$solb</answer>
+</p>
+
+<p>c) <m>\displaystyle \lim_{x \to 0} $exprc = </m> 
+  <answer name="ans1c">
+      <award>DNE</award>
+      <award>dne</award>
+    </answer>
+</p>
+
+<p>d) <m>\displaystyle \lim_{x \to $h} $exprd = </m> 
+  <answer name="ans1d">$sold</answer>
+</p>
+
+<p><em>Note, if a limit or a function value does not exist, type "DNE" in the answer blank.</em></p>
+
+
+</problem>
+
+<solution>
+<p><m>$sola, \; $solb, \; DNE, \; $sold</m></p>
+</solution>
+
+<div name="source_a" hide>[TMPL]/Library/UCSB/Stewart5_2_2/Stewart5_2_2_35.pg"
+<!--## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Rules of limits - basic)
+## Institution(UCSB)
+## Level(2)
+## Static(1)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.2')
+## Problem1('35')
+## KEYWORDS('Product','Quotient','Differentiation')
+
+DOCUMENT();
+
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "PGcourse.pl"
+);
+
+TEXT(&beginproblem);
+$showPartialCorrectAnswers = 1;
+$a=random(1,10,1)*random(-1,1,2);
+$b=random(1,10,1)*random(-1,1,2);
+$c=random(1,10,1)*random(-1,1,2);
+
+BEGIN_TEXT
+
+$PAR
+
+Find \(\displaystyle \lim_{x \to 0} (x^2-\frac{2^x}{1000})\)
+
+$PAR
+
+\{ans_rule(10)\}
+
+END_TEXT
+
+ANS(fun_cmp(" -.001 ", var=>["i","n"]));
+
+ENDDOCUMENT(); -->
+</div>
+
+
+<div name="source_b" hide>[TMPL]/Library/UCSB/Stewart5_2_3/Stewart5_2_3_7.pg".
+<!-- ## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Rules of limits - basic)
+## Institution(UCSB)
+## MLT(limbasicratpluspower)
+## MLTleader(1)
+## Level(2)
+## Static(1)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.3')
+## Problem1('7')
+## KEYWORDS('Product','Quotient','Differentiation')
+
+DOCUMENT();
+
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "PGcourse.pl"
+);
+
+TEXT(&beginproblem);
+$showPartialCorrectAnswers = 1;
+$a=random(1,10,1)*random(-1,1,2);
+$b=random(1,10,1)*random(-1,1,2);
+$c=random(1,10,1)*random(-1,1,2);
+
+BEGIN_TEXT
+
+$PAR
+
+Evaluate the limit, by using the appropriate Limit Law(s). $PAR
+\(\displaystyle \lim_{x \to 1} \left(\frac{1+3x}{1+4x^2+3x^4}\right)^3\)
+
+$PAR
+
+\{ans_rule(10)\}
+
+END_TEXT
+
+ANS(num_cmp(1/8));
+
+ENDDOCUMENT(); -->
+</div>
+
+<div name="source_c" hide>Library/Valdosta/APEX_Calculus/1.3/APEX_1.3_21.pg</div>
+
+
+<div name="source_d" hide>
+<!-- ## DESCRIPTION
+## Calculus: Limits and Derivatives
+## ENDDESCRIPTION
+
+## Tagged by LD
+
+
+## DBsubject(Calculus - single variable)
+## DBchapter(Limits and continuity)
+## DBsection(Rules of limits - basic)
+## Date(5/26/2005)
+## Institution(UCSB)
+## Author(Jeff Holt)
+## Level(2)
+## MO(1)
+## TitleText1('Calculus: Early Transcendentals')
+## AuthorText1('Stewart')
+## EditionText1('5')
+## Section1('2.3')
+## Problem1('')
+## TitleText2('Calculus: Early Transcendentals')
+## AuthorText2('Stewart')
+## EditionText2('6')
+## Section2('2.3')
+## Problem2('')
+## KEYWORDS('limits', 'derivatives','Product','Quotient','Differentiation')
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "MathObjects.pl",
+  "PGcourse.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+$a = random(1,8,1);
+$b=-$a;
+
+BEGIN_TEXT
+Evaluate the limit
+\[ \lim_{ x \rightarrow $b } |x + $a|\]
+Enter $BBOLD Inf $EBOLD for \(\infty\), $BBOLD -Inf $EBOLD for \(-\infty\),
+and $BBOLD DNE $EBOLD if the limit does not exist.
+$PAR Limit = \{ans_rule(25) \}
+$BR
+END_TEXT
+
+$ans = (0);
+#ANS(num_cmp($ans,strings=>["I","-I","DNE"]));
+ANS(Compute($ans)->cmp());
+ENDDOCUMENT();        # This should be the last executable line in the problem. -->
+</div>
+  

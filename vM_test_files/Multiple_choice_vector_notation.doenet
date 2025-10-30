@@ -1,0 +1,124 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the nonsensical notation in a list of different correct vector notations. Parameters are randomized and the order of choices is shuffled.
+
+(TR-Vectors #16 TR2831)
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-3" to="3" exclude="0"/> 
+  <selectFromSequence name="b" from="-3" to="3" exclude="0"/>
+  <selectFromSequence name="c" from="2" to="4"/>
+  <selectFromSequence name="d" from="2" to="5"/>
+  <selectFromSequence name="e" from="2" to="5"/>
+  <math name="x1" simplify>$a $c</math>
+  <math name="x2" simplify>$b $c</math>
+  <vector name="w" displayWithAngleBrackets>($d, $e)</vector>
+  <math name="dx" simplify>$x1 + $d</math>
+  <math name="dy" simplify>$x2 + $e</math>
+  <vector name="u" displayWithAngleBrackets>($dx, $dy)</vector>
+  <math name="choice1expr" simplify="numberspreserveorder" format="latex">$x1 \vec{i} + $x2 \vec{j}</math>
+  <math name="choice2" simplify="numberspreserveorder" format="latex">$c \langle $a, $b \rangle</math>
+  <m name="choice3">r = <math simplify>|$x1 + $x2|</math>,\; \theta = \arctan(<math simplify>-$x1</math>)</m>
+  <m name="choice4">\vec{u} - \vec{w},\;\text{where}\;\vec{u} = $u, \;\text{and}\;\vec{w} = $w</m>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>x1 = $x1</p>
+<p>x2 = $x2</p>
+<p>u = $u</p>
+<p>w = $w</p> -->
+<!--testing-->
+
+<p>Which of the following is NOT a correct way to express the vector <m>\vec{v} = \langle $x1, $x2 \rangle</m> ?</p>
+
+
+<p><answer name="ans1" shuffleOrder>
+     <choice>$choice1expr , where <m>\vec{i} = \langle 1, 0 \rangle</m> and <m>\vec{j} = \langle 0, 1 \rangle</m></choice>
+     <choice>$choice2</choice>
+     <choice credit>$choice3</choice>
+     <choice>$choice4</choice>
+</answer>
+</p>
+   
+
+
+
+
+    
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$choice3</p>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

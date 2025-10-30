@@ -1,0 +1,353 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve the trigonometric equation 2cos(theta) + a = b for theta, where x values are selected from the unit circle. Four nonnegative solutions and two negative solutions for theta are required, as well as the period. A graphical tool is provided for visualization of solutions (graph the curve; do the solution points lie on the curve?)
+
+*************************************************************--> 
+
+
+<problem><title/>
+<setup>
+ <select assignNames="(n d theta1 offset1 offset2)">
+   <option>
+     <math>1</math>
+     <math>2</math>
+     <math>60</math>
+     <math>60</math>
+     <math>300</math>
+   </option>
+   <option>
+     <math>sqrt(2)</math>
+     <math>2</math>
+     <math>45</math>
+     <math>45</math>
+     <math>315</math>
+   </option>
+   <option>
+     <math>sqrt(3)</math>
+     <math>2</math>
+     <math>30</math>
+     <math>30</math>
+     <math>330</math>
+   </option>
+   <option>
+     <math>-1</math>
+     <math>2</math>
+     <math>120</math>
+     <math>120</math>
+     <math>240</math>
+   </option>
+   <option>
+     <math>-sqrt(2)</math>
+     <math>2</math>
+     <math>135</math>
+     <math>135</math>
+     <math>225</math>
+   </option>
+   <option>
+     <math>-sqrt(3)</math>
+     <math>2</math>
+     <math>150</math>
+     <math>150</math>
+     <math>210</math>
+   </option>
+ </select>
+  <math name="a" simplify>$n / $d</math>
+  <boolean name="test">$a = cos($theta1 pi/180)</boolean>
+  <number name="zeroF" fixed>0</number>
+  <math name="secondTerm" simplify>-$n</math>
+  <math name="eq" simplify="numberspreserveorder">$d cos(theta) + $secondTerm = 0</math>
+  <math name="period">2pi</math>
+  <math name="periodD">360</math>
+  
+  <periodicSet name="sol1" period="$periodD" offsets="$offset1" minIndexAsList="-2" maxIndexAsList="4"/>
+
+  <periodicSet name="sol2" period="$periodD" offsets="$offset2" minIndexAsList="-2" maxIndexAsList="4"/>
+
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>theta1 = $theta1</p>
+<p>eq = $eq</p>
+<p>test = $test</p>
+<p>period = $period</p>
+<p>periodD = $periodD</p> -->
+
+<!--testing-->
+
+<p>Find the angles in degrees that solve the equation below. List four non-negative angles, two negative angles, and how often the pattern repeats (the period). Express your answer in degrees (but do not write the degree symbol in your answer.)</p>
+<me>$eq</me>
+
+
+<aside><title>Graphing Tool</title>
+
+<setup>
+  <function name="userF" variables="theta">$userEq</function>
+  <line name="userLine" styleNumber="8">y = $userRHS</line>
+  <point name="p1" styleNumber="9" showCoordsWhenDragging="false" fixLocation>($userTheta1G pi/180, $userRHS)
+    <label><m>P_1</m></label>
+  </point>
+  <point name="p2" styleNumber="10" showCoordsWhenDragging="false" fixLocation>($userTheta2G pi/180, $userRHS)
+    <label><m>P_2</m></label>
+  </point>
+  <point name="p3" styleNumber="11"showCoordsWhenDragging="false" fixLocation>($userTheta3G pi/180, $userRHS)
+    <label><m>P_3</m></label>
+  </point>
+  <point name="p4" styleNumber="12"showCoordsWhenDragging="false" fixLocation>($userTheta4G pi/180, $userRHS)
+    <label><m>P_4</m></label>
+  </point>
+  <point name="p5" styleNumber="11"showCoordsWhenDragging="false" fixLocation>($userTheta5G pi/180, $userRHS)
+    <label><m>P_5</m></label>
+  </point>
+  <point name="p6" styleNumber="12"showCoordsWhenDragging="false" fixLocation>($userTheta6G pi/180, $userRHS)
+    <label><m>P_6</m></label>
+  </point>
+  <function name="onePeriodF" domain="[$p1.x, $p1.x + $period]" styleNumber="9">$userF</function>
+</setup>
+
+
+<p>First, rearrange the equation to isolate the trigonometric function on the left-hand side.</p>
+<sideBySide widths="30% 70%">
+<div>
+ 
+  <p>Enter the simplified left-hand side of the given equation as a function of <m>\theta</m><footnote>To enter the greek letter, type "theta"</footnote>:</p>
+  <p><m>f(\theta) = </m><mathInput name="userEq"/></p>
+  <p>Graph the right-hand side as a line.</p>
+  <p><m>y = </m><mathInput name="userRHS"/></p>
+  
+  <p>Note, <m>f(\theta) = y</m> at the intersection points.</p>
+</div>
+
+<div>  
+  <graph xmin="-4pi" xmax="9pi" ymin="-2" ymax="2" displayXAxisTickLabels="false" aspectRatio="4/3">
+   $userF $userLine $p1 $p2 $p3 $p4 $p5 $p6
+    <function copySource="onePeriodF" hide="!$highlight"/>
+    <regionBetweenCurveXAxis name="region" function="$onePeriodF" styleNumber="3" boundaryValues="$p1.x ($p1.x + $period)"  hide="!$highlight"/>
+    <label anchor="(5pi, -1.5)">Note, angles entered in degrees have been converted to radians for graphing.</label>
+  </graph>
+  <booleanInput name="highlight" prefill="true">
+    <label>Highlight one period</label>
+  </booleanInput><footnote>Enter the function value, and a value for the first point to activate this feature.</footnote>
+</div>
+</sideBySide>
+
+  
+<sideBySide>
+<div>
+  <p>Check non-negative intersection points, <m>(\theta, $userRHS)</m>:</p>
+  <p><m>P_1 = \bigg( </m> <mathInput name="userTheta1G" bindValueTo="$userTheta1"/><m>^{\circ}, $userRHS\bigg)</m></p>
+  
+  <p><m>P_2 = \bigg( </m> <mathInput name="userTheta2G" bindValueTo="$userTheta2"/><m>^{\circ}, $userRHS\bigg)</m></p>
+
+  <p><m>P_3 = \bigg( </m> <mathInput name="userTheta3G" bindValueTo="$userTheta3"/><m>^{\circ}, $userRHS\bigg)</m></p>
+
+  <p><m>P_4 = \bigg( </m> <mathInput name="userTheta4G" bindValueTo="$userTheta4"/><m>^{\circ}, $userRHS\bigg)</m></p>
+</div>
+
+<div>
+  <p>Check negative intersection points, <m>(\theta, $userRHS)</m>:</p>
+  <p><m>P_5 = \bigg( </m> <mathInput name="userTheta5G" bindValueTo="$userTheta5"/><m>^{\circ}, $userRHS\bigg)</m></p>
+  
+  <p><m>P_6 = \bigg( </m> <mathInput name="userTheta6G" bindValueTo="$userTheta6"/><m>^{\circ}, $userRHS\bigg)</m></p>
+</div>
+</sideBySide>
+  
+</aside>
+
+<p>List four non-negative angles: <m>\theta = </m>
+  <mathInput name="userTheta1" prefill="x"/><m>^{\circ}</m>, 
+  <mathInput name="userTheta2" disabled="$userTheta1 = x"/><m>^{\circ}</m>,
+  <mathInput name="userTheta3" disabled="$userTheta1 = x"/><m>^{\circ}</m>,
+  <mathInput name="userTheta4" disabled="$userTheta1 = x"/><m>^{\circ}</m></p>
+
+<p>List two negative angles: <m>\theta = </m>
+  <mathInput name="userTheta5" disabled="$userTheta1 = x"/><m>^{\circ}</m>, 
+  <mathInput name="userTheta6" disabled="$userTheta1 = x"/><m>^{\circ}</m></p>
+
+<p>Answers repeat every: 
+  <m>\text{Period} = </m><mathInput name="userPeriod" prefill="0"/><m>^{\circ}</m></p>
+
+<setup>
+  <boolean name="theta1Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta1 pi/180) = $a</boolean>
+  <boolean name="theta1Pos">$userTheta1 >= 0</boolean>
+  <boolean name="theta1Unique">
+  $userTheta1 != $userTheta2 and
+  $userTheta1 != $userTheta3 and
+  $userTheta1 != $userTheta4 and
+  $userTheta1 != $userTheta5 and
+  $userTheta1 != $userTheta6
+  </boolean>
+  <boolean name="theta1Correct">$theta1Valid and $theta1Pos and $theta1Unique</boolean>
+
+  
+  <math name="refAngle2">$userTheta2 - $userTheta1</math>
+  <boolean name="theta2Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta2 pi/180) = $a</boolean>
+  <boolean name="theta2Pos">$userTheta2 >= 0</boolean>
+  <boolean name="theta2Unique">
+  $userTheta2 != $userTheta1 and
+  $userTheta2 != $userTheta3 and
+  $userTheta2 != $userTheta4 and
+  $userTheta2 != $userTheta5 and
+  $userTheta2 != $userTheta6</boolean>
+  <boolean name="theta2Correct">$theta2Valid and $theta2Pos and $theta2Unique</boolean>
+  
+
+  <math name="refAngle3">$userTheta3 - $userTheta1</math>
+  <boolean name="theta3Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta3 pi/180) = $a</boolean>
+  <boolean name="theta3Pos">$userTheta3 >= 0</boolean>
+  <boolean name="theta3Unique">
+  $userTheta3 != $userTheta2 and
+  $userTheta3 != $userTheta1 and
+  $userTheta3 != $userTheta4 and
+  $userTheta3 != $userTheta5 and
+  $userTheta3 != $userTheta6
+  </boolean>
+  <boolean name="theta3Correct">$theta3Valid and $theta3Pos and $theta3Unique</boolean>
+
+
+
+  <math name="refAngle4">$userTheta4 - $userTheta1</math>
+  <boolean name="theta4Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta4 pi/180) = $a</boolean>
+  <boolean name="theta4Pos">$userTheta4 >= 0</boolean>
+  <boolean name="theta4Unique">
+  $userTheta4 != $userTheta2 and
+  $userTheta4 != $userTheta1 and
+  $userTheta4 != $userTheta3 and
+  $userTheta4 != $userTheta5 and
+  $userTheta4 != $userTheta6
+  </boolean>
+  <boolean name="theta4Correct">$theta4Valid and $theta4Pos and $theta4Unique</boolean>
+
+
+  <math name="refAngle5">$userTheta1 - $userTheta5</math>
+  <boolean name="theta5Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta5 pi/180) = $a</boolean>
+  <boolean name="theta5Neg">$userTheta5 < 0</boolean>
+  <boolean name="theta5Unique">
+  $userTheta5 != $userTheta2 and
+  $userTheta5 != $userTheta1 and
+  $userTheta5 != $userTheta4 and
+  $userTheta5 != $userTheta3 and
+  $userTheta5 != $userTheta6
+  </boolean>
+  <boolean name="theta5Correct">$theta5Valid and $theta5Neg and $theta5Unique</boolean>
+
+
+  
+  <math name="refAngle6">$userTheta1 - $userTheta6</math>
+  <boolean name="theta6Valid" allowedErrorInNumbers="0.00001" allowedErrorIsAbsolute>cos($userTheta6 pi/180) = $a</boolean>
+  <boolean name="theta6Neg">$userTheta6 < 0</boolean>
+  <boolean name="theta6Unique">
+  $userTheta6 != $userTheta2 and
+  $userTheta6 != $userTheta1 and
+  $userTheta6 != $userTheta4 and
+  $userTheta6 != $userTheta5 and
+  $userTheta6 != $userTheta3
+  </boolean>
+  <boolean name="theta6Correct">$theta6Valid and $theta6Neg and $theta6Unique</boolean>
+  
+  <boolean name="periodCorrect">$userPeriod = $periodD</boolean>
+
+  <boolean name="oneDuplicated">$theta2Unique = false or $theta3Unique = false or $theta4Unique = false or $theta5Unique = false or $theta6Unique = false</boolean>
+
+  <boolean name="oneSignError">$theta1Pos = false or $theta2Pos = false or $theta3Pos = false or $theta4Pos = false or $theta5Neg = false or $theta6neg = false</boolean>
+
+</setup>
+
+
+<answer name="ans1" disabled="$userTheta1 = x or $userPeriod = 0">
+  <award name="correct">
+    <when>$theta1Correct and $theta2Correct and $theta3Correct and $theta4Correct and $theta5Correct and $theta6Correct and $periodCorrect</when>
+  </award>
+</answer>
+
+  <em>Enter the period and at least one positive angle to check your answer.</em>
+
+<!-- testing -->
+<!-- <p>theta1Correct = $theta1Correct</p>
+<p>theta2Correct = $theta2Correct</p>
+<p>theta3Correct = $theta3Correct</p>
+<p>theta4Correct = $theta4Correct</p>
+<p>theta5Correct = $theta5Correct</p>
+<p>theta6Correct = $theta6Correct</p>
+<p>periodCorrect = $periodCorrect</p> -->
+<!-- /testing  -->
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$periodD != $userPeriod and $ans1.responseHasBeenSubmitted">The period is incorrect.</feedback>
+
+  <feedback condition="$oneDuplicated and $ans1.responseHasBeenSubmitted = true">One or more of your angles is duplicated. Provide all unique angles.</feedback>
+
+  <feedback condition="$oneSignError and $ans1.responseHasBeenSubmitted = true">One or more of your angles has the incorrect sign (or is currently blank).</feedback>
+
+  
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul> 
+<li><p>Any combination of angles from the following two periodic sets will be marked correct: 
+  <me>\{$sol1.asList\}^{\circ}</me></p>
+  <conditionalContent>
+    <case condition="$a = 1 or $a = -1">
+      <em>No other sets of solutions for this case.</em>
+    </case>
+    <else>
+      <me>\{$sol2.asList\}^{\circ}</me>
+    </else>
+  </conditionalContent>
+</li>
+<li>
+<p>The period is <m>$periodD^{\circ}</m></p></li>
+</ul>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

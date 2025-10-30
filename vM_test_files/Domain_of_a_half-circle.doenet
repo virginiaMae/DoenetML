@@ -1,0 +1,143 @@
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="10"/>
+  <math name="b" simplify>$a^2</math>
+  <select name="c">-1 1</select>
+  <function name="f" simplify="numbersPreserveOrder" styleNumber="5">$c sqrt($b - x^2)
+    <label><m>f(x)</m></label>
+  </function>
+  <math name="interval">[-$a,$a]</math>
+  <subsetOfReals name="ineq">[-$a,$a]</subsetOfReals>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>interval = $interval</p> -->
+
+<!--testing-->
+
+
+<p>What is the domain of the function:</p>
+<p>
+<m>\large{f(x) = $f.formula{simplify="numbersPreserveOrder"}}</m>
+</p>
+  
+
+<p><alert>Answer:</alert> Domain = 
+
+  <answer name="ans1" forceFullCheckworkButton>
+    <mathInput name="userDomain" />
+    <award name="allCorrect">
+      <when>$userDomain = $interval or $userDomain = <subsetOfReals displayMode="inequalities">$interval</subsetOfReals></when>
+    </award>
+  </answer>
+</p>
+
+<p><em>Note: To enter a symbol for "less than or equal to" you can enter a " < " symbol followed by a " = " symbol.</em></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review the definition for the domain of a function, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-3-the-domain-and-range-of-a-function/">here</ref>.</feedback>
+
+<section boxed><title>Graph of function</title>
+<sideBySide margins="2%" widths="60% 40%">
+<graph size="full" xmin="-$a-2" xmax="$a + 2" ymin="-$a - 2" ymax="$a + 2" showNavigation="false" >
+    $f
+</graph>
+
+<section><title>Text Description of Graph:</title> 
+  <p>A cartesian axis is shown with the x-axis ranging from negative 6 to positive 6, and the y-axis ranging from negative 6 to positive 6. On the graph, there is semicircular cirve that is centered at the origin. The location of the semicircle is above the x-axis. The semicircle terminates at the x-axis in two locations, at the point <m>(-5,0)</m> and at the point <m>(5,0)</m>. The semicircle passes through the y-axis at <m>(0,5)</m>.</p>
+</section>
+</sideBySide>
+</section>
+
+
+
+
+ 
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+  <setup>
+  <math name="a">12</math>
+  <math name="b" simplify>$a^2</math>
+  <function name="f">sqrt($b - x^2)</function>
+  <math name="interval">[-$a,$a]</math>
+</setup>
+<p><em>The domain of the function, <m>f(x) = $f</m> <nbsp/><nbsp/> is:</em></p>
+
+<graph size="small" xmin="-$a-2" xmax="$a + 2" ymin="-$a - 2" ymax="$a + 2" showNavigation="false">
+    $f
+</graph>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>The <term>domain</term> of a function consists of the interval of input values over which the function is defined. Notice that the given function involves a square root operation. Since our function is defined for real numbers only, we know that the expression under the square root cannot evaluate to a negative number. For what values of the input, <m>x</m>, is the expression under the square root a non-negative number?
+    <md>
+      <mrow>$b - x^2 &\geq 0</mrow>
+      <mrow>$b &\geq x^2</mrow>
+      <mrow>\pm \sqrt{$b} &\geq x</mrow>
+      <mrow>\pm $a &\geq x</mrow>
+    </md>
+Notice that we must also consider negative values for <m>x</m>, since <m>x</m> is squared in our original expression.</p></li>
+
+  <li><p>We now know that our function is defined everywhere between <m>-$a</m> and <m>$a</m>. In interval notation, we can write this as <math>[-$a,$a]</math>.</p>
+  </li>
+</ul>
+</example>
+
+</hint>
+   -->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>$interval or <subsetOfReals displayMode="inequalities">$interval</subsetOfReals></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

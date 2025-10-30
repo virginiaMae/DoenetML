@@ -1,0 +1,143 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor and simplify a rational expression. Numerator has constant GCF and denominator is a cubic with difference of squares factors.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="3"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <selectFromSequence name="c" from="2" to="5"/>
+  <selectFromSequence name="d" from="2" to="4"/>
+  
+  <math name="commonFactor">x + $a</math>
+  <math name="numerator">$d(x + $a)(x + $b)</math>
+  <math name="numeratorSimp">$d (x + $b)</math>
+  <math name="denominator">(x - $a)(x + $a)(x - $c)</math>
+  <math name="denominatorSimp">(x - $a)(x - $c)</math>
+  <math name="fullExprExp">$numerator{expand}/$denominator{expand}</math>
+  <math name="factoredExpr">$numerator/$denominator</math>
+  <math name="factoredExprSimp">$numeratorSimp/$denominatorSimp</math>
+  <math name="numeratorNegAns">- $d (-x - $b)/$denominatorSimp</math>
+  <math name="denominatorNegAns1">$numeratorSimp/(-(-x + $a)(x - $c))</math>
+  <math name="denominatorNegAns2">$numeratorSimp/(-(x - $a)(-x + $c))</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>fullExprExp = $fullExprExp</p>
+<p>factoredExpr = $factoredExpr</p>
+<p>factoredExprSimp = $factoredExprSimp</p>
+<p>$numeratorNegAns = $numeratorNegAns{simplify}</p>
+<p>$denominatorNegAns1 = $denominatorNegAns1{simplify}</p>
+<p>$denominatorNegAns2 = $denominatorNegAns2{simplify}</p> -->
+<!--testing-->
+  
+<p>Factor the numerator and denominator and cancel any common factors to reduce the fraction to simplest terms. 
+  <me>$fullExprExp</me>
+</p>
+  <p><m>\displaystyle $fullExprExp = </m>
+      
+    <answer name="ans76" >
+      <mathInput name="userFraction" prefill="/"/> 
+      <award symbolicEquality="true" simplifyOnCompare name="correct">     
+        <when>
+      $userFraction=$factoredExprSimp
+        </when>
+      </award>
+
+
+      <award name="noCancelling" symbolicEquality="true" simplifyOnCompare credit="1/4">           
+        <when>
+      $userFraction=$factoredExpr
+        </when>
+      </award>
+
+      <award name="numeratorNegative" symbolicEquality="true" simplifyOnCompare credit="1">           
+        <when>
+      $userFraction=$numeratorNegAns
+        </when>
+      </award>
+
+      <award name="denominatorNegative1" symbolicEquality="true" simplifyOnCompare credit="1">           
+        <when>
+      $userFraction=$denominatorNegAns1
+        </when>
+      </award>
+      
+      <award name="denominatorNegative2" symbolicEquality="true" simplifyOnCompare credit="1">           
+        <when>
+      $userFraction=$denominatorNegAns2
+        </when>
+      </award>
+
+      <award name="noChanges" credit="0">
+    <when>$userFraction=$fullExprExp</when>
+      </award>
+  </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct or $numeratorNegative or $denominatorNegative1 or $denominatorNegative2">Great job!</feedback>
+  
+  <feedback condition="$noCancelling">
+  <p>Do you see any common factors that can be cancelled?</p>
+<p><em>How to check</em>: Look for common binomial terms (terms that look like <m>(x + a)</m>). If you have binomial terms that are exactly the same in the numerator and the denominator, they will cancel out, because <me>\frac{(x+a)}{(x+a)} = 1.</me></p>
+  </feedback>
+
+  <feedback condition="$noChanges">
+    <div name="helpText">
+    <p>First, check to see if the terms in either the numerator or the denominator have a greatest common factor that can be factored out first. Then, factor the numerator and the denominator separately.</p>
+<p>The denominator is a cubic expression, so first be sure to check if it can be factored by grouping. Finally, look for common factors in the numerator and the denominator that can be cancelled out. Here is a similar worked example:
+    <md>
+      <mrow>\frac{3x^2 + 6}{x^3 + 2x^2 + 5x + 10} \amp= \frac{3x(x + 2)}{x^3 + 2x^2 + 5x + 10}\;\;\text{factor out GCF}</mrow>
+      <mrow>\amp=\frac{3x(x + 2)}{x^2(x+2) + 5(x + 2)}\;\;\text{begin factoring denominator by grouping}</mrow>
+      <mrow>\amp=\frac{3x(x + 2)}{(x^2 + 5)(x+2)}\;\;\text{complete factoring denominator}</mrow>
+      <mrow>\amp=\frac{3x}{x^2 + 5}\;\;\text{cancel common factors}</mrow>
+    </md> 
+  </p>  
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+    </div>
+  </feedback>
+
+  <feedback condition="$ans76.numSubmissions > 2 and $ans76.creditAchieved != 1">
+    $helpText
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    <p>First, check to see if the terms in either the numerator or the denominator have a greatest common factor that can be factored out first. Then, factor the numerator and the denominator separately.</p>
+<p>The denominator is a cubic expression, so first be sure to check if it can be factored by grouping. Finally, look for common factors in the numerator and the denominator that can be cancelled out. Here is a similar worked example:
+    <md>
+      <mrow>\frac{3x^2 + 6}{x^3 + 2x^2 + 5x + 10} \amp= \frac{3x(x + 2)}{x^3 + 2x^2 + 5x + 10}\;\;\text{factor out GCF}</mrow>
+      <mrow>\amp=\frac{3x(x + 2)}{x^2(x+2) + 5(x + 2)}\;\;\text{begin factoring denominator by grouping}</mrow>
+      <mrow>\amp=\frac{3x(x + 2)}{(x^2 + 5)(x+2)}\;\;\text{complete factoring denominator}</mrow>
+      <mrow>\amp=\frac{3x}{x^2 + 5}\;\;\text{cancel common factors}</mrow>
+    </md> 
+  </p>  
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+  
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>The numerator, <m>$numerator{expand}</m> can be factored into <m>$numerator{simplify}</m>.</p>
+<p>The denominator, <m>$denominator{expand}</m> can be factored into <m>$denominator{simplify}</m>.</p>
+<p>Therefore, the fraction becomes
+  <me>$factoredExpr{simplify}</me>
+which can be simplified by cancelling the common factor <m>($commonFactor{simplify})</m>. We then have
+  <me>$factoredExprSimp.</me></p>
+</solution>
+</problem>

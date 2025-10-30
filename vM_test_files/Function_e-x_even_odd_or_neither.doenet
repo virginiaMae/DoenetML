@@ -1,0 +1,145 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the type of symmetry (even, odd, or neither) given the graph of e^(-x_. 
+
+(BA-Basics #62 BA13237)
+*************************************************************-->
+<problem>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>f(x) = $f</p>
+-->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+  
+<p>Is the function graphed below even, odd, or neither?</p>
+<me>f(x) = $f</me>
+<graph name="g1" xmin="-3" xmax="3" ymin="-2" ymax="10">
+ <function name="f">e^(-x)</function>
+</graph>
+
+<!--*********************************************
+            Graphing tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <p>Check if <alert>even:</alert>
+ </p>
+  <p><booleanInput name="showEven" prefill="true"/>
+    <m>f(-x) = </m> <mathInput name="miEven"/>  
+  </p>
+  <p>Check if <alert>odd:</alert></p>
+    <p><booleanInput name="showOdd" prefill="true"/>
+    <m>- f(-x) = </m> <mathInput name="miOdd"/>
+  </p>
+ 
+  
+  <setup>
+  <function name="miFunction">$mi</function>
+  <function name="evenFunction" styleNumber="8" hide="!$showEven">$miEven</function>
+  <function name="oddFunction" styleNumber="9" hide="!$showOdd">$miOdd</function>
+  </setup>
+</div>
+  
+<graph>
+  $miFunction $evenFunction $oddFunction
+</graph>
+</sideBySide>
+
+</aside>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1">
+  <choice>even</choice>
+  <choice>odd</choice>
+  <choice credit>neither</choice>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><term>Even functions</term> have the following property:
+  <me>f(x) = f(-x)</me>
+  </p>
+  <p><term>Odd functions</term> have the following property:
+  <me>f(x) = -f(-x)</me>
+  </p>
+  <p>You can overlay the graph of <m>f(x)</m> with the graphs of <m>f(-x)</m>  and <m>-f(-x)</m> to informally check if a function is even or odd. You can also compare the two functions algebraically.</p>
+  <p>The graph below illustrates that the given function, <m>f(x) = $f</m>, is neither an even function nor an odd function.</p>
+  <graph copySource="g1" ymin="-4">
+    <function name="solF" copySource="f"/>
+    <booleanInput name="showAlt" anchor="(-1.25,8)" prefill="true">
+      <label>Show <m>f(-x)</m></label>
+    </booleanInput>
+    <booleanInput name="showAlt2" anchor="(-1,7)" prefill="true">
+      <label>Show <m>-f(-x)</m></label>
+    </booleanInput>
+    <function name="altF" styleNumber="8" hide="!$showAlt">e^(x)</function>
+    <function name="altF2" styleNumber="8" hide="!$showAlt2">-e^(x)</function>
+    <legend position="lowerleft">
+      <label forObject="altF">$altF</label>
+      <label forObject="altF2">$altF2</label>
+      <label forObject="solF">$solF</label>
+    </legend>
+  </graph>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="13" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+</styleDefinitions>
+</setup>
+

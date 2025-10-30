@@ -1,0 +1,177 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a cubic polynomial by grouping; constant GCF and difference of squares factors.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <select name="a">
+    <option><math>1</math></option>
+    <option><math>4</math></option>
+    <option><math>9</math></option>
+  </select>
+  <select name="b">
+    <option><math>4</math></option>
+    <option><math>6</math></option>
+  </select>
+  <select name="m">
+    <option><math>2</math></option>
+    <option><math>4</math></option>
+  </select>
+  <math name="c">$m $a</math>
+  <math name="d">$m $a $b</math>
+  <math name="n">$m $b</math>
+  <math name="r" simplify>sqrt($a)</math>
+  <math name="factoredExpr">$m(x - $r)(x + $r)(x + $b)</math>
+  
+  <!--expressions for feedback for incorrect responses-->
+  <math name="groupedNotFactoredAns">$m(x^2(x + $b) - $r^2 (x + $b))</math>
+  <math name="signErrorAns1">$m(x - $r)(x - $r)(x - $b)</math>
+  <math name="signErrorAns2">$m(x - $r)(x - $r)(x + $b)</math>
+  <math name="signErrorAns3">$m(x - $r)(x + $r)(x - $b)</math>
+  <math name="noGCFAns1">($m x +$m $b)(x - $r)(x+$r)</math>
+  <math name="noGCFAns2">(x + $b)($m x - $m $r)(x + $r)</math>
+  <math name="noGCFAns3">(x + $b)($m x + $m $r)(x - $r)</math>
+  <math name="GCFonlyAns" simplify>$m(x^3 + $b x^2 - $r^2 x - $r^2 $b)</math>
+  <math name="diffSquaresAns">$m (x^2 - $r^2)(x + $b)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>m = $m</p>  
+<p>c = $c</p>
+<p>d = $d</p>
+<p>n = $n</p>
+<p>GCFonlyAns = $GCFonlyAns</p>
+<p>diffSquaresAns = $diffSquaresAns</p>
+<p>signErrorAns1 = $signErrorAns1</p>
+<p>signErrorAns2 = $signErrorAns2</p>
+<p>signErrorAns3 = $signErrorAns3</p>
+<p>groupedNotFactoredAns = $groupedNotFactoredAns</p> 
+<p>noGCFAns1 = $noGCFAns1</p> 
+<p>noGCFAns2 = $noGCFAns2</p> 
+<p>noGCFAns3 = $noGCFAns3</p> 
+<p>factoredExpr = $factoredExpr</p> -->
+<!--testing-->
+
+
+<p>Factor 
+    <me>$factoredExpr{expand}.</me></p>
+
+<p><m>$factoredExpr{expand} = </m>
+
+
+  <answer name="ans25">
+  <mathInput name="userExpr"/>
+    <award symbolicEquality simplifyOnCompare>
+      <when>
+<!--         $userExpr = $factoredExpr -->
+         <hasSameFactoring allowOnlySignDifferences>$userExpr $factoredExpr</hasSameFactoring>
+      </when>
+    </award>
+    <award name="diffSquares" credit="4/5" symbolicEquality simplifyOnCompare>
+      <when>
+         <hasSameFactoring allowOnlySignDifferences>$userExpr $diffSquaresAns</hasSameFactoring>
+      </when>
+    </award>
+    <award name="signError" credit="0">
+      <when>$userExpr = $signErrorAns1 or $userExpr = $signErrorAns2 or $userExpr = $signErrorAns3</when>
+    </award>
+    <award name="noFactoring" credit="0" symbolicEquality simplifyOnCompare>
+        <when>$userExpr = $factoredExpr{expand}</when>
+    </award>
+    <award name="groupedNotFactored" credit="1/4" symbolicEquality simplifyOnCompare>
+        <when>$userExpr = $groupedNotFactoredAns</when>
+    </award>
+    <award name="noGCF1" credit="1/2" symbolicEquality simplifyOnCompare>
+      <when>$userExpr = $noGCFAns1</when>
+    </award>
+    <award name="GCFonly" credit="1/4" symbolicEquality simplifyOnCompare>
+      <when>$userExpr = $GCFonlyAns</when>
+    </award>
+    <award name="GCFonly2" credit="1/8" symbolicEquality simplifyOnCompare>
+      <when>$userExpr = $GCFonlyAns2</when>
+    </award>
+    
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+
+  <feedback condition="$noFactoring">
+  <p>To factor the expression <m>($factoredExpr{expand})</m>, means to split it into two factor or more irreducible factors, if possible. First, do all terms have a greatest common factor? </p>
+  <p>After factoring out the <m>GCF</m>, you can tackle factoring the remaining cubic expression. Here are two simple examples:</p>
+<ul>
+  <li><m>2x^3 + 2x^2 - 4x= 2x(x^2 + x - 2) = 2x(x+2)(x-1)</m></li>
+  <li><m>4x^3 + 36x^2 - 8x -72 = 4(x^2 - 2)(x+9)</m></li>
+</ul>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. Choose a possible factoring, and then FOIL it out to see if it matches your original, expanded cubic expression.</p>
+  </feedback>
+  
+    <feedback condition="$signError">
+    <p>It looks like you have a sign error somewhere.</p>
+  <p><em>How to check</em>: FOIL out your factored answer to see if it matches your original, expanded quadratic expression.</p></feedback>
+  
+   <feedback condition="$groupedNotFactored">
+    <p>Looks like you started the process of grouping, but this expression is not fully factored. Do you see any binomial terms that are repeated in this expression? Is there a greatest common factor remaining to be factored out? These can be factored out for a fully-factored final response.</p>
+     
+  <p><em>How to check</em>: FOIL out your factored answer, including the <m>GCF</m> you factored out first, to see if it matches your original, expanded quadratic expression.</p></feedback> 
+
+  <feedback condition="$noGCF1">
+  <p>It looks like this expression has a greatest common factor that can be factored out as well. Factor out the <m>GCF</m> for full credit. Here is a simple example of when a <m>GCF</m> can be factored out:</p>
+<md>
+  <mrow>2x^2 + 8x - 10 \amp= 2(x^2 + 4x - 5)</mrow>
+  <mrow>\amp=2(x-1)(x+5)</mrow>
+</md>
+  
+<p><em>How to check</em>: It is ok to use a bit of trial and error when factoring. First, find the GCD and factor it out of the entire expression. Then, look at the remaining polynomial and choose a possible factoring, and then FOIL it out (don't forget to multiply by the GCD at the final step) to see if it matches your original, expanded expression.</p>
+  </feedback>
+
+  <feedback condition="$GCFonly">
+    <p>Great job factoring out the <m>GCF</m>. For full credit, also factor the remaining expression as well.</p>
+  <p><em>How to check</em>: FOIL out your factored answer, including the <m>GCF</m> you factored out first, to see if it matches your original, expanded cubic expression.</p></feedback>
+
+  <feedback condition="$GCFonly2">
+    <p>Good start factoring out the <math simplify>$m </math>. In this case, notice that you can also factor out an <m>x</m>.</p>
+  <p>Then, make sure to factor the remaining expression as well.</p></feedback>
+
+  <feedback condition="$diffSquares">For full credit, also factor the difference of squares.</feedback>
+
+
+
+<!--*********************************************
+            Hints
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    <p>We first need to notice that this problem has a greatest common factor. Then, we can proceed to factoring the remaining cubic polynomial by grouping. Here is a similar worked example:</p>
+
+<example>
+      <md>
+        <mrow>2x^4 - 8x^3 + 22x^2 - 88x \amp= 2x(x^3 - 4x^2 + 11x - 44)\;\;\text{factor out GCF = 2}x</mrow>
+        <mrow>\amp= 2x\bigg(x^2(x - 4) + 11(x - 4)\bigg)</mrow>
+        <mrow>\amp= 2x(x - 4)(x^2 + 11)</mrow>
+      </md> 
+</example>
+<p><em>How to check</em>: Always FOIL it out to see if it matches your original expression.</p>
+    
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+<solution>  
+<p>First, factor out the <m>GCF</m>. In this problem, the <m>GCF = $m x</m>. Then, factor the remaining cubic polynomial by grouping.</p>
+  <md>
+    <mrow>$factoredExpr{expand} \amp= $GCFonlyAns</mrow>
+    <mrow>\amp=$factoredExpr</mrow>
+  </md>
+</solution>
+</problem>

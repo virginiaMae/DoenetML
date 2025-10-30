@@ -1,0 +1,122 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the amplitude and vertical shift of a sine wave from its graph. Variants involve amplitudes ranging from 2 to 8 and vertical shifts ranging from -4 to 4.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="8"/>
+  <selectFromSequence name="b" from="-4" to="4" exclude="0"/>
+  <function name="f">$a sin(x) + $b</function> 
+  <number name="ymin">min(-$a - 2, $b - $a - 2)</number>
+  <number name="ymax">max($a + 2, $b + $a + 2)</number>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>ymin = $ymin</p>
+<p>ymax = $ymax</p> -->
+<!--testing-->
+
+<p>For the graph below whose equation is 
+  <me>y = A \sin(x) + D.</me>
+</p>
+<p><em>tip: you can drag the $dp1.styleDescription and $fp1.styleDescription points to measure vertical distance. The $fp1.styleDescription line will snap to the midline of the wave.</em></p>
+
+<graph xmin="-8" xmax="8" xTickScaleFactor="pi" ymin="$ymin" ymax="$ymax" aspectRatio="3/2" grid="1 1">
+  $f
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="3">($dp1.x, 0.75)
+    <constraints>
+      <attractTo>$midlineHidden</attractTo>
+    </constraints>
+  </point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+  <line name="midline" through="$fp1" slope="0" styleNumber="3" applyStyleToLabel>
+    <label>Drag to midline</label>
+  </line>
+  <line name="midlineHidden" hide fixed>y = $b</line> 
+</graph>
+
+<p>Complete the equation by entering the missing <m>A</m> and <m>D</m> in the spaces provided<footnote>Note, if your vertical shift is downwards, enter a negative value for "D" in the box</footnote>.</p>
+
+<p><m>y = </m> <mathInput name="userA"/><m>\sin(x) + </m>
+  <mathInput name="userD"/>
+  <answer name="ans1">
+      <award name="correct" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute>   
+        <when>
+          $userA = $a and $userD = $b
+        </when>
+      </award>
+
+    </answer></p>
+
+<p>The equation you have entered is: 
+  <me>y = <math simplify="numberspreserveorder">$userA sin(x) + $userD</math></me></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <boolean name="aIncorrect" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute hide>$userA != $a</boolean>
+
+  <boolean name="bIncorrect" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute hide>$userD != $b</boolean>
+  
+  <feedback condition="$aIncorrect and $ans1.justsubmitted">The amplitude is incorrect.</feedback>
+
+    <feedback condition="$bIncorrect and $ans1.justsubmitted">The vertical shift is incorrect.</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>y = $f.formula </m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

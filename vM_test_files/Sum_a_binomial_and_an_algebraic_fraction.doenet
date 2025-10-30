@@ -1,0 +1,158 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify the sum of a binomial and an algebraic fraction to express as a single fraction.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-1" to="1" exclude="0"/>
+  <selectFromSequence name="b" from="2" to="5"/>
+  <selectFromSequence name="c" from="1" to="3"/>
+  <selectFromSequence name="d" from="3" to="6"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+
+  <math name="p1" simplify>x + $a$c</math>
+  <math name="p2" simplify>x + $e$d</math>
+
+  <math name="expr">$p1 + $b/$p2</math>
+  <math name="finalExprNumerator">x^2+($a$c + $e$d)x + ($a$e$c$d + $b)</math>
+  <math name="finalExprDenominator">$p2</math>
+  <math name="exprSimple">$finalExprNumerator{simplify}/$finalExprDenominator</math>
+
+  <math name="numeratorNegAns">- (-$finalExprNumerator)/$finalExprDenominator</math>
+  <math name="denominatorNegAns1">-($finalExprNumerator/(-$finalExprDenominator))</math>
+  <math name="denominatorNegAns2">-($finalExprNumerator/(-$finalExprDenominator{expand}))</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>p1 = $p1</p>
+<p>p2 = $p2</p>
+<p>p3 = $p3</p>
+<p>expr = $expr</p>
+<p>exprSimple = $exprSimple</p>
+<p>exprSimple{simplify} = $exprSimple{simplify}</p>
+<p>numeratorNegAns = $numeratorNegAns</p>
+<p>denominatorNegAns1 = $denominatorNegAns1</p>
+<p>denominatorNegAns2 = $denominatorNegAns2</p> -->
+<!--testing-->  
+
+
+  
+<p>Add or subtract the fractions and simplify to express the answer as a single reduced fraction.
+  <me>$expr</me></p>
+
+  <p><m>\displaystyle $expr = </m>
+      
+    <answer name="ans95" >
+      <mathInput name="userFraction" prefill="/"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare>
+        <when>$userFraction = $exprSimple
+        </when>
+      </award>
+
+      <award name="numeratorNegative" symbolicEquality simplifyOnCompare expandOnCompare credit="1">           
+        <when>
+      $userFraction=$numeratorNegAns
+        </when>
+      </award>
+
+      <award name="denominatorNegative" symbolicEquality simplifyOnCompare expandOnCompare credit="1">           
+        <when>
+      $userFraction=$denominatorNegAns1 or $userFraction=$denominatorNegAns2
+        </when>
+      </award>
+   
+      <award name="noChanges" credit="0">
+    <when>$userFraction=$expr</when>
+      </award>
+  </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct or $numeratorNegative or $denominatorNegative">Nice work!</feedback>
+
+
+  <feedback condition="$noChanges">
+    <div name="helpText">
+    <p>We need to find a common denominator between all terms, in order to express the answer as a single fraction. In this case, only one term is a rational expression, so the only possible choice for a common denominator is $finalExprDenominator.</p>  
+<p><em>How to check</em>: Substitute a valid value for <m>x</m> into both the original expression and your simplified expression. The values should match.</p>
+    </div>
+  </feedback>
+
+  <feedback condition="$ans95.numSubmissions > 2 and $ans95.creditAchieved != 1">
+    $helpText
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+   <p>Here is a similar worked example:</p>
+
+  <example newNameSpace>
+
+    <setup>
+  <math name="a">7</math>
+  <math name="b">5</math>
+  <math name="c">2</math>
+  <math name="d">8</math>
+  <math name="e">-1</math>
+
+  <math name="p1" simplify>x + $a$c</math>
+  <math name="p2" simplify>x + $e$d</math>
+
+  <math name="expr">$p1 + $b/$p2</math>
+  <math name="finalExprNumerator">x^2+($a$c + $e$d)x + ($a$e$c$d + $b)</math>
+  <math name="finalExprDenominator">$p2</math>
+  <math name="exprSimple">$finalExprNumerator{simplify}/$finalExprDenominator</math>
+
+  <math name="numeratorNegAns">- (-$finalExprNumerator)/$finalExprDenominator</math>
+  <math name="denominatorNegAns1">-($finalExprNumerator/(-$finalExprDenominator))</math>
+  <math name="denominatorNegAns2">-($finalExprNumerator/(-$finalExprDenominator{expand}))</math>
+</setup>
+
+
+    <p>Add or subtract the fractions and simplify to express the answer as a single reduced fraction.
+  <me>$expr</me></p>
+
+    <p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Find a common denominator. Of all three terms, only one is a rational expression, so use $finalExprDenominator.
+    <md>
+      <mrow>$expr \amp= x\cdot\frac{$p2}{$p2} + <math name="ac" simplify>$a$c</math>\cdot\frac{$p2}{$p2} + \frac{$b}{$p2}</mrow>
+      <mrow>\amp= \frac{<math simplify="numbersPreserveOrder">x($p2) + $ac($p2) + $b</math>}{$p2} </mrow>
+      <mrow>\amp= $exprSimple{simplify}</mrow>
+    </md></li>
+</ul>
+
+
+  </example>
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+  <li>Find a common denominator. Of all three terms, only one is a rational expression, so use $finalExprDenominator.
+    <md>
+      <mrow>$expr \amp= x\cdot\frac{$p2}{$p2} + <math name="ac" simplify>$a$c</math>\cdot\frac{$p2}{$p2} + \frac{$b}{$p2}</mrow>
+      <mrow>\amp= \frac{<math simplify="numbersPreserveOrder">x($p2) + $ac($p2) + $b</math>}{$p2} </mrow>
+      <mrow>\amp= $exprSimple{simplify}</mrow>
+    </md></li>
+</ul>
+</solution>
+</problem>

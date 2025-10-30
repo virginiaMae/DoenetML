@@ -1,0 +1,218 @@
+<setup>
+  <text name="source">	
+Question 33:TR-Conics/TR36/TR3603/04192016125608_TR-Conics_F5NDH11S</text>
+</setup>
+<!--*********************************************
+            Source code
+**********************************************-->
+
+<!-- 
+QUESTION: The motion of a point on a bicycle tire can be described as follows: 
+Think first of the center of the wheel (the "hub").  It has a constant height of y = 1 and an x-coordinate with x = t.  Examine the point on the circle which begins at the bottom of the circle (0,0) at time t = 0.  As t goes from t = 0 to t = 2Pi, two things happen; the hub moves in a straight line from (0,1) to (2Pi,1) and the point rotates about the hub.  If we ignore the hub moving and just look at the point rotating about the hub, the point moves unit circle backwards (i.e., clockwise) beginning at the angle 3Pi/2 at t = 0.
+
+Write a set of parametric equations to describe the motion of the red point in the animation below.  You will need to combine the motion of the hub with the motion of the point around the hub.  Your answers should be functions of t.
+
+Press the play button to start the animaiton.  You can move the slider back and forth. ;; 
+
+VARIABLES: {$$a$$[{0,1}, Integer], $$b$$[{-1,1}, Real]} ;;
+
+
+Code: (*Enter Self contained Mathematica code here. Do not remove the tag Code at the beginning of this line*)
+
+Animate[Graphics[{Line[{{-2,0},{15,0}}],Translate[Rotate[{{Thickness[.015],Circle[{0,1},1]},{Red,PointSize[0.02],Point[{0,0}],Black,Point[{0,1}],Gray,Line[{{0,0},{0,2}}],Line[{{-1,1},{1,1}}],Line[{{-Sqrt[2]/2,1-Sqrt[2]/2},{Sqrt[2]/2,1+Sqrt[2]/2}}],Line[{{-Sqrt[2]/2,1+Sqrt[2]/2},{Sqrt[2]/2,1-Sqrt[2]/2}}]}},-t],{t ,0}],PlotRange->{{0,15},{-2,2}}}],{t,0,4\[Pi]},AnimationRepetitions->1,AnimationRunning->
+False]
+
+answerLabel = {"x(t) =", "y(t) ="};;
+
+answer = {t-Sin[t],1-Cos[t]};;
+
+tolerance = 0
+
+ -->
+
+
+
+<problem newNamespace>
+<setup>
+  <number name="r">1</number>
+  <number name="arc">2 pi $r</number>
+
+  <number name="xmin">-pi/2</number>
+  <number name="xmax">9pi/4</number>
+  <number name="ymin">-1</number>
+  <number name="ymax">3 $r</number>
+
+  <math name="xOft">t - sin(t)</math>
+  <math name="yOft">1 - cos(t)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>arc = $arc</p> -->
+<!--testing-->
+
+<p>The motion of a point on a bicycle tire can be described as follows:</p> 
+
+<p>Think first of the center of the wheel (the "hub").  It has a constant height of <m>y = 1</m> and an <m>x</m>-coordinate with <m>x = t</m>.  Examine the point on the circle which begins at the bottom of the circle <m>(0,0)</m> at time <m>t = 0</m>.  As <m>t</m> goes from <m>t = 0</m> to <m>t = 2\pi</m>, two things happen; the hub moves in a straight line from <m>(0,1)</m> to <m>(2\pi,1)</m> and the point rotates about the hub.  If we ignore the hub moving and just look at the point rotating about the hub, the point moves unit circle backwards (i.e., clockwise) beginning at the angle <m>\frac{3\pi}{2}</m> at <m>t = 0</m>.</p>
+
+<p>Write a set of parametric equations to describe the motion of the red point in the animation below.  You will need to combine the motion of the hub with the motion of the point around the hub.  Your answers should be functions of <m>t</m>.</p>
+
+<p>Check the Animate box to start the animation.  You can move the slider below back and forth to check the coordinates of the point.</p>
+
+
+
+<!--*********************************************
+            Animation Graph
+**********************************************-->
+
+<setup>
+  <math name="t">$sliderPt.x</math>
+
+  <function name="fx" variable="t">$user_xOft</function>
+  <function name="fy" variable="t">$user_yOft</function>
+  <number name="zero" fixed>0</number>
+</setup>
+
+
+<div>
+<booleanInput name="animationOn"><label>Animate</label></booleanInput>
+</div>
+
+
+
+<animateFromSequence target="t" from="0" to="$arc" animationOn="$animationOn" animationInterval="100" step="pi/32"/>
+  
+<graph name="g1"  xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" identicalAxisScales xTickScaleFactor="pi/4" size="large" showNavigation="false">
+  <point name="center" styleNumber="5">($t, $r)</point>
+
+  <point name="animationPt" styleNumber="2" layer="2">($r($t - sin($t)), $r(1 - cos($t)))
+    <label><m>P</m></label>
+  </point>
+  <label anchor="(pi/2, 2.5)"><m>P = $animationPt.coords</m></label>
+  <circle name="tire" radius="1" center="$center" styleNumber="11" filled/>
+  <curve variable="t" parMin="0" parMax="$t" styleNumber="2">($r(t - sin(t)), $r(1 - cos(t)))</curve>
+  <curve variable="t" parMin="0" parMax="$arc" styleNumber="6">($r(t - sin(t)), $r(1 - cos(t)))</curve>
+    <curve name="userCurve" variable="t" parMin="0" parMax="2pi" hide="!$showUserCurve">
+    ($user_xOft, $user_yOft)
+  </curve>
+</graph>
+
+<graph name="gSlider"  xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="1" identicalAxisScales showBorder="false" displayYAxis="false" showNavigation="false" xTickScaleFactor="pi/4" size="large">
+  <lineSegment endpoints="(0,0) (2pi, 0)" styleNumber="10"/>
+  <point name="p0" fixLocation styleNumber="4">(0,0)</point>
+  <point name="p1" fixLocation styleNumber="4">(pi/4,0)</point>
+  <point name="p2" fixLocation styleNumber="4">(pi/2,0)</point>
+  <point name="p3" fixLocation styleNumber="4">(3pi/4,0)</point>
+  <point name="p4" fixLocation styleNumber="4">(pi,0)</point>
+  <point name="p5" fixLocation styleNumber="4">(5pi/4,0)</point>
+  <point name="p6" fixLocation styleNumber="4">(3pi/2,0)</point>
+  <point name="p7" fixLocation styleNumber="4">(7pi/4,0)</point>
+  <point name="p8" fixLocation styleNumber="4">(2pi,0)</point>
+  <point name="sliderPt" styleNumber="5" layer="2">(0,$zero)
+    <constraints>
+      <attractTo threshold="0.075">$p0 $p1 $p2 $p3 $p4 $p5 $p6 $p7 $p8</attractTo>
+    </constraints>  
+  </point>
+</graph>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+<sideBySide>
+<div>
+<p><m>x(t) = </m> <mathInput name="user_xOft"/></p>
+<p><m>y(t) = </m> <mathInput name="user_yOft"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect" matchPartial>
+      <when>$user_xOft = $xOft and $user_yOft = $yOft</when>
+    </award>       
+</answer>
+</div>
+
+<div>
+<p>
+  <booleanInput name="showUserCurve">
+    <label>Show second curve</label>
+  </booleanInput>
+</p>
+</div>
+</sideBySide>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x(t) = $xOft</m></p>
+<p><m>y(t) = $yOft</m></p>
+</solution>
+
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="gray" fillOpacity="0.3" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.5" lineWidth="6"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

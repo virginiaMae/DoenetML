@@ -1,0 +1,211 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the exponential growth model, y = a b^x, determine parameters a and b provided with two points on the curve.
+
+A graphing tool is provided to help with visualizing the geometry of the problem.
+Fully-worked solution is provided.
+
+*************************************************************--> 
+<problem>
+<setup>
+  <selectFromSequence name="m" from="5" to="20"/>
+  <selectFromSequence name="n" from="2" to="6"/>
+  <selectFromSequence name="p" from="3" to="6"/>
+  <selectFromSequence name="q" from="4" to="10"/>
+  <math name="p2x" simplify>$p + $q</math>
+  <math name="p2y" simplify>$m $n</math>
+  <math name="b">$n^(1/$q)</math>
+  <math name="a">$m/($b^$p)</math>
+  <number name="aN" displayDecimals="7">$a</number>
+  <number name="bN" displayDecimals="7">$b</number>
+  <point name="p1" fixed>($p, $m)</point>
+  <math name="p2m" simplify>($p2x, $p2y)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>m = $m</p>
+<p>n = $n</p>
+<p>p = $p</p>
+<p>q = $q</p>
+<p>a = $a</p>
+<p>p2x = $p2x</p>
+<p>p2y = $p2y</p>
+<p>aN = $aN</p>
+<p>b = $b</p>
+<p>bN = $bN</p>
+<p>p1 = $p1</p>
+<p>p2m = $p2m</p> -->
+<!--testing-->
+
+
+<p>Find <m>a</m> and <m>b</m> so that the exponential growth model <m>y = a b^x</m> contains the points <m>$p1</m> and <m>$p2m</m>.</p>
+
+<p><em>Round your answers to the nearest <m>0.001</m></em>.</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">-5</number>
+  <number name="xmax">$p2x + 10</number>
+  <number name="ymin">-5</number>
+  <number name="ymax">$p2y + 10</number>
+</setup>
+  
+<p>Enter given points</p>
+<p><m>P_1 = </m> <mathInput name="graphP1"/>, <m>P_2 = </m> <mathInput name="graphP2"/></p>
+
+<p>Enter an approximation for <m>a</m> and <m>b</m> in the equation <m>y = a b^x</m>, or check the answers you obtained algebraically. Values are prefilled initially to give a suggestion of the shape of a simillar growth curve.</p>
+<p><m>a = </m><mathInput name="graphA" prefill="1" displayDecimals="3"/>, <m>b = </m><mathInput name="graphB" prefill="2" displayDecimals="3"/></p>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="graphExpFunc" styleNumber="5">$graphA $graphB^x
+  </function>
+  <label anchor="($p2x, $p2y/2)" positionFromAnchor="right"><math displayDecimals="3">y = $graphExpFunc.formula</math></label>
+
+  <point name="p1g" coords="$graphP1"/>
+  <point name="p2g" coords="$graphP2"/>
+</graph>
+
+</aside>  
+
+
+
+  
+<p><m>y = </m> <mathInput name="userA" prefill="a"/> <mathInput name="userB" prefill="b"/><m>^x</m></p>
+  <answer name="ans1">
+    <award name="correct" allowedErrorInNumbers="0.001" allowedErrorIsAbsolute>
+      <when>$userA = $a and $userB = $b</when>
+    </award>
+    <award  name="rounding" credit="0.5" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>
+      <when>$userA = $a and $userB = $b</when>
+    </award>
+  </answer>
+<p>You've entered <m>y = $userA \cdot $userB^x</m></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$rounding">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+
+
+
+
+  
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+</example>
+
+
+ </hint> -->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li><p>Substitute the given points into the general equation to yield a system of two equations in two unknowns
+    <md>
+      <mrow>$m \amp= a b^{$p}</mrow>
+      <mrow>$p2y \amp= a b^{$p2x}</mrow>
+    </md>
+  </p>
+  </li>
+  <li><p>Take the logarithm of both sides of each equation, then use properties of logarithms and rearrange to isolate a term in common to both equations, <m>\log(a)</m>.</p>
+    <p>First equation:
+    <md>
+      <mrow>\log\bigg(\frac{$m}{a} \bigg) \amp= \log(b^{$p})</mrow>
+      <mrow>\log($m) - \log(a) \amp= $p\log(b)</mrow>
+      <mrow>\log($m) - $p\log(b) \amp= \log(a)</mrow>
+    </md></p>
+    <p>Second equation:
+    <md>
+      <mrow>\log\bigg(\frac{$p2y}{a}\bigg) \amp= \log(b^{$p2x})</mrow>
+      <mrow>\log($p2y) - \log(a) \amp= ($p2x)\log(b)</mrow>
+      <mrow>\log($p2y) - ($p2x)\log(b) \amp= \log(a)</mrow>
+    </md></p>
+  </li>
+  <li><p>Each of these equations have a right-hand side equal to <m>\log(a)</m>. We can therefore set the left-hand sides equal to each other, simplify, and isolate the <m>\log(b)</m> term as follows
+    <md>
+      <mrow>\log($m) - $p \log(b) \amp= \log($p2y) - $p2x \log(b)</mrow>
+      <mrow>$p2x \log(b) - $p \log(b) \amp= \log($p2y) - \log($m)</mrow>
+      <mrow>\log(b^{$q}) \amp= \log($n)</mrow>
+    </md>
+  </p>
+  </li>
+  <li><p>Solve for <m>b</m>
+    <md>
+      <mrow>$q\log(b) \amp= \log($n)</mrow>
+      <mrow>\log(b) \amp= \frac{\log($n)}{$q}</mrow>
+      <mrow>10^{\log(b)} \amp= 10^{\frac{\log($n)}{$q}}</mrow>
+      <mrow>b \amp\approx $bN</mrow>
+    </md></p></li>
+  <li><p>Solve either of the original equations for <m>a</m> by substituting the value found for <m>b</m>, being sure to keep 5-7 decimal digits as stored in your calculator
+    <md>
+      <mrow>$m \amp= a b^{$p}</mrow>
+      <mrow>a \amp\approx \frac{$m}{$bN^{$p}}</mrow>
+      <mrow>a \amp\approx $aN</mrow>
+    </md>
+  </p></li>
+  <li>The final exponential growth model is 
+    <me>y = $aN{displayDecimals="3"} \cdot $bN{displayDecimals="3"}^x</me>
+  </li>
+</ul>
+    
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

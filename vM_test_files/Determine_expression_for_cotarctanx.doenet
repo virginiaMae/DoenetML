@@ -1,0 +1,154 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine an expression for cot(arctan(x)). This problem has no variants.
+Optional graphing tool provided. 
+
+(TR-Inv #46 TR1636)
+*************************************************************--> 
+
+<problem>
+<setup>
+<math name="expr">cot(arctan(x))</math>
+<math name="sol">1/x</math>
+<math name="sol2">x^(-1)</math>
+</setup>
+
+<!--testing-->
+<!-- <p>sol = $sol</p>
+<p>sol2 = $sol2</p> -->
+<!--testing-->
+
+<p>If <m>y = \arctan(x)</m>, express <me>$expr</me> in terms of <m>x</m>.</p>
+
+
+<!--*********************************************
+            Graphing tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+<p>Consider a triangle in the first quadrant that satisfies the given information.</p>
+<p>Given <m>y = \arctan(x)</m>, what does <m>y</m> represent? 
+  <answer weight="0" inline>
+    <choice credit>an angle</choice>
+    <choice>a ratio of sides of a triangle</choice>
+  </answer>
+</p>
+<p>The definition of <m>\tan(y)</m> is 
+  <answer weight="0" inline>
+    <choice>adjacent / opposite</choice>
+    <choice>opposite / hypotenuse</choice>
+    <choice credit>opposite / adjacent</choice>
+  </answer>
+</p>
+<p>Since <m>\tan(y) = x</m>, that means that <m>x</m> is some ratio of side lengths. If we choose the denominator, or the "adjacent" side length to be <m>1</m>, then for the ratio to be equal to <m>x</m>, that means that the numerator, or the "opposite" side length is 
+  <answer weight="0" inline>
+    <choice>y</choice>
+    <choice credit>x</choice>
+    <choice>infinity</choice>
+  </answer>
+</p>
+<p>Using the given information, drag the labels to the correct sides and angle of the triangle representing a general first-quadrant value for <m>y</m>.</p>
+
+<p>Use the Pythagorean Theorem to enter the value for the missing hypotenuse (in terms of the other 2 sides): <mathInput name="bInput"/></p>
+  
+<graph xmin="-1" xmax="7" ymin="-1.5" ymax="5.5" identicalAxisScales size="large">
+  <angle name="y" radius="0.75" styleNumber="8" through="(3,0) (0,0) (3,4)"/>
+  <lineSegment name="b" styleNumber="8" fixed endpoints="(0,0) (3,0)"/>
+  <lineSegment name="a" styleNumber="10" fixed endpoints="(3,0) (3,4)"/>
+  <lineSegment name="c" styleNumber="7" fixed endpoints="(0,0) (3,4)"/>
+  <rectangle name="bRect" styleNumber="6" fixed center="(1.5, -0.7)" width="1.5" height="0.7"/>
+  <rectangle name="cRect" styleNumber="6" fixed center="(1, 2.75)" width="1.5" height="0.7"/>
+  <rectangle name="yRect" styleNumber="6" fixed center="(1.7, 0.7)" width="1.5" height="0.7"/>
+  <rectangle name="aRect" styleNumber="6" fixed center="(4, 2)" width="1.5" height="0.7"/>
+  <line fixed styleNumber="5">x = 5</line>
+  <label anchor="(6, 5)"><m>\huge\text{Labels}</m></label>
+  <m anchor="(6, 4)" styleNumber="7">\huge{y}</m>
+  <m anchor="(6, 3)">\huge{x}</m>
+  <m anchor="(6, 2)">\huge{1}</m>
+  <m anchor="(6, 1)">\huge{$bInput}</m>
+</graph>
+
+<p><em>Note, in this case its much easier not to take the radius, or the hypotenuse, as 1!</em></p>
+
+<p>Use this picture to guide your answer for an expression for $expr in terms of <m>x</m>.</p>
+
+
+</aside>
+  
+<p><m>$expr = </m><answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct" symbolicEquality>   
+        <when>
+          $userAns = $sol or $userAns = $sol2
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$expr = $sol</p>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

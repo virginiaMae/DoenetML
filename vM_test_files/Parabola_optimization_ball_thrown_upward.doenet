@@ -1,0 +1,203 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the maximum height of a ball thrown upward given the equation of its height in general form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="c" from="1" to="10" />
+  <selectFromSequence name="b" from="1" to="6"/>
+  <math name="p1" simplify="numberspreserveorder">-16t^2 + 16$b t + $c</math>
+  <math name="sol" simplify>4 $b^2 + $c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>b = $b</p>
+<p>c = $c</p>
+<p>p1 = $p1</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>A ball is thrown upward and its height <m>h</m> in feet after <m>t</m> seconds is given by the equation
+
+<me>h(t) = $p1</me>
+</p>
+
+<p>Find the maximum height of the ball.</p> 
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">$sol + 10</number>
+  <number name="ymin">-0.1*$ymax</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>h(t) = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph a point at the proposed maximum height<footnote>How to find the coordinates of the vertex of a parabola from general form? Recall, there is a simple formula for the <m>x</m>, (or in this case, the <m>t</m>) value...</footnote>:</p> 
+  <p><m>(t, h(t)) = </m></p>
+  <p><m>\bigg( </m><mathInput name="tmax"/> , <mathInput name="hmax" bindValueTo="$userAns"/> <m>\bigg)</m></p>
+</div>
+  
+<graph name="g1" xmin="-1" xmax="7" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="givenParabola" variables="t" domain="[0,infinity]">$eq1</function>
+  <point name="userVertex" fixed styleNumber="5">($tmax, $hmax)
+    <label>$userVertex.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will occur at the maximum value of the graphed function.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+  
+<p><m>h_{max} = </m> <mathInput name="userAns"/>  <m>\text{feet}</m>
+  <answer name="ans1">    
+    <award name="correct">
+      <when>$userAns = $sol</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+      <p>First, try computing the time at which the vertex is achieved using the formula for the <m>x</m>-coordinate of the vertex. If you are still stuck, review this lesson on <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-6-optimization-using-parabolas/">Optimization Using Parabolas</ref>.</p>
+    </feedback>
+  
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p> 
+<example newNamespace>
+<setup>
+  <function name="exH" variables="t" domain="[0,infinity]">
+    -(1/5)t^2+18t+200</function>
+  <math name="sol" simplify>$$exH(45)</math>
+</setup>
+
+  
+<p><em>The altitude (in meters) of a model rocket after engine burnout is described by the equation 
+
+<me>h(t) = $exH\;\;\text{meters}</me>
+</em></p>
+
+<p><em>Where <m>t</m> is the time elapsed since burnout. Find the maximum altitude obtained by the rocket. Enter your answer as a number without units. </em></p> 
+ 
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li><p>First, lets determine the coordinates of the vertex from the given function. Our independent variable is <m>t</m> here rather than <m>x</m>, so the standard equations look slightly different.
+    <md>
+      <mrow>t &= - \frac{b}{2a}</mrow>
+      <mrow>&= - \frac{18}{2(-\frac{1}{5})}</mrow>
+      <mrow>&=  45</mrow>
+    </md></p>
+  </li>
+  <li><p>Knowing <m>t</m>, we can calculate the height directly from the function or, alternatively, use the vertex formula. We'll evaluate the function,
+    <md>
+      <mrow>h(45) &= <math>(1/5)(45)^2+18(45)+200</math></mrow>
+      <mrow>&= $sol</mrow>
+    </md>
+  </p>          
+  </li>
+  <li><p>We can now graph the altitude function as a check on our work,</p>
+<setup>
+  <number name="ymax">$sol + 20</number>
+  <number name="ymin">-0.1*$ymax</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>h(t) = </m> <mathInput name="eq1" prefill="-(1/5)t^2+18t+200"/></p>
+
+  <p>Graph a point at the proposed maximum height:</p> 
+  <p><m>(t, h(t)) = </m></p>
+  <p><m>\bigg( </m><mathInput name="tmax" prefill="45"/> , <mathInput name="hmax" prefill="$sol"/> <m>\bigg)</m></p>
+</div>
+  
+<graph name="g1" xmin="-5" xmax="120" ymin="$ymin" ymax="$ymax">
+  <function name="givenParabola" variables="t" domain="[0,infinity]">$eq1</function>
+  <point name="userVertex" fixed styleNumber="5">($tmax, $hmax)
+    <label>$userVertex.coords</label>
+  </point>
+</graph>
+</sideBySide>
+    <p>Since our calculated maximum height does occur at the vertex of the parabola, we know that our work is correct!</p>
+    <p>The maximum height is <m>h_{max} = 605\;\;\text{meters}</m>.</p>
+  </li>
+    
+</ul>
+</example>
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>h_{max} = $sol \;\;\text{feet}</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,322 @@
+<problem><title/>
+<setup>
+  <select assignNames="ca cb cd cf" numToSelect="6" withReplacement type="boolean">true false</select>
+
+<boolean name="cc" >
+  <conditionalContent>
+    <case condition="$cb = true">false</case>
+    <else>true</else>
+  </conditionalContent>
+</boolean>
+<boolean name="ce" >
+  <conditionalContent>
+    <case condition="$cd = true">false</case>
+    <else>true</else>
+  </conditionalContent>
+</boolean>
+  
+  <number name="ax" fixed>-8</number>
+  <number name="bx" fixed>-4</number>
+  <number name="cx" fixed>-4</number>
+  <number name="dx" fixed>2</number>
+  <number name="ex" fixed>2</number>
+  <number name="fx" fixed>7</number>
+  <selectFromSequence name="ay" from="-8" to="8"/>
+  <select name="m1">0 1/2 -1/2 1/4 -1/4 3/4 -3/4 1 -1 5/4 -5/4</select>
+  <math name="by" simplify>$m1($bx - $ax) + $ay</math>
+
+  <selectFromSequence name="cy" from="-8" to="8" exclude="$by"/>
+  <select name="m2">0 1/2 -1/2 1 -1 3/2 -3/2</select>
+  <math name="dy" simplify>$m2($dx - $cx) + $cy</math>
+
+  <selectFromSequence name="ey" from="-8" to="8" exclude="$dy"/>
+  <select name="m3">0 1 -1</select>
+  <math name="fy" simplify>$m3($fx - $ex) + $ey</math>
+  
+  <math name="line1Eq" simplify="numberspreserveorder">$line1.slope x + $line1.yIntercept</math>
+  <math name="line2Eq" simplify="numberspreserveorder">$line2.slope x + $line2.yIntercept</math>
+  <math name="line3Eq" simplify="numberspreserveorder">$line3.slope x + $line3.yIntercept</math>
+  <math name="int1">
+    <conditionalContent>
+      <case condition="$ca = true and $cb = true">$a.x < x < $b.x</case>
+      <case condition="$ca = false and $cb = true">$a.x <= x < $b.x</case>
+      <case condition="$ca = true and $cb = false">$a.x < x <= $b.x</case>
+      <case condition="$ca = false and $cb = false">$a.x <= x <= $b.x</case>
+    </conditionalContent>
+  </math>
+  <math name="int2">
+    <conditionalContent>
+      <case condition="$cc = true and $cd = true">$c.x < x < $d.x</case>
+      <case condition="$cc = false and $cd = true">$c.x <= x < $d.x</case>
+      <case condition="$cc = true and $cd = false">$c.x < x <= $d.x</case>
+      <case condition="$cc = false and $cd = false">$c.x <= x <= $d.x</case>
+    </conditionalContent>
+  </math>
+  <math name="int3">
+    <conditionalContent>
+      <case condition="$ce = true and $cf = true">$e.x < x < $f.x</case>
+      <case condition="$ce = false and $cf = true">$e.x <= x < $f.x</case>
+      <case condition="$ce = true and $cf = false">$e.x < x <= $f.x</case>
+      <case condition="$ce = false and $cf = false">$e.x <= x <= $f.x</case>
+    </conditionalContent>
+  </math>
+  <math name="ymin">min($ay, $by, $cy, $dy, $ey, $fy, -6) - 2</math>
+  <math name="ymax">max($ay, $by, $cy, $dy, $ey, $fy, 6) + 3</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>m1 = $m1</p>
+<p>m2 = $m2</p>
+<p>m3 = $m3</p>
+<p>line1Eq = $line1Eq</p>
+<p>line2Eq = $line2Eq</p>
+<p>line3Eq = $line3Eq</p>
+<p>userLine1.equation = $userLine1.equation</p> -->
+<!--testing-->
+
+<p>Use the equation of the piecewise function shown below to construct its graph.</p>
+<p><me>f(x) = \begin{cases}
+              $line1Eq & \text{if }$int1 & (\text{use segment }ab)\\
+              $line2Eq & \text{if }$int2 & (\text{use segment }cd)\\
+              $line3Eq & \text{if }$int3 & (\text{use segment }ef)\
+            \end{cases}
+  </me></p>
+
+
+<sideBySide widths="70% 30%" margins="2%">
+<div>
+<graph name="userG1" grid="1 1" ymin="$ymin" ymax="$ymax" identicalAxisScales fixAxes>
+  <booleanInput name="showGuides" anchor="(-6,$ymin + 1)">
+    <label>Show guides</label>
+  </booleanInput>
+  <endpoint name="a" open="$ca" styleNumber="6" fixLocation hide>($ax,$ay)
+  </endpoint>
+  <endpoint name="dpA" switchable layer="2">(-7,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpA.x - 0.5, $dpA.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{a}</m>
+  </label>
+  
+  <endpoint name="b" open="$cb" styleNumber="6" fixLocation hide>($bx,$by)
+  </endpoint>
+  <endpoint name="dpB" switchable layer="2">(-4,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpB.x + 0.5, $dpB.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{b}</m>
+  </label>
+  
+  <line name="userLine1" through="$dpA $dpB" hide="!$showGuides" styleNumber="6"/>
+  <lineSegment name="seg1" endpoints="$dpA $dpB"/>
+  <line name="line1" through="$a $b" styleNumber="6" hide/>
+  
+  <endpoint name="c" open="$cc" fixLocation styleNumber="6" hide>($bx,$cy)
+  </endpoint>
+  <endpoint name="dpC" switchable layer="2">(-1,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpC.x - 0.5, $dpC.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{c}</m>
+  </label>
+
+  <endpoint name="d" open="$cd" fixLocation styleNumber="6" hide>($dx,$dy)
+  </endpoint>
+  <endpoint name="dpD" switchable layer="2">(2,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpD.x + 0.5, $dpD.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{d}</m>
+  </label>
+
+  <lineSegment name="seg2" endpoints="$dpC $dpD"/>
+  <line name="userLine2" through="$dpC $dpD" hide="!$showGuides" styleNumber="6"/>
+  <line name="line2" through="$c $d" styleNumber="6" hide/>
+  
+  <endpoint name="e" open="$ce" fixLocation styleNumber="6" hide>($dx,$ey)
+  </endpoint>
+  <endpoint name="dpE" switchable layer="2">(5,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpE.x - 0.5, $dpE.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{e}</m>
+  </label>
+  
+  <endpoint name="f" open="$cf" fixLocation styleNumber="6" hide>($fx,$fy)
+  </endpoint>
+  <endpoint name="dpF" switchable layer="2">(8,8)
+    <constraints><constrainToGrid/></constraints>
+  </endpoint>
+  <label anchor="($dpF.x + 0.5, $dpF.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{f}</m>
+  </label>
+  <lineSegment name="seg3" endpoints="$dpE $dpF" />
+  <line name="line3" through="$e $f" styleNumber="6" hide/>
+  <line name="userLine3" through="$dpE $dpF" styleNumber="6" hide="!$showGuides"/>
+</graph> 
+
+  
+<aside><title>Graphing Tips</title>
+  <ul>
+    <li>Drag the endpoints of the line segments to place each portion of the function in the correct location</li>
+    <li>Click on the endpoints to toggle between open and closed</li>
+    <li>Click "Show Guides" button to see how the segments would extend as lines</li>
+  </ul>
+</aside>
+</div>
+  
+
+<div>
+  <p><alert>Point coordinates: </alert></p>
+  <p><m>a = $dpA</m></p>
+  <p><m>b = $dpB</m></p>
+  <p><m>c = $dpC</m></p>
+  <p><m>d = $dpD</m></p>
+  <p><m>e = $dpE</m></p>
+  <p><m>f = $dpF</m></p>
+</div>
+</sideBySide>
+
+
+
+
+<!--******************************************************
+            User Input
+*******************************************************-->  
+<setup>
+  <boolean name="correctLines" unorderedCompare>
+    <mathList>$userLine1.equation $userLine2.equation $userLine3.equation</mathList> = 
+    <mathList>$line1.equation $line2.equation $line3.equation</mathList>
+  </boolean>
+  <boolean name="correctEndpoints" unorderedCompare>
+    <mathList>$dpA $dpB $dpC $dpD $dpE $dpF</mathList> = 
+    <mathList>$a $b $c $d $e $f</mathList>
+  </boolean>
+
+  <boolean name="correctClosures">
+    $dpA.open = $ca and $dpB.open = $cb and 
+    $dpC.open = $cc and $dpD.open = $cd and 
+    $dpE.open = $ce and $dpF.open = $cf
+  </boolean>
+</setup>
+
+<!-- testing -->
+<!-- <p>correctLines = $correctLines</p>
+<p>correctEndpoints = $correctEndpoints</p>
+<p>correctClosures = $correctClosures</p>
+<p>ca = $ca</p>
+<p>cb = $cb</p>
+<p>cc = $cc</p>
+<p>cd = $cd</p>
+<p>ce = $ce</p>
+<p>cf = $cf</p> -->
+<!-- /testing -->
+  
+  
+<answer name="ans1">
+  <award>
+    <when>$correctLines and $correctEndpoints and $correctClosures</when>
+  </award>
+</answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+
+<feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="!$correctLines and $ans1.justSubmitted = true">One or more of your line segments does not match the equation for <m>f(x)</m>.</feedback>
+  <feedback condition="!$correctEndpoints and $ans1.justSubmitted = true">One or more of your endpoints is not in the correct location.</feedback>
+  <feedback condition="!$correctClosures and $ans1.justSubmitted = true"><p>One or more of your endpoints does not have the correct closure (i.e. it is open when it should be solid, or solid when it should be open).</p>
+  <p>You can click on the endpoint to toggle between solid and open.</p></feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<graph name="solGraph" grid="1 1" ymin="$ymin" ymax="$ymax" identicalAxisScales>
+  <endpoint name="aS" open="$ca" styleNumber="11" fixLocation>($ax,$ay)
+  </endpoint>
+  <label anchor="($aS.x - 0.5, $aS.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{a}</m>
+  </label>
+  
+  <endpoint name="bS" open="$cb" styleNumber="11" fixLocation>($bx,$by)
+  </endpoint>
+  <label anchor="($bS.x + 0.5, $bS.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{b}</m>
+  </label>
+  <lineSegment name="seg1S" endpoints="$aS $bS" styleNumber="11"/>
+  
+  <endpoint name="cS" open="$cc" fixLocation styleNumber="11">($bx,$cy)
+  </endpoint>
+  <label anchor="($cS.x - 0.5, $cS.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{c}</m>
+  </label>
+
+  <endpoint name="dS" open="$cd" fixLocation styleNumber="11">($dx,$dy)
+  </endpoint>
+  <label anchor="($dS.x + 0.5, $dS.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{d}</m>
+  </label>
+  <lineSegment name="seg2S" endpoints="$cS $dS" styleNumber="11"/>
+  
+  <endpoint name="eS" open="$ce" fixLocation styleNumber="11">($dx,$ey)
+  </endpoint>
+
+  <label anchor="($eS.x - 0.5, $eS.y)" positionFromAnchor="upperleft" styleNumber="13">
+    <m>\large{e}</m>
+  </label>
+  
+  <endpoint name="fS" open="$cf" fixLocation styleNumber="11">($fx,$fy)
+  </endpoint>
+  <label anchor="($fS.x + 0.5, $fS.y)" positionFromAnchor="upperright" styleNumber="13">
+    <m>\large{f}</m>
+  </label>
+  <lineSegment name="seg3S" endpoints="$eS $fS" styleNumber="11"/>
+</graph> 
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+  
+<!--black line with white background for labels-->  
+<styleDefinition styleNumber="13" fillColor="white" backgroundColor="white" fillOpacity="0.7" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7"  lineWidth="2"/>
+</styleDefinitions>
+</setup>
+

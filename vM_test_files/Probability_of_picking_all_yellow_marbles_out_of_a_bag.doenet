@@ -1,0 +1,172 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This is a general probabilty question about choosing marbles without replacement from a bag. The event of interest is that all marbles are of the same color. Students can answer in a reduced or an unreduced fraction.
+
+
+*************************************************************-->
+<problem><title></title>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="4" to="7"/>
+  <selectFromSequence name="c" from="3" to="6" exclude="$a $b"/>
+  <math name="d" simplify>$a + 
+  $b + $c</math>
+
+  <math name="num">nCr($c,3)</math>
+  <math name="den">nCr($d,3)</math>
+  <math name="numSimp" simplify>$num</math>
+  <math name="denSimp" simplify>$den</math>
+  <math name="sol">$num/$den</math>
+
+  <math name="num2" simplify>$c($c - 1)($c - 2)</math>
+  <math name="den2" simplify>$d($d - 1)($d - 2)</math>
+  <math name="sol2">$num2/$den2</math>
+  <math name="sol2Simp" simplify>$sol2</math>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>sol = $sol</p> -->
+
+<!--******************************************************
+            End testing
+*******************************************************-->
+<p>A bag contains <m>$d</m> marbles, <m>$a</m> are red, <m>$b</m> are green, and <m>$c</m> are yellow. If you draw <m>3</m> marbles
+without replacement then what is the probability that you get all yellows?</p>  
+<p><em>Leave your answer as a
+non-reduced fraction.</em></p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><m>P(\text{all yellow marbles}) = </m>
+  <answer>$sol</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p>A bag contains <m>$n</m> marbles, <m>$a</m> are purple, <m>$c</m> are rainbow, and <m>$b</m> are glow-in-the-dark. If you draw <m>$k</m> marbles
+without replacement then what is the probability that you get all rainbows?</p>  
+<p><em>Leave your answer as a
+non-reduced fraction.</em></p>
+  
+<setup>
+  <number name="a">8</number>
+  <number name="b">3</number>
+  <number name="c">7</number>
+  <number name="n">18</number>
+  <number name="k">4</number>
+  <math name="num">nCr($c,$k)</math>
+  <math name="numSimp" simplify>$num</math>
+  <math name="den">nCr($n,$k)</math>
+  <math name="denSimp" simplify>$den</math>
+  <math name="num2" simplify>$c($c - 1)($c - 2)($c - 3)</math>
+  <math name="den2" simplify>$n($n - 1)($n - 2)($n - 3)</math>
+  <math name="sol">$numSimp/$denSimp</math>
+  <math name="sol2">$num/$den</math>
+</setup>
+  
+<p><em></em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>First, we determine the number of possible outcomes in the sample space corresponding to choosing <m>k = $k</m> marbles from the bag of <m>n = $n</m>.</p>
+<p>Since the marbles are an unordered set, we use the definition of a <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-5/">combination</ref> of <m>$k</m> marbles from a set of <m>$n</m>,
+  <md>
+    <mrow>C(n,k) &= \frac{n!}{k!(n - k)!}</mrow>
+    <mrow>C($n,$k) &= \frac{$n!}{$k!($n - $k)!}</mrow>
+    <mrow>&= $denSimp</mrow>
+  </md>
+So, there are <m>$denSimp</m> ways to randomly select <m>$k</m> marbles.</p>
+
+<p>Next, we determine the number of ways to choose successfully -- to pick a rainbow marble from the bag <m>$k</m> times. This corresponds to choosing <m>k = $k</m> marbles from the subset of <m>n = $c</m> marbles which are rainbow-colored.
+  <md>
+    <mrow>C(n,k) &= \frac{n!}{k!(n - k)!}</mrow>
+    <mrow>C($c,$k) &= \frac{$c!}{$k!($c - $k)!}</mrow>
+    <mrow>&= $numSimp</mrow>
+  </md>
+So, there are <m>$numSimp</m> ways to randomly select <m>$k</m> rainbow marbles.</p>
+    
+<p>Using the basic definition of the probability of an event, 
+  <md>
+  <mrow>P(E) &= \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</mrow>
+  <mrow>P($k \; \text{rainbow marbles}) &= \frac{$num}{$den}</mrow>
+  <mrow>&= $sol</mrow>
+  <mrow>&= $sol{simplify}</mrow>
+  </md>
+This answer can be left unreduced, if desired.</p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><alert>First Solution Method:</alert> Use Combinations</p>
+<p>Using the basic definition of the probability of an event, 
+  <md>
+  <mrow>P(E) &= \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</mrow>
+  <mrow>P($k \; \text{rainbow marbles}) &= \frac{$num}{$den}</mrow>
+  <mrow>&= \frac{$numSimp}{$denSimp}</mrow>
+  <mrow>&= $sol{simplify}</mrow>
+  </md>
+This answer can be left unreduced, if desired.</p>
+
+<p><alert>Second Solution Method:</alert> Consider each selection independently</p>
+<p>Consider the changing probabilities of each individual selection. The choices must be: (first yellow, second yellow, third yellow). Then, each choice has the following probability:</p>
+
+<p><alert>(yellow, yellow, yellow)</alert>: At first, there are <m>$d</m> marbles to choose from, and <m>$c</m> possible yellow marbles. So, the first pick has probability <m>P = <math name="cOverD">$c/$d</math></m>. For the second pick, there are now only <math simplify>$d - 1</math> marbles left to choose from, and there are <math simplify>$c - 1</math> yellow marbles remaining. So, to pick yellow again has probability <m>P = <math name="secondChoice">(<number>$c - 1</number>)/(<number>$d - 1</number>)</math></m>. Similarly, the third choice has probability <m>P = <math name="thirdChoice">(<number>$c - 2</number>)/(<number>$d - 2</number>)</math></m>.</p>
+  
+<p>Combining these three selections gives a total probability for this selection of <m>P = ($cOverD)($secondChoice)($thirdChoice) = <math>(<number>$c*($c - 1)($c - 2)</number>)/(<number>$d*($d - 1)($d - 2)</number>)</math> = <math name="p1" simplify>($cOverD)($secondChoice)($thirdChoice)</math></m></p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

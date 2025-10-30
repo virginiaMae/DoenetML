@@ -1,0 +1,240 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem requires the student to use the Law of Sines to calculate the missing geometry in a triangle. Angle-angle-side given. Answers are fill-in the blank with an approximate decimal value. 
+*************************************************************--> 
+
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="A" from="20" to="59"/>
+  <selectFromSequence name="C" from="40" to="95"/>
+  <selectFromSequence name="a" from="4" to="15"/>
+  <math name="B" simplify>180 - $A - $C</math>
+  <math name="b" simplify>$a sin(($A + $C)pi/180)/(sin($A pi/180))</math>
+  <math name="c" simplify>$a sin($C pi/180)/(sin($A pi/180))</math>
+  <number name="Bn">$B</number>
+  <number name="bn" displayDecimals="2" padZeros>$b</number>
+  <number name="cn" displayDecimals="2" padZeros>$c</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>C = $C</p>
+<p>a = $a</p>
+<p>B = $B</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>Bn = $Bn</p>
+<p>bn = $bn</p>
+<p>cn = $cn</p> -->
+<!--testing-->
+
+<p>Find the missing parts of the triangle.  Round lengths to the nearest <m>0.01</m>. </p>
+
+<p>In the triangle below:</p>
+  <md>
+    <mrow>A &= $A^{\circ}</mrow>
+    <mrow>C &= $C^{\circ}</mrow>
+    <mrow>a &= $a</mrow>
+  </md>
+
+  
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="-3" xmax="$b + 3" ymin="-3" ymax="$pB.y + 3" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC"/>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2">
+    <label><m>$angleA.degrees</m></label>
+  </angle>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3" emphasizeRightAngle="false"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4" emphasizeRightAngle="false">
+    <label><m>$angleC.degrees</m></label>
+  </angle>
+
+
+  <textInput name="Binput" anchor="($pB.x - 0.25$b, $pB.y)" width="25px">
+    <label><m>B = </m></label>
+  </textInput>
+  <label name="aLabel" anchor="(($pB.x + $pC.x)/2 + 0.15$b, $pB.y/2)"><m>a = $a</m></label>
+  <textInput name="binput" anchor="($pC.x/2 + 0.12$b, -1)" width="30px">
+    <label><m>b = </m></label>
+  </textInput>
+  <textInput name="cinput" anchor="($pB.x/2 - 0.18$b, $pB.y/2)" width="30px">
+    <label><m>c = </m></label>
+  </textInput>
+</graph>
+
+  
+<p><m>B = </m><mathInput name="userB" bindValueTo="$Binput"/><m>^{\circ}</m></p>
+<p><m>b = </m><mathInput name="userb" bindValueTo="$binput"/></p>
+<p><m>c = </m><mathInput name="userc" bindValueTo="$cinput"/></p>  
+  
+    <answer name="ans1">
+      <award name="correct" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute matchByExactPositions>   
+        <when>
+          ($userB, $userb, $userc) = ($B, $b, $c)
+        </when>
+      </award>
+    </answer>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+  <boolean name="bIncorrect" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userb != $b</boolean>
+  <boolean name="cIncorrect" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userc != $c</boolean>
+</setup>
+  
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$userB != $B and $ans1.justSubmitted">Your value for angle <m>B</m> is incorrect.</feedback>
+  
+  <feedback condition="$bIncorrect and $ans1.justSubmitted">Your value for length <m>b</m> is incorrect (or contains a rounding error).</feedback>
+  
+  <feedback condition="$cIncorrect and $ans1.justSubmitted">Your value for length <m>c</m> is incorrect (or contains a rounding error).</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="A">63</math>
+  <math name="C">32</math>
+  <math name="a">12</math>
+  <math name="B" simplify>180 - $A - $C</math>
+  <math name="b" simplify>$a sin(($A + $C)pi/180)/(sin($A pi/180))</math>
+  <math name="c" simplify>$a sin($C pi/180)/(sin($A pi/180))</math>
+  <number name="Bn">$B</number>
+  <number name="bn">$b</number>
+  <number name="cn">$c</number>
+</setup>
+
+<p><em>Find the missing parts of the triangle.  Round lengths to the nearest 0.01. </em></p>
+
+<p>In the triangle below:</p>
+  <md>
+    <mrow>A &= $A^{\circ}</mrow>
+    <mrow>C &= $C^{\circ}</mrow>
+    <mrow>a &= $a</mrow>
+  </md>
+
+  
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="-3" xmax="$b + 3" ymin="-3" ymax="$pB.y + 3" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC"/>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2">
+    <label><m>$angleA.degrees</m></label>
+  </angle>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3" emphasizeRightAngle="false"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4" emphasizeRightAngle="false">
+    <label><m>$angleC.degrees</m></label>
+  </angle>
+
+  <textInput name="Binput" anchor="($pB.x - 0.20$b, $pB.y)" width="25px" prefill="$B"/>
+  <label name="aLabel" anchor="(($pB.x + $pC.x)/2 + 0.15$b, $pB.y/2)"><m>a = $a</m></label>
+  <label name="b_label" anchor="($pC.x/2, -1)"><m>b = </m></label>
+  <textInput name="binput" anchor="($pC.x/2 + 0.12$b, -1)" width="30px" prefill="$bn"/>
+  <label name="c_label" anchor="($pB.x/2 - 0.3$b, $pB.y/2)"><m>c = </m></label>
+  <textInput name="cinput" anchor="($pB.x/2 - 0.18$b, $pB.y/2)" width="30px" prefill="$cn"/>
+</graph>
+
+
+
+  
+<p><alert><em>Solution.</em></alert></p>
+<p>First apply the fact that the sum of all angles in a triangle is <m>180^{\circ}</m> to calculate the angle at <m>B</m>
+  <me>B = 180 - $A - $C = $B.</me></p>
+<p>Next, apply the <term>Law of Sines</term> to compute the length of <m>b</m>
+  <md>
+    <mrow>\frac{b}{\sin(B)} &= \frac{a}{\sin(A)}</mrow>
+    <mrow>b &= <math>sin($B) ($a/sin($A))</math></mrow>
+    <mrow>b &\approx $bn .</mrow>
+  </md></p>
+
+<p>Finally, the same procedure is used to compute the length of <m>c</m>
+  <md>
+    <mrow>\frac{c}{\sin(C)} &= \frac{a}{\sin(A)}</mrow>
+    <mrow>c &= <math>sin($C) ($a/sin($A))</math></mrow>
+    <mrow>c &\approx $cn .</mrow>
+  </md></p>
+
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>B = $B^{\circ}</m></p>
+<p><m>b = $bn</m></p>
+<p><m>c = $cn</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

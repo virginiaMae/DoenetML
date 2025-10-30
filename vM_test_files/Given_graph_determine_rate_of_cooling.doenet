@@ -1,0 +1,219 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Newton's Law of Cooling application - given a graph of temperature over time. 
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="35" to="38"/>
+  <selectFromSequence name="b" from="10" to="40"/>
+  <selectFromSequence name="t" from="2" to="5"/>
+  <math name="initialTemp" simplify>$a + $b</math>
+  <math name="secondTemp" simplify>$a + 3</math>
+  <math name="delta2">$secondTemp - $a</math>
+  <math name="delta1">$initialTemp - $a</math>
+  <math name="k">-ln($delta2{simplify}/$delta1{simplify})/$t</math>
+  <number name="kNumerical">$k</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>t = $t</p>
+<p>d = $d</p>
+
+<p>k = $k</p>
+<p>kNumerical = $kNumerical</p>
+<p>finalTime = $finalTime</p>
+<p>finalTimeNumerical = $finalTimeNumerical</p> -->
+<!--testing-->
+  
+<p>An item that is refrigerated loses heat according to <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-6-6-newtons-law-of-cooling/">Newton's Law of Cooling</ref>. Determine the cooling rate, <m>k</m>, given the temperature data recorded in the graph below.</p>
+
+<p><em>Answer precisely using logarithms, or express the answer as a decimal correct to the nearest <m>0.001.</m></em></p>
+
+
+<setup>
+  <number name="xmin">-1</number>
+  <number name="xmax">7</number>
+  <number name="ymin">-10</number>
+  <number name="ymax">$initialTemp + 20</number>
+</setup>
+
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" size="full" showNavigation="false" aspectRatio="3/2">
+  <label anchor="(5,2)" fixLocation><m>\text{Time (min)}</m></label>
+  <label anchor="(-0.2, $initialTemp + 5)" positionFromAnchor="left"><m>\text{Temp} ^{\circ}</m></label>
+  <function name="graphExpFunc" variables="t" domain="[0,infinity)" styleNumber="5">$delta1 e^(-$k t) + $a</function>
+  <point name="p0" coords="(0, $initialTemp)"/>
+  <label anchor="(0.5, $p0.y)"><m>$p0.coords</m></label>
+  
+  <point name="ph" coords="($t, $secondTemp)">
+     <label><m>$ph.coords</m></label>
+  </point>
+  <line name="ambient" fixLocation styleNumber="2" labelPosition="lowerright">y = $a
+    <label>Temperature of refrigerator: <m>$a ^{\circ}</m></label>
+  </line>
+</graph>  
+
+
+<!--*********************************************
+            Answer input
+**********************************************-->  
+
+<p><m>k = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns" prefillLatex="0.000"/>
+    <award name="correctNumerical" allowedErrorInNumbers="0.001" allowedErrorIsAbsolute>
+      <when>$userAns = $k</when>
+    </award>
+
+    <award name="correctSymbolic" symbolicEquality simplifyOnCompare>
+      <when>$userAns = $k</when>
+    </award>
+
+    <award name="roundingError1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0.7">
+      <when>$userAns = $k</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correctNumerical or $correctSymbolic">$correctFeedback</feedback>
+  <feedback condition="$roundingError1">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">We need to use the formula for Newton's Law of Cooling, 
+    <me>(T_t - T_m) = (T_0 - T_m) e^{-k t}</me>
+where <m>T_t</m> is the tempertaure of the substance at time <m>t</m>, <m>T_0</m> is the initial temperature, <m>T_m</m> is the temperature of the medium (the surrounding enviornment) and <m>k</m> is the rate of cooling (or heating)..</feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>An item that is refrigerated loses heat according to Newton's Law of Cooling. Determine the cooling rate, <m>k</m>, given the temperature data recorded in the graph below.</em></p> 
+
+<setup>
+  <math name="a">33</math>
+  <math name="b">50</math>
+  <math name="t">7</math>
+  <math name="initialTemp" simplify>$a + $b</math>
+  <math name="secondTemp" simplify>$a + 3</math>
+  <math name="delta2">$secondTemp - $a</math>
+  <math name="delta1">$initialTemp - $a</math>
+  <math name="k">-ln($delta2{simplify}/$delta1{simplify})/$t</math>
+  <number name="kNumerical">$k</number>
+  <number name="xmin">-2</number>
+  <number name="xmax">9</number>
+  <number name="ymin">-10</number>
+  <number name="ymax">$initialTemp + 20</number>
+</setup>
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" size="full"  aspectRatio="3/2">
+  <label anchor="(5,2)" fixLocation><m>\text{Time (min)}</m></label>
+  <label anchor="(-0.2, $initialTemp + 5)" positionFromAnchor="left"><m>\text{Temp} ^{\circ}</m></label>
+  <function name="graphExpFunc" variables="t" domain="[0,infinity)" styleNumber="5">$delta1 e^(-$k t) + $a</function>
+  <point name="p0" coords="(0, $initialTemp)"/>
+  <label anchor="(0.8, $p0.y + 3)"><m>$p0.coords</m></label>
+  
+  <point name="ph" coords="($t, $secondTemp)">
+     <label><m>$ph.coords</m></label>
+  </point>
+  <line name="ambient" fixLocation styleNumber="2" labelPosition="lowerright">y = $a
+    <label>Temperature of refrigerator: <m>$a ^{\circ}</m></label>
+  </line>
+</graph> 
+  
+<p><alert><em>Solution.</em></alert></p>
+<p>Note that the ambient enviornment, in this example, is the temperature of the refrigerator. Therefore, we see from the graph that <m>T_m = $a ^{\circ}</m>. The initial temperature of the item is <m>T_0 = $initialTemp ^{\circ}</m>, which corresponds on the graph to the <m>y</m>-value of the point at time <m>t = 0</m> minutes.</p>
+
+<p>From the second data point, we can determine that the temperature at <m>t = $t</m> minutes is <m>T_t = T_4 = $secondTemp ^{\circ}</m>.</p>
+
+<ul>
+  <li>Using Newton's Law of Cooling, we substitute the information from the graph  to solve for <m>k</m>,
+    <me>(T_t - T_m) = (T_0 - T_m) e^{-k t}</me>
+    we have,
+    <md>
+      <mrow>($delta2) \amp= ($delta1)e^{-$t k}\;\; \amp\text{substitute known information}</mrow>
+      <mrow>\frac{\ln(\frac{$delta2{simplify}}{$delta1{simplify}})}{-$t} \amp= k\;\;\amp\text{simplify}</mrow>
+      <mrow>$k \amp= k\;\;\amp\text{simplify}</mrow>
+    <mrow>$kNumerical{displayDecimals="3"} \amp= k\;\amp\text{keep 3 decimal places, or retain symbolic expression}</mrow>
+    </md></li>  
+
+</ul>
+  
+</example>
+</hint>
+
+
+
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Using Newton's Law of Cooling, we substitute the information given for <m>t = $t</m> to solve for <m>k</m>,
+    <me>(T_t - T_m) = (T_0 - T_m) e^{-k t}</me>
+    we have,
+    <md>
+      <mrow>($delta2) \amp= ($delta1)e^{-$t k}\;\; \amp\text{substitute known information}</mrow>
+      <mrow>\frac{\ln(\frac{$delta2{simplify}}{$delta1{simplify}})}{-$t} \amp= k\;\;\amp\text{simplify}</mrow>
+      <mrow>$k \amp= k\;\;\amp\text{simplify}</mrow>
+    <mrow>$kNumerical{displayDecimals="3"} \amp= k\;\amp\text{keep 3 decimal places, or retain symbolic expression}</mrow>
+    </md></li>  
+
+</ul>
+
+    
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,178 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem asks the student 2 missing sides and the one missinge angle of a right triangle when given one angle and one side. The given angle ranges from 15 to 40 degrees, and the given side ranges in length from 4 to 8. Answers are fill-in the blank with an approximate decimal value.
+*************************************************************--> 
+
+
+<problem>
+<setup>
+  <selectFromSequence name="A" from="15" to="40"/>
+  <selectFromSequence name="a" from="4" to="8"/>
+  <number name="C">90</number>
+  <math name="b">$c cos($A pi/180)</math>
+  <math name="c">$a / sin($A pi/180)</math>
+  <math name="B" simplify>90 - $A</math>
+ 
+  <number name="bn" displayDecimals="2" padZeros>$b</number>
+  <number name="cn" displayDecimals="2" padZeros>$c</number>
+  <number name="Bn" displayDecimals="1" padZeros>$B</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>B = $B</p>
+<p>C = $C</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>An = $An</p>
+<p>Bn = $Bn</p>
+<p>bn = $bn</p> -->
+<!--testing-->
+
+<p>Given the following right triangle, determine the missing lengths and angles.  Express angles in degrees and round angles to the nearest <m>0.1</m> degree.</p>
+
+  
+<p>Find the missing parts of the triangle.  Round lengths to the nearest 0.01. </p>
+
+<p>In the triangle below:</p>
+  <md>
+    <mrow>a &= $a</mrow>
+    <mrow>A &= $A^{\circ}</mrow>
+    <mrow>C &= $C^{\circ}</mrow>
+  </md>
+
+  
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="-$b/2" xmax="$b + $b/2" ymin="-$a" ymax="$pB.y + $a" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC"/>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2">
+    <label>$angleA.degrees</label>
+  </angle>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4"/>
+
+
+
+  <textInput name="Binput" anchor="($pB.x - 0.25$b, $pB.y + 0.1$a)" width="25px">
+    <label><m>B = </m></label>
+  </textInput>
+  
+  <label name="a_label" anchor="(($pB.x + $pC.x)/2 + 0.25$b, $pB.y/2)" >
+    <m>a = $a</m>
+  </label>
+
+  <textInput name="cinput" anchor="($b/2 - 0.2$b, $a/2 + 1)" width="30px">
+    <label><m>c = </m></label>
+  </textInput>
+
+  <textInput name="binput" anchor="($pC.x/2, -1.5)" width="30px">
+    <label><m>b = </m></label>
+  </textInput>
+</graph>
+
+  
+<p><m>b = </m><mathInput name="userb" bindValueTo="$binput"/></p>
+<p><m>c = </m><mathInput name="userc" bindValueTo="$cinput"/></p>
+<p><m>B = </m><mathInput name="userB" bindValueTo="$Binput"/><m>^{\circ}</m></p>  
+  
+
+<setup>  
+<boolean name="btrue" allowedErrorInNumbers="0.2" allowedErrorIsAbsolute>$userb = $b</boolean>
+<boolean name="ctrue" allowedErrorInNumbers="0.2" allowedErrorIsAbsolute>$userc = $c</boolean>  
+<boolean name="Btrue" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>$userB = $B</boolean>
+
+<boolean name="bclose" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userb = $b and $btrue = false</boolean>
+<boolean name="cclose" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userc = $c and $ctrue = false</boolean>  
+<boolean name="Bclose" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userB = $B and $Btrue = false</boolean>
+<boolean name="someRoundingError">$aclose or $cclose or $Bclose</boolean>
+</setup>
+  
+<answer name="ans1">
+      <award name="correct">   
+        <when>$btrue and $ctrue and $Btrue</when>
+      </award>
+      <award name="rounding" credit="0">
+        <when>$bclose or $cclose or $Bclose</when>
+      </award>
+    </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="!$ctrue and $ans1.justSubmitted">Your value for <m>c</m> is incorrect (or contains a rounding error).</feedback>
+
+  <feedback condition="!$btrue and $ans1.justSubmitted">Your value for <m>b</m> is incorrect (or contains a rounding error).</feedback>
+
+  <feedback condition="!$Btrue and $ans1.justSubmitted">Your value for angle  <m>B</m> is incorrect (or contains a rounding error).</feedback>
+
+  <feedback condition="$someRoundingError and $ans1.creditAchieved != 1 and $ans1.responseHasBeenSubmitted">Try carrying more decimal places throughout your computations. It looks like you are close but you made a rounding error in one or more of your results!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>b \approx $bn</m></p>
+<p><m>c \approx $cn</m></p>
+<p><m>B = $Bn^{\circ}</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

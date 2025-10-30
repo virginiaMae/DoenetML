@@ -1,0 +1,108 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Make a substitution, where the substitution variable is a linear expression in x. Simplify, then record the values for the coefficients of the parabola in general form in terms of the substitution variable.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="3" to="7"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <selectFromSequence name="c" from="1" to="3"/>
+  <math name="solb" simplify>$a + 2 $c</math>
+  <math name="solc" simplify>$c^2 + $a $c + $b</math>
+  <math name="expr">f(x) = x^2 + $a x + $b</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f(a) = $$f($a)</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+<p>For the function <me>$expr</me> find <m>f(x + $c)</m>.</p> <p>Multiply out your answer to get a function of the form <m>f(x + $c) = a x^2 + b x + c</m>. Enter the values of <m>a</m>, <m>b</m>, <m>c</m>.</p> 
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+
+
+<!--*********************************************
+            User input
+**********************************************-->
+<p><m>f(x + $c) = </m> <mathInput name="mi_a" /><m>x^2 + </m> <mathInput name="mi_b"/><m>x + </m> <mathInput name="mi_c" />
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$mi_a = 1 and $mi_b = $solb and $mi_c = $solc</when>
+    </award>
+  </answer>
+</p>
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$ans1.justSubmitted and $mi_a != 1">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.justSubmitted and $mi_b != $solb">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.justSubmitted and $mi_c != $solc">Your <m>c</m> value is incorrect.</feedback>
+
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">To review function notation, take a look at the video textbook lesson <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-3-2-function-notation/">here</ref>.</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+***********************************************-->
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>f(x + $c) = x^2 + $solb x+ $solc</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,62 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the surface area of a sphere given its radius. Analytical responses of the form A = 4pi r ^2 are accepted, as well as decimal approximations. Radius parameter ranges from 3 to 10.
+
+
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="r" from="3" to="10"/>
+  <number name="sol" displayDecimals="2" padZeros>4 pi $r^2</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+  
+<p>Find the surface area of the sphere with radius <m>r = $r</m>. Round your answer to the nearest <m>0.01</m>.
+</p>
+
+<p>
+<m>\text{Area} = </m>
+  <answer name="ans1" allowedErrorInNumbers="0.01" allowedErrorIsAbsolute>$sol</answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Area} = $sol</m></p>
+</solution>
+</problem>

@@ -1,0 +1,324 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given two points of an arithmetic sequence, find the common difference, the explicit formula, and a specific given term in the sequence. Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="4"/>
+  <selectFromSequence name="b" from="5" to="8"/>
+  <selectFromSequence name="d" from="-4" to="4" exclude="0 1 -1"/>
+  <selectFromSequence name="a0" from="-3" to="5"/>
+  <selectFromSequence name="n" from="3" to="15" exclude="$b $a"/>
+  <function name="f" styleNumber="6">$d x + $a0</function>
+  <math name="x_a" simplify>$a $d + $a0</math>
+  <math name="x_b" simplify>$b $d + $a0</math>
+  <math name="x_n" simplify>$n $d + $a0</math>
+
+  
+  <number name="xmax1">max($n + 6, 6)</number>
+  <number name="ymin1">$a0 - 6</number>
+  <number name="ymax1">max($x_n + 2 $d, $x_b + 2 $d)</number>
+
+  <number name="xmax2">max($n + 6, 6)</number>
+  <number name="ymax2">max($a0 + 6, 6)</number>
+  <number name="ymin2">min($x_n + 2$d, $x_b + 2$d)</number>
+  <math name="expr" simplify="numberspreserveorder">$d n + $a0</math>
+  <boolean name="containsN"><matchesPattern pattern="()n+()" allowImplicitIdentities>$user_expr</matchesPattern></boolean>
+  <!--maths for incorrect responses-->
+  <math name="noA_0Ans">$d n</math>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>a0 = $a0</p>
+<p>n = $n</p>
+<p>x_a = $x_a</p>
+<p>x_b = $x_b</p>
+<p>x_n = $x_n</p>
+<p>f.formula = $f.formula</p>
+<p>f(n) = $$f($n)</p>
+
+
+<p>expr = $expr</p>
+<p>expr{simplify} = $expr{simplify}</p>
+<p>containsN = $containsN</p>
+<p>$ans1.responseHasBeenSubmitted</p>
+<p>noA_0Ans = $noA_0Ans</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+
+
+<p>In an arithmetic sequence, <m>a_{$a} = $x_a</m> and <m>a_{$b} = $x_b</m>. Find:</p>
+<ol level="2">
+  <li>the common difference, <m>d</m></li>
+  <li>a general expression for <m>a_n</m></li>
+  <li><m>a_{$n}</m></li>
+</ol>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<setup>
+  <function name="graphFunc" variables="n" styleNumber="6">$graphExpr</function>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<stack>
+  <p>Plot known points of the sequence:</p>
+  <p>1. Term number <mathInput name="userIndex1" minWidth="30"/> of the sequence has value: <mathInput name="userValue1"/></p>
+  <p>2. Term number <mathInput name="userIndex2" minWidth="30"/> of the sequence has value: <mathInput name="userValue2"/></p>
+  <p>Plot general expression for <m>a_n</m></p>
+  <p><m>a_n = </m><mathInput name="graphExpr" bindValueTo="$user_expr"/></p>
+  <p><em>Note, the above expression should contain the variable <m>n</m></em>.</p>
+  <p>Check <m>a_{$n} = </m><mathInput name="graph_x_n" bindValueTo="$user_a_n"/></p>
+</stack>
+<conditionalContent>
+  <case condition="$d > 0">
+<graph xmin="-5" xmax="$xmax1{link='false'}" ymin="$ymin1{link='false'}" ymax="$ymax1{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>a_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>a_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>a_0</m></label>
+  </point>
+  $graphFunc
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="lowerright">
+    <label><m>a_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="max($n, $b+1)"/></sources>
+  </map>
+</graph>
+  </case>
+
+<case condition="$d < 0">
+  <graph xmin="-5" xmax="$xmax2{link='false'}" ymin="$ymin2{link='false'}" ymax="$ymax2{link='false'}">
+  <point layer="2" styleNumber="2" labelPosition="upperright">($userIndex1, $userValue1)
+    <label><m>a_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="upperright">($userIndex2, $userValue2)
+    <label><m>a_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="upperright">(0, $$graphFunc(0))
+    <label><m>a_0</m></label>
+  </point>
+  $graphFunc
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="upperright">
+    <label><m>a_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="max($n, $b+1)"/></sources>
+  </map>
+</graph> 
+</case>
+
+</conditionalContent>
+</sideBySide>
+</aside>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<ol level="2">
+  <li><nbsp/><nbsp/><m>d = </m><mathInput name="user_d"/></li>
+  <li><nbsp/><nbsp/><m>a_n = </m><mathInput name="user_expr"/></li>
+  <li><nbsp/><nbsp/><m>a_{$n} = </m><mathInput name="user_a_n"/></li>
+</ol>
+    
+    <answer name="ans1">
+      <award name="correct" credit="1">    
+        <when>
+      $user_d = $d and $user_expr = $expr and $user_a_n = $x_n
+        </when>
+      </award>
+    </answer>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$ans1.justSubmitted and $containsN = false"><p>It looks like your equation for <m>a_n</m> is missing an <m>n</m>.</p></feedback>
+  <feedback condition="$ans1.justSubmitted and $user_expr = $noA_0Ans"><p>It looks like your equation for <m>a_n</m>  is missing an <m>a_0</m> term.</p></feedback>
+  <feedback condition="$ans1.justSubmitted and $user_d != $d">Your value for <m>d</m> is incorrect.</feedback>
+  <feedback condition="$ans1.justSubmitted and $user_expr != $expr">Your response for <m>a_n</m> is incorrect.</feedback>
+  <feedback condition="$ans1.justSubmitted and $user_a_n != $x_n">Your response for <m>a_{$n}</m> is incorrect.</feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<p>Here is a similar worked example:</p>
+<example newNamespace>
+<setup>
+  <number name="a">5</number>
+  <number name="b">8</number>
+  <number name="d">5</number>
+  <number name="a0">6</number>
+  <number name="n">12</number>
+  <function name="f" styleNumber="6">$d x + $a0</function>
+  <math name="x_a" simplify>$a $d + $a0</math>
+  <math name="x_b" simplify>$b $d + $a0</math>
+  <math name="x_n" simplify>$n $d + $a0</math>
+
+  
+  <number name="xmax1">max($n + 6, 6)</number>
+  <number name="ymin1">$a0 - 6</number>
+  <number name="ymax1">max($x_n + 2 $d, $x_b + 2 $d)</number>
+
+  <math name="expr" simplify="numberspreserveorder">$d n + $a0</math>
+</setup>
+
+  
+<p><em>In an arithmetic sequence, <m>a_{$a} = $x_a</m> and <m>a_{$b} = $x_b</m>. Find:</em></p>
+<ol level="2">
+  <li>the common difference, <m>d</m></li>
+  <li>a general expression for <m>a_n</m></li>
+  <li><m>a_{$n}</m></li>
+</ol>
+
+
+<p><alert><em>Solution.</em></alert></p>
+  <ul>
+    <li><p>First, compute the common difference <m>d</m>
+      <md>
+        <mrow>d \amp= \frac{a_{$b} - a_{$a}}{$b - $a}</mrow>
+        <mrow>\amp= \frac{$x_b - $x_a}{$b - $a}</mrow>
+        <mrow>\amp= $d</mrow>
+      </md></p></li>
+    <li><p>When we write the explicit formula, substituting the value we've just computed for <m>d</m>, we see that we still need to compute <m>a_0</m> to obtain a complete formula.
+      <me>a_n = $d n + a_0</me>
+      To do this, we can substitute the information given in the problem for either sequence term. We'll use the term for <m>a_{$a}</m>
+      <md>
+        <mrow>$x_a \amp= $d ($a) + a_0</mrow>
+        <mrow><math simplify>$x_a - $d $a </math>\amp= a_0</mrow>
+      </md>
+      So, our general formula is now <me>a_n = $expr.</me></p>
+    </li>
+    <li><p>Its a good moment to stop and graph our sequence using the graphing tool:</p>
+
+<setup>
+  <function name="graphFunc" variables="n" styleNumber="6">$graphExpr</function>
+</setup>
+      <sideBySide margins="5%" widths="30% 70%">
+<stack>
+  <p>Plot known points of the sequence:</p>
+  <p>1. Term number <mathInput name="userIndex1" minWidth="30" prefill="$a"/> of the sequence has value: <mathInput name="userValue1" prefill="$x_a"/></p>
+  <p>2. Term number <mathInput name="userIndex2" minWidth="30" prefill="$b"/> of the sequence has value: <mathInput name="userValue2" prefill="$x_b"/></p>
+  <p>Plot general expression for <m>a_n</m></p>
+  <p><m>a_n = </m><mathInput name="graphExpr" prefill="$expr"/></p>
+  <p>Check <m>a_{$n} = </m><mathInput name="graph_x_n"/></p>
+</stack>
+
+<graph xmin="-5" xmax="$xmax1" ymin="$ymin1" ymax="$ymax1">
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex1, $userValue1)
+    <label><m>a_{$userIndex1}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">($userIndex2, $userValue2)
+    <label><m>a_{$userIndex2}</m></label>
+  </point>
+  <point layer="2" styleNumber="2" labelPosition="lowerright">(0, $$graphFunc(0))
+    <label><m>a_0</m></label>
+  </point>
+  $graphFunc
+  <point layer="2" coords="($n, $graph_x_n)" labelPosition="lowerright">
+    <label><m>a_{$n}</m></label>
+  </point>
+  <map>
+    <template>
+      <point styleNumber="6">($i, $$graphFunc($i))</point>
+    </template>
+    <sources alias="i"><sequence from="0" to="max($n, $b+1)"/></sources>
+  </map>
+</graph>
+      </sideBySide>
+  We are on the right track, because the given sequence terms match the pattern generated by our formula.
+    </li>
+    <li><p>Finally, compute <m>a_{$n}</m>
+      <md>
+        <mrow>a_{$n} \amp= $d ($n) + $a0</mrow>
+        <mrow>\amp= $x_n</mrow>
+      </md>
+      This sequence value can also be checked with the graphing tool above.</p>
+    </li>
+     
+  </ul>
+</example> 
+
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ol level="2">
+  <li><nbsp/><nbsp/><m>d = $d</m></li>
+  <li><nbsp/><nbsp/><m>a_n = $expr</m></li>
+  <li><nbsp/><nbsp/><m>a_{$n} = $x_n</m></li>
+</ol>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

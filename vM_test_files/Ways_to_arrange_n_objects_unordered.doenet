@@ -1,0 +1,104 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine how many ways to arrange k objects from a set of n objects where order is not important. Application of the standard formula for combinations.
+This problem is randomized with k ranging from 2 to n-2 and n ranging from 5 to 10.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="n" from="5" to="10"/>
+  <selectFromSequence name="k" from="2" to="$n - 2"/>
+  <math name="combinationskOfN" simplify>$n!/($k!($n - $k)!)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>k = $k</p>
+<p>combinationskOfN = $combinationskOfN</p> -->
+<!--testing-->
+  
+<p>From a set of <m>$n</m> objects, find the number of ways to arrange <m>$k</m> objects. Order is not important. In other words, find <m>C($n,$k)</m>.</p> 
+  <p><m>C($n,$k) = </m>
+      
+    <answer name="ans4" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$combinationskOfN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans4.numSubmissions > 2 and $ans4.creditAchieved != 1">
+     <div name="helpText">
+      The formula for the number of <term>combinations</term> of <m>k</m> objects chosen from a set of <m>n</m> objects is
+    <me>C(n,k) = \frac{n!}{k!(n-k)!}.</me>
+    </div>
+  </feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="n">12</math>
+  <math name="k">3</math>
+  <math name="combinationskOfN" simplify>$n!/($k!($n - $k)!)</math>
+</setup>
+
+  
+<p><em>From a set of <m>$n</m> objects, find the number of ways to arrange <m>$k</m> objects. Order is not important. In other words, find <m>C($n,$k)</m>.</em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $combinationskOfN \amp\text{evaluate}</mrow>
+      </md></p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $combinationskOfN \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+</problem>

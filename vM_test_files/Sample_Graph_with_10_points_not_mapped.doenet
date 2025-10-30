@@ -1,0 +1,14 @@
+<title>This is a graph</title>
+
+<graph xmin="-1" xmax="10">
+  <point/>
+  <point>(1,0)</point>
+  <point>(2,0)</point>
+  <point>(3,0)</point>
+  <point>(4,0)</point>
+  <point>(5,0)</point>
+  <point>(6,0)</point>
+  <point>(7,0)</point>
+  <point>(8,0)</point>
+  <point>(9,0)</point>
+</graph>

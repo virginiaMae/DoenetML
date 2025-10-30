@@ -1,0 +1,213 @@
+<problem>
+<setup>
+  <select assignNames="(theta sol)">
+<!--  Q1   variants a,b,c,d -->
+<!--     <option>
+      <math>0</math>
+      <math>0</math>
+    </option>
+     <option>
+      <math>pi/6</math>
+      <math>sqrt(3)/3</math>
+    </option>
+    <option>
+      <math>pi/4</math>
+      <math>1</math>
+    </option>
+     <option>
+      <math>pi/3</math>
+      <math>sqrt(3)</math>
+    </option> -->
+<!--  Q2   variants e,f,g,h -->
+<!--     <option>
+      <math>2pi/3</math>
+      <math>-sqrt(3)</math>
+    </option>
+    <option>
+      <math>3pi/4</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>5pi/6</math>
+      <math>-sqrt(3)/3</math>
+    </option> -->
+<!--  Q3+   variants i,j,k,l -->
+    <option>
+      <math>pi</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>7pi/6</math>
+      <math>sqrt(3)/3</math>
+    </option>
+    <option>
+      <math>5pi/4</math>
+      <math>1</math>
+    </option>
+    <option>
+      <math>4pi/3</math>
+      <math>sqrt(3)</math>
+    </option>
+<!--  Q3-   variants m,n,o,p -->
+<!--     <option>
+      <math>-pi</math>
+      <math>0</math>
+    </option>
+    <option>
+      <math>-7pi/6</math>
+      <math>sqrt(3)/3</math>
+    </option>
+    <option>
+      <math>-3pi/4</math>
+      <math>1</math>
+    </option>
+    <option>
+      <math>-2pi/3</math>
+      <math>sqrt(3)</math>
+    </option> -->
+<!--  Q4+   variants q,r,s,t,u -->
+<!--     <option>
+      <math>5pi/3</math>
+      <math>-sqrt(3)</math>
+    </option>
+    <option>
+      <math>7pi/4</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>11pi/6</math>
+      <math>-sqrt(3)/3</math>
+    </option>
+    <option>
+      <math>2pi</math>
+      <math>0</math>
+    </option> -->
+<!--  Q4-   variants v,w,x,y,z -->
+<!--     <option>
+      <math>-pi/3</math>
+      <math>-sqrt(3)</math>
+    </option>
+    <option>
+      <math>-pi/4</math>
+      <math>-1</math>
+    </option>
+    <option>
+      <math>-pi/6</math>
+      <math>-sqrt(3)/3</math>
+    </option>
+    <option>
+      <math>-2pi</math>
+      <math>0</math>
+    </option> -->
+  </select>
+<vector name="choices">
+  (-sqrt(3), -1, -sqrt(3)/3, 0, sqrt(3)/3, 1, sqrt(3))
+</vector>      
+  
+</setup>
+  
+<!--testing-->
+<!-- <p>theta = $theta</p>
+<p>sol = $sol</p>
+<p>choices.displacement[1] = $choices.displacement[1]</p> 
+<p><boolean>$sol = $choices.displacement[1]</boolean></p> 
+<p><boolean>tan($theta) = $sol</boolean></p> -->
+<!--testing-->
+
+<sideBySide margins="0% 3% 0%">
+<p>Find <m>\tan\left($theta\right)</m>. <nbsp/><nbsp/><nbsp/>  
+  <answer name="ans1" inline>
+    <choice credit="$sol = $choices.displacement[1]">a</choice>
+    <choice credit="$sol = $choices.displacement[2]">b</choice>
+    <choice credit="$sol = $choices.displacement[3]">c</choice>
+    <choice credit="$sol = $choices.displacement[4]">d</choice>
+    <choice credit="$sol = $choices.displacement[5]">e</choice>
+    <choice credit="$sol = $choices.displacement[6]">f</choice>
+    <choice credit="$sol = $choices.displacement[7]">g</choice>
+  </answer></p>
+
+  
+  <tabular bottom="minor" top="minor" left="minor" right="minor" width="200">
+    <row>
+      <cell>a.</cell><cell halign="center"><m>\displaystyle $choices.displacement[1]</m></cell>
+    </row>
+    <row>
+      <cell>b.</cell><cell halign="center"><m>\displaystyle $choices.displacement[2]</m></cell>
+    </row>
+    <row>
+      <cell>c.</cell><cell halign="center"><m>\displaystyle $choices.displacement[3]</m></cell>
+    </row>
+    <row>
+      <cell>d.</cell><cell halign="center"><m>\displaystyle $choices.displacement[4]</m></cell>
+    </row>
+    <row>
+      <cell>e.</cell><cell halign="center"><m>\displaystyle $choices.displacement[5]</m></cell>
+    </row>
+    <row>
+      <cell>f.</cell><cell halign="center"><m>\displaystyle $choices.displacement[6]</m></cell>
+    </row>
+    <row>
+      <cell>g.</cell><cell halign="center"><m>\displaystyle $choices.displacement[7]</m></cell>
+    </row>
+  </tabular>
+    
+</sideBySide>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Unit Circle Widget
+**********************************************-->
+<aside><title>Unit Circle Widget</title>
+  <copy uri="doenet:doenetId=_cyKsdZxEkHegkS48LjRVk&pageId=_2qCrkw2UFD7zsl4VAM2kJ&cid=bafkreia3e2tzucww2vie2gfhfjsqvgscodfmelyysmjmufwvdmlubrhpp4" />
+</aside>
+
+  
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<m>\tan\left($theta\right) = $sol</m>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

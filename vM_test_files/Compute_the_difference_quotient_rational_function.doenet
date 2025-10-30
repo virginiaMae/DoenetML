@@ -1,0 +1,93 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the difference quotient for a square root function
+
+(CA-Deriv #8 CA2006)
+
+QUESTION:The difference quotient for a function HoldForm[f(x)] is 
+
+HoldForm[Style[(f(x+h)-f(x))/h,20]]
+
+Find the difference quotient for
+
+ HoldForm[f(x)=Style[2/x^2,20]];; 
+
+VARIABLES: {$$a$$[{2,4}, Integer], $$b$$[{-1,1}, Choice]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {"Numerator", "Denominator"};;
+
+answer = {-4*x-(2*h),x^2*(x+h)^2};;
+
+tolerance = 0
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="2" to="4"/>
+  <math name="diffQuotient">(f(x + h) - f(x))/h</math>
+  <math name="expr" simplify="numberspreserveorder">f(x) = $a/(x^2)</math>
+  <math name="sol" simplify="numberspreserveorder">(-2 $a x - 2h)/(x^2 (x + h)^2)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>The difference quotient for a function <m>f(x)</m> is 
+  <me>$diffQuotient</me>
+</p>
+<p>Find the difference quotient for 
+  <me>$expr</me>
+</p>
+
+    <answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>
+      <mathInput name="userAns" minWidth="150"/>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>\displaystyle{$sol}</m>
+</p>
+
+</solution>
+</problem>

@@ -1,0 +1,121 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem asks the student to convert an angle given in degrees to radians. The angles range from (15 - 3*360) to (315 + 3*360) degrees.
+*************************************************************--> 
+
+
+
+<problem>
+<setup>
+  <select name="c">36 72 108 144 216 252 30 60 90 120 150 180 210 240 270 300 45 135 225 315 15 75 105 165</select>
+  <select name="b">-3 -2 -1 1 2 3</select>
+  <math name="a" simplify>$c + $b 360</math>
+  <math name="gcf"><gcd>$a 180</gcd></math>
+  <math name="num" simplify>$a pi/$gcf</math>
+  <math name="den" simplify>180/$gcf</math>
+  <math name="sol" simplify>$num/$den</math>
+  <math name="unsimple">$a pi/180</math>
+  <boolean name="check">$a pi/180 = $sol</boolean>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>gcf = $gcf</p>
+<p>num = $num</p>
+<p>den = $den</p>
+<p>sol = $sol</p>
+<p>unsimple = $unsimple</p>
+<p>check = $check</p> -->
+<!--testing-->
+
+<p>Convert the angle <m>\alpha = $a^{\circ}</m> to radians. Express you answer exactly, using <m>\pi</m>, and simplifying if necessary: </p>
+  
+<p><m>\alpha = </m><answer name="ans1">
+      <mathInput name="userAngle"/>
+      <award name="correct" symbolicEquality expandOnCompare>   
+        <when>
+          $userAngle = $sol
+        </when>
+      </award>
+      <award name="notSimple" symbolicEquality credit="0.5" expandOnCompare>   
+        <when>
+          $userAngle = $unsimple
+        </when>
+      </award>
+      <award name="numerical" allowedErrorInNumbers="0.01" credit="0.5">
+        <when>
+          $userAngle = $sol
+        </when>
+      </award>
+    </answer> radians.</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$numerical">Enter <m>\pi</m> if needed in your answer; do not round. Your answer should be an integer or an exact rational number, not a decimal approximation.</feedback>
+
+  <feedback condition="$notSimple">Remember to simplify your answer. See <ref uri="https://openstax.org/books/prealgebra-2e/pages/4-2-multiply-and-divide-fractions">this</ref> online textbook chapter, or <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-1-3-reducing-fractions/">this</ref> video lesson for a refresher on simplifying fractions.</feedback>
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+     <div name="helpText">
+       <p>See the examples in <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-1-3/">this</ref> lesson on the <term>radian</term> measure of an angle.</p>
+    </div>
+  </feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<asList>$sol</asList>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

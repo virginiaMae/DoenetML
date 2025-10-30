@@ -1,0 +1,102 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine how many ways to arrange k objects in order from a set of n objects. Application of the standard formula for permutations.
+This problem is randomized with k ranging from 2 to n-2 and n ranging from 5 to 10.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="n" from="5" to="10"/>
+  <selectFromSequence name="k" from="2" to="$n - 2"/>
+  <math name="permutekOfN" simplify>$n!/($n - $k)!</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>k = $k</p>
+<p>permutekOfN = $permutekOfN</p> -->
+<!--testing-->
+  
+<p>From a set of <m>$n</m> objects, find the number of ways to arrange <m>$k</m> objects, in order. In other words, find <m>P($n,$k)</m>.</p> 
+  <p><m>P($n,$k) = </m>
+      
+    <answer name="ans3" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$permutekOfN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans3.numSubmissions > 2 and $ans3.creditAchieved != 1">
+     <div name="helpText">
+      The formula for the number of <term>permutations</term>of <m>k</m> objects chosen from a set of <m>n</m> objects is
+    <me>P(n,k) = \frac{n!}{(n-k)!}.</me>
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="n">12</math>
+  <math name="k">3</math>
+  <math name="permutekOfN" simplify>$n!/($n - $k)!</math>
+</setup>
+
+  
+<p><em>From a set of <m>$n</m> objects, find the number of ways to arrange <m>$k</m> objects, in order. In other words, find <m>P($n,$k)</m>.</em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Use the formula for <m>P(n,k)</m>
+      <md>
+        <mrow>P(n,k) \amp= \frac{n!}{(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>P($n,$k) \amp= \frac{$n!}{($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $permutekOfN \amp\text{evaluate}</mrow>
+      </md></p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Use the formula for <m>P(n,k)</m>
+      <md>
+        <mrow>P(n,k) \amp= \frac{n!}{(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>P($n,$k) \amp= \frac{$n!}{($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $permutekOfN \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+</problem>

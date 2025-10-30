@@ -1,0 +1,119 @@
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="p" from="-5" to="5" exclude="0"/>
+  <math name="genForm" simplify="numberspreserveorder">x^2 + 2$p x + $p^2</math>
+  <math name="factForm" simplify="numberspreserveorder">(x + $p)^2</math>
+  <math name="exprFactForm">(x + p)^2</math>
+  
+</setup>
+
+
+<!--testing-->
+<!-- <p>p = $p</p>
+<p>genForm = $genForm</p>
+<p>factForm = $factForm</p>
+<p>exprFactForm = $exprFactForm</p> -->
+<!--testing-->
+
+<p> Write $genForm in the form $exprFactForm.  Find <m>p</m>.  Note: <m>p</m> may be negative.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph parabola in the form <m>y = (x + p)^2</m>:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+  <p><booleanInput name="showParabola">
+      <label>Click to show second parabola</label>
+    </booleanInput>
+  </p>
+</div>
+
+
+<graph name="g1" >
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="userParabola" hide="!$showParabola">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+<p><m>y = \bigg(x + </m> <mathinput name="userP"/><m>\bigg)^2</m>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userP = $p</when>
+    </award>
+    <award name="signError" credit="0">
+      <when>$userP = -$p</when>
+    </award>    
+</answer></p>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$signError">Check the sign of your answer.</feedback>
+  <feedback condition="$ans1.numSubmissions > 1 and $ans1.creditAchieved != 1">Try graphing both forms to check your answer.</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>p = $p</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

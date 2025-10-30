@@ -1,0 +1,138 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve an exponential equation for x. 
+
+Delete or comment out the <hint> to remove the Worked Example.
+Delete or comment out the <hint> to remove the Worked Example.
+
+Version 1: exponential term on left-hand side only
+Version 2: exponential terms on both sides of the equation
+*************************************************************--> 
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="12"/>
+  <selectFromSequence name="b" from="2" to="50"/>
+  <selectFromSequence name="c" from="1" to="7"/>
+  <math name="expr">e^($a x + $c) = $b</math>
+  <math name="sol">(ln($b) - $c)/$a</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Find the solution of the exponential equation
+<me>$expr</me></p>
+
+<p><em>Write your answer in terms of logarithms, or correct to four decimal places.</em></p>
+
+<p><m>x = </m> 
+  <answer name="ans1">
+    <mathInput name="userAns"/>
+    <award name="correct">
+      <when>$userAns = $sol</when>
+    </award>
+    <award name="numerical" allowedErrorInNumbers="0.0001" allowedErrorIsAbsolute>
+      <when>$userAns = $sol</when>
+    </award>
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+  
+<p>Here is a similar worked example:</p> 
+<example newNamespace>
+
+<setup>
+  <math name="a">15</math>
+  <math name="b">36</math>
+  <math name="c">12</math>
+  <math name="expr">e^($a x + $c) = $b</math>
+  <math name="sol">(ln($b) - $c)/$a</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Find the solution of the exponential equation
+<me>$expr</me></p>
+
+<p><em><alert>Solution.</alert></em>
+    <md>
+      <mrow>\ln (e^{$a x + $c})\amp= \ln ($b) \;\;\amp\text{take the natural log of both sides}</mrow>
+      <mrow>($a x + $c) \ln (e)\amp= \ln ($b) \;\;\amp\text{apply properties of logs to simplify the LHS}</mrow>
+      <mrow>$a x + $c \amp= \ln ($b) \;\;\amp\text{simplify} \ln(e) = 1</mrow>
+      <mrow>x \amp= $sol \; \;\amp\text{solve for x}</mrow>
+    </md>
+You can leave your answer in this format: <m>x = $sol</m>, or use a calculator to get a decimal approximation for <m>x</m>:
+  <me>x \approx <number displayDecimals="4">$sol</number></me>
+</p>
+</example>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x = $sol</m>, or <m>x \approx <number displayDecimals="4">$sol</number></m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

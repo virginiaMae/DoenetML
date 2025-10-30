@@ -1,0 +1,202 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the probabilities for winning individual dollar amounts from a raffle, determine the expected value of a raffle ticket. Decimal response format. 
+
+The Worked Example can be hidden from veiw by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title></title>
+<setup>
+  <select name="p10">
+    <option><math displayDecimals="2" padZeros>0.05</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.10</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.15</math>
+    </option>
+  </select>
+
+  <select name="p5">
+    <option><math displayDecimals="2" padZeros>0.10</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.15</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.20</math>
+    </option>
+  </select>
+
+  <select name="p2">
+    <option><math displayDecimals="2" padZeros>0.20</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.30</math>
+    </option>
+    <option><math displayDecimals="2" padZeros>0.40</math>
+    </option>
+  </select>
+
+  <math name="p1" displayDecimals="2" padZeros simplify>1 - $p10 - $p5 - $p2</math>
+  <math name="expectedValue" displayDecimals="2" padZeros>10$p10 + 5$p5 + 2$p2 + $p1</math>
+</setup>
+
+  
+<!--testing-->
+<!-- <p>p10 = $p10</p>
+<p>p5 = $p5</p>
+<p>p2 = $p2</p>
+<p>p1 = $p1{simplify}</p>
+<p>expectedValue = $expectedValue = $expectedValue{simplify}</p> -->
+<!--testing-->
+
+<p>You hold one ticket to a raffle that has the following payouts:</p>
+
+<p>You will win <m>\$ 10</m> with probability <m>$p10</m></p>
+<p>You will win <m>\$ 5</m> with probability <m>$p5</m> </p>
+<p>You will win <m>\$ 2</m> with probability <m>$p2</m></p>
+<p>You will win <m>\$ 1</m> with probability <m>$p1</m></p>
+
+Find the expected value of the amount of money you will win. Do not include the dollar sign in your answer. 
+
+      
+<p><m>\text{Expected value} = \$</m>   <answer name="ans14" >
+      <mathInput name="userInput" prefillLatex="0.00"/>
+      
+      <award name="correct" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="1">    
+        <when>
+      $userInput=$expectedValue
+        </when>
+      </award>
+
+      <award name="roundingError" allowedErrorInNumbers="1" allowedErrorIsAbsolute credit="0">
+        <when>
+      $userInput=$expectedValue
+        </when>
+      </award>
+      
+      <award name="correctSymbolic" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$expectedValue
+        </when>
+      </award>
+
+      <award name="tooHigh"  credit="0">    
+        <when>
+      $userInput > <math>10</math>
+        </when>
+      </award>
+
+      <award name="tooLow"  credit="0">    
+        <when>
+      $userInput < <math>1</math>
+        </when>
+      </award>
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctSymbolic">$correctFeedback</feedback>
+  
+  <feedback condition="$roundingError">It looks like you may have rounded incorrectly. Try again for full credit, preserving more decimal places in your intermediate computations.</feedback>
+
+  <feedback condition="$tooHigh">Check again. It is not possible for the expected value to be more than the maximum possible win.</feedback>
+  
+  <feedback condition="$tooLow">Check again. it is not possible for the expected value to be less than the minimum possible win.</feedback>
+  
+  <feedback condition="$ans14.numSubmissions > 2 and $ans14.creditAchieved != 1">
+     <div name="helpText">
+       If a <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-4/https://open.lib.umn.edu/probability/chapter/topic-2-3/">random variable</ref> <m>X</m>, takes on possible values <m>v_1, v_2, v_3,...</m> which have probabilites <m>p_1, p_2, p_3,...</m> respectively, then the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-4/">expected value</ref> of <m>X</m> is
+       <me>E(X) = v_1 \cdot p_1 + v_2 \cdot p_2 + v_3 \cdot p_3 ... = \sum_{i} v_i \cdot p_i</me>
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>You hold one ticket to a raffle that has the following payouts:</em></p>
+
+<p><em>You will win <m>\$ 10</m> with probability <m>$p10</m></em></p>
+<p><em>You will win <m>\$ 5</m> with probability <m>$p5</m></em> </p>
+<p><em>You will win <m>\$ 2</m> with probability <m>$p2</m></em></p>
+<p><em>You will win <m>\$ 1</m> with probability <m>$p1</m></em></p>
+
+<setup>
+  <math name="p10" displayDecimals="2">0.09</math>
+  <math name="p5" displayDecimals="2">0.17</math>
+  <math name="p2" displayDecimals="2">0.22</math>
+  <math name="p1" simplify displayDecimals="2" padZeros>1 - $p10 - $p5 - $p2</math>
+  <math name="expectedValue" displayDecimals="2" padZeros>10$p10 + 5$p5 + 2$p2 + $p1</math>
+</setup>
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Using the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-4/">expected value formula</ref>, we have
+  <md>
+    <mrow>E(X) \amp= v_1 \cdot p_1 + v_2 \cdot p_2 + v_3 \cdot p_3 ... = \sum_{i} v_i \cdot p_i \amp\text{general formula}</mrow>
+    <mrow>E(X) \amp = $expectedValue \amp\text{substitute known information}</mrow>
+    <mrow>\amp= $expectedValue{simplify} \amp\text{simplify}</mrow>
+  </md>
+
+</p>
+  
+</example>
+
+<p><em>How to check</em>: Ask yourself whether the dollar value you computed seems reasonable considering the given probabilities? Make sure your answer is a value between <m>1</m> and <m>10</m>, because the expected value of the winnings cannot be greater than the maximum or minimum value that it is possible to win.</p>
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Using the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-4/">expected value formula</ref>, we have
+  <md>
+    <mrow>E(X) \amp= v_1 \cdot p_1 + v_2 \cdot p_2 + v_3 \cdot p_3 ... = \sum_{i} v_i \cdot p_i \amp\text{general formula}</mrow>
+    <mrow>E(X) \amp = $expectedValue \amp\text{substitute known information}</mrow>
+    <mrow>\amp= $expectedValue{simplify} \amp\text{simplify}</mrow>
+  </md>
+
+</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

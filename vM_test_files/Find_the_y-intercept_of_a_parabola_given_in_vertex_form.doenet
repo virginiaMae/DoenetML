@@ -1,0 +1,193 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the y-intercept of a parabola expressed in vertex form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-9" to="9" exclude="0"/>
+  <selectFromSequence name="a" from="-4" to="4" step="2" exclude="0"/>
+  <math name="expr" simplify="numbersPreserveOrder">$a(x - $h)^2 + $k</math>
+  <math name="yIntercept" simplify="numbers">$a(0 - $h)^2 + $k</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>p = $p</p>
+<p>expr = $expr</p>
+<p>yIntercept = $yIntercept{simplify}</p> -->
+<!--testing-->
+
+<p>Find the <m>y</m>-intercept of the parabola</p><me>y = $expr</me> 
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($yIntercept - 10, -10)</number>
+  <number name="ymax">max($yIntercept + 10, 10)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph point at the proposed <m>y</m>-intercept:</p> 
+  <p><m>(0, y) = </m></p>
+  <p><m>\bigg( 0, </m> <mathInput name="yInt" bindValueTo="$userYInt"/> <m>\bigg)</m></p>
+</div>
+  
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <point name="userIntercept" fixed styleNumber="5">(0, $yInt)
+    <label>$userIntercept.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will occur at the intersection of the graphed function with the <m>y</m>-axis.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+  
+
+<p><m>y\text{-intercept} = </m> 
+  <answer name="ans1">
+    <mathInput name="userYInt"/>
+    <award name="correct">
+      <when>$userYInt = $yIntercept</when>
+    </award>
+    <award name="correctAlso">
+      <when>$userYInt = (0,$yIntercept)</when>
+    </award>
+  </answer>
+</p>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctAlso">$correctFeedback</feedback>
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <div name="helpText">
+<p>Recall the definition of the <alert><m>y</m>-intercept</alert> of a linear function or the <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-4-10-equations-of-lines/">equation of a line</ref>: It is the location where the linear function crosses the <m>y</m>-axis; in other words, where <m>x = 0</m>.</p>
+      <p>The <alert><m>y</m>-intercept</alert> of a quadratic function, or a parabola, refers to the same point on the graph. Therefore, to determine the <m>y</m>-coordinate of the parabola we can substitute <m>x = 0</m> into the given equation.</p>
+    </div>
+  </feedback>
+  
+ 
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+<section newNameSpace><title></title>
+<setup>
+  <math name="h">5</math>
+  <math name="k">-11</math>
+  <math name="a">2</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a(x - $h)^2 + $k</math>
+  <math name="yIntercept" simplify="numbers">$a(0 - $h)^2 + $k</math>
+</setup>
+  
+<p>Here is a similar worked example:</p>  
+<p><em>Find the <m>y</m>-intercept of the parabola</em></p>
+  <me>y = $expr</me> 
+  
+<p><em><alert>Solution.</alert></em>
+<md>
+  <mrow>y \amp=$a((0) - $h)^2 - <abs>$k</abs> \amp\text{substitute x = 0}</mrow>
+  <mrow>\amp=$yIntercept{simplify} \amp\text{simplify}</mrow>
+</md>
+</p>
+</section>
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>We substitute <m>x = 0</m> into the given equation:</p>
+<conditionalContent>
+  <case condition="$h > 0 and $k > 0">
+<md>
+  <mrow>y \amp=$a((0) - $h)^2 + $k</mrow>
+  <mrow>\amp=$yIntercept{simplify}</mrow>
+</md>
+  </case>
+  
+  <case condition="$h > 0 and $k < 0">
+<md>
+  <mrow>y \amp=$a((0) - $h)^2 - <abs>$k</abs></mrow>
+  <mrow>\amp=$yIntercept{simplify}</mrow>
+</md>
+  </case>
+  <case condition="$h < 0 and $k > 0">
+<md>
+  <mrow>y \amp=$a((0) + <abs>$h</abs>)^2 + $k</mrow>
+  <mrow>\amp=$yIntercept{simplify}</mrow>
+</md>
+  </case>
+  <case condition="$h < 0 and $k < 0">
+<md>
+  <mrow>y \amp=$a((0) + <abs>$h</abs>)^2 - <abs>$k</abs></mrow>
+  <mrow>\amp=$yIntercept{simplify}</mrow>
+</md>
+  </case>
+</conditionalContent>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

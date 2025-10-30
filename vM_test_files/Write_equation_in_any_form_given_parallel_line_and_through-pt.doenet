@@ -1,0 +1,225 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Write the equation of the line in any form given parallel line and through-pt. Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="3" to="5"/>
+  <select name="b">-2 -4 -6 2 4 6</select>
+  <select name="c">1 4 6</select>
+  <select name="h">-2 -3</select>
+  <select name="k">1 0</select>
+  <point name="p1">($h, $k)</point>
+  <math name="line1Eq" simplify="numberspreserveorder">$a x - $b y = $c</math>
+  <math name="sol" simplify="full">y = $k - ($a $h)/$b + ($a / $b) x</math>
+  <boolean name="isEquation">
+  <matchesPattern pattern="() = ()" allowImplicitIdentities>
+    $userEq
+  </matchesPattern>
+</boolean> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>p1 = $p1</p>
+<p>line1Eq = $line1Eq</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Find the equation of the line parallel to the line $line1Eq passing through the point $p1. Express the equation of the line any convenient form (i.e. standard form, point-slope form, or slope-intercept form).</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Enter the equation of the first line:</p> 
+  <p><mathInput name="eq1"/></p>
+
+  <p>Enter the given point that the second line passes through:</p> 
+  <p><m>P = </m> <mathInput name="pCoords"/></p>
+
+   <p>Enter proposed equation for the second line:</p> 
+   <p><mathInput name="eq2" bindValueTo="$userEq"/></p>
+</div>
+
+  
+<graph name="g1">
+  <line name="line1" equation="$eq1">
+    <label>Line 1</label>
+  </line>
+  <point name="P" fixed coords="$pCoords" styleNumber="2">
+    <label>$P.coords</label>
+  </point>
+  <line name="line2" equation="$eq2" styleNumber="2">
+    <label>Line 2</label>
+  </line>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+
+
+
+  
+<p>
+  <answer name="ans11">
+    <mathInput name="userEq"/>
+    <award name="correct">
+      <when>$userEq = $sol</when>
+    </award>
+    <award name="notEquation" credit="0">
+      <when>$isEquation = false</when>
+    </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$notEquation"><p>Check to make sure you entered a complete equation (including an equals sign!)</p></feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<div newNamespace> 
+<setup>
+  <math name="a">7</math>
+  <math name="b">-1</math>
+  <math name="c">5</math>
+  <math name="h">3</math>
+  <math name="k">-1</math>
+  <math name="m">7</math>
+  <point name="p1">($h, $k)</point>
+  <math name="line1Eq" simplify="numberspreserveorder">$a x + $b y = $c</math>
+  <math name="sol" simplify="numberspreserveorder">y - $k = $m(x - $h)</math>
+</setup>
+
+
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>Find the equation of the line parallel to the line $line1Eq passing through the point $p1. Express the equation of the line any convenient form (i.e. standard form, point-slope form, or slope-intercept form).</em></p>
+
+  <ul>
+    <li><p>First, we determine the slope of the parallel line by rearraging the equation to slope-intercept form.
+      <md>
+        <mrow>7x - y &= 5\;\;\;\text{add}\; y\; \text{to both sides, subtract 5 both sides}</mrow>
+        <mrow>7x - 5 &= y\;\;\;\text{this is now slope-intercept form. Therefore, } m = 7</mrow>
+      </md></p>
+    </li>
+    <li><p>We can now use point-slope form with the given point to determine an equation for the line. We have <m>m = 7</m> and <m>(x_1, y_1) = (3,-1)</m>
+      <md>
+        <mrow>y - y_1 &= m(x - x_1)\;\;\;\text{point-slope form; substitute known values}</mrow>
+        <mrow>y - (-1) &= 7(x - 3) \;\;\;\text{simplify}</mrow>
+        <mrow>y + 1 &= 7(x - 3)</mrow>
+      </md></p>
+    </li>
+    <li>
+      <p>Finally, we should graph our equation to ensure that it is parallel to the original line and passes through the given point.</p>
+
+  <sideBySide margins="5%">
+  <div>
+  <p>Enter the equation of the first line:</p> 
+  <p><mathInput name="eq1" prefill="$line1Eq"/></p>
+
+  <p>Enter the given point that the second line passes through:</p> 
+  <p><m>P = </m> <mathInput name="pCoords" prefill="$p1.coords"/></p>
+
+   <p>Enter proposed equation for the second line:</p> 
+   <p><mathInput name="eq2" prefill="y + 1 = 7(x - 3)"/></p>
+  </div>
+  
+    <graph name="g1">
+      <line name="line1" equation="$eq1">
+        <label>Line 1</label>
+      </line>
+      <point name="P" fixed coords="$pCoords" styleNumber="2">
+        <label>$P.coords</label>
+      </point>
+      <line name="line2" equation="$eq2" styleNumber="2">
+        <label>Line 2</label>
+      </line>
+    </graph>
+  </sideBySide>
+  
+    </li>
+  </ul>
+        
+        
+
+
+  
+</example>
+
+<p><em><alert>How to check your answer</alert></em>: Your final answer should be an equation that defines a line. If you graph this equation, you should be able to verify that it passes through the given point.</p>
+
+</div>
+
+</hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>One possible equation is $sol . Different formats are also accepted as long as they describe the same line.</p>
+
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

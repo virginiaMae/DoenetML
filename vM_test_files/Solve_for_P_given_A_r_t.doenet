@@ -1,0 +1,188 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Continuously compounding interest problem: given A, r, and t solve for P. A graphing tool is provided to help visualize the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="64000" to="72000" step="1000"/>
+  <selectFromSequence name="t" from="10" to="20"/>
+  <selectFromSequence name="r" from="0.02" to="0.08" step="0.005"/>
+  
+  <math name="p">$a/(e^($r $t))</math>
+  <number name="pNumerical">$p</number>
+
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>t = $t</p>
+<p>r = $r</p>
+<p>p = $p</p>
+<p>pNumerical = $pNumerical</p> -->
+<!--testing-->
+
+<p>What principal would you need to invest at an interest rate of <m><math simplify>$r 100</math> \%</m> in order to have <m>\$ $a</m> at the end of <m>$t \;\text{years}</m>? Assume interest is compounded continuously and use the formula <m>A = P e^{r t}</m>. Round to the nearest <m>\$ 0.01 \;</m>.</p>
+
+<p><em>Input your reponse as a decimal, rounding to the nearest <m>\$ 0.01</m>. Do not include commas in your answer.</em></p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">-5</number>
+  <number name="xmax">$t+5</number>
+  <number name="ymin">-1000</number>
+  <number name="ymax">$a + 5000</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the exponential function, including the computed principal:</p>
+  <p><m>A(t) = Pe^{rt}</m>:</p>
+  <p><m>A(t) = </m> <mathInput name="eq1"/></p>
+
+  <p>Check with the given data point at final time:</p> 
+  <p><m>(t, A(t)) = </m></p>
+  <p><m>\bigg(</m> <mathInput name="tFinal" /><m>,</m>
+  <mathInput name="finalAmount"  displayDecimals="2" padZeros/><m> \bigg)</m> </p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <function name="graphExpFunc" variables="t" styleNumber="5">$eq1</function>
+  <point name="pT" coords="($tFinal, $finalAmount)"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+<!--*********************************************
+            User answer input
+**********************************************-->  
+  
+<p><m>\text{Principle} = \$</m> <mathInput name="userPrinciple" prefillLatex="0.00"/>
+  <answer name="ans11">
+    <award name="correctNumerical" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+      <when>$userPrinciple{isResponse} = $pNumerical</when>
+    </award>
+
+    <award name="correctSymbolic" symbolicEquality simplifyOnCompare>
+      <when>$userPrinciple{isResponse} = $p</when>
+    </award>
+
+    <award name="roundingError1" allowedErrorInNumbers="1" allowedErrorIsAbsolute credit="0">
+      <when>$userPrinciple{isResponse} = $pNumerical</when>
+    </award>
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correctNumerical or $correctSymbolic">$correctFeedback</feedback>
+  <feedback condition="$roundingError1">It looks like you may have rounded incorrectly. Try again but keep more decimal values in your intermediate computations, or keep your solution symbolic until the last step.</feedback>
+  
+  <feedback condition="$ans11.numSubmissions > 2 and $ans11.creditAchieved != 1">
+    <div name="helpText">We need to use the formula for continuously compounding interest, 
+    <me>A = P e^{r t}</me>
+where <m>A</m> is the accrual, or value at time <m>t</m>, <m>P</m> is the Principal, and <m>r</m> is the interest rate.    </div>
+  </feedback>
+
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+  
+<setup>
+  <math name="a">55000</math>
+  <math name="t">22</math>
+  <math name="r">0.015</math>
+  <math name="p">$a/(e^($r $t))</math>
+  <number name="pNumerical">$p</number>
+</setup>
+<p><em>What principal would you need to invest at an interest rate of <m><math simplify>$r 100</math> \%</m> in order to have <m>\$ $a</m> at the end of <m>$t \;\text{years}</m>?</em></p>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+   <md>
+      <mrow>A \amp= P e^{r t} \amp\text{formula for continously compounding interest}</mrow>
+      <mrow>$a \amp= P e^{$r \cdot $t} \amp\text{substitute known information}</mrow>
+      <mrow><math name="aOverExp">$a/(e^($r $t))</math> \amp= P \amp\text{divide both sides by}\; e^{rt}</mrow>
+      <mrow> $pNumerical{displayDecimals="2"} \amp= P \amp\text{evaluate and round}</mrow>
+    </md>
+
+
+<p>Tip: Do not include any commas to indicate place-value in your response. The system has a hard time with those!</p>
+
+</example>
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+
+    <md>
+      <mrow>A \amp= P e^{r t} \amp\text{formula for continously compounding interest}</mrow>
+      <mrow>$a \amp= P e^{$r \cdot $t} \amp\text{substitute known information}</mrow>
+      <mrow><math name="aOverExp">$a/(e^($r $t))</math> \amp= P\amp\text{divide both sides by}\; e^{rt}</mrow>
+      <mrow> $pNumerical{displayDecimals="2"} \amp= P \amp\text{evaluate and round}</mrow>
+    </md>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

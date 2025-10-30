@@ -1,0 +1,166 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="a" from="1" to="5"/>
+  <selectFromSequence name="b" from="1" to="5" exclude="$a"/>
+  <math name="exprRHS" simplify="numbersPreserveOrder">1</math>
+  <math name="exprLHS" simplify="numbersPreserveOrder">(x- $h)^2/$a^2 + (y - $k)^2/$b^2</math>
+  <math name="form">(x - h)^2/a^2 + (y - k)^2/b^2</math>
+  <math name="expr">$exprLHS = $exprRHS</math>
+  <number name="xmin">$phl.x - 3</number>
+  <number name="xmax">$phr.x + 3</number>
+  <number name="ymin">$pvb.y - 3</number>
+  <number name="ymax">$pvt.y + 3</number>
+  
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>k = $k</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>exprLHS = $exprLHS</p> -->
+<!--testing-->
+
+<p>For the graph of the ellipse below whose equation is of the form <m>$form = $exprRHS</m>, enter the values of <m>h</m>, <m>k</m>, <m>a</m>, and <m>b</m>.</p>
+
+<graph name="g1" displayXAxis="false" displayYAxis="false" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" identicalAxisScales size="small">
+  <point name="phr" styleNumber="11" labelPosition="upperright">($h + $a, $k)
+    <label><m>$phr.coords</m></label>
+  </point>
+  <point name="phl" styleNumber="11" labelPosition="upperleft">($h - $a, $k)
+    <label><m>$phl.coords</m></label>
+  </point>
+  <point name="pvt" styleNumber="11" labelPosition="upperright">($h, $k + $b)
+    <label><m>$pvt.coords</m></label>
+  </point>
+  <point name="pvb" styleNumber="11" labelPosition="lowerright">($h, $k - $b)
+    <label><m>$pvb.coords</m></label>
+  </point>
+  <curve name="ellipse" variable="t">($h + $a cos(t), $k + $b sin(t))</curve>
+  <point name="userCenter" hide="!$showUserEllipse" styleNumber="8" applyStyleToLabel>($userH, $userK)
+    <label><m>$userCenter.coords</m></label>
+  </point>
+  <curve name="userCurve" hide="!$showUserEllipse" variable="t" styleNumber="8">($userH + $user_a cos(t), $userK + $user_b sin(t))</curve>
+</graph>
+<p><booleanInput name="showUserEllipse">
+  <label>Show second ellipse</label>
+</booleanInput>
+</p>
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+  
+<p><m>\text{Center} = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/> <m>\bigg)</m></p>
+
+<p><m>a = </m> <mathInput name="user_a" prefill="a"/></p>
+<p><m>b = </m> <mathInput name="user_b" prefill="b"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$h = $userH and $k = $userK and $a = $user_a and $b = $user_b</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>a = $user_a{isResponse} and b = $user_b{isResponse} and h = $userH{isResponse} and k = $userK{isResponse}</when>
+    </award>
+
+        
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$symbolic">Please enter numerical values for <m>h, k, a, b</m> that correspond to the given ellipse.</feedback>
+  <feedback condition="$user_a != $a and $ans1.responseHasBeenSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$user_b != $b and $ans1.responseHasBeenSubmitted">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans1.responseHasBeenSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userK != $k and $ans1.responseHasBeenSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <div name="helpText">
+      <p>This question involves applying the standard equation for an ellipse:
+    <me>$form = $exprRHS</me> to determine key parameters of the ellipse when you are given the equation.</p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>From the given graph, we locate the center <m>(h, k)</m> at <m>($h, $k)</m> by taking the halfway point between the two points along the horizontal axis to determine <m>h</m>, and along the vertical axis to determine <m>k</m>.
+  <graph name="g2" displayXAxis="false" displayYAxis="false" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" identicalAxisScales size="small">
+    $ellipse $phl $phr $pvt $pvb
+    <point name="center" styleNumber="2" labelPosition="lowerleft" applyStyleToLabel>($h,$k)
+      <label>$center.coords</label>
+    </point>
+    <line through="$center $phl" styleNumber="9"/>
+    <line through="$center $pvt" styleNumber="9"/>
+  </graph>
+</li>
+<li>In this problem, since we are given the intersection points of the ellipse and the horizontal axis, we can take half the distance between these two intersection points as our <m>a</m> value. Here, <m>a = $a</m>.
+   <graph copySource="g2" name="g3">
+     <lineSegment name="hor" endpoints="$center ($h + $a, $k)" styleNumber="11" layer="2">
+       <label><m>a = $a</m></label>
+     </lineSegment>
+     <point styleNumber="11" layer="2">$hor.endpoints[2]</point>
+     
+   </graph> 
+</li>
+<li>In this problem, since we are given the intersection points of the ellipse and the vertical axis, we can take half the distance between these two intersection points as our <m>b</m> value. Here, <m>b = $b</m>.
+   <graph copySource="g3" name="g4">
+     <lineSegment name="ver" endpoints="$center ($h, $k + $b)" styleNumber="11" layer="2">
+       <label><m>b = $b</m></label>
+     </lineSegment>
+     <point styleNumber="11" layer="2">$ver.endpoints[2]</point>
+   </graph> 
+</li>
+</ul>   
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

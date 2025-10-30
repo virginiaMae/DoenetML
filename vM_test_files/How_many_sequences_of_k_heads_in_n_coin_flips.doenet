@@ -1,0 +1,113 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine how many sequences of heads and tails have a certain number of heads. Application of the standard formula for combinations.
+This problem is randomized with the number of total coin flips ranging from 4 to 10, and required number of heads ranging from 2 to 6.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="k" from="2" to="6" type="math"/>
+  <selectFromSequence name="b" from="2" to="4"/>
+  <math name="n" simplify>$k + $b</math>
+  <math name="combinationskOfN" simplify>$n!/($k!($n - $k)!)</math>
+</setup>
+
+
+<!--testing--> 
+<!-- <p>k = $k</p>
+<p>b = $b</p>
+<p>n = $n</p>
+<p>combinationskOfN = $combinationskOfN</p> -->
+<!--testing-->
+
+<p>When flipping $n coins, how many sequences of Heads and Tails have exactly $k Heads?</p>  
+
+  <p><m>\text{Number of sequences} = </m>
+      
+    <answer name="ans2" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$combinationskOfN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans2.numSubmissions > 2 and $ans2.creditAchieved != 1">
+     <div name="helpText"><p>You flip <m>$n</m> coins, and <m>$k</m> of them land heads. Imagine the coins are labeled <m>1</m> through <m>$n</m>. The different arrangement of heads and tails on coins <m>1</m> through <m>$n</m> produce <term>combinations</term>; how many of these have exactly $k heads?</p>
+     <p>Note that the problem does not mention that the order is important, i.e. it makes no difference whether you choose to flip the lowest numbered coin first, or the highest numbered coin first.</p>
+     <p>
+      The formula for the number of combinations of <m>k</m> objects chosen from a set of <m>n</m> objects is
+    <me>C(n,k) = \frac{n!}{k!(n-k)!}.</me>
+     </p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>When flipping <m>$n</m> coins, how many sequences of Heads and Tails have exactly <m>$k</m> Heads?</em></p>
+
+<setup>
+  <math name="k">7</math>
+  <math name="b">5</math>
+  <math name="n" simplify>$k + $b</math>
+  <math name="combinationskOfN" simplify>$n!/($k!($n - $k)!)</math>
+</setup>
+
+  
+<p><em></em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $combinationskOfN \amp\text{evaluate}</mrow>
+      </md></p>
+  
+</example>
+
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Use the formula for <m>C(n,k)</m>
+      <md>
+        <mrow>C(n,k) \amp= \frac{n!}{k!(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>C($n,$k) \amp= \frac{$n!}{$k!($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $combinationskOfN \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+</problem>
+

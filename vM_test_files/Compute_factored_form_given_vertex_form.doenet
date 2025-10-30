@@ -1,0 +1,253 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute factored form given vertex form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="1 0"/>
+  <selectFromSequence name="r" from="-5" to="5" step="2" exclude="0"/>
+  <selectFromSequence name="s" from="-5" to="5" step="2" exclude="0 $r"/>
+  <math name="b" simplify>$a(-$s + -$r)</math>
+  <math name="c" simplify>$r$s$a</math>
+  <math name="h" simplify>-$b/(2$a)</math>
+  <math name="k" simplify>$c - ($b^2/(4$a))</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a(x - $h)^2 + $k</math>
+  <math name="generalForm" simplify="numbersPreserveOrder">$a x^2 + $b x + $c</math>
+  <math name="factoredGeneralForm" simplify="numbersPreserveOrder">$a(x^2 + ($b/$a)x + ($c/$a))</math>
+  <math name="finalRootForm" simplify="numbersPreserveOrder">$a(x - $s)(x - $r)</math>
+  <math name="userEq" simplify="numbersPreserveOrder">$userA(x - $userR)(x - $userS)</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>s = $s</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>expr = $expr</p>
+<p>generalForm = $generalForm</p>
+<p>factoredGeneralForm = $factoredGeneralForm</p> -->
+<!--testing-->
+  
+<p>Express the parabola <m>y = $expr.</m> in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/"><term>factored form</term></ref>, <me>y = a(x - r)(x - s).</me></p>
+
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymin">min($k - 10, -10)</number>
+  <number name="xmin">min($r - 10, $s - 10, -10)</number>
+  <number name="ymax">max($k + 10, 10)</number>
+  <number name="xmax">max($r + 10, $s + 10, 10)</number>
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+<p>The given equation is <m>y = </m> <mathInput name="eq1"/></p>
+ 
+  <p>The equation of the
+  parabola in <term>factored form</term> is:
+  <m>y = </m> <mathInput name="eq2" prefill="a(x - r)(x - s)"/></p>
+
+</div>
+
+<div>
+<graph name="g1" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}">
+  <function name="givenParabola">$eq1</function>
+  <function name="overlayParabola" styleNumber="2">$eq2</function>
+</graph>
+
+<me>\text{factored form:} y = a(x-r)(x-s)</me>
+</div>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay each other.</p>
+
+</aside>  
+  
+
+
+
+  
+<p><m>y = </m> <mathInput name="userA" /> <m>\bigg(x - </m> <mathInput name="userR" /><m>\bigg) \bigg(x - </m> <mathInput name="userS" /> <m>\bigg).</m></p>
+
+<p>Your equation is <m>y = $userEq</m></p>
+  <answer name="ans13">
+
+    <award name="allCorrect" unorderedCompare>
+      <when>$userA = $a and <math>$userR, $userS</math> = <math>$r, $s</math>
+      </when>
+    </award>
+
+    <award name="aIncorrect" unorderedCompare credit="0">
+      <when>$userA != $a and <math>$userR, $userS</math> = <math>$r, $s</math>
+      </when>
+    </award>
+
+    <award name="rOrSIncorrect" unorderedCompare credit="0">
+      <when>$userA = $a and <math>$userR, $userS</math> != <math>$r, $s</math>
+      </when>
+    </award>
+
+    <award name="noChange" credit="0">
+      <when>$userA{isReponse} = $a and $userS{isResponse} = $s and $userR{isResponse} = $r</when>
+    </award>
+    
+  </answer>
+
+ 
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$aIncorrect">Your <m>a</m> value is incorrect</feedback>
+  
+  <feedback condition="$rOrSIncorrect">One or both of your root values is incorrect</feedback>
+  
+  <feedback condition="$ans13.numSubmissions > 2 and $ans13.creditAchieved != 1">
+    <div name="helpText">
+      <p>In order to determine the roots of the parabola, its equation must be in a form that can be factored. We are given the equation of the parabola in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/"><term>standard form</term></ref>, 
+        <me>y = a(x - h)^2 + k\;\;\;\text{standard form}.</me>
+    We can fully expand this equation to get it into <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-3-parabolas/"><term>general form</term></ref>,
+        <me>y = ax^2 + bx + c\;\;\;\text{general form}.</me>
+    From there, we look for common factors to remove and then factor the remaining expression to get it into  <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/"><term>factored form</term></ref>,
+        <me>y = a(x - r)(x - s) \;\;\;\text{factored form}.</me></p>
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+
+<p>Here is a similar worked example:</p>  
+<example newNamespace>
+<p><em>Find the roots of the parabola <m>y = $expr.</m></em></p>
+
+<p><em>Express your answer in <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-5-root-form-of-a-parabola/"><term>factored form</term></ref>, 
+  <me>y = a(x - r)(x - s).</me></em></p>
+
+
+<setup>
+  <math name="a">-2</math>
+  <math name="r">-7</math>
+  <math name="s">3</math>
+  <math name="b" simplify>$a(-$s + -$r)</math>
+  <math name="c" simplify>$r$s$a</math>
+  <math name="h" simplify>-$b/(2$a)</math>
+  <math name="k" simplify>$c - ($b^2/(4$a))</math>
+  <math name="expr" simplify="numbersPreserveOrder">$a(x - $h)^2 + $k</math>
+  <math name="generalForm" simplify="numbersPreserveOrder">$a x^2 + $b x + $c</math>
+  <math name="factoredGeneralForm" simplify="numbersPreserveOrder">$a(x^2 + ($b/$a)x + ($c/$a))</math>
+  <math name="finalRootForm" simplify="numbersPreserveOrder">$a(x - $s)(x - $r)</math>
+</setup>
+
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>Expand to general form:
+    <md>
+      <mrow>y = $expr</mrow>
+      <mrow>y = $generalForm.</mrow>
+    </md></li>
+  <li><p>The greatest common factor is <m>GCF = $a</m>. Factoring this out gives,
+    <me>y = $factoredGeneralForm.</me></p>
+  </li>
+  <li><p>Factor the expression inside the parentheses:
+    <me>y = $finalRootForm.</me></p>
+  </li>
+</ul>
+</example>
+
+
+  
+<p><em><alert>How to check your answer</alert></em>: Graph two parabolas. Express the first parabola using the given standard form equation. Graph the second parabola using your final, factored form equation. The two parabolas should overlay. Verify the roots.</p>
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <conditionalContent>
+    <case condition="$h != 0">
+  <li>Expand to general form:
+    <md>
+      <mrow>y = $expr</mrow>
+      <mrow>y = $generalForm.</mrow>
+    </md></li>
+      
+    </case>
+    <case condition="$h = 0">
+    <li>The equation is in general form. We could also view it as an equation in standard form, with <m>h = 0</m>.</li>
+    </case>
+  </conditionalContent>
+  <li><p>The greatest common factor is <m>GCF = $a</m>. Factoring this out gives,
+    <me>y = $factoredGeneralForm.</me></p>
+  </li>
+  <li><p>Factor the expression inside the parentheses:
+    <me>y = $finalRootForm.</me></p>
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

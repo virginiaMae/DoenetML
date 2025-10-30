@@ -1,0 +1,178 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a randomized value for the sum of two dice rolls, determine the probability of this outcome.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="n" from="2" to="12"/>
+  <math name="probOfSumN" simplify>min(($n - 1)/36, (13 - $n)/36)</math>
+  <math name="nEquals2">{(1,1)}</math>
+  <math name="nEquals3">{(1,2),(2,1)}</math>
+  <math name="nEquals4">{(1,3),(2,2),(3,1)}</math>
+  <math name="nEquals5">{(1,4),(2,3),(3,2),(4,1)}</math>
+  <math name="nEquals6">{(1,5),(2,4),(3,3),(4,2),(5,1)}</math>
+  <math name="nEquals7">{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)}</math>
+  <math name="nEquals8">{(2,6),(3,5),(4,4),(5,3),(6,2)}</math>
+  <math name="nEquals9">{(3,6),(4,5),(5,4),(6,3)}</math>
+  <math name="nEquals10">{(4,6),(5,5),(6,4)}</math>
+  <math name="nEquals11">{(5,6),(6,5)}</math>
+  <math name="nEquals12">{(6,6)}</math>
+</setup>
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>probOfSumN = $probOfSumN</p>
+<p>nEquals2 = $nEquals2</p>
+<p>nEquals3 = $nEquals3</p>
+<p>nEquals4 = $nEquals4</p>
+<p>nEquals5 = $nEquals5</p>
+<p>nEquals6 = $nEquals6</p>
+<p>nEquals7 = $nEquals7</p>
+<p>nEquals8 = $nEquals8</p>
+<p>nEquals9 = $nEquals9</p>
+<p>nEquals10 = $nEquals10</p>
+<p>nEquals11 = $nEquals11</p>
+<p>nEquals12 = $nEquals12</p> -->
+<!--testing-->
+
+<p>If two 6-sided dice are rolled, what is the probability that the total of the two dice is <m>$n</m> ?  Express the answer as a fraction.</p> 
+
+  <p><m>P(\text{sum of two dice} = $n) = </m>
+      
+    <answer name="ans7" >
+      <mathInput name="userInput" prefill="/"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$probOfSumN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">
+    <p>$correctFeedback </p>
+    <p><m>$probOfSumN = <number>$probOfSumN*100</number> \%</m></p>
+  </feedback>
+  
+  <feedback condition="$ans7.numSubmissions > 2 and $ans7.creditAchieved != 1">
+     <div name="helpText">
+       <p>This problem involves an application of the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-1/">basic definition</ref> of the probability of an event, where events are of equal likelihood (such as rolls of a fair die, or flipping a fair coin).  
+  <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me></p>
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>If two 8-sided dice are rolled, what is the probability that the total of the two dice is <m>$n</m> ?  Express the answer as a fraction.</em></p>
+
+<setup>
+  <math name="n">5</math>
+  <math name="probOfSumN" simplify>min(($n - 1)/64, (13 - $n)/64)</math>
+  <math name="nEquals5">{(1,4),(2,3),(3,2),(4,1)}</math>
+</setup>
+  
+<p><em></em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<ul>
+ <li>First, we determine the number of possible outcomes corresponding to the event that the sum of two rolls is <m>$n</m>. 
+    <p>Using the basic definition of the probability of an event, 
+  <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me></p></li>
+
+  <li>By the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-1/">General Counting Principle</ref>, the number of total outcomes is <m>8 \cdot 8 = 64</m></li>
+<li>The possible outcomes are: 
+  $nEquals5. There are <m>4</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{4}{36} = $probOfSumN.</me></li>
+</ul>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+  <li>First, we determine the number of possible outcomes corresponding to the event that the sum of two rolls is <m>$n</m>. 
+    <p>Using the basic definition of the probability of an event, 
+  <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me></p></li>
+
+  <li>By the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-1/">General Counting Principle</ref>, the number of total outcomes is <m>6 \cdot 6 = 36</m></li>
+<li>The possible outcomes are: 
+  <conditionalContent>
+    <case condition="$n = 2">$nEquals2. There is <m>1</m> possible outcome. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me>
+    </case>
+    <case condition="$n = 3">$nEquals3. There are <m>2</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{2}{36} = $probOfSumN.</me> </case>
+    <case condition="$n = 4">$nEquals4. There are <m>3</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{3}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 5">$nEquals5. There are <m>4</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{4}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 6">$nEquals6. There are <m>5</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+    <case condition="$n = 7">$nEquals7. There are <m>6</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{6}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 8">$nEquals8. There are <m>5</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+    <case condition="$n = 9">$nEquals9. There are <m>4</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{4}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 10">$nEquals10. There are <m>3</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{3}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 11">$nEquals11. There are <m>2</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{2}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 12">$nEquals12. There is <m>1</m> possible outcome. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+  </conditionalContent>
+</li>
+</ul>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

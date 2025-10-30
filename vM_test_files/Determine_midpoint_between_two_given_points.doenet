@@ -1,0 +1,147 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the midpoint between two given endpoints. Points are randomized; midpoint will always have integer coordinates. Optional graphing tool provided, which can be hidden by commenting out the <aside> portion of the document.
+
+(BA-Basics #86 BA1411)
+
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence assignNames="a b c d" numToSelect="5" from="-5" to="5" withReplacement/>
+  <selectFromSequence name="styleNumber" from="7" to="10"/>
+  <point name="C" fixed styleNumber="$styleNumber">($a + $c, $b + $d)
+    <label><m>C</m></label>
+  </point>
+  <point name="A" fixed styleNumber="$styleNumber">(2 $a, 2 $b)
+    <label><m>A</m></label>
+  </point>
+  <point name="B" fixed styleNumber="$styleNumber">(2 $c, 2 $d)
+    <label><m>B</m></label>
+  </point>
+  <math name="xmin">min($A.x - 3,$B.x - 3, $C.x - 3, -6)</math>
+  <math name="xmax">max($A.x + 3,$B.x + 3, $C.x + 3, 6)</math>
+  <math name="ymin">min($A.y - 3,$B.y - 3, $C.y - 3, -6)</math>
+  <math name="ymax">max($A.y + 3,$B.y + 3, $C.y + 3, 6)</math>
+  <!--maths for incorrect responses-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>A = $A</p>
+<p>B = $B</p>
+<p>C = $C</p> -->
+<!--testing-->
+
+
+<!--*********************************************
+            Main problem
+**********************************************-->
+<p>Find the midpoint, <m>C</m>, between the points <m>A $A</m> and <m>B $B</m> .</p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Drag each point to the given points to construct the line.</p>
+  <p>Check a midpoint: <m>C = </m> <mathInput name="graphCmi" bindValueTo="$userC"/></p>
+</div>
+
+  
+<graph name="g1" grid="1 1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <point name="graphC" styleNumber="11" coords="$graphCmi">
+    <label><m>C</m></label>
+  </point>
+  <point name="dragPoint1" styleNumber="$styleNumber">(0,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>A</m></label>
+  </point>
+  <point name="dragPoint2" styleNumber="$styleNumber">(5,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>B</m></label>
+  </point>
+  <line name="line2" through="$dragPoint1 $dragPoint2" styleNumber="$styleNumber"/>
+</graph>
+  
+</sideBySide>
+</aside>   
+
+  
+<p><m>C = </m> <mathInput name="userC"/></p>
+          
+    <answer name="ans1">
+      <award name="correct">     
+        <when>$userC = $C.coords</when>
+      </award>
+    </answer>
+
+
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint><title>Worked Example</title>
+<p>Here is a similar worked example:</p>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>C = $C</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

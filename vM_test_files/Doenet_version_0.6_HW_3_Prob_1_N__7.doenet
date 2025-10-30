@@ -1,0 +1,238 @@
+<variantControl numVariants="15"/>
+<problem>
+  <setup>
+    <selectFromSequence assignNames="g0 g3 g5 g6" from="2" to="4" withReplacement numToSelect="4"/>
+    <select assignNames="g1 g2 g4" numToSelect="3" withReplacement>0 1</select>
+    <select assignNames="h0 h1 h2 h3 h4 h5 h6" numToSelect="7" withReplacement>1 0 0</select>
+
+    <!-- test case #2 for N = 7: -->
+<!--     <number name="g0">6</number>
+    <number name="g1">5</number>
+    <number name="g2">4</number>
+    <number name="g3">3</number>
+    <number name="g4">2</number>
+    <number name="g5">1</number>
+    <number name="g6">0</number>
+
+    <number name="h0">0</number>
+    <number name="h1">0</number>
+    <number name="h2">1</number>
+    <number name="h3">0</number>
+    <number name="h4">0</number>
+    <number name="h5">0</number>
+    <number name="h6">0</number> -->
+    <!-- /test case -->
+  
+    <number name="N">7</number>
+    <matrix name="g">
+      <row>
+        <math>$g0</math><math>$g1</math> 
+        <math>$g2</math><math>$g3</math><math>$g4</math>
+        <math>$g5</math> <math>$g6</math>
+      </row>
+    </matrix>
+    <matrix name="h">
+      <row>
+        <math>$h0</math><math>$h1</math> 
+        <math>$h2</math><math>$h3</math><math>$h4</math>
+        <math>$h5</math> <math>$h6</math>
+      </row>
+    </matrix>
+
+    <matrix name="M">
+      <row>
+        <math>$g0</math><math>$g1</math> 
+        <math>$g2</math><math>$g3</math><math>$g4</math>
+        <math>$g5</math> <math>$g6</math>
+      </row>
+      <row>
+        <math>$g6</math><math>$g0</math><math>$g1</math> 
+        <math>$g2</math><math>$g3</math><math>$g4</math>
+        <math>$g5</math> 
+      </row>
+      <row>
+        <math>$g5</math><math>$g6</math><math>$g0</math>
+        <math>$g1</math><math>$g2</math><math>$g3</math>
+        <math>$g4</math>
+      </row>
+      <row>
+        <math>$g4</math><math>$g5</math><math>$g6</math>
+        <math>$g0</math><math>$g1</math><math>$g2</math>
+        <math>$g3</math>
+      </row>
+      <row>
+        <math>$g3</math><math>$g4</math><math>$g5</math>
+        <math>$g6</math><math>$g0</math><math>$g1</math>
+        <math>$g2</math>
+      </row>
+      <row>
+        <math>$g2</math><math>$g3</math><math>$g4</math>
+        <math>$g5</math><math>$g6</math><math>$g0</math>
+        <math>$g1</math>
+      </row>
+      <row>
+        <math>$g1</math><math>$g2</math><math>$g3</math>
+        <math>$g4</math><math>$g5</math><math>$g6</math>
+        <math>$g0</math>
+      </row>
+    </matrix>
+    
+    <number name="ymax">max($g.row1) + 2</number>
+    <math name="sol" simplify expand>$h $M</math>
+    <mathList name="solList">$sol.row1[1] $sol.row1[2] $sol.row1[3]
+      $sol.row1[4] $sol.row1[5] $sol.row1[6] $sol.row1[7]</mathList>
+    <number name="ymax2">max($sol.row1) + 2</number>    
+  </setup>
+
+<!-- testing -->
+<!-- <p>N = $N</p>
+<p>g = $g</p>
+<p>h = $h</p>
+<p>ymax = $ymax</p>
+<p>M = $M</p>
+<p>sol = $sol</p>
+<p>solList = $solList</p>
+<p>$g.row1[3]</p> -->
+<!-- /testing -->
+
+ <p>The figure below shows two periodic sequences, <m>\tilde{x_1}[n]</m> and <m>\tilde{x_2}[n]</m> with period <m>N = $N</m>.</p>
+
+<p>Find a sequence <m>\tilde{y_1}[n]</m> whose <m>\text{DFS}</m> is equal to the product of the <m>\text{DFS}</m> of <m>\tilde{x_1}[n]</m> and the <m>\text{DFS}</m> of <m>\tilde{x_2}[n]</m>, i.e.,
+  <me>\tilde{Y_1}[k] = \tilde{X_1}[k] \tilde{X_2}[k]</me></p>
+
+<graph displayXAxis="false" displayYAxis="false" showBorder="false" showNavigation="false" xmin="-$N - 1" xmax="2$N" ymin="-10" ymax="$ymax" aspectRatio="2" size="large">
+  <group name="gLines">
+  <line fixed styleNumber="6">x = 0</line>
+  <line fixed styleNumber="6">x = $N</line>
+  <line fixed styleNumber="6">x = -$N</line>
+  <line fixed styleNumber="5">y = 0</line>
+  <line fixed styleNumber="5">y = -7</line>
+  </group>
+  
+    <map fixed>
+    <template>
+      <math name="j" hide><mod>$i $N</mod> + 1</math>
+      <lineSegment styleNumber="5" fixed endpoints="($i, 0) ($i, $g.row1[$j])"/>
+      <point name="q" fixed styleNumber="11">($i,$g.row1[$j])
+      </point>
+      <label anchor="($i,-1)" fixed><m>$i</m></label>
+
+      <lineSegment styleNumber="5" fixed endpoints="($i, -7) ($i, -7 + $h.row1[$j])"/>
+      <point name="p" fixed styleNumber="11">($i,-7 + $h.row1[$j])
+      </point>
+      <conditionalContent>
+        <case condition="-1 <= $i <= 8">
+          <label anchor="($i,-8)" fixed><m>$i</m></label>
+          <label anchor="$p + (0,0.5)" positionFromAnchor="top"><m>$h.row1[$j]</m></label>
+          <label anchor="($i,-1)" fixed><m>$i</m></label>
+          <label anchor="$q + (0,0.5)" positionFromAnchor="top"><m>$g.row1[$j]</m></label>
+        </case>
+      </conditionalContent>
+    </template>
+    <sources alias="i"><sequence from="-$N" to="2$N - 1"/></sources>
+  </map>
+ 
+  <label anchor="(2$N - 0.5,$ymax - 1)" fixed>
+    <m>\tilde{x_1}[n]</m>
+  </label>
+  <label anchor="(2$N - 0.5,-3)" fixed>
+    <m>\tilde{x_2}[n]</m>
+  </label>
+</graph>
+
+<section boxed><title>Response</title>
+<p>Sketch of <m>\tilde{y_1}[n]</m><nbsp/><nbsp/>:</p>  
+<graph name="userG1" displayXAxis="false" displayYAxis="false" showBorder="false" showNavigation="false" xmin="-$N - 1" xmax="2$N" ymin="-2" ymax="$ymax2" aspectRatio="4" size="large">
+  $gLines
+  <map>
+    <template>
+      <point name="pi" styleNumber="7">($i,0)
+        <constraints><constrainToGrid/></constraints>
+          <label><m>$pi.y</m></label>
+      </point>
+      <point name="piL" styleNumber="11">($i - $N, $pi.y)</point>
+      <point name="piR" styleNumber="11">($i + $N, $pi.y)</point>
+      <lineSegment styleNumber="7" endpoints="($i, 0) $pi"/>
+      <lineSegment styleNumber="5" endpoints="($i - $N, 0) $piL"/>
+      <lineSegment styleNumber="5" endpoints="($i + $N, 0) $piR"/>
+      <label anchor="($i,-1)" fixed><m>$i</m></label>
+    </template>
+    <sources alias="i"><sequence from="0" to="$N - 1"/></sources>
+  </map>
+</graph>
+
+<setup>
+
+<p><collect name="ans1Pts" source="userG1" componentTypes="point" prop="y"/></p> 
+<p>filtered response: </p>
+    <mathList name="filtered">
+    $ans1Pts[1]
+    $ans1Pts[4]
+    $ans1Pts[7]
+    $ans1Pts[10]
+    $ans1Pts[13]
+    $ans1Pts[16]
+    $ans1Pts[19]
+  </mathList>
+</setup>
+  
+<answer name="ans1">
+  <award><when>$filtered = $solList</when></award>
+</answer>
+
+<p>Description</p>
+<answer type="text" handGraded expanded/>
+</section>
+
+  
+<solution>
+<p><m>\tilde{y_1}[n]</m></p>
+<graph name="solG1" displayXAxis="false" displayYAxis="false" showBorder="false" showNavigation="false" xmin="-$N - 1" xmax="2$N" ymin="-2" ymax="$ymax2" aspectRatio="3" size="large">
+  $gLines 
+    <map fixed>
+    <template>
+      <math name="k" hide><mod>$i $N</mod> + 1</math>
+      <lineSegment styleNumber="5" fixed endpoints="($i, 0) ($i, $sol.row1[$k])"/>
+      <point name="r" fixed styleNumber="11">($i,$sol.row1[$k])
+      </point>
+      <conditionalContent>
+        <case condition="0 <= $i <= 6">
+          <label anchor="($i,-1)" fixed><m>$i</m></label>
+          <label anchor="$r + (0,0.5)" positionFromAnchor="top">
+            <m>$sol.row1[$k]</m></label>
+        </case>
+      </conditionalContent>
+    </template>
+    <sources alias="i">
+      <sequence from="-$N" to="2$N - 1"/>
+    </sources>
+  </map>
+</graph>
+
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="2" markerStyle="circle" markerColor="#648FFF" lineWidth="2"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="2" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

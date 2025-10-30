@@ -1,0 +1,62 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the difference of terms involving square roots.
+
+*************************************************************-->
+<problem>
+<setup>
+<selectFromSequence name="a" from="5" to="8"/>
+<select name="b">2 3 5</select>
+<selectFromSequence name="c" from="2" to="4"/>
+<math name="expr">$a sqrt($b) - $c sqrt($b)</math>
+<math name="sol" simplify>$expr</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+
+<!--testing-->  
+
+  
+<p>Simplify.
+  <me>$expr</me></p>
+
+  <p><m>\displaystyle $expr = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userAns"/> 
+      <award name="correct" symbolicEquality>
+        <when>$userAns = $sol
+        </when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<feedback condition="$correct or $numeratorNegative or $denominatorNegative">Nice work!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+    <p>Here is a similar worked example:</p>
+
+  </hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$sol</p>
+</solution>
+</problem>

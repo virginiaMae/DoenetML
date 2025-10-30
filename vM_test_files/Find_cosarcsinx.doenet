@@ -1,0 +1,273 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem involves a composition of the cosine and arcsin functions, and application of the Pythagorean theorem.
+A optional triangle visualization tool is provided.
+Precise answers are required, but full simplification is not enforced.
+*************************************************************--> 
+
+<problem>
+<setup>
+   <select assignNames="(a sol)">
+   <option>
+      <math>1/3</math>
+      <math>2sqrt(2)/3</math>
+    </option>
+    <option>
+      <math>2/3</math>
+      <math>sqrt(5)/3</math>
+    </option>
+    <option>
+      <math>1/4</math>
+      <math>sqrt(15)/4</math>
+    </option>
+    <option>
+      <math>3/4</math>
+      <math>sqrt(7)/4</math>
+    </option>
+     <option>
+      <math>1/5</math>
+      <math>2sqrt(6)/5</math>
+    </option>
+    <option>
+      <math>2/5</math>
+      <math>sqrt(21)/5</math>
+    </option>
+    <option>
+      <math>3/5</math>
+      <math>4/5</math>
+    </option>
+    <option>
+      <math>4/5</math>
+      <math>3/5</math>
+    </option>
+    <option>
+      <math>1/6</math>
+      <math>sqrt(35)/6</math>
+    </option>
+    <option>
+      <math>5/6</math>
+      <math>sqrt(11)/6</math>
+    </option>
+    <option>
+      <math>1/7</math>
+      <math>4sqrt(3)/7</math>
+    </option>
+    <option>
+      <math>2/7</math>
+      <math>3sqrt(5)/7</math>
+    </option>
+    <option>
+      <math>3/7</math>
+      <math>2sqrt(10)/7</math>
+    </option>
+    <option>
+      <math>4/7</math>
+      <math>sqrt(33)/7</math>
+    </option>
+    <option>
+      <math>5/7</math>
+      <math>2sqrt(6)/7</math>
+    </option>
+    <option>
+      <math>6/7</math>
+      <math>sqrt(13)/7</math>
+    </option>
+    <option>
+      <math>1/8</math>
+      <math>3sqrt(7)/8</math>
+    </option>
+    <option>
+      <math>3/8</math>
+      <math>sqrt(55)/8</math>
+    </option>
+    <option>
+      <math>5/8</math>
+      <math>sqrt(39)/8</math>
+    </option>
+    <option>
+      <math>7/8</math>
+      <math>sqrt(15)/8</math>
+    </option>
+    <option>
+      <math>1/9</math>
+      <math>4sqrt(5)/9</math>
+    </option>
+    <option>
+      <math>2/9</math>
+      <math>sqrt(77)/9</math>
+    </option>
+    <option>
+      <math>4/9</math>
+      <math>sqrt(65)/9</math>
+    </option>
+    <option>
+      <math>5/9</math>
+      <math>2sqrt(14)/9</math>
+    </option>
+    <option>
+      <math>7/9</math>
+      <math>4sqrt(2)/9</math>
+    </option>
+    <option>
+      <math>8/9</math>
+      <math>sqrt(17)/9</math>
+    </option>
+    <option>
+      <math>1/10</math>
+      <math>3sqrt(11)/10</math>
+    </option>
+    <option>
+      <math>3/10</math>
+      <math>sqrt(91)/10</math>
+    </option>
+   <option>
+      <math>7/10</math>
+      <math>sqrt(51)/10</math>
+    </option>
+    <option>
+      <math>9/10</math>
+      <math>sqrt(19)/10</math>
+    </option>
+  </select>
+  <boolean name="test">$sol = $expr</boolean>
+  <number name="solN">$sol</number>
+  <number name="zeroF" fixed>0</number>
+  <math name="expr">cos(arcsin($a))</math>
+  <matchesPattern name="same" pattern="cos( )">$userAns</matchesPattern>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>test = $test</p>
+<p>solN = $solN</p> -->
+<!--testing-->
+
+<p>Find $expr.  Enter your answer as an exact value using <alert>square roots</alert><footnote>To enter a square root symbol, type "sqrt"</footnote> when necessary.  Do not use a calculator to give a decimal approximation.</p>
+
+<aside><title>Graphing Tool</title>
+<p>Adjust the triangle to match the problem at hand.</p>
+<sideBySide widths="30% 70%">
+<div>
+<p><m>a = </m><mathInput name="A" prefill="5"/></p>
+<p><m>b = </m><mathInput name="B" prefill="5"/></p>
+<p><m>c = </m><mathInput name="C" prefill="5sqrt(2)"/></p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+</div>
+
+  <graph grid="1 1" xmin="-2" xmax="12" ymin="-2" ymax="12">
+    <point name="p1" styleNumber="2" fixed coords="(0,0)"/>
+    <point name="p2" styleNumber="5" coords="($A,$zeroF)">
+    </point>
+    <point name="p3" styleNumber="5" coords="($A, $B)" layer="2">
+    </point>
+    <point name="p3UserC">($C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2">
+      <label><m>a = $A</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3">
+      <label><m>b = $B</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1">
+      <label><m>c = $C</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="theta" through="$p2 $p1 $p3">
+      <label><m>\theta</m></label>
+    </angle>
+  </graph>
+</sideBySide>
+</aside>
+  
+<p><m>$expr = </m><answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct">   
+        <when>
+          $userAns = $sol and !$same
+        </when>
+      </award>
+      <award name="numerical" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">   
+        <when>
+          $userAns = $solN and !$same
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$numerical">Your answer should be an integer or an exact rational number, not a decimal approximation.</feedback>
+
+
+
+    <feedback condition="$same and $ans1.justSubmitted">Make sure you are responding with the function's value, rather than the expression of function evaluation. (Your answer will not contain the word "cos".)</feedback> 
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$expr = $sol</p>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

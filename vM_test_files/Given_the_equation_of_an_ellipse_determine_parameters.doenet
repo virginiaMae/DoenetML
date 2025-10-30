@@ -1,0 +1,186 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="k" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="a" from="1" to="5"/>
+  <selectFromSequence name="b" from="1" to="5" exclude="$a"/>
+
+  <math name="exprRHS" simplify="numbersPreserveOrder">$a^2 $b^2</math>
+  <math name="exprLHS" simplify="numbersPreserveOrder">$b^2(x- $h)^2 + $a^2(y - $k)^2</math>
+  <math name="exprLHSstandard" simplify="numbersPreserveOrder">(x- $h)^2/$a^2 + (y - $k)^2/$b^2</math>
+  <math name="form">(x - h)^2/a^2 + (y - k)^2/b^2 = 1</math>
+  <math name="expr">$exprLHS = $exprRHS</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>k = $k</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>exprLHS = $exprLHS</p> -->
+<!--testing-->
+
+
+<p>Find <m>h</m>, <m>k</m>, <m>a</m>, and <m>b</m> for the ellipse given by the equation 
+  <me>$exprLHS = $exprRHS</me></p>
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph ellipse with given equation:</p> 
+  <p><mathInput name="eq1"/></p>
+
+  
+  <p>Graph ellipse with center, <m>a</m> and <m>b</m>:</p> 
+<p><m>\text{Center} = </m></p>
+<p><m>\bigg(</m> <mathInput name="userHGraph" bindValueTo="$userH"/> , <mathInput name="userKGraph" bindValueTo="$userK"/> <m>\bigg)</m></p>
+
+<p><m>a = </m> <mathInput name="user_aGraph" bindValueTo="$user_a"/></p>
+<p><m>b = </m> <mathInput name="user_bGraph" bindValueTo="$user_b"/></p>
+<p><booleanInput name="showUserEllipse">
+  <label>Show second ellipse</label>
+</booleanInput>
+</p>
+</div>
+
+  
+<graph name="g1">
+  <conditionalContent condition="$eq1 = $expr">
+  <curve name="ellipse" variable="t">($h + $a cos(t), $k + $b sin(t))</curve>
+  </conditionalContent>
+  <point name="userCenter" hide="!$showUserEllipse" styleNumber="8">($userH, $userK)</point>
+  <curve name="userCurve" hide="!$showUserEllipse" variable="t" styleNumber="8">($userH + $user_a cos(t), $userK + $user_b sin(t))</curve>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two ellipses will overlay one another.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+  
+<p><m>\text{Center} = \bigg(</m> <mathInput name="userH" prefill="h"/> , <mathInput name="userK" prefill="k"/> <m>\bigg)</m></p>
+
+<p><m>a = </m> <mathInput name="user_a" prefill="a"/></p>
+<p><m>b = </m> <mathInput name="user_b" prefill="b"/></p>
+
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$h = $userH and $k = $userK and $a = $user_a and $b = $user_b</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>a = $user_a{isResponse} and b = $user_b{isResponse} and h = $userH{isResponse} and k = $userK{isResponse}</when>
+    </award>
+
+        
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$symbolic">Please enter numerical values for <m>h, k, a, b</m> that correspond to the given ellipse.</feedback>
+  <feedback condition="$user_a != $a and $ans1.responseHasBeenSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$user_b != $b and $ans1.responseHasBeenSubmitted">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$userH != $h and $ans1.responseHasBeenSubmitted">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$userK != $k and $ans1.responseHasBeenSubmitted">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <div name="helpText">
+      <p>This question involves applying the standard equation for an ellipse:
+    <me>$form = $exprRHS</me> to determine key parameters of the ellipse when you are given the equation.</p>
+    </div>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>The standard form for the equation of an ellipse is 
+  <me>$form</me></li>
+<li>We first divide both sides of the given equation, 
+  <me>$exprLHS = $exprRHS</me>
+  by <m>$exprRHS</m> to arrive at an equation in standard form.
+</li>
+<li>Now, we have
+  <me>$exprLHSstandard = 1</me>
+and we can equate corresponding terms to find that 
+  <md>
+    <mrow>h \amp= $h</mrow>
+    <mrow>k \amp= $k</mrow>
+    <mrow>a^2 \amp= <math name="aSquared" simplify>$a^2</math> \implies a = \sqrt{$aSquared}</mrow>
+    <mrow>a \amp= $a</mrow>
+    <mrow>b^2 \amp= <math name="bSquared" simplify>$b^2</math> \implies b = \sqrt{$bSquared}</mrow>
+    <mrow>b \amp= $b</mrow>
+  </md>
+</li>
+  <li>Our center is <m>($h,$k)</m> and <m>a = $a,\;\; b = $b</m>.</li>
+</ul>     
+
+</solution>
+
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,264 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the average rate of change of a function between two given input values. Graphical tool provided for visualization of the geometry of the problem. 
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<setup>
+  <selectFromSequence name="a" from="-3" to="3"/>
+  <selectFromSequence name="d" from="2" to="5"/>
+  <selectFromSequence name="h" from="-5" to="5"/>
+  <selectFromSequence name="k" from="-5" to="5"/>
+  <math name="c" simplify>$a + $d</math>
+  <function name="f" styleNumber="12">(x - $h)^2+$k</function>
+  <math name="fOfa">$$f($a)</math>
+  <math name="fOfc">$$f($c)</math>
+  <point name="solPt1" fixed coords="($a,$fOfa)" styleNumber="5">
+    <label>$solPt1.coords</label>
+  </point>
+  <point name="solPt2" fixed coords="($c,$fOfc)" styleNumber="5">
+    <label>$solPt2.coords</label>
+  </point>
+  <line name="solLine" through="$solPt1 $solPt2" styleNumber="5" fixed/>
+  <math name="sol" simplify>($solPt2.y - $solPt1.y)/($solPt2.x - $solPt1.x)</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>d = $d</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+
+<problem>
+  <p>Find the average rate of change of the function <m>f(x) = $f.formula{simplify="numberspreserveorder"}</m> from <m>x = $a</m> to <m>x = $c</m>.</p>
+
+
+
+<!--******************************************************
+            Graphing Tool
+*******************************************************-->
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">min(-4, $a - 4, $c - 4)</number>
+  <number name="xmax">max(4, $a + 4, $c + 4)</number>
+  <number name="ymin">min(-4, $fOfa - 4, $fOfc - 4)</number>
+  <number name="ymax">max(4, $fOfa + 4, $fOfc + 4)</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Given function: <m>\;f(x) = </m> <mathInput name="mi"/></p>
+  <setup>
+    <function name="miFunction" styleNumber="5">$mi</function>
+  </setup>
+  <p>First point: <m>(x_1, f(x_1)) = </m> <mathInput name="p1mi"/></p>
+  <p>Second point: <m>(x_2, f(x_2)) = </m> <mathInput name="p2mi"/></p>
+  <p>
+    <booleanInput name="showLine">
+      <label>Graph line between points</label>
+    </booleanInput>      
+  </p>
+  
+</div>
+
+  
+<graph grid="1 1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" showNavigation="false">
+  $miFunction
+  <line name="avgChange" styleNumber="2" fixed through="$p1 $p2" hide="!$showLine"/>
+  <point name="p1" coords="$p1mi" styleNumber="5" fixed>
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" coords="$p2mi" styleNumber="5" fixed>
+    <label>$p2.coords</label>
+  </point>
+  
+  <legend position="lowerright">
+    <label><m>f(x)</m></label>
+  </legend>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+
+<!--******************************************************
+            Problem Statement
+*******************************************************-->
+
+  
+    <p>Average rate of change <m> = </m> 
+      <answer name="ans1">$sol
+    </answer>
+    </p>
+  
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+
+<example newNameSpace>
+<setup>
+  <math name="a">-5</math>
+  <math name="d">5</math>
+  <math name="h">-1</math>
+  <math name="k">-3</math>
+  <math name="c" simplify>$a + $d</math>
+  <function name="f" styleNumber="12">(x - $h)^2+$k</function>
+  <math name="fOfa">$$f($a)</math>
+  <math name="fOfc">$$f($c)</math>
+  <point name="solPt1" fixed coords="($a,$fOfa)" styleNumber="5">
+    <label>$solPt1.coords</label>
+  </point>
+  <point name="solPt2" fixed coords="($c,$fOfc)" styleNumber="5">
+    <label>$solPt2.coords</label>
+  </point>
+  <line name="solLine" through="$solPt1 $solPt2" styleNumber="5" fixed/>
+  <math name="sol" simplify>($solPt2.y - $solPt1.y)/($solPt2.x - $solPt1.x)</math>
+
+  <number name="xmin">min(-4, $a - 4, $c - 4)</number>
+  <number name="xmax">max(4, $a + 4, $c + 4)</number>
+  <number name="ymin">min(-4, $fOfa - 4, $fOfc - 4)</number>
+  <number name="ymax">max(4, $fOfa + 4, $fOfc + 4)</number>
+
+</setup>
+
+  <p><em>Find the average rate of change of the function <m>f(x) = $f.formula{simplify="numberspreserveorder"}</m> from <m>x = $a</m> to <m>x = $c</m>.</em></p>
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>
+<p>The average rate of change of a function between two input values <m>a</m> and <m>b</m> is equal to the difference of the function evaluated at each input, divided by the change in the input values. In other words, it is the slope of the line sketched between the two points.</p>
+  </li>
+  <li><p>To visualize better how the function and this line are related, let's graph this first. We'll graph the given function, the points on the function at each of the given input values, and the line between them.</p>
+ 
+    <sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Given function: <m>\;f(x) = </m> <mathInput name="mi" prefill="$f.formula{simplify='numbersPreserveOrder'}"/></p>
+  <setup>
+    <function name="miFunction" styleNumber="5">$mi</function>
+  </setup>
+  <p>First point: <m>(x_1, f(x_1)) = </m> <mathInput name="p1mi" prefill="($a, $$f($a))"/></p>
+  <p>Second point: <m>(x_2, f(x_2)) = </m> <mathInput name="p2mi" prefill="($c, $$f($c))"/></p>
+  <p>
+    <booleanInput name="showLine" prefill="true">
+      <label>Graph line between points</label>
+    </booleanInput>      
+  </p>
+  
+</div>
+
+  
+<graph grid="1 1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" showNavigation="false">
+  $miFunction
+  <line name="avgChange" styleNumber="2" fixed through="$p1 $p2" hide="!$showLine"/>
+  <point name="p1" coords="$p1mi" styleNumber="5" fixed>
+    <label>$p1.coords</label>
+  </point>
+  <point name="p2" coords="$p2mi" styleNumber="5" fixed>
+    <label>$p2.coords</label>
+  </point>
+  
+  <legend position="lowerright">
+    <label><m>f(x)</m></label>
+  </legend>
+</graph>  
+</sideBySide>
+  </li>
+  
+  <li><p>Now, let's compute the slope between these two points</p>
+  <me>f_{avg} = \frac{f(b) - f(a)}{b - a} = \;\text{average rate of change from}\;a\;\text{to}\;b.</me>
+<p>So, we substitute in each given input value of <m>x</m> for <m>f(x)</m> and evaluate to obtain the following:</p>
+  <me>f_{avg} = <math name="sol_step1">($fOfc - $fOfa)/($c - $a)</math></me>
+  </li>
+  <li>
+<p>Simplifying gives
+  <me>f_{avg} = $sol_step1{simplify}.</me></p>
+  </li>
+</ul>
+
+  
+</example>
+
+
+</hint>
+  
+
+
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>The average rate of change of a function between two input values <m>a</m> and <m>b</m> is equal to the difference of the function evaluated at each input, divided by the change in the input values.</p>
+  <me>f_{avg} = \frac{f(b) - f(a)}{b - a} = \;\text{average rate of change from}\;a\;\text{to}\;b.</me>
+<p>So, we substitute in each given input value of <m>x</m> for <m>f(x)</m> and evaluate to obtain the following:</p>
+  <me>f_{avg} = <math name="sol_step1">($fOfc - $fOfa)/($c - $a)</math></me>
+<p>Simplifying gives
+  <me>f_{avg} = $sol_step1{simplify}.</me></p>
+
+  <graph grid="1 1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" showNavigation="false">
+    $f
+    $solPt1
+    $solPt2
+    $solLine
+  </graph>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,4 @@
+<p>Enter a: <mathInput name="a"/></p>
+<p>Enter b: <mathInput name="b"/></p>
+
+<p>The GCD is: <gcd>$a $b</gcd></p>

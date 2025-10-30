@@ -1,0 +1,199 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Applied vector addition problem; boat in current. Animated graphing tool provided for visualization of the geometry of the problem.
+
+*************************************************************-->
+<problem><title/>
+<setup>
+<selectFromSequence name="a" from="8" to="20"/>
+<selectFromSequence name="c" from="2" to="7"/>
+
+<selectFromSequence assignNames="b d" numToSelect="2" from="1" to="179"/>
+<math name="mag">sqrt(($a cos($b pi/180) + $c cos($d pi/180))^2 + ($a sin($b pi/180) + $c sin($d pi/180))^2)</math>
+<number name="magN" displayDecimals="1" padZeros>$mag</number>
+<math name="baseAngle">
+  arctan(($a sin($b pi/180) + $c sin($d pi/180))/ ($a cos($b pi/180) + $c cos($d pi/180))) *180/pi</math>
+<math name="dir">
+  <conditionalContent>
+    <case condition="$baseAngle > 0">
+      $baseAngle
+    </case>
+    <case condition="$baseAngle < 0">
+      $baseAngle + 180
+    </case>
+    <case condition="$baseAngle = infinity or $baseAngle= -infinity">
+      90
+    </case>
+  </conditionalContent>
+</math>
+<number name="dirN" displayDecimals="1" padZeros>$dir</number>
+
+</setup>
+  
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>mag = $mag</p>
+<p>magN = $magN</p>
+<p>baseAngle = $baseAngle</p>
+<p>dir = $dir</p>
+<p>dirN = $dirN</p> -->
+<!--testing-->
+
+<p>A boat is traveling through the water at a speed of <m>$a\; \text{km/hr}</m> with a bearing of <m>$b^{\circ}</m>.  A current flowing at a speed of <m>$c \;\text{km/hr}</m> is pushing against the boat in the direction <m>$d^{\circ}</m>.  What is the true speed of the boat and in what direction is it traveling?</p>
+
+
+<p><em>Round the speed and the direction angle to the nearest <m>0.1</m>.  Do not include the units in your answer.</em></p> 
+
+
+<!--*********************************************
+          Graphing Tool
+**********************************************-->
+<aside><title>Graphing Tool</title>
+<p>Input the given vector information to update the diagram</p>
+<p><alert>Graphing tip:</alert> The sum vector is the third side of the triangle formed by vectors <m>v_b</m> and <m>v_c</m> when they are placed head to tail.</p>
+
+<setup>
+<number name="r1">0</number>
+<number name="r2">0</number>
+<number name="r3">0</number>
+
+<animateFromSequence name="animate1" animationOn="false" target="r1" from="0" to="$f1MagG" animationInterval="5" animationMode="increase once" />
+<animateFromSequence name="animate2" animationOn="false" target="r2" from="0" to="$f2MagG" animationInterval="5" animationMode="increase once" />
+
+</setup>
+
+<sideBySide widths="30% 70%">
+
+<div>
+<p>Boat's speed: <m>||v_b|| = </m><mathInput name="f1MagG"/></p>
+<p><m>\theta _1 = </m><mathInput name="f1DirG"/> 
+  <updateValue target="animate1.animationOn" newValue="true" type="boolean" disabled="$r1 = $f1MagG">
+    <label>Show boat</label>
+  </updateValue>
+</p>
+
+<p>Current speed: <m>||v_c|| = </m><mathInput name="f2MagG"/> </p>
+<p><m>\theta _1 = </m><mathInput name="f2DirG"/>
+  <updateValue name="update2" target="animate2.animationOn" newValue="true" type="boolean" disabled="$r2 = $f2MagG or $r1 != $f1MagG">
+    <label>Show current</label>
+  </updateValue>
+  <updateValue triggerWith="update2" target="animateSum.hide" newValue="false" type="boolean"/>
+  <updateValue triggerWith="update2" target="f1G.styleNumber" newValue="6"/>
+</p>
+  
+<p>Check sum vector, <m>v_b + v_c</m>:</p>
+<p>True speed:<mathInput name="userMagG" bindValueTo="$userMag"/><m>\;\text{km / hr}</m>
+</p>
+<p>Direction:<mathInput name="userDirG" bindValueTo="$userDir"/><m>^{\circ}</m>
+
+</p>
+
+</div>
+  
+<graph xmin="-30" xmax="30" ymin="-20" ymax="20">
+<vector name="animateSum" hide>$f1G + $fcG</vector>
+<point name="pT" fixLocation styleNumber="5" hide>(0,0)</point>
+<point name="pH_f1" layer="2" styleNumber="5" hide="!$animate1.animationOn">($r1 cos($f1DirG pi/180), $r1 sin($f1DirG pi/180))
+</point>
+<vector name="f1G" head="$pH_f1" tail="$pT"/>
+
+<point name="pH_f2" layer="2" hide="!$animate2.animationOn" styleNumber="5">
+  ($r2 cos($f2DirG pi/180) + $r1 cos($f1DirG pi/180), $r2 sin($f2DirG pi/180) + $r1 sin($f1DirG pi/180))
+</point>
+<vector name="f2G" head="$pH_f2" tail="$f1G.head" styleNumber="2" />
+<vector name="fcG" head="($r2 cos($f2DirG pi/180), $r2 sin($f2DirG pi/180))" tail="$pT" hide />
+<point name="pH_sum" layer="2" hide="true" styleNumber="5">($userMagG cos($userDirG pi/180), $userMagG sin($userDirG pi/180))</point>
+<vector name="sumG" head="$pH_sum" tail="$pT" styleNumber="5">
+  <label><m>v_b + v_c</m></label>
+</vector>
+
+<polygon name="outline" vertices="$pH_f1 $pH_sum $pT" styleNumber="6"/>
+</graph>
+
+
+</sideBySide>
+<p><em>Note, when your sum vector is correct it will overlay the $fcG.styleDescriptionWithNoun that was "pushed" by the current.</em></p>
+</aside>
+
+<!--*********************************************
+           User Input
+**********************************************-->
+  
+  
+<p>True speed: <mathInput name="userMag"/><m>\;\text{km/hr}</m></p>
+  
+<p>Direction angle: <mathInput name="userDir" /><m>^{\circ}</m></p>
+
+<setup>
+<boolean name="correctMag" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userMag = $mag</boolean>
+<boolean name="correctDir" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userDir = $dir</boolean>
+</setup>
+  
+  <answer name="ans1">
+     <award name="correct1">
+      <when>$correctMag and $correctDir</when>
+    </award>
+  </answer>
+  
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="!$correctMag and $ans1.justSubmitted">There is an error in your speed.</feedback>
+  <feedback condition="!$correctDir and $ans1.justSubmitted">There is an error in your direction angle.</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>  
+<p>True speed: <m>$magN \;\text{km/hr}</m></p>
+  
+<p>Direction angle: <m>$dirN ^{\circ}</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<styleDefinition styleNumber="2" lineWidth="4"/>
+<styleDefinition styleNumber="4" lineWidth="4"/>
+<styleDefinition styleNumber="5" lineWidth="4"/>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

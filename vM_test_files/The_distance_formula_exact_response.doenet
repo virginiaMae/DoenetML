@@ -1,0 +1,176 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use the distance formula to calculate the distance between two points. Provide an exact response.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence assignNames="a b" numToSelect="2" from="-6" to="6" withReplacement/>
+  <selectFromSequence assignNames="c d" numToSelect="2" from="1" to="6" withReplacement/>
+  <selectFromSequence assignNames="q p" numToSelect="2" from="-1" to="1" withReplacement exclude="0"/>
+  <selectFromSequence name="styleNumber" from="7" to="12"/>
+  
+  <point name="p1" fixed styleNumber="$styleNumber">($a,$b)</point>
+  <point name="p2" fixed styleNumber="$styleNumber">($a + $p$c, $b + $q$d)</point>
+  <math name="distance">sqrt($c^2 + $d^2)</math>
+  <math name="xmin">min($p2.x - 3,$p1.x - 3, -6)</math>
+  <math name="xmax">max($p2.x + 3,$p1.x + 3, 6)</math>
+  <math name="ymin">min($p2.y - 3,$p1.y - 3, -6)</math>
+  <math name="ymax">max($p2.y + 3,$p1.y + 3, 6)</math>
+  <!--maths for incorrect responses-->
+  <number name="numericalAns">$distance</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>q = $q</p>
+<p>p = $p</p>
+<p>p1 = $p1</p>
+<p>p2 = $p2</p>
+<p>distance = $distance</p>
+<p>distance{simplify} = $distance{simplify}</p>
+<p>numericalAns = $numericalAns</p> -->
+<!--testing-->
+
+<!--*********************************************
+            Graph
+**********************************************-->
+ <graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" grid="1 1" size="small">
+    $p1 $p2 
+    <line through="$p1 $p2" fixed styleNumber="$styleNumber"/>
+  </graph>
+
+
+<!--*********************************************
+            Main problem
+**********************************************-->
+<p>Find the distance between the points $p1 and $p2{simplify}. Express your answer precisely, using a square root when necessary.</p>
+
+
+  <p><m>\text{Distance} = </m>
+          
+    <answer name="ans84" >
+      <mathInput name="userDistance" prefill="sqrt()"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare>     
+        <when>
+      $userDistance=$distance{simplify}
+        </when>
+      </award>
+
+      <award name="numerical" allowedErrorInNumbers = "0.1" allowedErrorIsAbsolute credit="0.5">$numericalAns</award>
+    </answer>
+  </p>
+
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Fantastic!</feedback>
+  <feedback condition="$numerical"><p>For full credit, express your answer precisely, with a square root or as an integer. There should be no decimal in your response.</p>
+    <p>If you accidentally deleted the square root symbol, you can type "<c>sqrt</c>" or you can use the square root symbol by expanding the math keyboard at the bottom of the page.</p></feedback>
+  <feedback condition="$ans84.numSubmissions > 2 and $ans84.creditAchieved != 1">
+    <div name="helpText">
+      <p>We need to recognize that the changes in the <m>x</m>-coordinates and the <m>y</m>-coordinates of the two points on the line form the two perpendicular legs of a right triangle. </p>
+  <p>The distance between the two points <em>along</em> the diagonal form the hypotenuse of this right triangle.</p>
+  <image source='doenet:cid=bafkreia5goguzxlqzhw5lfcmuv4fmtldw3nbbio3grlvk2xsfsz6g3nnrm' description='A graphical illustration of the distance formula' asfilename='Illustration distance formula.png' size="small" mimeType='image/png' />
+<p>The <term>distance formula</term> is a simplification of the <term>Pythagorean Theorem</term> that is obtained by taking the square root of both sides of the equation. 
+  </p>  
+  <md name="distanceFormula">
+    <mrow>\textbf{Distance Formula:}\amp</mrow>
+    <mrow >c =\amp \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}</mrow>
+  </md>
+<p><em>How to check</em>: Since the hypotenuse is the longest side, your distance should be at least greater than the difference in the <m>x</m>-coordinates and the difference in the <m>y</m>-coordinates of the two points; but not by too much.</p>
+    </div>
+  </feedback>
+
+
+
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint><title>Worked Example</title>
+<p>Here is a similar worked example:</p>
+  <example newNameSpace>
+    <p><em>Find the distance between the points $p1 and $p2{simplify}. Express your answer precisely, using a square root when necessary.</em></p>
+    
+    <setup>
+      <math name="a">8</math>
+      <math name="b">10</math>
+      <math name="c">7</math>
+      <math name="d">3</math>
+      <math name="q">-1</math>
+      <math name="p">1</math>
+      <point name="p1" fixed styleNumber="$styleNumber">($a,$b)</point>
+      <point name="p2" fixed styleNumber="$styleNumber">($a + $p$c, $b + $q$d)</point>
+      <math name="distance">sqrt($c^2 + $d^2)</math>
+      <math name="xmin">min($p2.x - 3,$p1.x - 3, -6)</math>
+      <math name="xmax">max($p2.x + 3,$p1.x + 3, 6)</math>
+      <math name="ymin">min($p2.y - 3,$p1.y - 3, -6)</math>
+      <math name="ymax">max($p2.y + 3,$p1.y + 3, 6)</math>
+</setup>
+
+     <graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax" grid="1 1">
+    $p1 $p2 
+    <line through="$p1 $p2" fixed styleNumber="$styleNumber"/>
+  </graph>
+
+    <p><alert><em>Solution.</em></alert></p>
+    <p>We apply the distance formula, $distanceFormula and obtain the following:
+  <md>
+    <mrow>c \amp= \sqrt{($p2.x{simplify} - $p1.x)^2 + ($p2.y{simplify} - $p1.y)^2}</mrow>
+    <mrow>\amp= $distance</mrow>
+    <mrow>\amp=$distance{simplify}.</mrow>
+  </md>
+</p>
+    
+  </example>
+
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>We apply the distance formula, $distanceFormula and obtain the following:
+  <md>
+    <mrow>c \amp= \sqrt{($p2.x{simplify} - $p1.x)^2 + ($p2.y{simplify} - $p1.y)^2}</mrow>
+    <mrow>\amp= $distance</mrow>
+    <mrow>\amp=$distance{simplify}.</mrow>
+  </md>
+</p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

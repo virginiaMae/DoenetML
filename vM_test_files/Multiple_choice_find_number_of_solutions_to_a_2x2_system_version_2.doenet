@@ -1,0 +1,129 @@
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="b" from="-3" to="6" exclude="0"/>
+  <selectFromSequence name="c" from="-3" to="5" exclude="-1 0 1"/>
+  <selectFromSequence name="d" from="4" to="12"/>
+  <selectFromSequence name="e" from="-3" to="6" exclude="1 0 $c"/>
+
+  <math name="RHS1" simplify>$d $e</math>
+  <math name="LHS1" simplify>$a x + $b y</math>
+  <math name="RHS2" simplify>$c $d</math>
+  <math name="LHS2" simplify>$c $a x + $c $b y</math>
+  <line name="eq1">$LHS1 = $RHS1</line>
+  <line name="eq2">$LHS2 = $RHS2</line>
+  <boolean name="sameSlope">$eq1.slope = $eq2.slope</boolean>
+  <boolean name="sameLine">$eq1 = $eq2</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>sameSlope = $sameSlope</p>
+<p>sameLine = $sameLine</p>   -->
+<!--testing-->
+
+<p>Find the number of solutions to the system of equations below.</p>
+  <md>
+    <mrow>$LHS1 \amp= $RHS1</mrow>
+    <mrow>$LHS2 \amp= $RHS2</mrow>
+  </md>
+
+  
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given equation of the first line:</p> 
+  <p><mathInput name="graphEq1"/></p>
+
+  <p>Enter the given equation of the second line:</p> 
+  <p><mathInput name="graphEq2"/></p>
+
+</div>
+
+  
+<graph name="g1">
+  <point name="ip" coords="($graphX, $graphY)" fixed styleNumber="5">
+    <label>$ip.coords</label>
+  </point>
+  <line name="line1" equation="$graphEq1" fixed/>
+  <line name="line2" equation="$graphEq2" fixed styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+  <p>If there is one solution, the two lines will intersect. Infinitely many solutions occur when the two lines coincide (lie on top of each other). The case where the system has no solutions occurs when the two lines are parallel. What do each of these cases represent algebraically?</p>
+  <p>Note, you might have to zoom in or out to view both lines in the window.</p>
+</aside>  
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+  
+<answer name="ans1">
+  <choice credit="1">No solutions</choice>
+  <choice>One solution</choice>
+  <choice>Infinitely many solutions</choice>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allcorrect">$correctFeedback</feedback>
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p>No solutions.</p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

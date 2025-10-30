@@ -1,0 +1,249 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the x-values for the x-intercepts and asymptotes of a rational function. Parameters are randomized; each problem will have two roots and 3 asymptotes. Optional graphing tool provided. To remove the graphing tool, delete or comment out the <aside> portion of the document.
+
+
+QUESTION: Find the x-intercepts, vertical asymptotes, and slant asymptotes of the rational function Expand[($$a$$*x-$$b$$)*(x-$$c$$)]/($$d$$*x-$$e$$).  Hint 1: Get everything in factored form to help find the intercepts and vertical asymptotes.  Hint 2: Use polynomial division to help find the slant asymptote.
+
+VARIABLES: {$$a$$[{2,5}, Integer], $$b$$[{-4,-3,-2,-1,1,2,3,4}, Choice], $$c$$[{-7,7}, Integer], $$d$$[{1,7}, Integer], $$e$$[{3,9}, Integer]} ;;
+
+ComputedVariables: {$$g$$ -> PolynomialQuotient[($$a$$*x - $$b$$)*(x - $$c$$), $$d$$*x-$$e$$, x], $$h$$ -> $$b$$/$$a$$, $$j$$ -> $$e$$/$$d$$};;
+
+answerLabel = {"x-value of largest x-intercept ", "x-value of 2nd largest x-intercept ", "x-value of the vertical asymptote ", "Equation of the slant asymptote is y = "};;
+
+answer = {RankedMax[{$$h$$,$$c$$},1],RankedMax[{$$h$$,$$c$$},2],$$j$$,$$g$$};;
+
+tolerance = 0
+
+
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5"/>
+  <selectFromSequence name="b" from="-4" to="4" exclude="0"/>
+  <selectFromSequence name="c" from="-7" to="7"/>
+  <selectFromSequence name="d" from="1" to="7"/>
+  <selectFromSequence name="e" from="3" to="9"/>
+  <math name="exprFactored" simplify>($a x + $b)(x + $c)/($d x + $e)</math>
+  <math name="coeff2" simplify>$a $c + $b</math>
+  <math name="expr" simplify="numberspreserveorder">($a x^2 + $coeff2 x + $b $c)/($d x + $e)</math>
+  <math name="int1" simplify>-$b/$a</math>
+  <math name="int2" simplify>-$c</math>
+  <math name="j" simplify>$e/$d</math>
+  <math name="g" simplify>($a / $d)</math>
+  <math name="t1" simplify>$coeff2 - ($a / $d)*$e</math>
+  <math name="k">$t1 / $d</math>
+  <math name="slant" simplify="numberspreserveorder">$g x + $k</math>  
+  <mathList name="intsList">$int1 $int2</mathList>
+  <mathList name="asysList">-$j</mathList>
+  <mathList name="slantsList">$slant</mathList>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>coeff2 = $coeff2</p>
+<p>expr = $expr</p>
+<p>exprFactored = $exprFactored</p>
+<p>int1 = $int1</p>
+<p>int2 = $int2</p>
+<p>j = $j</p>
+<p>g = $g</p>
+<p>t1 = $t1</p>
+<p>k = $k</p>
+<p>slant = $slant</p>
+<p>intsList = $intsList</p>
+<p>asysList = $asysList</p>
+<p>slantsList = $slantsList</p> -->
+<!--testing-->
+
+<p>For the rational function below, find:</p>
+  <ol>
+    <li>all the <m>x</m>-intercepts (you only need to enter <m>x</m>-value for the <m>x</m>-intercepts)</li>
+    <li>the <m>x</m>-values of the vertical asymptotes</li>
+    <li>the equations of the slant asymptotes</li>
+  </ol>
+  <me>f(x) = $expr</me>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint>
+  <ol>
+    <li>Get everything in factored form to help find the intercepts and vertical asymptotes</li>
+    <li>Use polynomial division to help find the slant asymptote</li>
+  </ol>
+</hint>
+  
+<!--*********************************************
+            Graphing tool
+**********************************************-->
+<aside><title>Graphing tool</title>
+<div>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+
+  <p>Check an <m>x</m>-intercept:</p>
+  <p><m>x\text{-intercept} = </m> <mathInput name="xInt"/></p>
+  
+  <p>Check a vertical asymptote(s):</p>
+  <p><m>x = </m> <mathInput name="asy1"/></p>
+
+  <p>Check a slant asymptote(s):</p>
+  <p><m>y = </m> <mathInput name="asySlant"/></p>
+  
+  <setup>
+  <function name="miFunction">$mi</function>
+  <number name="zeroFixed" fixed>0</number>
+  </setup></div>
+  
+<graph size="full" aspectRatio="3/2">
+  $miFunction
+  <point name="zPt" styleNumber="3">($asy1, $zeroFixed)</point>
+  <point name="xIntPt" styleNumber="5">($xInt, $zeroFixed)</point>
+  <line styleNumber="3">x = $zPt.x</line>
+  <line styleNumber="4">y = $asySlant</line>
+</graph>
+
+
+</aside>
+
+<!--*********************************************
+           User solution input
+**********************************************-->
+
+<ol>
+  <li> <alert><m>x</m>-intercepts</alert>
+<p>How many <m>x</m>-intercepts are there? <mathinput name="nInt" /></p>
+
+<p>The <m>x</m>-intercepts are</p>
+<ul>
+  <map name="map1">
+    <template><li><m>$(x) = </m> <mathinput /></li></template>
+    <sources><sequence length="$nInt" /></sources>
+  </map>
+</ul>
+<p>
+<answer name="ans1a">
+<award matchPartial>
+  <when unorderedCompare>
+    <mathlist><collect isResponse prop="value" componentTypes="mathinput" source="map1" name="collectedInts"/></mathlist>
+    = $intsList
+  </when>
+</award>
+</answer></p>
+  </li>
+
+    <li> <alert>Vertical Asymptotes</alert>
+<p>How many vertical asymptotes are there? <mathinput name="nAsy" /></p>
+
+<p>The <m>x</m>-values of the asymptotes are</p>
+<ul>
+  <map name="map2">
+    <template><li><m>$(x) = </m> <mathinput /></li></template>
+    <sources><sequence length="$nAsy" /></sources>
+  </map>
+</ul>
+<p>
+<answer name="ans1b">
+<award matchPartial>
+  <when unorderedCompare>
+    <mathlist><collect isResponse prop="value" componentTypes="mathinput" source="map2" name="collectedAsys"/></mathlist>
+    = $asysList
+  </when>
+</award>
+</answer></p>
+  </li>
+
+      <li> <alert>Slant Asymptotes</alert>
+<p>How many slant asymptotes are there? <mathinput name="nSlant" /></p>
+
+<p>The equations for the slant asymptotes are</p>
+<ul>
+  <map name="map3">
+    <template><li><m>y = </m> <mathinput /></li></template>
+    <sources><sequence length="$nSlant" /></sources>
+  </map>
+</ul>
+<p>
+<answer name="ans1c">
+<award matchPartial>
+  <when unorderedCompare>
+    <mathlist><collect isResponse prop="value" componentTypes="mathinput" source="map3" name="collectedSlants"/></mathlist>
+    = $slantsList
+  </when>
+</award>
+</answer></p>
+  </li>
+</ol>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1a.creditAchieved = 1 and $ans1b.creditAchieved = 1 and $ans1c.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$ans1b.creditAchieved != 1 and $ans1b.responseHasBeenSubmitted">One or more <m>x</m>-values for the asymptotes are incorrect.</feedback>
+  <feedback condition="$ans1a.creditAchieved != 1 and $ans1a.responseHasBeenSubmitted">One or more <m>x</m>-intercepts are incorrect.</feedback>
+  <feedback condition="$ans1c.creditAchieved != 1 and $ans1c.responseHasBeenSubmitted">One or more equations for the slant asymptotes are incorrect.</feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+
+ </hint>
+   -->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>x</m>-intercepts: $intsList</p>
+<p>One vertical asymptotes at <m>x</m>-value: $asysList</p>
+<p>Slant asymptote with equation: <m>y = $slantsList</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

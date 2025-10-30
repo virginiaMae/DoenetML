@@ -1,0 +1,76 @@
+<problem><title/>
+<setup>
+    <selectFromSequence name="a" from="2" to="8"/>
+    <selectFromSequence name="d" from="-4" to="4"/>
+    <select name="b">1/2 3/2 2 3 4 1/4 3/4</select>
+    <math simplify name="bTimesX">$b x</math>
+    <math name="displayFunc" simplify="numberspreserveorder">$a sin($bTimesX) + $d</math>
+    <function name="f">$a sin($b x) + $d</function>
+    <math name="waveL" simplify>(2/$b) * pi</math>
+    <number name="ymin">min(-$a - 4, $d - $a - 4)</number>
+    <number name="ymax">max($a + 4, $d + $a + 4)</number>
+</setup>
+
+
+<!-- testing -->
+<!-- <p>f = $f</p>
+<p>a = $a</p>
+<p>bTimesX = $bTimesX</p>
+<p>b = $b</p>
+<p>waveL = $waveL</p> -->
+<!-- testing -->
+  
+  <p>Find the amplitude and wavelength of the function graphed below. Enter the wavelength as an exact value in radians, using <m>\pi</m><footnote>Note, type "pi" to enter a <m>\pi</m> symbol</footnote> if necessary.</p>
+
+<figure>
+  <graph xmin="-$waveL{link='false'}" xmax="2*$waveL{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}" xTickScaleFactor="pi" grid="pi/2 1">
+    $f
+    <line styleNumber="6" fixed>y = $d</line>
+    <point name="p">($waveL,$d)
+      <label>$p.coords</label>
+    </point>
+  </graph>
+  <caption>A graph of the function <m>f = $displayFunc</m></caption>
+</figure>
+
+  
+  <p><m>\text{Wavelength} = </m><mathInput name="userWavelength"/> </p>
+  <p><m>\text{Amplitude} = </m><mathInput name="userAmp"/></p>
+  <p><answer name="ans1">
+      <award name="correct">
+        <when>$userWavelength = $waveL and $userAmp = $a</when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$userAmp != $a and $ans1.justSubmitted">The amplitude is incorrect.</feedback>
+
+  <feedback condition="$userWavelength != $waveL and $ans1.justSubmitted">The wavelength is incorrect.</feedback>
+
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Wavelength} = $waveL</m></p>
+<p><m>\text{Amplitude} = $a</m></p>
+</solution>
+</problem>

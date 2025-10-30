@@ -1,0 +1,140 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: 
+*************************************************************-->
+
+<problem><title/>
+<setup>
+<!-- <point name="A" labelIsName showCoordsWhenDragging="false">(-8, 8)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<point name="B" labelIsName styleNumber="2" showCoordsWhenDragging="false">(-6, 8)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<point name="C" labelIsName styleNumber="3" showCoordsWhenDragging="false">(-4, 8)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<point name="D" labelIsName styleNumber="4" showCoordsWhenDragging="false">(-7, 7)
+  <constraints><constrainToGrid/></constraints>
+</point>
+<point name="E" labelIsName styleNumber="5" showCoordsWhenDragging="false">(-5, 7)
+  <constraints><constrainToGrid/></constraints>
+</point> -->
+<selectFromSequence assignNames="xA xB xC xD xE" numToSelect="5" from="-9" to="9"/>
+<selectFromSequence assignNames="yA yB yC yD yE" numToSelect="5" from="-9" to="9"/>
+<point name="solA" fixed coords="($xA, $yA)">
+  <label>A</label>
+</point>
+<point name="solB" fixed coords="($xB, $yB)" styleNumber="2">
+  <label>B</label>
+</point>
+<point name="solC" fixed coords="($xC, $yC)" styleNumber="3">
+  <label>C</label>
+</point>
+<point name="solD" fixed coords="($xD, $yD)" styleNumber="4">
+  <label>D</label>
+</point>
+<point name="solE" fixed coords="($xE, $yE)" styleNumber="5">
+  <label>E</label>
+</point>
+</setup>
+
+
+<!--testing-->
+
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+<p>Given the graph below, list the coordinates of each point.</p>
+<graph grid="1 1">
+  $solA $solB $solC $solD $solE
+</graph>
+
+
+<!--*********************************************
+            Solution input
+**********************************************-->
+<sideBySide>
+<stack>
+<p><m>A = </m> <mathInput name="userA" prefill="( , )"/></p>
+<p><m>B = </m> <mathInput name="userB" prefill="( , )"/></p>
+<p><m>C = </m> <mathInput name="userC" prefill="( , )"/></p>
+</stack>
+
+<stack>
+<p><m>D = </m> <mathInput name="userD" prefill="( , )"/></p>
+<p><m>E = </m> <mathInput name="userE" prefill="( , )"/></p>
+</stack>
+</sideBySide>
+ 
+<answer name="ans1">
+  <award>
+    <when>
+      $userA = $solA.coords and $userB = $solB.coords and
+      $userC = $solC.coords and $userD = $solD.coords and
+      $userE = $solE.coords
+    </when>
+  </award>
+</answer>
+
+
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$userA != $solA.coords and $ans1.justSubmitted">The coordinates for point <m>A</m> are not correct.</feedback>
+  <feedback condition="$userB != $solB.coords and $ans1.justSubmitted">The coordinates for point <m>B</m> are not correct.</feedback>
+  <feedback condition="$userC != $solC.coords and $ans1.justSubmitted">The coordinates for point <m>C</m> are not correct.</feedback>
+  <feedback condition="$userD != $solD.coords and $ans1.justSubmitted">The coordinates for point <m>D</m> are not correct.</feedback>
+  <feedback condition="$userE != $solE.coords and $ans1.justSubmitted">The coordinates for point <m>E</m> are not correct.</feedback>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>A = $solA, \; B = $solB, \; C = $solC, \; D = $solD, \;
+  E = $solE</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

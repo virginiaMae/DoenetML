@@ -1,0 +1,109 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Note, this problem is not randomized. Determine conceptual information about the amount of material remaining at a given time, when presented with information about the time required for a material to decay to half of it's initial amount (without explicitly stating that this time is the half-life).
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="4"/>
+  <selectFromSequence name="b" from="5" to="10"/>
+  <selectFromSequence name="d" from="2" to="5"/>
+  <selectFromSequence name="a0" from="-3" to="3" exclude="0"/>
+  
+  <function name="f" styleNumber="6">$d x + $a0</function>
+  <math name="x_a" simplify>$a $d + $a0</math>
+  <math name="x_b" simplify>$b $d + $a0</math>
+ 
+  <number name="xmax1">max($b + 4, 6)</number>
+  <number name="ymin1">$a0 - 6</number>
+  <number name="ymax1">$x_b + 2 $d</number>
+
+  <math name="expr" simplify="numberspreserveorder">$d n + $a0</math>
+  <math name="expr_incorrect1" simplify="numberspreserveorder">$d n - $a0</math>
+  <math name="expr_incorrect2" simplify="numberspreserveorder">- $a0 - $d n</math>
+  <math name="expr_incorrect3" simplify="numberspreserveorder">$d n/2 + $a0</math>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>a0 = $a0</p>
+<p>x_a = $x_a</p>
+<p>x_b = $x_b</p>
+<p>f.formula = $f.formula</p>
+<p>expr = $expr</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+<p>The formula for the amount of radioative material <m>N(t)</m> present at time <m>t</m>, given the initial amount <m>N_0</m> and the decay rate <m>\lambda</m> is given by
+  <me>N(t) = N_0 e^{-\lambda t}</me>
+The half-life <m>H</m> can be calculated by the formula 
+  <me>H = \frac{\ln 2}{\lambda}.</me></p>
+
+<p>A sample of a radioactive substance begins with <m>1000</m> grams present at time <m>t = 0</m>. In other words, <m>N_0 = 1000 \;\text{grams}</m>. At time <m>t = 10\;\text{years}</m>, the amount of radioactive material remaining is <m>500 \;\text{grams}</m>. At time <m>t = 15</m>, the amount of radioactive material remaining will be...</p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><answer name="ans1">
+  <choice credit="1">greater than <m>250 \;\text{grams}</m></choice>
+  <choice><m>250 \;\text{grams}</m></choice>
+  <choice>less than <m>250 \;\text{grams}</m></choice>
+  <choice>more information is needed</choice>
+</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p>Greater than <m>250 \;\text{grams}</m>.</p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

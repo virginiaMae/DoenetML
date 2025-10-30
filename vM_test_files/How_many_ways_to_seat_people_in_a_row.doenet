@@ -1,0 +1,134 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine how many ways to arrange k people in a row from a group of n objects. Application of the standard formula for permutations.
+This problem is randomized with k ranging from 3 to 6 and n ranging from 5 (k = 3, b = 2) to 12 (k = 6, b = 6).
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <selectFromSequence name="k" from="3" to="6"/>
+  <selectFromSequence name="b" from="2" to="6"/>
+  <math name="n" simplify>$k + $b</math>
+  <math name="permutekOfN">$n!/$b!</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>n = $n</p>
+<p>k = $k</p>
+<p>permutekOfN = $permutekOfN</p> -->
+<!--testing-->
+  
+<p>From a group of <m>$n</m> people, in how many ways can <m>$k</m> people be seated in a row, from left to right?</p> 
+  <p><m>\text{Number of ways to arrange people} = </m>
+      
+    <answer name="ans8" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$permutekOfN
+        </when>
+      </award>
+    </answer>
+  </p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$ans8.numSubmissions > 2 and $ans8.creditAchieved != 1">
+     <div name="helpText">
+      Recall that the number of ways to choose <m>k</m> objects, without order, from a set of <m>n</m> objects, is the number of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-5/"><term>combinations</term></ref>, given by: 
+       <me>C(n,k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}.</me>
+       In contrast, the number of ways to choose <m>k</m> objects <em>in a certain order</em>, is the number of <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-4/"><term>permutations</term></ref>, given by: 
+    <me>P(n,k) = \frac{n!}{(n-k)!}.</me>
+       In this example, the people are being seated from left to right, so the order <em>does</em> matter.
+    </div>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="n">15</math>
+  <math name="k">7</math>
+  <math name="permutekOfN" simplify>$n!/($n - $k)!</math>
+</setup>
+
+  
+<p><em>From a group of <m>$n</m> people, in how many ways can <m>$k</m> people be seated in a row, from left to right?</em></p> 
+
+<p><alert><em>Solution.</em></alert></p>
+<p>Use the formula for <m>P(n,k)</m>
+      <md>
+        <mrow>P(n,k) \amp= \frac{n!}{(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>P($n,$k) \amp= \frac{$n!}{($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $permutekOfN \amp\text{evaluate}</mrow>
+      </md></p>
+  
+</example>
+
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>Use the formula for <m>P(n,k)</m>
+      <md>
+        <mrow>P(n,k) \amp= \frac{n!}{(n-k)!} \amp\text{general formula}</mrow>
+        <mrow>P($n,$k) \amp= \frac{$n!}{($n-$k)!} \amp\text{substitute}</mrow>
+        <mrow> \amp= $permutekOfN{simplify} \amp\text{evaluate}</mrow>
+      </md></p>
+
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

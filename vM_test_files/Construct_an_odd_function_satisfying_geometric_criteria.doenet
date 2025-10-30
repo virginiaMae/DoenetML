@@ -1,0 +1,168 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of an odd function to construct a function meeting specified geometric criteria.
+
+*************************************************************-->
+
+<problem>
+<setup>
+<group name="demoPoints">
+  <point name="p1" styleNumber="5" fixLocation>(-8,5)
+    <label><m>a</m></label>
+  </point>
+  <point name="p2" styleNumber="5" fixLocation>(-6,2)
+    <label><m>b</m></label>
+  </point>
+  <point name="p3" styleNumber="5" fixLocation>(-3,3)
+    <label><m>c</m></label>
+  </point>
+  <point name="p4" styleNumber="5" fixLocation>(0,0)
+    <label><m>d</m></label>
+  </point>
+  <point name="p5" styleNumber="5" fixLocation>(3,-3)
+    <label><m>e</m></label>
+  </point>
+  <point name="p6" styleNumber="5" fixLocation>(6,-2)
+    <label><m>f</m></label>
+  </point>
+  <point name="p7" styleNumber="5" fixLocation>(8,-5)
+    <label><m>g</m></label>
+  </point>
+</group>
+<derivative name="dfdx">$f</derivative>
+<function name="demoFunction" through="$p1 $p2 $p3 $p4 $p5 $p6 $p7"/>
+<boolean name="zeroCorrect">$dp4 = (0,0)</boolean>
+<boolean name="isStraight" allowedErrorInNumbers="0.001">$$dfdx($dp1.x) = $$dfdx($dp2.x) and $$dfdx($dp2.x) = $$dfdx($dp3.x) and $$dfdx($dp3.x) = $$dfdx($dp4.x) and $$dfdx($dp4.x) = $$dfdx($dp5.x) and $$dfdx($dp5.x) = $$dfdx($dp6.x) and $$dfdx($dp6.x) = $$dfdx($dp7.x)</boolean>
+<boolean name="notAllIncreasingL">$dp1.y > $dp2.y or $dp2.y > $dp3.y</boolean>
+<boolean name="negativeYQ4">$dp5.y < 0 and $dp6.y < 0 and $dp7.y < 0</boolean>
+<boolean name="isOdd">$$f($dp1.x) = -$$f($dp7.x) and $$f($dp2.x) = -$$f($dp6.x)
+  and $$f($dp3.x) = -$$f($dp5.x)</boolean>
+</setup>
+
+
+<!--testing-->
+<!-- <p>zeroCorrect = $zeroCorrect</p>
+<p>isStraight = $isStraight</p>
+<p>notAllIncreasingL = $notAllIncreasingL</p>
+<p>negativeYQ4 = $negativeYQ4</p>
+<p>isOdd = $isOdd</p> -->
+<!--testing-->
+
+<!--*********************************************
+           Problem Statement
+**********************************************-->
+
+<p>Use the points on the curve below to graph a function that has <term>odd</term> symmetry. The function should also:</p>
+  <ul>
+    <li>Not be a straight line</li>
+    <li>Not be increasing throughout the entire interval <m>x < 0</m></li>
+    <li>Over the interval <m>x > 0</m>, the output of the function must be a negative value</li>
+    <li>From left to right, the sequence of points must be <m>a, b, c, d, e, f, g</m></li>
+  </ul>
+
+<graph grid="1 1">
+  <point name="dp1" styleNumber="5">(-9,8)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>a</m></label>
+  </point>
+  <point name="dp2" styleNumber="5">(-7,2)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>b</m></label>
+  </point>
+  <point name="dp3" styleNumber="5">(-2,8)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>c</m></label>
+  </point>
+  <point name="dp4" styleNumber="2">(0,2)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>d</m></label>
+  </point>
+  <point name="dp5" styleNumber="5">(4,-2)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>e</m></label>
+  </point>
+  <point name="dp6" styleNumber="5">(7,5)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>f</m></label>
+  </point>
+  <point name="dp7" styleNumber="5">(9,6)
+    <constraints><constrainToGrid/></constraints>
+    <label><m>g</m></label>
+  </point>
+  <function name="f" through="$dp1 $dp2 $dp3 $dp4 $dp5 $dp6 $dp7"/>
+</graph> 
+<!--*********************************************
+            Solution input
+**********************************************-->
+<p>
+  <answer name="ans1">
+    <award>
+      <when>$zeroCorrect and !$isStraight and $notAllIncreasingL and $negativeYQ4 and $isOdd</when>
+    </award>
+  </answer>
+</p>
+  
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+
+<!--*********************************************
+            Hints
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+   <li>There are an infinite number of correct solutions, see if you can find several! One possible solution is: <me>$demoExpr</me>
+     <graph  name="gSol">
+       $demoFunction
+       $demoPoints
+     </graph>
+   </li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

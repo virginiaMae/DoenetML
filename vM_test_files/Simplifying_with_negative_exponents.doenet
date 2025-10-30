@@ -1,0 +1,78 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Apply the definition of negative exponents to rewrite a given algebraic expression.
+
+(BA-Basics #108 BA6105)
+
+
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence assignNames="a b c d e" from="-5" to="5" numToSelect="5" withReplacement exclude="0"/>
+  <selectFromSequence name="f" from="1" to="10"/>
+  <math name="expr" simplify="numberspreserveorder">(x^($a) y^($b) z^($c))/(x^($a - 3) y^($b - 4) z^($c - 2)) + $f(y^($e) z^($d))/(x^(-3) y^($e - 4) z^($d - 2))</math>
+  <math name="sol" simplify>(1 + $f)x^3 y^4 z^2</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f = $f</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>Using laws of exponents, rewrite the following expression as a single term (without fractions).</p>
+  <me>$expr</me>
+
+
+<!-- <p><m>$expr = </m><mathInput name="userAns"/> -->
+<p><mathInput name="userAns"/>
+   <answer name="ans1" symbolicEquality simplifyOnCompare>
+      <award name="correct">
+        <when>$userAns = $sol</when>
+      </award>
+    </answer></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>$sol</m></p>
+</solution>
+</problem>

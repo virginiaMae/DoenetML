@@ -1,0 +1,158 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Subtract fractions and give answer in reduced form. A fully worked example is provided; this can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <select name="a">3 12</select>
+  <select name="b">5 12</select>
+  <select name="c">2 4 5 10</select>
+  <select name="d">3 7 9</select>
+  <select name="e">2 3 4 5</select>
+  <math name="d1" simplify>$c $e</math>
+  <math name="d2" simplify>$d $e</math>
+  <math name="f1">$a/$d1</math>
+  <math name="f2">$b/$d2</math>
+  <me name="expr">$f1 - $f2</me>
+  <math name="absSol">|$sol|</math>
+  <math name="sol" simplify>$expr</math>
+  <boolean name="singleFraction">
+          <matchesPattern pattern="-()/()">
+            $userFraction</matchesPattern>
+  </boolean>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>f1 = $f1</p>
+<p>f2 = $f2</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>singleFraction = $singleFraction</p> -->
+<!--testing-->
+
+<p>Subtract, then write the answer as a single reduced fraction: $expr</p>
+  
+<p><m>$expr = </m>
+    <answer name="ans1">
+      <mathInput name="userFraction"/>
+      <award name="correct" symbolicEquality="true">   
+        <when>$userFraction = $sol</when>
+      </award>
+      <award symbolicEquality simplifyOnCompare name="correctNeg">
+        <when>$userFraction = $sol and $sol < 0
+          and $singleFraction
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$correctNeg and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$notFully and $ans1.creditAchieved != 1">This fraction can still be simplified further. Look for more common factors in the numerator and denominator!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<setup>
+  <math name="p">13 / 7</math>
+  <math name="q">3 / 14</math>
+  <me name="expr">$p - $q</me>
+  <math name="sol" simplify>$p - $q</math>
+</setup>
+  
+<p><em>Add, then write the answer as a single reduced fraction: $expr</em></p>
+
+ 
+<p><alert><em>Solution.</em></alert></p>
+<ul>
+<li>
+<p>In order to subtract fractions, we must first find a <term>common denominator</term>. Look for the least common multiple that is common to both of the denominators. In our case, the least common multiple of <m>7</m> and <m>14</m> is <m>14</m>.</p>
+</li>
+<li><p>In order to rewrite the first fraction, $p, as an equivalent fraction with a denominator of <m>14</m>, we multiply both the numerator and the denominator by <m>2</m>. In other words, we multiply it by the unit fraction <m>\frac{2}{2}</m></p>
+  <md>
+    <mrow>$p - $q &= \frac{13}{7}\cdot\frac{2}{2} - $q</mrow>
+    <mrow> &=\frac{26}{14} - $q</mrow>
+    <mrow> &= $sol</mrow>
+  </md>
+</li>
+<li><p>Since the numerator and the denominator have no common factors, this fraction is fully simplified. The final answer is <m>$sol</m>.</p></li>
+</ul>
+ 
+</example>
+
+<sideBySide margins="2%">
+<p>
+Textbook Link: <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-1-4-multiplying-and-dividing-fractions/">Multiplying and Dividing Fractions</ref>
+</p>
+
+<div>
+<p>Video textbook reference: <ref uri="https://open.lib.umn.edu/precalculus/">Precalculus</ref></p>
+<p>Text-based textbook reference: <ref uri="https://mathbooks.unl.edu/PreCalculus/Numbers-and-Operations.html">Precalculus</ref></p>
+</div>
+</sideBySide> 
+  
+<!-- <p><em><alert>How to check your answer</alert></em>: </p> -->
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+$sol
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

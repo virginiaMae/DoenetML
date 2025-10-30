@@ -1,0 +1,59 @@
+<problem><title/>
+<setup>
+<select name="b">0 -1 -2 -3</select>
+<select name="a">1/2 1/3 1/4</select>
+<selectFromSequence name="styleNumber" from="7" to="12"/>
+<math name="lim" simplify>$a^($b)</math>
+<number name="ymax">$$f1($b) + 4</number>
+</setup>
+
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>lim = $lim</p> -->
+<!-- /testing -->
+
+<p>Determine <m>\lim\limits_{x \to $b} f(x)</m> for the function <m>f(x)</m> shown in the figure below</p>
+
+<graph xmin="-12" xmax="12" ymin="-0.2*$ymax" ymax="$ymax" grid="1 1">
+  <function name="f1" domain="(-infinity,$b]" styleNumber="$styleNumber">$a^x</function> 
+  <function name="f2" domain="[$b,infinity)" styleNumber="$styleNumber">$a^x</function>
+  <endpoint name="epB" open fixLocation styleNumber="$styleNumber" labelPosition="left">($b, $$f1($b))
+    <label><m>$epB.coords</m></label>
+  </endpoint>
+</graph>
+
+<p>The limit as <m>x \to $b</m> is <answer name="ans1">$lim</answer></p>
+</problem>
+
+<solution>
+  <p><m>\lim\limits_{x \to $b} f(x) = $lim</m></p>
+</solution>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="4" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+

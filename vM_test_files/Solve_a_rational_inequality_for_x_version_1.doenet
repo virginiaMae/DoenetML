@@ -1,0 +1,118 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve a rational inequality for x. This problem is not randomized. A step-by-step process is provided, as well as an optional graphing tool. The graphing tool can be hidden by commenting out the <aside> portion of the document.
+
+*************************************************************-->
+
+
+<problem>
+<setup>
+  <math name="expr">(x^2 + 6x - 2)/(x - 3) < 2</math>
+  <m name="choice1">(-\infty, -2) \cup (3, \infty)</m>
+  <m name="choice2">(-2, 3)</m>
+  <m name="choice3">(-2, 3) \cup (3, \infty)</m>
+  <m name="choice4">(3, \infty)</m>
+  <m name="choice5">(-\infty, -2) \cup (-2, 3)</m>
+</setup>
+
+
+<!--testing-->
+<!-- <p>choice1 = $choice1</p>
+<p>choice2 = $choice2</p>
+<p>choice3 = $choice3</p>
+<p>choice4 = $choice4</p>
+<p>choice5 = $choice5</p> -->
+
+<!--testing-->
+
+  
+<p>Solve
+  <me>$expr</me>
+</p>
+
+<!--*********************************************
+            Graphing tool
+**********************************************-->
+
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p><m>\;f_1(x) = </m><mathInput name="mi"/></p>
+  <p><m>\;f_2(x) = </m><mathInput name="mi2"/></p>
+  <p>Graph an asymptote(s):</p>
+  <p><m>x = </m> <mathInput name="asy1"/></p>
+
+  <setup>
+  <function name="miFunction">$mi</function>
+  <function name="miFunction2" styleNumber="2">$mi2</function>
+  <number name="zeroFixed" fixed>0</number>
+  </setup>
+</div>
+  
+<graph xmin="-10" xmax="10" ymin="-30" ymax="30">
+  $miFunction $miFunction2
+  <point name="zPt" styleNumber="3">($asy1, $zeroFixed)</point>
+  <line styleNumber="3">x = $zPt.x</line>
+</graph>
+</sideBySide>
+  
+  
+<p><alert>Tip:</alert> Try graphing the left hand side and the right hand side as separate functions. Or, get the right hand side equal to zero and graph your new left-hand side as a function.</p>
+</aside>
+
+<p>Process:</p>
+<ul>
+  <li>Get the right hand side equal to zero.</li>
+  <li>Find a common denominator.</li>
+  <li>Add (subtract) the terms.</li>
+  <li>Factor numerator and denominator.</li>
+  <li>Draw the sign chart.</li>
+  <li>Select the negative intervals.</li>
+</ul>
+ 
+
+<p>
+    <answer name="ans1" shuffleOrder>
+      <choice>$choice1</choice>
+      <choice>$choice2</choice>
+      <choice>$choice3</choice>
+      <choice>$choice4</choice>
+      <choice credit="1">$choice5</choice>
+    </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>x \in $choice5</m></p>
+</solution>
+</problem>

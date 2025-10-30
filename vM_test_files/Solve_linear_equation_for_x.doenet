@@ -1,0 +1,162 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Solve a linear equation for x.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence assignNames="a b c" numToSelect="3" from="2" to="5" withReplacement/>
+  <selectFromSequence name="d" from="1" to="4"/>
+  <selectFromSequence name="e" from="2" to="6"/>
+  <math name="p">$a + $c + $e</math>
+  <math name="q">$c x + $d</math>
+
+  <math name="partialLHS">$c x + $d</math>
+  <math name="exprLHS">$a(x - $b) + $partialLHS{simplify}</math>
+  <math name="exprRHS"> 2 - $e x </math>
+  <math name="xCorrect">($a$b + 2 - $d)/($a + $c + $e)</math>
+  <!--discrete steps for solution section-->
+  <math name="step1LHS">$a x - <math simplify>$a$b</math> + $c x + $d</math>
+  <math name="step1RHS">2 - $e x</math>
+  <math name="step2LHS"><math simplify>$a + $c</math> x + <math simplify>$d - $a $b</math></math>
+  <math name="step2RHS">2 - $e x</math>
+  <math name="step3LHS"><math simplify>$a + $c</math>x + ($e)x</math>
+  <math name="step3RHS">2 + <math simplify>-($d - $a $b)</math></math>
+  <math name="step4LHS">$step3LHS{simplify}</math>
+  <math name="step4RHS">$step3RHS{simplify}</math>
+  <math name="step5RHS">$step3RHS{simplify}/(<math simplify>$a + $c + $e</math>)</math>
+  <number name="numerator">$step3RHS{simplify}</number>
+  <number name="denominator">$a + $c + $e</number>
+  <gcd name="gcd">$numerator $denominator</gcd>
+  <boolean name="constantGCF">$gcd != 1</boolean>
+  <!--maths for incorrect responses-->
+
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>p = $p</p>
+<p>q = $q</p>
+<p>exprLHS = $exprLHS</p>
+<p>exprRHS = $exprRHS</p>
+<p>xCorrect = $xCorrect{simplify}</p>
+<p>constantGCF = $constantGCF</p>
+<p>gcd = $gcd</p> -->
+<!--testing-->
+  
+<p>Solve for <m>x</m>.</p>
+  <p><me>$exprLHS = ($exprRHS)</me></p>
+  <p><m>x = </m>   
+    <answer name="ans17" >
+      <mathInput name="userInput"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare credit="1">    
+        <when>
+      $userInput=$xCorrect{simplify}
+        </when>
+      </award>
+      <award name="numerical" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute credit="0">
+        <when>
+      $userInput=$xCorrect{simplify}
+        </when>
+      </award>
+   
+    </answer>
+  </p>
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$numerical and $ans17.justSubmitted">Leave your answer in the form of an exact fraction. Do not use a decimal approximation.</feedback>
+  <feedback condition="$ans17.numSubmissions > 2 and $ans17.creditAchieved != 1">
+    <p>To solve for <m>x</m>, we first apply the distributive property, then combine like terms to isolate <m>x</m> on the left-hand side. Finally, we divide by the coefficient of <m>x</m> to get <m>x</m> by itself and simplify our final answer. </p>
+  </feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+  
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>Solve for <m>x</m>.</em>
+      <me>2(x - 6) + x + 5 = (2 - 3x)</me></p>
+<p><em><alert>Solution.</alert></em></p>
+    <md>
+      <mrow>2x - 12 + x + 5 \amp= (2 - 3x) \amp\text{apply the Distributive Property}</mrow>
+      <mrow>3x - 7 \amp= 2 - 3x \amp\text{combine like terms}</mrow>
+      <mrow>3x  + 3x \amp=2 + 7 \amp\text{combine like terms}</mrow>
+      <mrow>6x \amp= 9 \amp\text{divide by the coefficient of x}</mrow>
+      <mrow>x \amp= \frac{9}{6} \amp\text{simplify}</mrow>
+      <mrow>x \amp= \frac{3}{2}</mrow>
+    </md>
+</example>  
+<p><em>How to check</em>: Substitute the value you obtained for <m>x</m> into your original expression. Then, simplify. If your final answer is a tautology, i.e. takes the form <m>a = a</m>, then your answer is correct.</p>
+
+
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>To solve for <m>x</m>, we first apply the distributive property, then combine like terms to isolate <m>x</m> on the left-hand side. Finally, we divide by the coefficient of <m>x</m> to get <m>x</m> by itself and simplify our final answer:</p>
+    <md>
+      <mrow>$step1LHS \amp= $step1RHS</mrow>
+      <mrow>$step2LHS \amp= $step2RHS</mrow>
+      <mrow>$step3LHS \amp= $step3RHS</mrow>
+      <mrow>$step4LHS \amp= $step4RHS</mrow>
+      <mrow>x \amp= $step5RHS</mrow>
+      <conditionalContent condition="$constantGCF">
+      <mrow>x \amp= $xCorrect{simplify}.</mrow>
+      </conditionalContent>
+    </md>
+ 
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

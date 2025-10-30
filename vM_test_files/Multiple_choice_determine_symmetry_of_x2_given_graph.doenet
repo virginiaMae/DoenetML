@@ -1,0 +1,114 @@
+
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the type of symmetry (symmetric with respect to x-axis, symmetric with respect to y-axis, or symmetric with respect to origin...) given the graph of a function that is symmetric with respect to the y-axis. 
+
+*************************************************************-->
+<problem>
+<setup>
+<function name="f">x^2</function>
+<function name="g1" domain="[0,infinity)">x^2</function>
+<function name="g2" domain="[0,infinity)" styleNumber="8">(-x)^2</function>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>f(x) = $f</p>
+<p>g1(x) = $g1</p>
+<p>g2(x) = $g2</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+  
+<p>What is the symmetry of the following graph?</p>
+<me>f(x) = $f</me>
+<graph xmin="-3" xmax="3" ymin="-1.2" ymax="6.2">
+ $f
+</graph>
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<answer name="ans1">
+  <choice>Symmetric with respect to the <m>x</m>-axis</choice>
+  <choice credit="1">Symmetric with respect to the <m>y</m>-axis</choice>
+  <choice>Symmetric with respect to the origin</choice>
+  <choice>All of the above</choice>
+  <choice>None of the above</choice>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p>Symmetric with respect to the <m>y</m>-axis (or <term>even symmetry</term>). This means that the following statement holds:
+  <me>f(x) = f(-x)</me>
+  </p>
+  <p>You can imagine this by visualizing the following transformation in your mind: a reflection across the <m>y</m>-axis (imagine the graph is on a piece of paper that is folded over at its vertical axis)</p>
+  <graph displayYAxis="false" displayXAxis="false" size="small" xmin="-3" xmax="3" ymin="-1.2" ymax="6.2">
+    $g1 $g2
+    <line styleNumber="13" fixed>x=0</line>
+    <ray styleNumber="5" fixed endpoint="(0,0)" direction="(1,0)"/>
+    <ray styleNumber="6" fixed endpoint="(0,0)" direction="(-1,0)"/>
+    <legend position="lowerleft">
+      <label><m>f(x)</m></label>
+      <label><m>f(-x)</m></label>
+    </legend>
+    <vector name="v" fixed styleNumber="5" tail="(-1,1)" head="(-0.4,1)"/>
+    <label anchor="$v.tail" positionFromAnchor="upperright">Fold</label>
+  </graph>  
+    <p>If these two functions (the original function and the folded-over function) directly overlap, then the function is symmetric with respect to the <m>y</m>-axis.</p>
+
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="13" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4" lineStyle="dashed"/>
+</styleDefinitions>
+</setup>

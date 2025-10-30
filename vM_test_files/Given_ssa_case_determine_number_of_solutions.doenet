@@ -1,0 +1,306 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem requires the student to use the Law of Cosines or the Law of sines to calculate the missing geometry in a triangle. SSA is given. 
+
+This is the broadest version of this problem - in which all possible solution states occur. Angle A ranges from 20 to 125, side a from 3 to 12 and side c from 5 to 14.
+
+See versions 1 - 5 from more control over number of solutions.
+Version 1:
+Version 2:
+Version 3:
+Version 4:
+Version 5:
+
+Answers are fill-in the blank with an approximate decimal value. Partial credit awarded.
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="A" from="20" to="125"/>
+  <selectFromSequence name="a" from="3" to="12"/>
+  <selectFromSequence name="c" from="5" to="14" exclude="$a"/>
+
+  <math name="sinC" simplify>($c/$a)sin($A pi/180)</math>
+  <math name="C" simplify>arcsin($sinC) 180 / pi</math>
+  <number name="Calt">180 - $C</number>
+  <number name="sumACalt">$A + $Calt</number>
+  <boolean name="invalidAlt">$Balt < 0</boolean>
+  <math name="b" simplify></math>
+  <math name="B" simplify>180 - $A - $C</math>
+  <math name="Balt" simplify>180 - $A - $Calt</math>
+  <number name="an">$a</number>
+  <number name="Bn">$B</number>
+  <boolean name="invalidBn">$Bn < 0</boolean>
+  <number name="Cn">$C</number>
+  <number name="sinCn" displayDecimals="3">$sinC</number>
+  <math name="num" simplify>(0.5 + 0.5 |$a - $c sin($A pi/180)| / ($a - $c sin($A pi/180)))(1.5 - 0.5 |$a - $c|/($a - $c))</math>
+  <number name="numN">$num</number>
+  <number name="solN">
+    <conditionalContent>
+      <case condition="$numN = 2 and $invalidAlt = true and $invalidBn = false">1</case>
+      <case condition="$numN = 2 and $invalidAlt = false">2</case>
+      <case condition="$numN = 2 and $invalidBn = true">0</case>
+      <case condition="$numN = 1 and $invalidBn = true">0</case>
+      <case condition="$numN = 1 and $invalidBn = false">1</case>
+      <case condition="$numN = 1">1</case>
+      <case condition="$numN = 0">0</case>
+    </conditionalContent>
+  </number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>a = $a</p>
+<p>c = $c</p>
+<p>C = $C</p>
+<p>Cn = $Cn</p>
+<p>sinCn = $sinCn</p>
+<p>Calt = $Calt</p>
+<p>sumACalt = $sumACalt</p>
+<p>B = $B</p>
+<p>Bn = $Bn</p>
+<p>invalidBn = $invalidBn</p>
+<p>Balt = $Balt</p>
+<p>invalidAlt = $invalidAlt</p>
+<p>num = $num</p>
+<p>numN = $numN</p>
+<p>solN = $solN</p> -->
+<!--testing-->
+
+
+<p>This is a two-part problem.</p>
+
+<sideBySide>
+<div>
+<p>In the triangle shown (not drawn to scale):</p>
+  <md>
+    <mrow>A &= $A^{\circ}</mrow>
+    <mrow>a &= $a</mrow>
+    <mrow>c &= $c</mrow>
+  </md>
+
+
+  <p><alert>Part I:</alert> How many solutions exist for this triangle?</p>
+  <answer name="ans1a">
+    <choiceInput name="ci1">
+      <choice name="noSol" credit="$solN = 0">No solutions</choice>
+      <choice name="oneSol" credit="$solN = 1">One solution</choice>
+      <choice name="twoSol" credit="$solN = 2">Two solutions</choice>
+    </choiceInput>
+  </answer>
+
+</div>
+  
+<graph name="g1" size="small" fixAxes displayXAxis="false" displayYAxis="false" xmin="-3" xmax="13" ymin="-2" ymax="9" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5" labelPosition="top">(4, 6)
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5" labelPosition="right">(10,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC">
+    <label><m>a</m></label>
+  </lineSegment>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC" labelPosition="lowerright">
+    <label><m>b</m></label>
+  </lineSegment>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB" labelPosition="upperleft">
+    <label><m>c</m></label>
+  </lineSegment>
+  
+  <angle name="angleA" through="$pB $pA $pC" styleNumber="2"/>
+
+  <angle name="angleB" through="$pA $pB $pC" styleNumber="3" />
+  
+  <angle name="angleC" through="$pA $pC $pB" styleNumber="4" />
+
+  <label anchor="(9.5,6.5)">Not to scale</label>
+</graph>
+</sideBySide>
+ 
+
+
+<!--*********************************************
+            User Input
+**********************************************-->
+  <p><alert>Part II:</alert> <nbsp/><nbsp/><nbsp/>  <em hide="$ans1a.responseHasBeenSubmitted">Answer Part I. to proceed to Part II.</em></p>
+  <conditionalContent>
+     <case condition="$ci1.selectedIndices = 1 and $ans1a.justSubmitted and $invalidBn = false">
+       <p>What (invalid) computed value for <m>\sin(C)</m> led you to this conclusion? 
+         <answer name="ans0a" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+           <award name="correct0a">
+           $sinCn
+           </award>
+         </answer>
+         <em>(round your answer to the nearest 0.001)</em>
+       </p>
+     </case>
+    <case condition="$ci1.selectedIndices = 1 and $ans1a.justSubmitted and $invalidBn = true">
+       <p>What (invalid) computed value for angle <m>B</m> led you to this conclusion?</p>
+         <p><m>B = </m><mathInput name="userInvalidB"/><m>^{\circ}</m></p>
+         <answer name="ans0b" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+           <award name="correct0b">
+             <when>$userInvalidB = $Bn</when>
+           </award>
+         </answer>
+         <em>(round your answer to the nearest 0.01)</em>
+     </case>
+     <case condition="$ci1.selectedIndices = 2 and $ans1a.justSubmitted">
+       <p>Enter values for angles <m>B</m> and <m>C</m>:</p>
+       <p><m>B = </m><mathInput name="userB1sol"/><m>^{\circ}</m></p>
+       <p><m>C = </m><mathInput name="userC1sol"/><m>^{\circ}</m></p>
+         <answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+           <award name="correct1">
+             <when>$userB1sol = $B and $userC1sol = $C</when>
+           </award>
+         </answer>
+       <em>(round your answers to the nearest 0.01)</em>
+     </case>
+     <case condition="$ci1.selectedIndices = 3 and $ans1a.justSubmitted">
+        <p>Enter values for angles <m>B</m> and <m>C</m> for both solutions:</p>
+       <sideBySide>
+         <div>
+           <p><alert>Solution 1:</alert></p>
+           <p><m>B_1 = </m><mathInput name="userB2sol1"/><m>^{\circ}</m></p>
+       <p><m>C_1 = </m><mathInput name="userC2sol1"/><m>^{\circ}</m></p>
+         </div>
+         <div>
+           <p><alert>Solution 2:</alert></p>
+           <p><m>B_2 = </m><mathInput name="userB2sol2"/><m>^{\circ}</m></p>
+       <p><m>C_2 = </m><mathInput name="userC2sol2"/><m>^{\circ}</m></p>
+         </div>
+       </sideBySide>
+       
+       <setup>
+         <vector name="userSol1">
+           ($userB2sol1, $userC2sol1)</vector>
+         <vector name="userSol2">
+           ($userB2sol2, $userC2sol2)</vector>
+         <mathList name="userSols" unordered>
+           $userSol1 $userSol2
+         </mathList>
+         <vector name="sol2_1">($Bn, $Cn)</vector>
+         <vector name="sol2_2">($Balt, $Calt)</vector>
+         <mathList name="sol2List" unordered>
+           $sol2_1 $sol2_2</mathList>
+       </setup>
+
+
+<!-- testing -->
+<!-- <p>userSol1 = $userSol1</p>
+<p>userSol2 = $userSol2</p>
+<p>userSols = $userSols</p>
+<p>sol2_1 = $sol2_1</p>
+<p>sol2_2 = $sol2_2</p>
+<p>sol2List = $sol2List</p> -->
+<!-- /testing -->
+       
+       <answer name="ans2" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+         <award name="correct2">
+           <when>$userSols = $sol2List</when>
+         </award>
+       </answer>
+       <em>(round your answers to the nearest 0.01)</em>
+     </case>
+    </conditionalContent>
+
+  
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct0a and $ans0a.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$correct0b and $ans0b.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$correct1 and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$correct2 and $ans2.creditAchieved = 1">$correctFeedback</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<conditionalContent>
+  <case condition="$solN = 0 and $invalidBn = false">
+    <p>There are no solutions. The invalid value for <m>\sin(C)</m> that is computed from the <alert>Law of Sines</alert> is <m>$sinCn</m>. Since we know that the <m>\text{sine}</m> of any angle must be between <m>-1</m> and <m>1</m> (inclusive), no triangle can be drawn with the given geometry.</p>
+  </case>
+  <case condition="$solN = 0 and $invalidBn = true">
+    <p>There are no solutions. Although we can compute a valid value for <m>\sin(C) = $sinCn</m> from the <alert>Law of Sines</alert>, the resulting angle for <m>C</m> is too large. Taking <m>B = 180 - A - C = 180 - $A - $Cn = $Bn</m>. Therefore, no triangle can be drawn with the given geometry.</p>
+  </case>
+  <case condition="$solN = 1">
+    <p>There is only one solution for the given geometry.</p> 
+    <ul>
+      <li><m>B = $Bn ^{\circ}</m></li>
+      <li><m>C = $Cn ^{\circ}</m></li>
+    </ul>
+    <p><em>The invalid solution</em>: If you try to use the second-quadrant positive sin value for angle <m>C</m>, you will compute a value of <m>$Calt ^{\circ}</m>. This makes the sum of angles <m>A</m> and <m>C</m> equal to <m>$sumACalt ^{\circ}</m>. Since this value is already greater than <m>180^{\circ}</m>, the second computed angle for <m>C</m> does not yield a valid solution.
+    </p>
+  </case>
+  <case condition="$solN = 2">
+    <p>There are two solutions for the given geometry.</p> 
+    <p><alert>Solution 1:</alert></p>
+    <ul>
+      <li><m>B_1 = $Bn ^{\circ}</m></li>
+      <li><m>C_1 = $Cn ^{\circ}</m></li>
+    </ul>
+    <p><alert>Solution 2:</alert></p>
+    <ul>
+      <li><m>B_2 = $Balt ^{\circ}</m></li>
+      <li><m>C_2 = $Calt ^{\circ}</m></li>
+    </ul>
+    <p>The order in which the solutions are entered does not matter.</p>
+  </case>
+</conditionalContent>
+
+  
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+

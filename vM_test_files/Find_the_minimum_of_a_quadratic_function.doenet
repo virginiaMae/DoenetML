@@ -1,0 +1,184 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Find the minimum of a quadratic function; parabola expressed in general form. Graphing tool provided for visualization of the geometry of the problem.
+The Worked Example can be hidden by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="1" to="5"/>
+  <selectFromSequence name="k" from="-5" to="5"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+  <select name="a">
+    <option><math>3</math></option>
+    <option><math>2</math></option>
+    <option selectWeight="2"><math>1</math></option>
+  </select>
+
+  <math name="factoredExpr" expand simplify="numberspreserveorder">$a(x - $e $h)^2 + $k</math>
+  <math name="hAns">$e $h</math>
+  <math name="b">-2 $a $e $h</math>
+  <math name="c">$a($e$h)^2 + $k</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>k = $k</p>
+<p>e = $e</p>
+<p>factoredExpr = $factoredExpr</p>
+<p>factoredExpr{expand} = $factoredExpr{expand}</p>
+<p>hAns = $hAns</p> -->
+
+<!--testing-->
+
+<p>Find the minimum value of the function 
+  <me>f(x) = $factoredExpr.</me>
+  <em>Note that the minimum value is a number.</em></p> 
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>f(x) = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph a point at the proposed minimum value<footnote>How to find the coordinates of the vertex of a parabola from general form? Recall, there is a simple formula for the <m>x</m>, (or in this case, the <m>t</m>) value...</footnote>:</p> 
+  <p><m>(x, f(x)) = </m></p>
+  <p><m>\bigg( </m><mathInput name="userX"/> , <mathInput name="userMinGraph" bindValueTo="$userMin"/> <m>\bigg)</m></p>
+</div>
+  
+<graph name="g1">
+  <function name="givenParabola">$eq1</function>
+  <point name="userVertex" fixed styleNumber="5">($userX, $userMinGraph)
+    <label>$userVertex.coords</label>
+  </point>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the graphed point will occur at the minimum value of the graphed function.</p>
+
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+
+  
+<p><m>\text{min} = </m> 
+  <answer name="ans9">
+    <mathInput name="userMin"/>
+    <award name="correct">
+      <when>$userMin{isResponse} = $k</when>
+    </award>
+
+    <award name="usedH" credit="0">
+      <when>$userMin{isResponse} = $hAns</when>
+    </award>
+  </answer>
+</p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  
+  <feedback condition="$usedH"><p>It looks like you computed the location of the minimum, rather than the min itself.</p>
+  </feedback>
+  <feedback condition="$ans9.numSubmissions > 2 and $ans9.creditAchieved != 1"> 
+    <p>The minimum of a <ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-6-optimization-using-parabolas/">quadratic function</ref> is equal to the value of the function at the vertex, when the parabola opens upwards (or, equivalently, when <m>a > 0</m>). We can determine the vertex from the given quadratic function <me>f(x) = ax^2 + bx + c</me> several different ways:</p>
+  <ul>
+    <li><p>Use the formula for the <m>x</m>-coordinate of the vertex given by <me>x = -\frac{b}{2a}.</me> For more information, see the textbook link labeled "Optimization using Parabolas" below.</p></li>
+    <li><p><ref uri="https://open.lib.umn.edu/algebra/chapter/topic-5-7-completing-the-square/">Complete the square</ref> to obtain an equation in vertex form, i.e. transform the given equation into one that resembles <me>y = a(x - h)^2 + k.</me></p></li>
+  </ul>
+  </feedback>
+
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+
+</hint>
+ -->
+
+
+
+
+  
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+<li>Using the formula for the <m>x</m>-coordinate of the vertex,
+  <md>
+    <mrow>x \amp= -\frac{b}{2a}</mrow>
+    <mrow>\amp= -\frac{$b{simplify}}{2($a{simplify})}</mrow>
+    <mrow>\amp= $hAns{simplify}</mrow>
+  </md></li>
+<li>Evaluate the function <m>f</m> at the input value <m>x = $hAns{simplify}</m>
+  <md>
+    <mrow>f(x) \amp= $factoredExpr{expand}</mrow>
+    <mrow>f($hAns{simplify})\amp= <math>$a{simplify}($hAns{simplify})^2 + $b{simplify}($hAns{simplify}) + $c{simplify}</math></mrow>
+    <mrow>\amp= $k</mrow>
+  </md></li>
+  <li>The minimum value of the function is <m>$k.</m></li>
+</ul>
+    
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

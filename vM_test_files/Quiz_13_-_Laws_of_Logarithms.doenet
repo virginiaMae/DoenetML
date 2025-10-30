@@ -1,0 +1,153 @@
+<!-- <problem sectionWideCheckWork aggregateScores><title/> -->
+<problem><title/>
+
+<p>The Laws of Exponents are given in the left hand column.</p>
+
+<p>Complete the corresponding Laws of Logarithms by filling in the right hand side of each equation in the right column.</p>
+
+<p>The substitutions <m>b^m = x</m>, <m>b^n = y</m> and <m>\log_b{y} = n</m> can be used throughout.</p>
+  
+<!-- 
+<p>Test logs as math components: <mathInput name="mi1"/></p>
+<p>Simplified: <math simplify>$mi1</math></p> -->
+
+  
+<aside><title>Entering Logarithms</title>
+<p>To enter a logarithm with base <m>b</m>, such as <m>\log_b{(xy)}</m>, first type "<alert>log</alert>", followed by an underscore, "<alert>_</alert>" followed by the letter "<alert>b</alert>". Then, use the right arrow key to move the cursor back up to the main line to type the "<alert>(xy)</alert>".</p>
+
+<p>You can also use the math keyboard. The button to access the math keyboard is located in the lower left corner of the screen. The button to enter <m>\log_b</m> is located under the math functions tab labeled <m>f(x)</m>.</p>
+</aside>
+
+<setup>  
+<boolean name="repeat1" symbolicEquality>$mi1 = log_b (1)</boolean>
+  
+<boolean name="repeat2" symbolicEquality>$mi2 = log_b (b)</boolean>
+<boolean name="repeat3" symbolicEquality>$mi3 = log_b (x) + log_b (y)</boolean>
+<boolean name="repeat4" symbolicEquality>$mi4 = log_b (x) - log_b (y)</boolean>
+<boolean name="repeat5" symbolicEquality simplifyOnCompare>$mi5 = log_b (1/x)</boolean>
+<boolean name="repeat6" symbolicEquality>$mi6 = b^(log_b (x))</boolean>
+<boolean name="repeat7" symbolicEquality>$mi7 = log_b(b^m)</boolean>
+<boolean name="repeat8" symbolicEquality>$mi8 = log_b(x^n)</boolean>
+</setup>
+
+<setup>
+<row name="row1"><cell><m>b^0 = 1</m></cell><cell><m>\log_b{1} = </m>
+  <answer name="ans1">
+    <mathInput name="mi1"/>
+    <award credit="0"><when>$repeat1</when></award>
+    <award symbolicEquality simplifyOnCompare>0</award>
+  </answer>
+  <feedback condition="$repeat1 and $ans1.justSubmitted">Simplify further.</feedback>
+</cell>
+</row>
+
+<row name="solrow1"><cell><m>b^0 = 1</m></cell><cell><m>\log_b{1} = 0</m></cell>
+</row>
+
+<row name="row2"><cell><m>b^1 = b</m></cell><cell><m>\log_b{b} = </m>
+  <answer name="ans2">
+    <mathInput name="mi2"/>
+    <award credit="0"><when>$repeat2</when></award>
+    <award symbolicEquality simplifyOnCompare>1</award>
+  </answer>
+  <feedback condition="$repeat2 and $ans2.justSubmitted">Simplify further.</feedback></cell>
+</row>
+
+<row name="solrow2"><cell><m>b^1 = b</m></cell><cell><m>\log_b{b} = 1</m></cell>
+</row>
+
+<row name="row3"><cell><m>b^m \cdot b^n = b^{m + n}</m></cell><cell><m>\log_b{x} + \log_b{y} = </m>
+  <answer name="ans3">
+    <mathInput name="mi3"/>
+    <award credit="0"><when>$repeat3</when></award>
+    <award symbolicEquality simplifyOnCompare>log_b (xy)</award>
+    <award symbolicEquality simplifyOnCompare>log_b xy</award>
+  </answer>
+  <feedback condition="$repeat3 and $ans3.justSubmitted">Simplify further.</feedback></cell>
+</row>
+
+<row name="solrow3"><cell><m>b^m \cdot b^n = b^{m + n}</m></cell><cell><m>\log_b{x} + \log_b{y} = \log_b{(xy)}</m></cell>
+</row>
+
+<row name="row4"><cell><m>\frac{b^m}{b^n}</m></cell><cell><m>\log_b{x} - \log_b{y} = </m>
+  <answer name="ans4">
+    <mathInput name="mi4"/>
+    <award credit="0"><when>$repeat4</when></award>
+    <award symbolicEquality simplifyOnCompare>log_b(x/y)</award>
+  </answer>
+  <feedback condition="$repeat4 and $ans4.justSubmitted">Simplify further.</feedback></cell>
+</row>
+  
+<row name="solrow4"><cell><m>\frac{b^m}{b^n}</m></cell><cell><m>\log_b{x} - \log_b{y} = \log_b{\bigg(\displaystyle\frac{x}{y}\bigg)}</m></cell>
+</row>
+
+<row name="row5"><cell><m>b^{-m} = \frac{1}{b^m}</m></cell><cell><m>\log_b{\frac{1}{x}} = </m>
+ <answer name="ans5">
+    <mathInput name="mi5"/>
+    <award credit="0">
+      <when>$repeat5</when>
+    </award>
+    <award name="correct" symbolicEquality simplifyOnCompare>-log_b(x)</award>
+    <award symbolicEquality simplifyOnCompare>-m</award>
+  </answer>
+  <feedback condition="$repeat5 and $ans5.justSubmitted">Simplify further.</feedback>
+</cell>
+</row>
+
+<row name="solrow5"><cell><m>b^{-m} = \frac{1}{b^m}</m></cell><cell><m>\log_b{\frac{1}{x}} = -\log_b{(x)}</m></cell>
+</row>
+
+<row name="row6"><cell></cell><cell><m>b^{\log_b{x}} = </m>
+  <answer name="ans6">
+    <mathInput name="mi6"/>
+    <award credit="0"><when>$repeat6</when></award>
+    <award symbolicEquality simplifyOnCompare>x</award>
+  </answer>
+  <feedback condition="$repeat6 and $ans6.justSubmitted">Simplify further.</feedback></cell>
+</row>
+
+<row name="solrow6"><cell></cell><cell><m>b^{\log_b{x}} = x</m></cell>
+</row>
+  
+<row name="row7"><cell></cell><cell><m>\log_b{b^m} = </m>
+  <answer name="ans7">
+    <mathInput name="mi7"/>
+    <award credit="0"><when>$repeat7</when></award>
+    <award symbolicEquality simplifyOnCompare>m</award>
+  </answer>
+  <feedback condition="$repeat7 and $ans7.justSubmitted">Simplify further.</feedback></cell>
+</row>
+
+<row name="solrow7"><cell></cell><cell><m>\log_b{b^m} = m</m></cell>
+</row>
+
+<row name="row8"><cell><m>(b^m)^n = b^{m \cdot n}</m></cell><cell><m>\log_b{x^n} = </m>
+  <answer name="ans8">
+    <mathInput name="mi8"/>
+    <award credit="0"><when>$repeat8</when></award>
+    <award symbolicEquality simplifyOnCompare>n log_b (x)</award>
+  </answer>
+  <feedback condition="$repeat8 and $ans8.justSubmitted">Simplify further.</feedback></cell>
+</row>
+
+<row name="solrow8"><cell><m>(b^m)^n = b^{m \cdot n}</m></cell><cell><m>\log_b{x^n} = n \cdot \log_b{(x)}</m></cell>
+</row>
+</setup>
+
+  
+<tabular top="minor" bottom="minor" left="minor" right="minor"  height="500">
+  <row header><cell>Laws of Exponents</cell><cell>Laws of Logarithms</cell></row>
+  <shuffle>$row1 $row2 $row3 $row4 $row5 $row6 $row7 $row8</shuffle>
+</tabular>
+
+<solution>
+<p>The order of the Laws in this solution will likely be different from the order presented in your problem.</p>
+<tabular top="minor" bottom="minor" left="minor" right="minor"  height="500">
+  <row header><cell>Laws of Exponents</cell><cell>Laws of Logarithms</cell></row>
+  $solrow1 $solrow2 $solrow3 $solrow4 $solrow5 $solrow6 $solrow7 $solrow8
+</tabular>
+</solution>
+</problem>
+
+
+  

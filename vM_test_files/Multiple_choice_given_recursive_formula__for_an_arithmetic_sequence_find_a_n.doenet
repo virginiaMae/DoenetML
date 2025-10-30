@@ -1,0 +1,92 @@
+<setup>
+  <text name="source">Question 3:TR-Series/TR41/TR4103/04302021110824_TR-Series_Q210SVCV
+</text>
+</setup>
+<!--******************************************************
+            Current randomized problem
+*******************************************************-->
+<!-- 
+QUESTION:If Subscript[a, 1] = 2 and Subscript[a, n] =  3Subscript[a, n - 1] \.13 2, find Subscript[a, 4].
+
+a) 5
+b) 10
+c) 28
+d) 44
+e) 82;; 
+
+VARIABLES: {$$a$$[{1,3}, Integer], $$b$$[{-1,1}, Choice]} ;;
+
+ComputedVariables: {$$c1$$ -> Cos[$$a$$]};;
+
+answerLabel = {""};;
+
+answer = {"a","b","c","d","e"}
+(*Enter correct answer in first position (answer a). *);;
+SOLUTION={3};;
+tolerance = 0
+-->
+
+
+
+<problem>
+<setup>
+  <math name="expr">3 a_(n-1) - 2</math>
+</setup>
+
+
+<!--testing-->
+
+<!--testing-->
+  
+<p>If <m>a_1 = 2</m> and <m>a_n = $expr</m>, find <m>a_4</m>.</p>
+  <p><m>a_4 = </m>
+      
+    <answer name="ans1" shuffleOrder>
+      <choice credit="1">28</choice>
+      <choice>5</choice>
+      <choice>10</choice>
+      <choice>44</choice>
+      <choice>82</choice>
+    </answer>
+  </p>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Awesome!</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>a_4 = 28</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

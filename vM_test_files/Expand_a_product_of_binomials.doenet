@@ -1,0 +1,60 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use FOIL to expand a product of binomials.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence assignNames="a c" numToSelect="2" from="1" to="7"/>
+  <selectFromSequence assignNames="b" from="-6" to="8" exclude="0"/>
+  <selectFromSequence assignNames="d" from="-9" to="-1" exclude="0"/>
+
+  <math name="fullExpr" simplify="numberspreserveorder">($a x + $b)($c x + $d)</math>
+  <math name="solExpr" expand simplify>$fullExpr</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>fullExpr = $fullExpr</p>
+<p>solExpr = $solExpr</p> -->
+<!--testing-->
+
+
+  <p>Expand the following product into a single polynomial.</p>
+    <me>$fullExpr</me>
+  
+<p><m>$fullExpr = </m>
+  <answer name="ans1" symbolicEquality simplifyOnCompare>
+    $solExpr
+  </answer>
+</p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$ans1.submittedResponse = $fullExpr and $ans1.creditAchieved != 1">FOIL and simplify. Your final answer will not contain any parentheses.</feedback>
+
+  
+<solution>
+<p><m>$fullExpr = $solExpr</m></p>
+</solution>
+</problem>

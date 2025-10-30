@@ -1,0 +1,209 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Linear population growth modeling example; determine population at a future point in time given two data points. Answers are rounded to the nearest integer value.
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="0" to="4"/>
+  <selectFromSequence name="b" from="18" to="95"/>
+  <selectFromSequence name="c" from="5" to="25"/>
+  <selectFromSequence name="d" from="30" to="80"/>
+  <selectFromSequence name="e" from="0" to="4"/>
+
+  <math name="startYear">1950+10$a</math>  
+  <math name="startPop">$b*1000</math>
+  <math name="secondYear">1950+$a*10+$c</math>
+  <math name="secondPop">$b*1000+$d*1000</math>
+  <math name="finalYear">2025+$e*5</math>
+  <math name="finalPop">1000*$d/$c*(75+5*$e-10*$a)+($b*1000)</math>
+
+  <!--incorrect solutions for feedbacks-->
+  <math name="noInterceptAns">(1000 $d/$c )(75+5$e-10$a)</math> <!--if they forget to include the y-intercept-->
+  <math name="wrongDeltaTAns">(1000 $d/$c )($finalYear - $secondYear) + (1000$b)</math>. <!--If they start computing delta t from year 2 instead of year 0-->
+  <math name="invertedSlopeAns">($c/(1000 $d))(75+5$e-10$a) + (1000$b)</math>. <!--If they compute the slope as delta t/ delta population-->
+</setup>
+
+<!-- testing -->
+<!--   <p>invertedSlopeAns = $invertedSlopeAns = $invertedSlopeAns{simplify}</p>
+  <p>noInterceptAns = $noInterceptAns = $noInterceptAns{simplify}</p>
+  <p>wrongDeltaTAns = $wrongDeltaTAns = $wrongDeltaTAns{simplify}</p>
+  <p>finalPop = $finalPop{simplify}</p>
+  <p>startYear = $startYear</p>
+  <p>finalYear = $finalYear</p>
+  <p>xmin = $xmin</p>
+  <p>xmax = $xmax</p>
+  <p>startPop = $startPop</p>
+  <p>ymin = $ymin</p>
+  <p>ymax = $ymax</p> -->
+<!--testing-->
+
+  
+  <p>In $startYear{simplify}, the population of Metropolis was $startPop{simplify}.  By $secondYear{simplify}, the population had grown to $secondPop{simplify}.  Assuming linear growth, what will the population be in $finalYear{simplify}? </p>
+
+
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+<!-- 
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="xmin">$startYear - 50</number>
+  <number name="xmax">$finalYear + 50</number>
+  <number name="ymin">$startPop - 10000</number>
+  <number name="ymax">$finalPop + 10000</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the first data point:</p> 
+  <p><m>(x_1, y_1)</m> = <mathInput name="p1"/></p>
+  <p>Enter the second data point:</p> 
+  <p><m>(x_2, y_2)</m> = <mathInput name="p2"/></p>
+
+  <p>Check third data point:</p> 
+  <p><m>(x_3, y_3)</m> = <mathInput name="p3"/></p>
+</div>
+
+  
+<graph name="g1" xmin="$xmin" xmax="$xmax" ymin="$ymin" ymax="$ymax">
+  <point name="graphP1" coords="$p1" styleNumber="5">
+    <label>$graphP1.coords</label>
+  </point>
+  <point name="graphP2" coords="$p2" styleNumber="5">
+    <label>$graphP2.coords</label>
+  </point>
+  <point name="graphP3" coords="$p3" styleNumber="2">
+    <label>$graphP3.coords</label>
+  </point>
+
+  <line name="line1" through="$graphP1 $graphP2" styleNumber="5"/>
+</graph>
+  
+</sideBySide>
+<p>Note, a line is automatically graphed through the first two data points supplied. To check your equation/ solution, graph the point for your estimated population in $finalYear{simplify}. If your work is correct, this third point will occur on the line.</p>
+</aside>   -->
+
+
+
+<p>Population = <answer name="ans1">
+  <mathInput name="userPopulation"/>
+  <award name="correct"  allowedErrorInNumbers="1" allowedErrorIsAbsolute>
+    <when> $userPopulation = $finalPop</when>
+  </award>
+  <award name="roundingError"  allowedErrorInNumbers="2" allowedErrorIsAbsolute credit="0">
+    <when> $userPopulation = $finalPop</when>
+  </award>
+  <award>
+        <when>$userPopulation.rawRendererValue = <intComma><integer>$finalPop</integer></intComma>
+        </when>
+   </award>
+  <award name="noIntercept" credit="0" allowedErrorInNumbers="2" allowedErrorIsAbsolute>$noInterceptAns</award>
+  <award name="wrongDeltaT" credit="0" allowedErrorInNumbers="2" allowedErrorIsAbsolute>$wrongDeltaTAns</award>
+  <award name="invertedSlope" credit="0" allowedErrorInNumbers="2" allowedErrorIsAbsolute>$invertedSlopeAns</award>
+ 
+</answer><nbsp/><nbsp/><nbsp/><nbsp/><nbsp/><em>(Round your answer to the nearest integer.)</em></p>
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$roundingError"><p>It looks like you may have rounded incorrectly. For full credit, express your answer rounded to the nearest integer value.</p></feedback>
+
+  <feedback condition="$noIntercept">
+    <p>Remember, the initial population of $city was $startPop{simplify}...Did you use that piece of information when you calculated the final population?</p>
+  </feedback>
+
+  <feedback condition="$wrongDeltaT">
+  <p>Double check the two values you used to calculate the time that elapsed between $startYear{simplify} and $finalYear{simplify}.</p>
+  </feedback>
+
+  <feedback condition="$invertedSlope">
+  <p>Double check the way you calculated your slope. Did you use <m>\frac{\text{change in population}}{\text{change in time}}</m>?</p>
+  </feedback>
+
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+  <p>The problem states that population growth can be assumed to be linear - which means it can be described by the equation <me>y = mx + b\;\;\;\text{slope-intercept}</me> in <term>slope-intercept form</term> or by the equation <me>(y - y_1) = m(x - x_1)\;\;\;\text{point-slope}</me> in <term>point-slope form</term>. In this specific example, the <m>y</m> values represent population, and the <m>x</m> values represent the time that has elapsed from the starting year. The <m>y</m>-intercept corresponds to the population in the starting year. Either equation can be used to determine your final population, but the first thing to do is to calculate the <term>slope</term>.</p>
+  </feedback>
+
+
+
+<!--*********************************************
+            Hints
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+  <p>Here is a similar worked example:</p>
+
+  <example>
+  <p><em>In 1920, the population of OldTown was <m>3500</m>. By 1932 it had grown to <m>4160</m>. Assuming linear growth, what should the population have been in 1940?</em></p>
+
+<p><em><alert>Solution.</alert></em> First, calculate the slope:</p>
+  <md>
+    <mrow>m \amp= \frac{y_2 - y_1}{x_2 - x_1}</mrow>
+    <mrow>\amp= \frac{4160 - 3500}{1932 - 1920}</mrow>
+    <mrow>\amp= \frac{660}{12} = 55</mrow>
+  </md>
+<p>Now that we have the slope, we can calculate the population in 1940 using the <term>slope-intercept form</term>. The elapsed time is <m>1940 - 1920 = 20</m>, so we will substitute this for <m>x</m> in the equation. The <m>y</m>-intercept is the starting population, which is <m>3500</m>:</p>
+  <md>
+    <mrow>y \amp= mx + b</mrow>
+    <mrow>\amp= 55(20) + 3500</mrow>
+    <mrow>\amp=4600</mrow>
+  </md>
+  <p>We got an integer value this time, but if you don't you can round your answer to the nearest integer. The final population is <m>4600</m> people.</p>
+
+<p><em><alert>How to check your answer</alert></em>: Plug your final population data into the slope equation along with your initial population. You should arrive at the same slope as you initially calculated. If you come up with a different slope, you made a mistake along the way.</p>
+  </example>
+
+
+
+  </hint>
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<setup>
+  <number name="y2">$secondPop</number>
+  <number name="y0">$startPop</number>
+  <number name="t2">$secondYear</number>
+  <number name="t0">$startYear</number>
+  <number name="tf">$finalYear</number>
+  <math name="m" simplify>($y2 - $y0)/($t2 - $t0)</math>
+  <number name="yf" displayDecimals="2">$finalPop</number>
+</setup>
+  
+<p>First, calculate the slope:</p>
+  <md>
+    <mrow>m \amp= \frac{y_2 - y_1}{x_2 - x_1}</mrow>
+    <mrow>\amp= \frac{$y2 - $y0}{$t2 - $t0}</mrow>
+    <mrow>\amp= $m</mrow>
+  </md>
+<p>Calculate the final population:</p>
+  <md>
+    <mrow>y \amp= mx + b</mrow>
+    <mrow>\amp= \bigg($m\bigg)($tf - $t0) + $y0</mrow>
+    <mrow>\amp= $yf</mrow>
+  </md>
+  <p>The final population is <m><integer>$yf</integer></m> people.</p>
+
+</solution>
+</problem>

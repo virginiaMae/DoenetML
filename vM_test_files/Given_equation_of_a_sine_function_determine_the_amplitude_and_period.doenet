@@ -1,0 +1,143 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given the equation of a sine function, determine the amplitude and period. Parameters are randomized. Optional graphing applet can be hidden by commenting out the <aside> portion of the document.
+
+(TR-Graphs #35 TR1234)
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="6"/>
+  <select name="b">1 2 3 4 7/8 5/8 3/8 3/4 5/6 2/3 1/3 1/2</select>
+  <selectFromSequence name="d" from="-6" to="6" exclude="0"/>
+  <select name="c">-2 -3 -4 -8 -9 -10 -14 -15 -16 -20 -21 -22 2 3 4 8 9 10 14 15 16 20 21 22</select> 
+  <math name="s" simplify>($c/24) pi</math>
+  <math name="expr" simplify="numberspreserveorder">$a sin($b x + $s) + $d</math>
+  <math name="T" simplify>(2 / $b)pi</math>
+</setup>
+
+<p>Consider the function <me>y = $expr</me> Determine the amplitude and period.</p>
+
+<!-- testing -->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>direction = $direction</p>
+<p>mult = $mult</p>
+<p>dAbs = $dAbs</p>
+<p>d = $d</p>
+<p>expr = $expr</p>
+<p>T = $T</p> -->
+<!-- /testing -->
+
+  
+<!--*********************************************
+           Graphing tool
+**********************************************--> 
+<div newNamespace>
+
+<aside><title>Graphing tool</title>
+<setup>
+  <function name="base" styleNumber="5">$userBaseFn</function> 
+  <function name="f1">$userExpr</function> 
+  <function name="fExtrema" domain="[-20, 20]">$f1</function>
+  <number name="zeroFixed" fixed>0</number> 
+  <number name="nR">pi/2</number>
+  <number name="nL">0</number>
+</setup>
+
+<!--testing-->
+<!-- <p>f1 = $f1.formula</p>
+<p>base = $base.formula</p> -->
+<!--testing-->
+
+
+<p>Graph base function: </p>
+<p><m>y = </m><mathInput name="userBaseFn"/></p>
+
+<p>Graph proposed solution function: </p>
+<p><m>y = </m> <mathInput name="userExpr" bindValueTo="$(/mi)"/></p>
+
+<p><em>tip: You can use the $wavePointR.styleDescription points to measure horizontal distance to wave points. </em></p>
+<graph  xTickScaleFactor="pi" aspectRatio="3/2" size="full" xmin="-4pi" xmax="4pi">
+  $f1 $base $fExtrema.extrema
+
+  <point name="wavePointL"  styleNumber="5" layer="2">($nL,$$f1($nL))
+    <constraints>
+      <attractTo>$fExtrema.extrema</attractTo>
+    </constraints>
+  </point>
+  <point name="wavePointR" styleNumber="5" layer="2">($nR, $$f1($nR))
+    <constraints>
+      <attractTo>$fExtrema.extrema</attractTo>
+    </constraints>
+  </point>
+  
+  <lineSegment name="hMeasure" endpoints="$wavePointL $wavePointR" styleNumber="6" labelPosition="lowerright">
+    <label>$hMeasure.length</label>
+  </lineSegment>
+  
+  <line name="vertL" styleNumber="4">x = $wavePointL.x</line>
+  <line name="vert2" styleNumber="4">x = $wavePointR.x</line>
+  <regionBetweenCurveXAxis function="$f1" styleNumber="1" boundaryValues="$wavePointL.x $wavePointR.x"/>
+</graph>
+
+
+</aside>
+</div>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><m>\text{Amplitude} = </m><mathInput name="userA"/></p>
+<p><m>\text{Period} = </m><mathInput name="userT"/></p>
+  <answer name="ans1" matchPartial>
+    <award><when>$userA = $a and $userT = $T</when></award>
+  </answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Amplitude} = $a</m></p>
+<p><m>\text{Period} = $T</m></p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

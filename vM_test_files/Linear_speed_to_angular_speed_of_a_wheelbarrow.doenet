@@ -1,0 +1,95 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="r" from="12" to="20"/>
+  <selectFromSequence name="m" from="5" to="10"/>
+  <select name="s">10 15 20</select>
+  <number name="d">5 $m</number>
+  <number name="sol" displayDecimals="2">($d/$s)(100)(1/(2pi$r))</number>
+</setup>
+
+<!--testing-->
+<!-- <p>r = $r</p>
+<p>m = $m</p>
+<p>s = $s</p>
+<p>d = $d</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>A wheel barrow tire has a radius of <m>$r\;\text{cm}</m>.  I can push the wheel barrow <m>$d</m> meters in <m>$s</m> seconds. At what rate is the tire rotating, measured in revolutions per second? Round your answer to the nearest <m>0.01\;\text{rev/sec}</m>. Do not include units in your answer.</p> 
+
+
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->
+
+<p><m>\text{angular speed} = </m> <mathInput name="user_s"/> <m>\text{rev/sec}</m></p> 
+<answer name="ans1" allowedErrorInNumbers="0.1" allowedErrorIsAbsolute>
+    <award name="allCorrect">
+      <when>$user_s = $sol</when>
+    </award>       
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+ 
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>\text{angular speed} = $sol \; \text{rev/sec}</m></p>
+</solution>
+
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="1"  lineWidth="5"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+
+
+
+
+
+

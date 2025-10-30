@@ -1,0 +1,200 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given two linear equations, find the solution (x,y). This problem formulation always has a single solution.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence assignNames="a b c d" numToSelect="4" withReplacement from="-3" to="6" exclude="0"/>
+  <selectFromSequence assignNames="x y" numToSelect="2" from="-6" to="7"/>
+  <math name="RHS1">$a $x + $b $y</math>
+  <math name="RHS2">$c $x + $d $y</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>x = $x</p>
+<p>y = $y</p>
+<p>RHS1 = $RHS1{simplify}</p>
+<p>RHS2 = $RHS2{simplify}</p> -->
+<!--testing-->
+
+
+<p>Find the solution to the system of equations:</p>
+  <md>
+    <mrow><math simplify>$a x + $b y</math> \amp= $RHS1{simplify}</mrow>
+    <mrow><math simplify>$c x + $d y</math> \amp= $RHS2{simplify}</mrow>
+  </md>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Enter the given equation of the first line:</p> 
+  <p><mathInput name="graphEq1"/></p>
+
+  <p>Enter the given equation of the second line:</p> 
+  <p><mathInput name="graphEq2"/></p>
+
+  <p>Proposed intersection point:</p>
+  <p><m>(x,y) =  </m></p>
+  <p><m>\bigg(</m> <mathInput name="graphX" bindValueTo="$userX"/> , <mathInput name="graphY" bindValueTo="$userY"/><m> \bigg)</m></p>
+</div>
+
+  
+<graph name="g1">
+  <point name="ip" coords="($graphX, $graphY)" fixed styleNumber="5">
+    <label>$ip.coords</label>
+  </point>
+  <line name="line1" equation="$graphEq1" fixed/>
+  <line name="line2" equation="$graphEq2" fixed styleNumber="2"/>
+</graph>
+  
+</sideBySide>
+
+</aside>  
+
+<!--*********************************************
+            User-input of answers
+**********************************************-->
+  
+<p><m>(x, y) = \bigg(</m> <mathInput name="userX"/><m>,</m>
+  <mathInput name="userY"/><m> \bigg)</m>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userX{isResponse} = $x and $userY{isResponse} = $y</when>
+    </award>
+  
+  <award name="xIncorrect" credit="0">
+      <when>$userX{isResponse} != $x and $userY{isResponse} = $y</when>
+  </award>
+
+  <award name="yIncorrect" credit="0">
+      <when>$userX{isResponse} = $x and $userY{isResponse} != $y</when>
+  </award>
+
+  <award name="reverseXY" credit="0">
+    <when>$userX{isResponse} = $y and $userY{isResponse} = $x</when>
+  </award>
+    
+</answer></p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect">$correctFeedback</feedback>
+  <feedback condition="$xIncorrect"><p>Your <m>x</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$yIncorrect"><p>Your <m>y</m>-coordinate is incorrect.</p></feedback>
+  <feedback condition="$reverseXY"><p>Your <m>x</m> and <m>y</m>-coordinates are in the wrong spot. The ordered pair should be written as <m>(x,y)</m>.</p></feedback>
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">
+    <p>In this problem, we are given a system of two linear equations and are asked to find the solution. Graphically, this can be represented by two lines. The solution, if it exists, is their point of intersection.</p>
+<p>To solve this problem algebraically, one can use several different techniques. Two of these methods are:</p>
+  <ul>
+    <li>Substitution</li>
+    <li>Elimination</li>
+  </ul>
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection" newNameSpace><title>Worked Example</title>
+  
+<p>Here is a similar worked example, using the method of substitution:</p>
+  
+<p><em>Find the solution to the system of equations:</em></p>
+  <mdn>
+    <mrow>7 x + 2 y \amp= 3</mrow>
+    <mrow>-4 x + y \amp= -6</mrow>
+  </mdn>
+<p><em><alert>Solution.</alert></em></p>
+  <ul>
+    <li>Solve for a single variable; here we choose <m>y</m> in the second equation to isolate:
+       <md>
+        <mrow>7x + 2y \amp= 3</mrow>
+        <mrow>y \amp= -6 + 4x \amp\text{solve for }\;x</mrow>
+      </md></li>
+    <li>Substitute <m>y = -6 +4x</m> into equation <m>(1)</m>, and solve for <m>x</m>:
+      <md>
+        <mrow>7x + 2(-6 + 4x) \amp= 3 \amp\text{substitute expression for y}</mrow>
+        <mrow>7x - 12 + 8x \amp= 3 \amp\text{distribute}</mrow>
+        <mrow>15x \amp= 3 + 12 \amp\text{combine like terms}</mrow>
+        <mrow>x \amp= 1 \amp\text{divide and simplify}</mrow>
+      </md>
+    </li>
+    <li>Substitute <m>x = 1</m> into either equation <m>(1)</m> or equation <m>(2)</m>, and solve for <m>y</m>:
+      <md>
+        <mrow>7(1) + 2y \amp= 3 \amp\text{substitute}</mrow>
+        <mrow>2y \amp= 3 - 7 \amp\text{combine like terms}</mrow>
+        <mrow>y \amp= -2 \amp\text{divide and simplify}</mrow>
+      </md>
+    </li>
+    <li>Our final solution is <m>(x,y) = (1,-2)</m></li>
+  </ul>
+  
+
+<p><em><alert>How to check your answer</alert></em>: Your final answer should be a point, consisting of an <m>x</m> and a <m>y</m> coordinate. If you solved this correctly, and you graph this system of equations using the graphing tool above, you should be able to verify that your solution matches the point of intersection of the two lines.</p> 
+
+  
+
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Use the method of substitution, or the method of elimination to obtain <m>(x,y) = ($x, $y)</m>
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

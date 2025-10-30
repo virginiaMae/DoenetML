@@ -1,0 +1,196 @@
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="9"/>
+  <selectFromSequence name="c" from="$a + 1" to="10"/>
+  <math name="sinTheta" simplify>$a / $c</math>
+  <math name="bSq" simplify>$c^2 - $a^2</math>
+  <math name="sqDivisor1">
+    <conditionalContent>
+      <case condition="mod($bSq, 49) = 0">49</case>
+      <case condition="mod($bSq, 36) = 0">36</case>
+      <case condition="mod($bSq, 25) = 0">25</case>
+      <case condition="mod($bSq, 16) = 0">16</case>
+      <case condition="mod($bSq, 9) = 0">9</case>
+      <case condition="mod($bSq, 4) = 0">4</case>
+    </conditionalContent>
+  </math>
+  <math name="sqRt">
+    <conditionalContent>
+      <case condition="mod($bSq, 49) = 0">7</case>
+      <case condition="mod($bSq, 36) = 0">6</case>
+      <case condition="mod($bSq, 25) = 0">5</case>
+      <case condition="mod($bSq, 16) = 0">4</case>
+      <case condition="mod($bSq, 9) = 0">3</case>
+      <case condition="mod($bSq, 4) = 0">2</case>
+    </conditionalContent>
+  </math>
+  <math name="divisor2" simplify>$bSq/$sqDivisor1</math>
+  <boolean name="sqDivisorExists">$sqDivisor1 = 49 or $sqDivisor1 = 36 or
+    $sqDivisor1 = 25 or $sqDivisor1 = 16 or $sqDivisor1 = 9 or
+    $sqDivisor1 = 4</boolean>
+  <math name="b" simplify>
+    <conditionalContent>
+      <case condition="$sqDivisorExists">-$sqRt sqrt($divisor2)</case>
+      <else>-sqrt($bSq)</else>
+    </conditionalContent>
+  </math>
+  <number name="gcd"><gcd>$sqRt $c</gcd></number>
+  <math name="sol" simplify>
+    <conditionalContent>
+      <case condition="$gcd > 1">($b / $gcd)/($c / $gcd)</case>
+      <else>$b / $c</else>
+    </conditionalContent>
+  </math>
+  <number name="solN">$sol</number>
+  <number name="zeroF" fixed>0</number>
+  <number name="thetaN">arcsin($sinTheta)</number>
+  <boolean name="check" allowedErrorInNumbers="0.000001" allowedErrorIsAbsolute>-cos($thetaN) = $solN</boolean>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>c = $c</p>
+<p>bSq = $bSq</p>
+<p>sinTheta = $sinTheta</p>
+<p>sqDivisor1 = $sqDivisor1</p>
+<p>sqDivisorExists = $sqDivisorExists</p>
+<p>divisor2 = $divisor2</p>
+<p>b = $b</p>
+<p>gcd = $gcd</p>
+<p>sol = $sol</p>
+<p>thetaN = $thetaN</p>
+<p>check = $check</p>
+<p>solN = $solN</p> -->
+<!--testing-->
+
+<p>If <m>\sin \theta = $sinTheta</m> and <m>\theta</m> is in Quadrant II,
+	find <m>\cos \theta</m>.  Enter your answer as an exact value using <alert>square roots</alert><footnote>To enter a square root symbol, type "sqrt"</footnote>  when necessary.  Do not use a calculator to give a decimal approximation.</p>
+
+
+<aside><title>Graphing Tool</title>
+<p>Adjust the triangle to match the problem at hand. (Note triangle distances are always positive.)</p>
+<sideBySide widths="30% 70%">
+<div>
+<p><m>a = </m><mathInput name="A" prefill="5"/></p>
+<p><m>b = </m><mathInput name="B" prefill="5"/></p>
+<p><m>c = </m><mathInput name="C" prefill="5sqrt(2)"/></p>
+<p hide="$actualLine3.length = $C">Triangle does not close.</p>
+</div>
+
+  <graph grid="1 1" xmin="-12" xmax="2" ymin="-2" ymax="12">
+    <point name="p1" styleNumber="2" fixed coords="(0,0)"/>
+    <point name="p2" styleNumber="5" coords="(-$A,$zeroF)">
+<!--       <constraints><constrainTo><line>y = 0</line></constrainTo>
+      </constraints> -->
+    </point>
+    <point name="p3" styleNumber="5" coords="(-$A, $B)" layer="2">
+    </point>
+    <point name="p3UserC">(-$C cos($theta), $C sin($theta))</point>
+    <triangle name="userTri" vertices="$p1 $p2 $p3" styleNumber="6"/>
+    <lineSegment name="line1" endpoints="$p1 $p2" labelPosition="upperleft">
+      <label><m>a = $A</m></label>
+    </lineSegment>
+    <lineSegment name="line2" endpoints="$p2 $p3" labelPosition="upperleft">
+      <label><m>b = $B</m></label>
+    </lineSegment>
+    <lineSegment name="line3" endpoints="$p3UserC $p1">
+      <label><m>c = $C</m></label>
+    </lineSegment>
+    <lineSegment name="actualLine3" endpoints="$p3 $p1" hide/>
+    <angle name="theta" through="$p2 $p1 $p3">
+      <label><m>\theta</m></label>
+    </angle>
+  </graph>
+</sideBySide>
+</aside>
+  
+
+<p><m>\cos \theta = </m><answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct">   
+        <when>
+          $userAns = $sol
+        </when>
+      </award>
+      <award name="numerical" allowedErrorInNumbers="0.001" allowedErrorIsAbsolute credit="0">   
+        <when>
+          $userAns = $solN
+        </when>
+      </award>
+    </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$numerical">Your answer should be an integer or an exact rational number, not a decimal approximation.</feedback>
+
+
+
+  <feedback condition="$userAns = -$sol or $userAns = -$solN">Check the sign of your answer. Is <m>\cos \theta</m> positive or negative in the second quadrant?</feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\cos \theta = $sol</m></p>
+
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

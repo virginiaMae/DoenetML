@@ -1,0 +1,161 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Multiple choice format; select the domain of a rational function. Function parameters are randomized and the order of choices is shuffled.
+Optional graphing tool provided; this tool can be hidden by commenting out the <aside> portion of the document.
+
+(BA-Fns #11 BA1752)
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-9" to="9" exclude="0 1 -1"/>
+  <selectFromSequence name="b" from="-9" to="9" exclude="$a 0"/>
+  <math name="expr" simplify="numberspreserveorder">f(x) = (x + $a)/(x + $b)</math>
+  <math name="choice1" simplify="numberspreserveorder">x != -$b</math>
+  <math name="choice_a" simplify="numberspreserveorder">x >= -$b</math>
+  <math name="choice_b" simplify="numberspreserveorder">x >= -$a</math>
+  <math name="choice_c" simplify="numberspreserveorder">x < -$b</math>
+  <math name="choice_d" simplify="numberspreserveorder">x != $b</math>
+  <math name="choice_e" simplify="numberspreserveorder">x != (-$b/(-$a))</math>
+  <math name="choice_f" simplify="numberspreserveorder">x >= (-$b)/$a</math>
+  <select assignNames="choice2 choice3 choice4 choice5" numToSelect="4">
+    $choice_a $choice_b $choice_c $choice_d $choice_e $choice_f
+  </select>
+
+  <row name="ri1">
+    <cell><p><booleanInput name="bi1">
+      <label><m>\displaystyle{$choice1}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri2">
+    <cell><p><booleanInput name="bi2">
+      <label><m>\displaystyle{$choice2}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri3">
+    <cell><p><booleanInput name="bi3">
+      <label><m>\displaystyle{$choice3}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri4">
+    <cell><p><booleanInput name="bi4">
+      <label><m>\displaystyle{$choice4}</m></label></booleanInput></p>
+    </cell>
+  </row>
+  <row name="ri5">
+    <cell><p><booleanInput name="bi5">
+      <label><m>\displaystyle{$choice5}</m></label></booleanInput></p>
+    </cell>
+  </row>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>choice1 = $choice1</p>
+<p>choice_a = $choice_a</p>
+<p>choice_b = $choice_b</p>
+<p>choice_c = $choice_c</p>
+<p>choice_d = $choice_d</p>
+<p>choice_e = $choice_e</p>
+<p>choice_f = $choice_f</p>
+<p>choice2 = $choice2</p>
+<p>choice3 = $choice3</p>
+<p>choice4 = $choice4</p>
+<p>choice5 = $choice5</p> -->
+<!--******************************************************
+            End testing
+*******************************************************-->
+
+<p>Find the domain of the function</p>
+  <me>$expr</me>
+
+
+<!--*********************************************
+           Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function: </p>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup></div>
+  
+<graph>
+  $miFunction
+</graph>
+</sideBySide>
+</aside>  
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+
+<tabular>
+  <shuffle>
+  <row copySource="ri1"/>
+  <row copySource="ri2"/>
+  <row copySource="ri3"/>
+  <row copySource="ri4"/>
+  <row copySource="ri5"/>
+  </shuffle>
+</tabular>
+
+<answer name="ans1">
+  <award><when>$bi1 = true and $bi2 = false and $bi3 = false and $bi4 = false and $bi5 = false</when></award>
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+  <p><m>$choice1</m></p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

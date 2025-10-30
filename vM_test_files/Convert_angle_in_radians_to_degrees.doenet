@@ -1,0 +1,123 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem asks the student to convert an angle given in radians to degrees. The angles range from pi/12 to 7pi/12 radians.
+*************************************************************--> 
+
+
+<problem>
+<setup>
+  <select name="a">36 72 108 144 216 252 30 60 90 120 150 180 210 240 270 300 45 135 225 315 15 75 105 165</select>
+  <math name="gcf"><gcd>$a 180</gcd></math>
+  <math name="num" simplify>$a pi/$gcf</math>
+  <math name="den" simplify>180/$gcf</math>
+  <math name="angle" simplify>$num/$den</math>
+  <math name="unsimple">$a pi/180</math>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>gcf = $gcf</p>
+<p>num = $num</p>
+<p>den = $den</p>
+<p>sol = $sol</p>
+<p>unsimple = $unsimple</p> -->
+<!--testing-->
+
+<p>Convert the angle <m>\alpha = $angle</m> radians to degrees.</p>
+  
+<p><m>\alpha = </m> <mathInput name="userAngle"/> <m>^{\circ}</m>
+  <answer name="ans1">  
+      <award name="correct">   
+        <when>
+          $userAngle = $a
+        </when>
+      </award>
+    </answer></p>
+
+<graph size="small" xmin="-2" xmax="2" ymin="-2" ymax="2" fixAxes displayXAxisTickLabels="false" displayYAxisTickLabels="false">
+  <angle degrees="$a" radius="1" fixed>
+    <label><m>\alpha</m></label>
+  </angle>
+  <circle radius="1" styleNumber="5"/>
+  <angle radians="pi" radius="0.5" fixed styleNumber="2"/>
+  <label styleNumber="2" anchor="(-0.5,-0.2)"><m>\pi</m> radians</label>
+</graph>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1">Your answer will be an integer value.
+  </feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+<p><em>Convert the angle <m>\alpha = \frac{\pi}{9}</m> radians to degrees.</em></p>
+  
+<p><alert><em>Solution.</em></alert></p>
+<p>If you recall the one fact that <m>180^{\circ}</m> is the same as <m>\pi</m> radians, you will always remember the unit fraction required for conversion: <m>\frac{180}{\pi}</m>. Multiply by this <term>unit fraction</term><footnote>A unit fraction is a fraction whose value is equal to <m>1</m>. They are often used for conversions between different units.</footnote> to convert any angle from radians to degrees:
+  <me>\frac{\pi}{9} = \frac{\pi}{9} \left(\frac{180}{\pi}\right) = 20^{\circ}</me></p>
+</example>
+
+<p>
+<ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-1-3/">Textbook link: The Radian Measure of an Angle</ref>
+</p>
+
+  
+<!-- <p><em><alert>How to check your answer</alert></em>: </p> -->
+</hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<m>$a^{\circ}</m>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

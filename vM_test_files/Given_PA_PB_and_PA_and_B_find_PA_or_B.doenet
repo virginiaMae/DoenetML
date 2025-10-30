@@ -1,0 +1,191 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a randomized value for the sum of two dice rolls, determine the probability of this outcome.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+
+
+*************************************************************-->
+<problem>
+<setup>
+  <select name="a">0.4 0.6 0.8</select>
+  <select name="b">0.2 0.3 0.5 0.7</select>
+  <select name="c">0.02 0.04 0.05 0.06</select>
+  <math name="d" simplify>$a $b - $c</math>
+  <math name="sol" simplify>$a + $b - $d</math>
+</setup>
+  
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+<p>If <m>P(A) = $a</m>, <m>P(B) = $b</m> and <m>P(A \cap B) = $d</m>, find <m>P(A \cup B)</m>.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<sideBySide margins="5%" widths="30% 70%">
+<stack>
+<p><booleanInput name="shadeA"/> <nbsp/> Shade <m>P(A) = $a</m></p>
+<p><booleanInput name="shadeB"/> <nbsp/>Shade <m>P(B) = $b</m></p>
+<p><booleanInput name="shadeAandB" prefill="$shadeB"/> <nbsp/> Shade <m>P(A \cap B) = $d</m></p>
+<boolean name="orShaded" hide>$shadeA and $shadeB and !$shadeAandB</boolean>
+</stack>
+
+<graph name="g1" xmin="$pOfA.vertices[3][1] - 0.1" xmax="$pOfB.vertices[1][1] + 0.1" identicalAxisScales aspectRatio="1" size="full" displayXAxis="false" displayYAxis="false" fixAxes showBorder="false">
+  <intersection name="int" hide>$pOfA $pOfB</intersection>
+  <regularPolygon name="pOfA" center="(-(sqrt($a/2)-sqrt($d/2)),0)" numSides="4" sideLength="sqrt($a)" filled="$shadeA" fixLocation/>
+  <regularPolygon name="pOfB" center="((sqrt($b/2)-sqrt($d/2)),0)" numSides="4" sideLength="sqrt($b)" fixLocation/>
+  <regularPolygon name="pOfAandB" center="(0,0)" numSides="4" sideLength="sqrt($d)" styleNumber="5" filled="$shadeAandB" fixLocation/>
+
+  <regularPolygon name="onlyB" copySource="pOfAandB" styleNumber="1" filled="$shadeA = false and $shadeB = true and $shadeAandB = false" fixLocation/>
+  <polygon name="bShading" vertices="$int[2] $pOfB.vertices[4] $pOfB.vertices[1] $pOfB.vertices[2] $int[1] $pOfAandB.vertices[1]" filled="$shadeB" fixLocation/>
+  <regularPolygon name="darkenA" filled="false" vertices="$pOfA.vertices[1] $pOfA.vertices[2] $pOfA.vertices[3] $pOfA.vertices[4]" numSides="4" fixLocation/>
+
+  <label anchor="$pOfA.vertices[2] - (0.2, 0)" hide="!$shadeA or $orShaded"><m>P(A)</m></label>
+  <label anchor="$pOfB.vertices[2] + (0.2, 0)" hide="!$shadeB  or $orShaded"><m>P(B)</m></label>
+  <label anchor="1/2($pOfAandB.vertices[2] + $pOfAandB.vertices[3]) - (0.2, 0)" hide="!$shadeAandB"><m>P(A \cap B)</m></label>
+</graph>
+</sideBySide>
+
+<p>The black shaded region represents 
+  <answer weight="0">
+    <choice credit>the intersection of <m>P(A)</m> and <m>P(B)</m>, or <m>P(A \cap B)</m></choice>
+    <choice>the union of <m>P(A)</m> and <m>P(B)</m></choice>
+    <choice><m>P(A) - P(B)</m></choice>
+  </answer></p>
+
+<p>What probability represents the blue shaded region only? (In other words, <m>P(A \cup B)</m> ) ? 
+  <answer weight="0">
+    <choice>the intersection of <m>P(A) + P(B)</m></choice>
+    <choice credit><m>P(A) + P(B) - P(A \cap B)</m></choice>
+    <choice><m>2 P(A) - P(B)</m></choice>
+  </answer></p>
+
+<!-- testing -->
+<!-- <p>pOfA = $pOfA.area</p>
+<p>pOfB = $pOfB.area</p>
+<p>pOfAandB = $pOfAandB.area</p> -->
+<!-- testing -->
+  
+</aside>  
+
+  
+
+  <p><m>P(A \cup B) = </m>     
+    <answer name="ans1">$sol</answer>
+  </p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">
+    <p>$correctFeedback</p>
+  </feedback>
+  
+<!--   <feedback condition="$ans7.numSubmissions > 2 and $ans7.creditAchieved != 1">
+     <div name="helpText">
+       <p>This problem involves an application of the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-2-1/">basic definition</ref> of the probability of an event, where events are of equal likelihood (such as rolls of a fair die, or flipping a fair coin).  
+  <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me></p>
+    </div>
+  </feedback> -->
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+</example>
+
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+  <li>First, we determine the number of possible outcomes corresponding to the event that the sum of two rolls is <m>$n</m>. 
+    <p>Using the basic definition of the probability of an event, 
+  <me>P(E) = \frac{\text{number of outcomes in event E}}{\text{number of total outcomes}}</me></p></li>
+
+  <li>By the <ref uri="https://open.lib.umn.edu/probability/chapter/topic-1-1/">General Counting Principle</ref>, the number of total outcomes is <m>6 \cdot 6 = 36</m></li>
+<li>The possible outcomes are: 
+  <conditionalContent>
+    <case condition="$n = 2">$nEquals2. There is <m>1</m> possible outcome. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me>
+    </case>
+    <case condition="$n = 3">$nEquals3. There are <m>2</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{2}{36} = $probOfSumN.</me> </case>
+    <case condition="$n = 4">$nEquals4. There are <m>3</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{3}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 5">$nEquals5. There are <m>4</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{4}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 6">$nEquals6. There are <m>5</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+    <case condition="$n = 7">$nEquals7. There are <m>6</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{6}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 8">$nEquals8. There are <m>5</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+    <case condition="$n = 9">$nEquals9. There are <m>4</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{4}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 10">$nEquals10. There are <m>3</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{3}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 11">$nEquals11. There are <m>2</m> possible outcomes. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = \frac{2}{36} = $probOfSumN.</me></case>
+    <case condition="$n = 12">$nEquals12. There is <m>1</m> possible outcome. Therefore, the probability is 
+    <me>P(\text{sum of two dice} = $n) = $probOfSumN.</me></case>
+  </conditionalContent>
+</li>
+</ul>
+
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

@@ -1,0 +1,152 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Add two rational expressions, numerators are constants. 
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="3" to="5"/>
+  <selectFromSequence name="b" from="1" to="4"/>
+  <selectFromSequence name="c" from="1" to="3"/>
+  <selectFromSequence name="d" from="3" to="6"/>
+
+  <math name="p1">x + $c</math>
+  <math name="p2">x - $d</math>
+  <math name="expr">$a/$p1 + $b/$p2</math>
+  <math name="finalExprNumerator">($a + $b)x - $a$d + $c$b</math>
+  <math name="finalExprDenominator">$p1$p2</math>
+  <math name="exprSimple">$finalExprNumerator/$finalExprDenominator</math>
+
+  <math name="numeratorNegAns">- (-$finalExprNumerator)/$finalExprDenominator</math>
+  <math name="denominatorNegAns1">-($finalExprNumerator/(-$finalExprDenominator))</math>
+  <math name="denominatorNegAns2">-($finalExprNumerator/(-$finalExprDenominator{expand}))</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>p1 = $p1</p>
+<p>p2 = $p2</p>
+<p>expr = $expr</p>
+<p>exprSimple = $exprSimple</p>
+<p>exprSimple{simplify} = $exprSimple{simplify}</p>
+<p>numeratorNegAns = $numeratorNegAns</p>
+<p>denominatorNegAns1 = $denominatorNegAns1</p>
+<p>denominatorNegAns2 = $denominatorNegAns2</p> -->
+<!--testing-->  
+<p>Add or subtract the fractions and simplify to express the answer as a single reduced fraction.
+  <me>$expr</me></p>
+
+  <p><m>\displaystyle $expr = </m>
+      
+    <answer name="ans91" >
+      <mathInput name="userFraction" prefill="/"/> 
+      <award name="correct" symbolicEquality simplifyOnCompare expandOnCompare>
+        <when>$userFraction = $exprSimple
+        </when>
+      </award>
+
+      <award name="numeratorNegative" symbolicEquality simplifyOnCompare expandOnCompare credit="1">           
+        <when>
+      $userFraction=$numeratorNegAns
+        </when>
+      </award>
+
+      <award name="denominatorNegative" symbolicEquality simplifyOnCompare expandOnCompare credit="1">           
+        <when>
+      $userFraction=$denominatorNegAns1 or $userFraction=$denominatorNegAns2
+        </when>
+      </award>
+   
+      <award name="noChanges" credit="0">
+    <when>$userFraction=$expr</when>
+      </award>
+  </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct or $numeratorNegative or $denominatorNegative">Nice work!</feedback>
+
+
+  <feedback condition="$noChanges">
+    <div name="helpText">
+    <p>We need to find a common denominator between the two rational expressions, in order to express the answer as a single fraction. Since the denominators do not have a common factor, the simplest common denominator to use is <m>$finalExprDenominator</m>.</p>  
+<p><em>How to check</em>: Substitute a valid value for <m>x</m> into both the original expression and your simplified expression. The values should match.</p>
+
+    </div>
+  </feedback>
+
+  <feedback condition="$ans91.numSubmissions > 2 and $ans91.creditAchieved != 1">
+    $helpText
+  </feedback>
+
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+    <p>Here is a similar worked example:</p>
+
+  <example newNameSpace>
+
+    <setup>
+  <math name="a">7</math>
+  <math name="b">5</math>
+  <math name="c">2</math>
+  <math name="d">8</math>
+
+  <math name="p1">x + $c</math>
+  <math name="p2">x - $d</math>
+  <math name="expr">$a/$p1 + $b/$p2</math>
+  <math name="finalExprNumerator">($a + $b)x - $a$d + $c$b</math>
+  <math name="finalExprDenominator">$p1$p2</math>
+  <math name="exprSimple">$finalExprNumerator/$finalExprDenominator</math>
+
+  <math name="numeratorNegAns">- (-$finalExprNumerator)/$finalExprDenominator</math>
+  <math name="denominatorNegAns1">-($finalExprNumerator/(-$finalExprDenominator))</math>
+  <math name="denominatorNegAns2">-($finalExprNumerator/(-$finalExprDenominator{expand}))</math>
+</setup>
+
+    <p>Add or subtract the fractions and simplify to express the answer as a single reduced fraction.
+  <me>$expr</me></p>
+
+    <p><em><alert>Solution.</alert></em></p>
+    <ul>
+  <li>Find a common denominator. Since there are no common factors between the two fractions, use $finalExprDenominator.
+    <md>
+      <mrow>$expr \amp=\frac{$a}{$p1}\cdot\frac{($p2)}{($p2)} + \frac{$b}{$p2}\cdot\frac{($p1)}{($p1)}</mrow>
+      <mrow>\amp=\frac{$a($p2) + $b($p1)}{$finalExprDenominator}</mrow>
+      <mrow>\amp= $exprSimple{simplify}</mrow>
+    </md></li>
+</ul>
+
+
+
+  
+  </example>
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<ul>
+  <li>Find a common denominator. Since there are no common factors between the two fractions, use $finalExprDenominator.
+    <md>
+      <mrow>$expr \amp=\frac{$a}{$p1}\cdot\frac{($p2)}{($p2)} + \frac{$b}{$p2}\cdot\frac{($p1)}{($p1)}</mrow>
+      <mrow>\amp=\frac{$a($p2) + $b($p1)}{$finalExprDenominator}</mrow>
+      <mrow>\amp= $exprSimple{simplify}</mrow>
+    </md></li>
+</ul>
+</solution>
+</problem>

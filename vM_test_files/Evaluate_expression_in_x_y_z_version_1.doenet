@@ -1,0 +1,83 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Use substitution to evaluate a set of 4 expressions.
+*************************************************************-->
+
+<setup>
+  <selectFromSequence assignNames="a b c d e" numToSelect="5" from="-4" to="9" exclude="0 -1"/>
+  <selectFromSequence assignNames="x y z" numToSelect="3" from="-3" to="6"/>
+  <math name="expr1" simplify="numberspreserveorder">$a x + $b y - z</math>
+  <math name="sol1" simplify>$a $x + $b $y - $z</math>
+  <math name="expr2" simplify="numberspreserveorder">$c z + $d x^2 </math>
+  <math name="sol2" simplify>$c $z + $d $x^2 </math>
+  <math name="expr3" simplify="numberspreserveorder">$e x z + $d($b $e - $a y) </math>
+  <math name="sol3" simplify>$e $x $z + $d($b $e - $a $y)</math>
+  <math name="expr4" simplify="numberspreserveorder">$e $a x (y + 1) + $d z^2 </math>
+  <math name="sol4" simplify>$e $a $x ($y + 1) +  $d $z^2</math>  
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>x = $x</p>
+<p>y = $y</p>
+<p>z = $z</p>
+<p>expr1 = $expr1</p>
+<p>sol1 = $sol1</p>
+<p>expr2 = $expr2</p>
+<p>sol2 = $sol2</p>
+<p>expr3 = $expr3</p>
+<p>sol3 = $sol3</p>
+<p>expr4 = $expr4</p>
+<p>sol4 = $sol4</p> -->
+<!--testing-->
+
+
+
+<problem>
+  <p>Evaluate each of the following expressions if <m>x = $x, y = $y</m> and <m>z = $z</m></p>
+
+<p><m>$expr1 = </m> <mathInput name="user1"/></p>
+<p><m>$expr2 = </m> <mathInput name="user2"/></p>
+<p><m>$expr3 = </m> <mathInput name="user3"/></p>
+<p><m>$expr4 = </m> <mathInput name="user4"/></p>
+<answer name="ans1" matchPartial>
+  <award>
+    <when>$user1 = $sol1 and $user2 = $sol2 and $user3 = $sol3 and $user4 = $sol4</when>
+  </award>
+</answer>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+<solution>
+<ul>
+  <li><m>$sol1</m></li>
+  <li><m>$sol2</m></li>
+  <li><m>$sol3</m></li>
+  <li><m>$sol4</m></li>
+</ul>
+</solution>
+</problem>

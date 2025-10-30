@@ -1,0 +1,141 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Compute the domain of a function that involves a square root and a logarithm. Graphing tool provided to help visualize the geometry of the problem. Response format is multiple choice.
+*************************************************************-->
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="10"/> 
+  <selectFromSequence name="b" from="1" to="5"/> 
+  <selectFromSequence name="c" from="6" to="10"/>
+  <subsetOfReals name="solInt">(-infinity, -$a) union ($b, $c)</subsetOfReals>
+  <number name="zeroF" fixed>0</number>
+<!--   <math name="expr">sqrt(x^2+x-12)+log(5-x)</math> -->
+  <math name="m1" expand>(x + $a)(x - $b)</math>
+  <math name="expr">sqrt($m1)+log($c-x)</math>
+</setup>
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p>
+<p>solInt = $solInt</p>
+<p>test = $test</p>
+<p>solN = $solN</p> -->
+<!--testing-->
+
+<p>What is the domain of the function
+  <me>f(x) = $expr</me></p>
+
+<hint><title>Process:</title>
+<ul>
+ <li>Step 1 - Factor the quadratic under the square root, draw a sign chart, and exclude the negative intervals.</li>
+ <li>Step 2 - Set the expression you are taking the log of greater than zero and solve for x.  Do not divide an inequality by a negative number.</li>
+ <li>Step 3 - Exclude all values excluded in either Step 1 or Step 2.</li>
+</ul>
+</hint>
+
+<!--*********************************************
+           Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph function: </p>
+  <p><m>\;f(x) = </m><mathInput name="mi"/></p>
+  <setup>
+  <function name="miFunction">$mi</function>
+  </setup></div>
+  
+<graph>
+  $miFunction
+</graph>
+</sideBySide>
+</aside>  
+
+
+<!--   <math name="expr">sqrt(x^2+x-12)+log(5-x)</math> -->  
+<p>The domain of <m>f = </m>
+  <answer name="ans1" shuffleOrder>
+     <choice><math>($b,infinity)</math></choice>
+     <choice><math simplify>(-infinity,-$a $b) union ($c, infinity)</math></choice>
+     <choice><math>(-infinity, $b) union ($c, infinity)</math></choice>
+     <choice credit="1"><math name="sol">(-infinity, -$a) union ($b, $c)</math></choice>
+     <choice><math simplify>(-$a $b, $c)</math></choice>
+  </answer></p>
+
+
+
+
+    
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+<p>Here is a similar worked example:</p> 
+<example newNameSpace>
+
+  
+<p><alert><em>Solution.</em></alert></p>
+
+</example>
+
+  
+</hint> -->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>$sol</p>
+</solution>
+
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+

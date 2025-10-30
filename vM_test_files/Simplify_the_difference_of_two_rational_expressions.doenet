@@ -1,0 +1,75 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor and simplify a difference of two rational expressions. Find the common denominator of two rational expressions. Expand and simplify the difference in the numerator.
+Step-by-step solution provided.
+*************************************************************-->
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="1" to="12"/>
+  <math name="c" simplify>$a - $b</math>
+  <selectFromSequence name="b" from="-5" to="5" exclude="$a 0"/>
+  <math name="topLeftFactor" simplify>x-$a</math>
+  <math name="xPlusBFactor" simplify>x+$b</math>
+  <math name="bottomLeftFactor">(x + $a)(x - $c)</math>
+  <math name="bottomRightFactor">(x + $a)(x + $b)</math>
+  <math name="fullExpression">$topLeftFactor{expand}/$bottomLeftFactor{expand} - x/$bottomRightFactor{expand}</math>
+  <math name="sol" simplify>-$a $b</math>
+  <math name="fullSol" simplify>$sol/((x+$a)(x-$c)(x+$b))</math>
+</setup>
+<!--Parameters are selected to force a single constant term in the final numerator. This constant term will be equal to -$a$b  -->
+
+<!--testing-->
+<!-- <p>sol from parameters = $sol</p>
+<p>full expr from parameters= $fullSol</p>
+<p><boolean name="checkWork">$fullSol = $fullExpression</boolean></p> -->
+<!--testing-->
+
+
+
+  <p>When $fullExpression is combined into a single fraction, the <alert>numerator</alert> will be</p>
+    <answer name="ans1">-$a $b</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  
+<hint>
+<p>Process:</p>
+    <ul>
+      <li>Factor the denominators</li>
+      <li>Find a common denominator by suppling the missing factors</li>
+      <li>Expand the numerators</li>
+      <li>Combine like terms in the numerator.</li>
+    </ul>
+    <p>Warning: be careful with the negative sign</p>
+    <p>Hint: the numerator will be a constant</p>
+</hint>
+
+
+  
+<solution>
+  <md>
+    <mrow>$fullExpression \amp= \frac{$topLeftFactor}{$bottomLeftFactor} - \frac{x}{$bottomRightFactor}</mrow>
+    <mrow>\amp=\frac{(x-$a)($xPlusBFactor)}{(x+$a)(x-$c)($xPlusBFactor)} - \frac{x(x-$c)}{(x+$a)(x-$c)($xPlusBFactor)}</mrow>
+    <mrow>\amp= \frac{(x-$a)($xPlusBFactor) - x(x-$c)}{(x+$a)(x-$c)($xPlusBFactor)}</mrow>
+    <mrow>\amp= \frac{$sol}{(x+$a)(x-$c)($xPlusBFactor)} \implies \text{solution} = $sol</mrow>
+  </md>
+</solution>
+</problem>

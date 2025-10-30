@@ -1,0 +1,102 @@
+<activity><title>Make a Tree of 3 coin flips</title>
+<p>Complete the tree by writing a code sequence for each coin flip combination. For example, flipping one coin heads is <alert>H</alert>, and flipping one coin tails is <alert>T</alert>.</p>
+<p>Flipping a heads first, and then a tails would be <alert>HT</alert></p>
+
+<setup>
+<boolean name="topCoinFlipped">false</boolean>
+<boolean name="HFlipped" caseInsensitiveMatch>$Hlbl = H</boolean>
+<boolean name="TFlipped" caseInsensitiveMatch>$Tlbl = T</boolean>
+<boolean name="HHFlipped" caseInsensitiveMatch>$HHlbl = HH</boolean>
+<boolean name="HTFlipped" caseInsensitiveMatch>$HTlbl = HT</boolean>
+<boolean name="THFlipped" caseInsensitiveMatch>$THlbl = TH</boolean>
+<boolean name="TTFlipped" caseInsensitiveMatch>$TTlbl = TT</boolean>
+</setup>
+<!-- <booleanInput name="HHFlipped"/>
+<booleanInput name="HTFlipped"/>
+<booleanInput name="THFlipped"/>
+<booleanInput name="TTFlipped"/> -->
+
+<updateValue triggerWhenObjectsClicked="topCoin" target="topCoinFlipped" newValue="true" type="boolean"/>
+<hint>One color stands for Heads, and the other color stands for Tails!</hint>
+<graph grid="1 1" size="full" xmin="1" xmax="27" ymin="1" ymax="17" identicalAxisScales fixAxes>
+  <circle name="topCoin" styleNumber="3" filled center="(14,15)" fixLocation/>
+  <label anchor="($topCoin.center.x, $topCoin.center.y - 2)">Click here to flip!</label>
+  <group hide="!$topCoinFlipped">
+    <circle name="H" copySource="topCoin" center="(8,11)" styleNumber="1"/>
+    <textInput name="Hlbl" anchor="$H.center" width="28"/>
+    <circle name="T" copySource="topCoin" center="(20,11)" styleNumber="2"/>
+    <textInput name="Tlbl" anchor="$T.center" width="28"/>
+    <lineSegment endpoints="$H.center $topCoin.center" styleNumber="5"/>
+    <lineSegment endpoints="$T.center $topCoin.center" styleNumber="5"/>
+  </group>
+
+   <group hide="!$HFlipped">
+    <circle name="HH" copySource="H" center="(5,7)" styleNumber="1"/>
+    <textInput name="HHlbl" anchor="$HH.center" width="28"/>
+    <circle name="HT" copySource="T" center="(11,7)" styleNumber="2"/>
+    <textInput name="HTlbl" anchor="$HT.center" width="28"/>
+    <lineSegment endpoints="$H.center $HH.center" styleNumber="5"/>
+    <lineSegment endpoints="$H.center $HT.center" styleNumber="5"/>
+  </group>
+
+  <group hide="!$TFlipped">
+    <circle name="TH" copySource="H" center="(17,7)" styleNumber="1"/>
+    <textInput name="THlbl" anchor="$TH.center" width="28"/>
+    <circle name="TT" copySource="T" center="(23,7)" styleNumber="2"/>
+    <textInput name="TTlbl" anchor="$TT.center" width="28"/>
+    <lineSegment endpoints="$T.center $TH.center" styleNumber="5"/>
+    <lineSegment endpoints="$T.center $TT.center" styleNumber="5"/>
+  </group>
+
+  <group hide="!$HHFlipped">
+    <circle name="HHH" copySource="HH" center="(3,3)" styleNumber="1"/>
+    <textInput name="HHHlbl" anchor="$HHH.center" width="28"/>
+    <circle name="HHT" copySource="HT" center="(6,3)" styleNumber="2"/>
+    <textInput name="HHTlbl" anchor="$HHT.center" width="28"/>
+    <lineSegment endpoints="$HH.center $HHH.center" styleNumber="5"/>
+    <lineSegment endpoints="$HH.center $HHT.center" styleNumber="5"/>
+  </group>
+
+  <group hide="!$HTFlipped">
+    <circle name="HTH" copySource="HH" center="(9,3)" styleNumber="1"/>
+    <textInput name="HTHlbl" anchor="$HTH.center" width="28"/>
+    <circle name="HTT" copySource="HT" center="(12,3)" styleNumber="2"/>
+    <textInput name="HTTlbl" anchor="$HTT.center" width="28"/>
+    <lineSegment endpoints="$HT.center $HTH.center" styleNumber="5"/>
+    <lineSegment endpoints="$HT.center $HTT.center" styleNumber="5"/>
+  </group>
+
+  <group hide="!$THFlipped">
+    <circle name="THH" copySource="HH" center="(16,3)" styleNumber="1"/>
+    <textInput name="THHlbl" anchor="$THH.center" width="28"/>
+    <circle name="THT" copySource="HT" center="(19,3)" styleNumber="2"/>
+    <textInput name="THTlbl" anchor="$THT.center" width="28"/>
+    <lineSegment endpoints="$TH.center $THH.center" styleNumber="5"/>
+    <lineSegment endpoints="$TH.center $THT.center" styleNumber="5"/>
+  </group>
+
+  <group hide="!$TTFlipped">
+    <circle name="TTH" copySource="HH" center="(22,3)" styleNumber="1"/>
+    <textInput name="TTHlbl" anchor="$TTH.center" width="28"/>
+    <circle name="TTT" copySource="HT" center="(25,3)" styleNumber="2"/>
+    <textInput name="TTTlbl" anchor="$TTT.center" width="28"/>
+    <lineSegment endpoints="$TT.center $TTH.center" styleNumber="5"/>
+    <lineSegment endpoints="$TT.center $TTT.center" styleNumber="5"/>
+  </group>
+    
+</graph>
+<answer name="finalCheck">
+  <award caseInsensitiveMatch>
+    <when>$HHHlbl = HHH and
+      $HHTlbl = HHT and
+      $HTHlbl = HTH and
+      $HTTlbl = HTT and
+      $THHlbl = THH and
+      $THTlbl = THT and
+      $TTHlbl = TTH and
+      $TTTlbl = TTT
+    </when>
+  </award>
+</answer>
+</activity>
+

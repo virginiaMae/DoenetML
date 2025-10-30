@@ -1,0 +1,165 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem requires the student to use the Law of Cosines to calculate the missing geometry in a triangle. Three sides are given. 
+There are two versions to this problem - 
+Version 1: a ranges from 10 to 12 and b, c range from 10 to 12.
+Version 2: side a ranges from 10 to 12 and b, c range from 7 to 9. 
+Answers are fill-in the blank with an approximate decimal value.
+*************************************************************--> 
+
+<problem>
+<setup>
+  <selectFromSequence name="a" from="10" to="12"/>
+  <selectFromSequence assignNames="b c" numToSelect="2" from="7" to="9" withReplacement/>
+  <math name="A" simplify>arccos(($b^2 + $c^2 - $a^2)/(2 $b $c)) 180 / pi</math>
+  <math name="B" simplify>arccos(($a^2 + $c^2 - $b^2)/(2 $a $c)) 180 / pi</math>
+  <math name="C" simplify>180 - $A - $B</math>
+  <number name="An" displayDecimals="1" padZeros>$A</number>
+  <number name="Bn" displayDecimals="1" padZeros>$B</number>
+  <number name="Cn" displayDecimals="1" padZeros>$C</number>
+  <number name="xmin">min(-3, $pB.x - 3)</number>
+  <number name="xmax">max($b + 3, $pB.x + 3)</number>
+</setup>
+  
+<!--testing-->
+<!-- <p>A = $A</p>
+<p>B = $B</p>
+<p>C = $C</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>An = $An</p>
+<p>Bn = $Bn</p>
+<p>Cn = $Cn</p> -->
+<!--testing-->
+
+<p>Find the missing parts of the triangle.  Round angles to the nearest <m>0.1</m> degrees.</p>
+
+<p>In the triangle below:</p>
+  <md>
+    <mrow>a &= $a</mrow>
+    <mrow>b &= $b</mrow>
+    <mrow>c &= $c</mrow>
+  </md>
+
+  
+<graph name="g1" size="medium" fixAxes displayXAxis="false" displayYAxis="false" xmin="$xmin" xmax="$xmax" ymin="-3" ymax="$pB.y + 3" identicalAxisScales>
+  <point name="pA" fixed labelPosition="left" styleNumber="5">(0,0)
+    <label><m>A</m></label>
+  </point>
+  <point name="pB" fixed styleNumber="5" labelPosition="left">($c cos($A pi/180), $c sin($A pi/180))
+    <label><m>B</m></label>
+  </point>
+  <point name="pC" fixed styleNumber="5">($b,0)
+    <label><m>C</m></label>
+  </point>
+  <lineSegment name="aSeg" styleNumber="2" endpoints="$pB $pC"/>
+  <lineSegment name="bSeg" styleNumber="3" endpoints="$pA $pC"/>
+  <lineSegment name="cSeg" styleNumber="4" endpoints="$pA $pB"/>
+  
+  <triangle name="triABC" vertices="$pA $pC $pB" fixed hide/>
+  
+  <angle name="angleA" through="$pB $pA $pC" radius="0.1 $b" styleNumber="2"/>
+  <angle name="angleB" through="$pA $pB $pC" radius="0.1 $b" styleNumber="3" emphasizeRightAngle="false"/>
+  <angle name="angleC" through="$pA $pC $pB" radius="0.1 $b" styleNumber="4" emphasizeRightAngle="false"/>
+
+  <textInput name="Ainput" anchor="($pA.x - 1, $pA.y - 1)" width="34px">
+    <label><m>A = </m></label>
+  </textInput>
+  
+  <textInput name="Cinput" anchor="($pC.x, $pC.y - 1)" width="34px">
+    <label><m>C = </m></label>
+  </textInput>
+
+  <textInput name="Binput" anchor="($pB.x + 0.2$b, $pB.y)" width="34px">
+    <label><m>B = </m></label>
+  </textInput>
+
+  <label name="alabel" anchor="(($pB.x + $pC.x)/2 + 0.25$b, $pB.y/2)"><m>a = $a</m></label>
+
+  <label name="blabel" anchor="($pC.x/2, -1)"><m>b = $b</m></label>
+
+  <label name="clabel" anchor="($pB.x/2 - 0.18$b, $pB.y/2)"><m>c = $c</m></label>
+</graph>
+
+<p><m>A = </m><mathInput name="userA" bindValueTo="$Ainput"/><m>^{\circ}</m></p>
+<p><m>B = </m><mathInput name="userB" bindValueTo="$Binput"/><m>^{\circ}</m></p>
+<p><m>C = </m><mathInput name="userC" bindValueTo="$Cinput"/><m>^{\circ}</m></p>  
+
+<setup>  
+  <boolean name="angleACorrect" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userA = $A</boolean>
+  <boolean name="angleBCorrect" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userB = $B</boolean>
+  <boolean name="angleCCorrect" allowedErrorInNumbers="1" allowedErrorIsAbsolute>$userC = $C</boolean>
+</setup>
+  
+    <answer name="ans1">
+      <award name="correct">   
+        <when>$angleACorrect and $angleBCorrect and $angleCCorrect</when>
+      </award>
+    </answer>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$angleACorrect = false and $ans1.justSubmitted">Angle <m>A</m> is incorrect.</feedback>
+
+  <feedback condition="$angleBCorrect = false and $ans1.justSubmitted">Angle <m>B</m> is incorrect.</feedback>
+
+  <feedback condition="$angleCCorrect = false and $ans1.justSubmitted">Angle <m>C</m> is incorrect.</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>A = $An ^{\circ}</m></p>
+<p><m>B = $Bn ^{\circ}</m></p>
+<p><m>C = $Cn ^{\circ}</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

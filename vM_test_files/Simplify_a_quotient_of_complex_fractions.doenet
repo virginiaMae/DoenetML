@@ -1,0 +1,68 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Simplify an ugly rational expression involving complex fractions.
+
+(BA-Basics #90 BA1444)
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="1" to="3"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <selectFromSequence name="c" from="1" to="3"/>
+  <selectFromSequence name="d" from="4" to="6"/>
+  <math name="expr">($b/(x + $a) + $c/(x - $a))/($d/(x - $a) - $b/(x + $a))</math>
+  <math name="sol" simplify>(($b + $c)x + ($a $c - $a $b))/(($d - $b)x + ($a $d + $a $b))</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+  
+<p>Simplify the following expression, expressing the answer as a single reduced fraction.
+  <me>\large{$expr}</me>
+</p>
+  <p><m>\displaystyle{$expr} = </m>
+      
+    <answer name="ans1" >
+      <mathInput name="userFraction" prefill="/"/> 
+      <award name="correct" symbolicEquality="true" simplifyOnCompare>     
+        <when>
+          $userFraction = $sol
+        </when>
+      </award>
+  </answer></p>
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  
+<feedback condition="$correct">$correctFeedback</feedback>
+ 
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\displaystyle{$sol}</m></p>
+</solution>
+</problem>

@@ -1,0 +1,164 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given an unformatted quadratic equation, expand and simplify to determine the coefficients a, b, c when the equation is written in general form.
+A graphing tool is provided for visualizing the geometry of the problem.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="4"/>
+  <selectFromSequence name="b" from="2" to="4"/>
+  <selectFromSequence name="h" from="1" to="5"/>
+  <selectFromSequence name="d" from="1" to="5"/>
+  <math name="expr">$a($h - x^2) - $b($d - x)($b + x)</math>
+  <math name="sol" expand>$expr</math>
+  <math name="acoeff">$b - $a</math>
+  <math name="bcoeff" simplify>$b^2 - $b $d</math>
+  <math name="c" simplify>$a $h - $b^2 $d</math>
+  <math name="k" simplify>-$bcoeff^2/(4 $acoeff) + $c</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>h = $h</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>k = $k</p>
+<p>acoeff = $acoeff</p>
+<p>bcoeff = $bcoeff</p>
+<p>expr = $expr</p>
+<p>sol = $sol</p> -->
+<!--testing-->
+
+
+<p>Expand <me>y = $expr</me> to identify the coefficients in the general form 
+  <me>y = ax^2 + bx + c</me></p>
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+
+<setup>
+  <number name="ymax">$k + 10</number>
+  <number name="ymin">$k - 10</number>
+</setup>
+  
+<sideBySide margins="5%" widths="30% 70%">
+<div><p>Graph parabola with given equation:</p> 
+  <p><m>y = </m> <mathInput name="eq1"/></p>
+
+  <p>Graph parabola in general form:</p> 
+  <p><m>y = </m> <mathInput name="eq2"/></p>
+  <p><booleanInput name="showParabola">
+      <label>Click to show second parabola</label>
+    </booleanInput>
+  </p>
+</div>
+
+  
+<graph name="g1" ymax="$ymax" ymin="$ymin">
+  <function name="givenParabola" styleNumber="5">$eq1</function>
+  <function name="userParabola" hide="!$showParabola">$eq2</function>
+</graph>
+  
+</sideBySide>
+
+<p>If your solution is correct the two parabolas will overlay one another.</p>
+
+</aside>   
+
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+  
+<p><m>y = </m>
+  <mathInput name="userA" prefill="a"/><m>x^2 + </m>
+  <mathInput name="userB" prefill="b"/><m>x + </m>
+  <mathInput name="userC" prefill="c"/></p>
+
+<p>The equation you have entered is: 
+  <me>y = <math simplify>$userA x^2 + $userB x + $userC</math></me></p>
+  
+  <answer name="ans1" >
+    <award name="correct" matchPartial>
+      <when>$userA = $acoeff and $userB = $bcoeff and $userC = $c</when>
+    </award>
+    <award name="symbolic" credit="0">
+      <when>a = $userA and b = $userB and c = $userC</when>
+    </award> 
+</answer>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+   <feedback condition="$symbolic">Please enter numerical values for <m>a, b, c</m> that correspond to the given parabola.</feedback>
+  <feedback condition="$userA != $acoeff and $ans1.responseHasBeenSubmitted">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$userB != $bcoeff and $ans1.responseHasBeenSubmitted">Your <m>b</m> value is incorrect.</feedback>
+  <feedback condition="$userC != $c and $ans1.responseHasBeenSubmitted">Your <m>c</m> value is incorrect.</feedback>
+  
+  <feedback condition="$ans1.numSubmissions > 2 and $ans1.creditAchieved != 1"> 
+    <p>Given a general quadratic equation,
+  we can rewrite the equation in  the general form <me>ax^2 + bx + x</me> by expanding the factored terms, and simplify the resulting expression by combining like terms. </p>
+  </feedback>
+ 
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+  
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>y = $sol</m></p>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<!-- <variantControl nVariants="100" variantsToExclude="i"/> -->
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

@@ -1,0 +1,84 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Factor a quadratic by grouping. 
+
+(BA-Basics #145 unsorted 4FWHCOD)
+*************************************************************-->
+
+
+<problem>
+
+<setup>
+  <selectFromSequence name="a" from="2" to="6"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <selectFromSequence name="c" from="2" to="3"/>
+  <selectFromSequence name="d" from="7" to="9"/>
+  <math name="expr" simplify>$a $c x^2 + ($a $d - $b $c) x - $b $d</math>
+  <math name="sol">($a x - $b)($c x + $d)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>expr = $expr</p> -->
+<!--testing-->
+
+
+<p>Factor the polynomial $expr by grouping.  Write your final answer in the form <m>(ax-b)(cx+d)</m> by entering the four integers <m>a</m>, <m>b</m>, <m>c</m>, and <m>d</m> in the blanks below.</p> 
+  <me>$expr</me>
+
+
+
+  <p><m>$expr = \bigg(</m>
+    <mathInput name="userA" prefill="a" minWidth="25"/> <m>x - </m> 
+    <mathInput name="userB" prefill="b" minWidth="25"/> <m>\bigg)\bigg(</m> 
+    <mathInput name="userC" prefill="c" minWidth="25"/> <m>x + </m> 
+    <mathInput name="userD" prefill="d" minWidth="25"/> <m>\bigg)</m></p>
+    <answer name="ans1" matchPartial>
+      <award name="correct">
+        <when>$userA = $a and $userB = $b and $userC = $c and $userD = $d</when>
+      </award>
+    </answer>
+
+<p>Your equation is: <m>($userA x - $userB)($userC x + $userD)</m></p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+<!--*********************************************
+            Hints
+**********************************************-->
+<!-- <hint name="helpSection"><title>Worked Example</title>
+
+</hint> -->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->
+  
+  
+<solution>
+<p><m>$expr = $sol</m>
+</p>
+
+</solution>
+</problem>

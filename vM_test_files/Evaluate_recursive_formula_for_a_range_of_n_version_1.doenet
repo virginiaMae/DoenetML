@@ -1,0 +1,93 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="a1" from="-144" to="144" step="12" exclude="0"/>
+  <select name="b">1 2 3</select>
+  <selectFromSequence name="c" from="2" to="4" exclude="$b"/>
+  <math name="r" simplify>$b / $c</math>
+  <math name="expr">$r a_(n-1)</math>
+  <math name="a2" simplify>$a1 ($r)</math>
+  <math name="a3" simplify>$a1 ($r)^2</math>
+  <math name="a4" simplify>$a1 ($r)^3</math>
+  <math name="a5" simplify>$a1 ($r)^4</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a1 = $a1</p>
+<p>b = $b</p>
+<p>r = $r</p>
+<p>expr = $expr</p>
+<p>a2 = $a2</p>
+<p>a3 = $a3</p>
+<p>a4 = $a4</p>
+<p>a5 = $a5</p> -->
+<!--testing-->
+  
+<p>If <m>a_1 = $a1</m> and <m>a_n = $expr</m>, find <m>a_2</m> through <m>a_5</m>.</p>
+  
+<p><m>a_2 = </m><mathInput name="usera2"/></p>
+<p><m>a_3 = </m><mathInput name="usera3"/></p>
+<p><m>a_4 = </m><mathInput name="usera4"/></p>
+<p><m>a_5 = </m><mathInput name="usera5"/></p>
+      
+    <answer name="ans1">
+      <award name="correct">    
+        <when>$usera2 = $a2 and $usera3 = $a3 and $usera4 = $a4 and $usera5 = $a5</when>
+      </award>
+    </answer>
+
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$usera2 != $a2 and $ans1.justSubmitted">Your response for <m>a_2</m> is incorrect.</feedback>
+  <feedback condition="$usera3 != $a3 and $ans1.justSubmitted">Your response for <m>a_3</m> is incorrect.</feedback>
+  <feedback condition="$usera4 != $a4 and $ans1.justSubmitted">Your response for <m>a_4</m> is incorrect.</feedback>
+  <feedback condition="$usera5 != $a5 and $ans1.justSubmitted">Your response for <m>a_5</m> is incorrect.</feedback>
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>a_2 = $a2</m></p>
+<p><m>a_3 = $a3</m></p>
+<p><m>a_4 = $a4</m></p>
+<p><m>a_5 = $a5</m></p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

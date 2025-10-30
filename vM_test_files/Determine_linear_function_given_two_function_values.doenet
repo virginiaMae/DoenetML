@@ -1,0 +1,236 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Write linear function given two function values.  Graphing tool provided for visualizing the geometry of the problem.
+
+The "Worked Example" can be hidden from view by commenting out the <hint> portion of the document.
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="-6" to="6"/>
+  <selectFromSequence name="b" from="-6" to="6"/>
+  <selectFromSequence name="c" from="1" to="6"/>
+  <selectFromSequence name="d" from="1" to="6"/>
+  <selectFromSequence name="e" from="-1" to="1" exclude="0"/>
+  <point name="p2">($x2, $$correctFunc($x2))</point>
+  <math name="x1">$a</math>
+  <math name="x2" simplify>$a + $c</math>
+  <math name="m">$e $d/$c</math>
+  <math name="yInt">$b - $a$m</math>
+  <function name="correctFunc">$m x + $yInt</function> 
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c</p>
+<p>d = $d</p>
+<p>e = $e</p>
+<p>m = $m</p>
+<p>yInt = $yInt</p>
+<p>yInt = $yInt{simplify}</p>
+<p>correctFunc = $correctFunc{simplify}</p> -->
+<!--testing-->
+
+
+<p>If <m>f(x)</m> is a linear function, find an expression for <m>f(x)</m> if <m>f($x1) = $b</m> and <m>f($x2) = $$correctFunc($x2)</m>.</p>
+
+
+
+<!--*********************************************
+            Graphing Tool
+**********************************************-->
+
+<aside><title>Graphing tool</title>
+<sideBySide margins="5%" widths="30% 70%">
+<div>
+  <p>Recall that <m>f(x) = y</m> has points defined by <m>(x, f(x))</m></p>
+  <p>Drag the $dragPoint1.styleDescriptionWithNoun to the location of the first given point.</p>
+  <p>Drag the $dragPoint2.styleDescriptionWithNoun to the location of the second given point.</p>
+  
+  <p>Enter proposed linear function / equation for the line in slope-intercept form:</p> 
+   <p><m>f(x) = y = </m><mathInput name="eq1" bindValueTo="$userFunc"/></p>
+  
+</div>
+
+  
+<graph name="g1" grid="1 1">
+  <point name="dragPoint1">(0,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_1</m></label>
+  </point>
+  <point name="dragPoint2" styleNumber="2">(5,0)
+    <constraints>
+      <constrainToGrid/>
+    </constraints>
+    <label><m>P_2</m></label>
+  </point>
+  <line name="line1" equation="y=$eq1">
+    <label>y = $eq1</label>
+  </line>
+  <line name="line2" through="$dragPoint1 $dragPoint2" styleNumber="2"/>
+
+</graph>
+  
+</sideBySide>
+  
+<p>A $line2.styleDescriptionWithNoun is automatically drawn between these two points. Next, enter your proposed equation. If your work is correct, the lines will overlap.</p>
+</aside> 
+
+
+<!--*********************************************
+            User-input of answer
+**********************************************-->
+  
+
+<p><m>f(x) = </m>
+  <answer name="ans13">
+  
+  <mathInput name="userFunc"/>
+    <award name="correct">
+      <when>$userFunc = $correctFunc</when>
+    </award>
+  
+  <award name="noIntercept" credit="0">
+      <when>$userFunc = $m x</when>
+  </award>
+    
+  <award name="notAFunctionInX" symbolicEquality simplifyOnCompare credit="0">  
+        <when>$userFunc = $m + $yInt
+        </when>
+      </award>
+</answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+  <feedback condition="$notAFunctionInX"><p>It looks like this expression is missing an <m>x</m>.</p></feedback>
+  <feedback condition="$noIntercept"><p>It looks like this expression is missing the slope-intercept.</p></feedback>
+   <feedback condition="$ans13.numSubmissions > 2 and $ans13.creditAchieved != 1">
+     <p>In this problem, we are told that <m>f</m> is a linear  <term>function</term> and given two output values of that function.</p>
+<p>Recognize that a line, perhaps one stated in the form <m>y = mx + b</m> is also a valid <em>function</em>. This is because each input value, <m>x</m>, produces only one output value, <m>y = f(x)</m>. Therefore, we can use what we know about lines, and standard equations of lines, to answer this question regarding functions.</p>
+   </feedback>
+  
+
+  
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>If <m>f(x)</m> is a linear function, find an expression for <m>f(x)</m> if <m>f(-9) = 8</m> and <m>f(6) = -7</m>.</em></p>
+
+<p><em><alert>Solution.</alert></em></p>
+<p>This is similar to the question that asks,<em>"given two points on a line, write the equation of the line"</em>. We can rewrite the given function values as points on the line, <m>p_1 = (x_1, f(x_1))</m> and <m>p_2 = (x_2, f(x_2))</m>.</p>
+<p>This allows us to use the standard <term>slope equation</term> to determine the slope of the line. We then calculate the <m>y</m>-intercept and we can express the linear 
+ <term>function</term> as the equation of a line in <term>slope-intercept form</term>. </p> 
+<md>
+  <mrow>m \amp= \frac{f(x_2) - f(x_1)}{x_2 - x_1} \amp\text{slope equation, function notation}</mrow>
+  <mrow> \amp=\frac{-7 - 8}{6 - (-9)} \amp\text{substitute known values}</mrow>
+  <mrow>\amp=\frac{-15}{15} = -1 \amp\text{simplify}</mrow>
+</md>
+<p>Now, use the slope <m>m = -1</m> and choose either point to solve for the <m>y</m>-intercept. We choose the point <m>(x_1, f(x_1)) = (-9,8)</m>.</p>
+  <md>
+    <mrow>y \amp= mx + b \amp\text{slope-intercept form equation}</mrow>
+    <mrow>8 \amp=-1(-9) + b \amp\text{substitute known values}</mrow>
+    <mrow>8 - 9 \amp= b \amp\text{simplify}</mrow>
+    <mrow>-1 = b</mrow>
+  </md>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line in slope-intercept form, using function notation:
+  <md>
+    <mrow>y \amp= -x - 1</mrow>
+    <mrow>y \amp= f(x)</mrow>
+    <mrow>f(x) \amp= -x -1</mrow>
+  </md>
+</p>
+
+<p>We can check by graphing:</p>
+  <graph grid xmin="-15" ymin="-15" xmax="15" ymax="15">
+    <function fixed applyStyleToLabel labelPosition="upperleft">-x - 1
+      <label><m>f(x) = -x-1</m></label>
+    </function>
+    <point name="knownPoint" fixed styleNumber="8" labelPosition="lowerright" applyStyleToLabel>(-9,8)
+      <label><m>(-9,8)</m></label>
+    </point>
+    <point name="yIntDemo" fixed styleNumber="11" applyStyleToLabel>(6,-7)
+      <label><m>(6,-7)</m></label>
+    </point>
+  </graph>
+</example>
+
+  
+  </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Consider the linear function as the line with the points <me>p_1 = (x_1, f(x_1))</me> and <me>p_2 = (x_2, f(x_2)).</me> Calculate slope:
+    <md>
+  <mrow>m \amp= \frac{f(x_2) - f(x_1)}{x_2 - x_1} \amp\text{slope equation, function notation}</mrow>
+  <mrow> \amp=<math name="slopeCalc">($p2.y - ($b))/($p2.x - ($a))</math> \amp\text{substitute known values}</mrow>
+  <mrow>\amp=$slopeCalc{simplify} \amp\text{simplify}</mrow>
+</md></li>
+  <li>Calculate <m>y</m>-intercept:
+<md>
+  <mrow>y \amp= mx + b \amp\text{slope-intercept form equation}</mrow>
+  <mrow>$b \amp= $m{simplify} ($a) + b \amp\text{substitute}\;x\;,y\;\text{values}</mrow>
+  <mrow>$b - (<math simplify>$m $a</math>)\amp= b \amp\text{solve for b}</mrow>
+  <mrow>$yInt{simplify} \amp= b \amp\text{simplify}</mrow>
+</md>
+  </li>
+  <li>
+<p>With known slope and <m>y</m>-intercept, we can now write the equation of the line, using function notation:
+  <me>f(x) = $correctFunc.formula{simplify}.</me></p>
+  </li>
+</ul>
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+

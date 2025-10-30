@@ -1,0 +1,105 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the amplitude of a cosine wave from its graph. Variants involve amplitudes ranging from 2 to 5 in increments of 1/2.
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="2" to="5" step="0.5"/>
+  <function name="f">$a cos(x)</function> 
+  <number name="zeroFixed" fixed>0</number>
+</setup>
+
+<!--testing-->
+
+<!--testing-->
+
+<p>Find the <ref uri="https://open.lib.umn.edu/precalculus/chapter/topic-2-2/">amplitude</ref> of the wave graphed below. </p>
+
+<p><em>tip: you can drag the $dp1.styleDescription point to measure vertical distance.</em></p>
+
+<graph xmin="-8" xmax="8" xTickScaleFactor="pi" ymin="-5.5" ymax="5.5" aspectRatio="3/2">
+  $f
+  <point name="dp1" styleNumber="2" layer="2">(-pi/2, 0)
+    <constraints>
+      <attractTo>$f</attractTo>
+    </constraints>
+  </point>
+  <point name="fp1" styleNumber="6" draggable="false">($dp1.x, $zeroFixed)</point>
+  <lineSegment name="measure" endpoints="$dp1 $fp1" styleNumber="6">
+    <label>$measure.length</label>
+  </lineSegment>
+  <line name="horizontal" through="$dp1" slope="0" styleNumber="2"/>
+
+</graph>
+
+
+<p><m>\text{Amplitude} = </m><answer name="ans1">
+      <mathInput name="userAns"/>
+      <award name="correct" allowedErrorInNumbers="0.25" allowedErrorIsAbsolute>   
+        <when>
+          $userAns = $a
+        </when>
+      </award>
+      <award name="double" credit="0">   
+        <when>
+          $userAns = 2$a
+        </when>
+      </award>
+    </answer></p>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct">$correctFeedback</feedback>
+
+  <feedback condition="$double">Recall, the <term>amplitude</term>
+   is defined as the vertical distance from the <em>midline</em> of the <m>
+  \text{cosine}</m> wave to its maximum value.</feedback>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p><m>\text{Amplitude} = $a</m></p>
+</solution>
+</problem>
+
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

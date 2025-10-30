@@ -1,0 +1,154 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: This problem involves application of properties of logarithms to simplify the sum of 2 logarithms and, equating sides, determine the unknown argument on the right-hand-side.
+
+
+Full simplification and symbolic equality is enforced for answer checking.
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="1" to="4" exclude="$b"/>
+  <selectFromSequence name="b" from="1" to="3"/>
+  <math name="c">2^$a 3^$b</math>
+  <math name="exprLHS" format="latex" simplify="numberspreserveorder">$a \log_b 2 + $b \log_b 3</math>
+  <math name="exprRHS" format="latex" simplify="numberspreserveorder">\log_b n</math>
+  <!--maths for incorrect answers-->
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>c = $c{simplify}</p>
+<p>exprLHS = $exprLHS{simplify}</p>
+<p>exprRHS = $exprRHS{simplify}</p> -->
+<!--testing-->
+
+
+<p>If <m>\;$exprLHS = $exprRHS</m>, find <m>n</m>.</p> 
+
+<p><m>n = </m> 
+  <answer name="ans26">
+    <mathInput name="userAns"/>
+    <award name="correct" symbolicEquality>
+      <when>$userAns = $c</when>
+    </award>
+
+    <award name="correctSimplified" symbolicEquality simplifyOnCompare>
+      <when>$userAns = $c{simplify}</when>
+    </award>
+  </answer>
+</p>
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct or $correctSimplified">$correctFeedback</feedback>
+
+   <feedback condition="$ans26.numSubmissions > 2 and $ans26.creditAchieved != 1">
+     <p>In order to solve this problem we need to use the properties of logarithms to simplify the expression on the right-hand side into one whose format resembles that of the expression on the left-hand side, and then equate corresponding terms.</p>
+   </feedback>
+
+
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+
+  
+<p>Here is a similar worked example:</p> 
+<example>
+<p><em>If <m>5\log_b 2 + 2\log_b 4 = \log_b n</m>, find <m>n</m>.</em></p> 
+  
+<p><em><alert>Solution.</alert></em></p>
+<ul>
+  <li>We apply the property of logarithms that
+    <me>\log_b x^n = n\log_b x</me>
+    and begin simplifying the left-hand side as follows:
+    <md>
+      <mrow>5\log_b 2 + 2\log_b 4 \amp= \log_b 2^5 + \log_b 4^2</mrow>
+    </md></li>
+  <li>Next, we combine the two terms on the left-hand side into a single term by applying the property of logarithms that
+    <me>\log_b xy = \log_b x + \log_b y.</me>
+    This will simplify the expression to a single term as follows:
+    <md>
+      <mrow>\log_b 2^5 + \log_b 4^2 \amp= \log_b (2^5 \cdot 4^2)</mrow>
+      <mrow>\amp= \log_b (32 \cdot 16)</mrow>
+      <mrow>\amp= \log_b 512</mrow>
+    </md></li>
+  <li>We can now compare our simplified expression to the right-hand side and equate corresponding terms to determine <m>n</m>,
+    <md>
+      <mrow>\log_b 512 \amp= \log_b n</mrow>
+      <mrow>512 \amp= n</mrow>
+    </md></li>
+</ul>
+</example>
+
+
+ </hint>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<ul>
+  <li>Simplify the left-hand side,
+    <md>
+      <mrow>$a\log_b 2 + $b\log_b 3 \amp=\log_b 2^{$a} + \log_b 3^{$b}</mrow>
+      <mrow>\amp=\log_b (2^{$a} \cdot 3^{$b})</mrow>
+      <mrow>\amp=\log_b ($c{simplify})</mrow>
+    </md></li>
+  <li>Compare simplified expression to the right-hand side and equate corresponding terms,
+    <md>
+      <mrow>\log_b ($c{simplify})\amp= $exprRHS</mrow>
+      <mrow>$c{simplify}\amp= n.</mrow>
+    </md></li>
+</ul>
+    
+</solution>
+</problem>
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

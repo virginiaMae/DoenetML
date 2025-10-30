@@ -1,0 +1,154 @@
+<problem><title/>
+<setup>
+  <selectFromSequence name="h" from="-4" to="4"/>
+  <selectFromSequence name="k" from="-4" to="4"/>
+  <selectFromSequence name="a" from="1" to="4"/>
+  <selectFromSequence name="b" from="1" to="4"/>
+  <math name="sol" simplify="numberspreserveorder">(y - $k)^2/$b^2 - (x - $h)^2/$a^2 = 1</math>
+  <line name="asymptotePos" styleNumber="6">y = ($b/$a)(x - $h) + $k</line>
+  <line name="asymptoteNeg" styleNumber="6">y = -($b/$a)(x - $h) + $k</line>
+  <number name="xmin">min($p1.x - 3, -1)</number>
+  <number name="xmax">max($p3.x + 3, 1)</number>
+  <number name="ymax">max($p3.y + 3, 1)</number>
+  <number name="ymin">min($p1.y - 3, -1)</number>
+</setup>
+
+
+<!--testing-->
+<!-- <p>h = $h</p>
+<p>k = $k</p>
+<p>a = $a</p>
+<p>b = $b</p>
+<p>sol = $sol</p>
+<p>p1 = $p1</p>
+<p>p2 = $p2</p>
+<p>p3 = $p3</p>
+<p>p4 = $p4</p> -->
+<!--testing-->
+
+
+<p>For the graph of the hyperbola below whose equation is of the form,
+  <me><math>(y - k)^2/b^2 - (x - h)^2/a^2 = 1</math></me>
+enter the values of <m>h</m>, <m>k</m>, <m>a</m>, and <m>b</m>.</p>
+
+  <graph grid="1 1" xmin="$xmin{link='false'}" xmax="$xmax{link='false'}" ymin="$ymin{link='false'}" ymax="$ymax{link='false'}">
+    <curve variable="t">($a sinh(t) + $h,$b cosh(t) + $k)</curve>
+    <curve variable="t">($a sinh(t) + $h,-$b cosh(t) + $k)</curve>
+    <point name="center" styleNumber="5">($h, $k)</point>
+    <label styleNumber="1" anchor="($center.x + 0.5, $center.y)" positionFromAnchor="upperright">$center.coords</label>
+    <point name="v1" applyStyleToLabel labelPosition="bottom">($h, $k - $b)
+      <label>$v1.coords</label>
+    </point>
+    <point name="v2" applyStyleToLabel labelPosition="top">($h, $k + $b)
+      <label>$v2.coords</label>
+    </point>
+    <label anchor="($p1.x - 0.25, $p1.y)" positionFromAnchor="upperleft">$p1.coords</label>
+    <label anchor="($p2.x + 0.25, $p2.y)" positionFromAnchor="upperright">$p2.coords</label>
+    <label anchor="($p3.x + 0.25, $p3.y)" positionFromAnchor="lowerright">$p3.coords</label>
+    <label anchor="($p4.x - 0.25, $p4.y)" positionFromAnchor="lowerleft">$p4.coords</label>
+
+    <rectangle name="rectangle" vertices="($h - $a, $k - $b) ($h + $a, $k + $b)" styleNumber="5"/>
+    <point name="p1" styleNumber="6">$rectangle.vertices[1]</point>
+    <point name="p2" styleNumber="6">$rectangle.vertices[2]</point>
+    <point name="p3" styleNumber="6">$rectangle.vertices[3]</point>
+    <point name="p4" styleNumber="6">$rectangle.vertices[4]</point>
+
+    <curve variable="t" hide="!$showUserFunc" styleNumber="8">($user_a sinh(t) + $user_h,$user_b cosh(t) + $user_k)</curve>
+    <curve variable="t" hide="!$showUserFunc" styleNumber="8">($user_a sinh(t) + $user_h,-$user_b cosh(t) + $user_k)</curve>
+    $asymptotePos
+    $asymptoteNeg
+  </graph>
+
+<sideBySide>
+<div>
+<p><m>h = </m> <mathInput name="user_h"/></p>
+<p><m>k = </m> <mathInput name="user_k"/></p>
+</div>
+
+<div>
+<p><m>a = </m> <mathInput name="user_a"/></p>
+<p><m>b = </m> <mathInput name="user_b"/></p>
+</div>
+</sideBySide>
+
+<p>Your equation is: <math simplify="numberspreserveorder">(y - $user_k)^2/($user_b^2) - (x - $user_h)^2/($user_a^2)</math></p>
+<setup>
+  <boolean name="hIncorrect">$user_h != $h and $ans1.justSubmitted</boolean>
+  <boolean name="kIncorrect">$user_k != $k and $ans1.justSubmitted</boolean>
+  <boolean name="aIncorrect">$user_a != $a and $ans1.justSubmitted</boolean>
+  <boolean name="bIncorrect">$user_b != $b and $ans1.justSubmitted</boolean>
+</setup>
+  
+  <answer name="ans1">
+    <award name="correct">
+      <when>$user_h = $h and $user_k = $k and $user_a = $a and $user_b = $b</when>
+    </award>
+  </answer>
+<booleanInput name="showUserFunc">
+  <label>Show second curve</label>
+</booleanInput>
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$correct and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+  <feedback condition="$hIncorrect">Your <m>h</m> value is incorrect.</feedback>
+  <feedback condition="$kIncorrect">Your <m>k</m> value is incorrect.</feedback>
+  <feedback condition="$aIncorrect">Your <m>a</m> value is incorrect.</feedback>
+  <feedback condition="$bIncorrect">Your <m>b</m> value is incorrect.</feedback>
+
+  
+<!--*********************************************
+            Hint
+**********************************************-->
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>h = $h</m></p>
+<p><m>k = $k</m></p>
+<p><m>a = $a</m></p>
+<p><m>b = $b</m></p>
+<p>The equation is: <m>$sol</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<styleDefinition styleNumber="1" backgroundColor="white" fillOpacity="1"/>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
+
+  
+
+  

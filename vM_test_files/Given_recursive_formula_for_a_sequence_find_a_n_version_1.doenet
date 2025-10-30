@@ -1,0 +1,139 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Given a recursivle formula for a sequence and a specified initial term, determine the kth term of the sequence. This problem has two versions:
+Version 1: a simpler version where the sequence always has the form 2 a_(n-1) - 1. The value of the initial term and the required term vary
+Version 2: the sequence formula varies, negative values allowed
+
+Delete or comment out the <hint> to remove the Worked Example.
+
+*************************************************************--> 
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="2" to="4"/>
+  <selectFromSequence name="p" from="4" to="6"/>
+  
+  <math name="expr">2 a_(n-1) - 1</math>
+  <math name="a_p">($a - 1)2^($p - 1) + 1</math>
+  <!--discrete steps for solution section-->
+  <math name="step1">2*$a - 1</math>
+  <math name="step2">2 $step1{simplify} - 1</math>
+  <math name="step3">2 $step2{simplify} - 1</math>
+  <math name="step4">2 $step3{simplify} - 1</math>
+  <math name="step5">2 $step4{simplify} - 1</math>
+  <!--maths for incorrect responses-->
+
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>p = $p</p>
+<p>expr = $expr</p>
+<p>a_p = $a_p</p>
+<p>a_p{simplify} = $a_p{simplify}</p> -->
+<!--testing-->
+  
+<p>If <m>a_1 = $a</m> and <m>a_n = $expr</m>, find <m>a_$p</m>.</p>
+  <p><m>a_$p = </m>
+      
+    <answer name="ans2" >
+      <mathInput name="userInput"/> 
+      <award name="correct">    
+        <when>
+      $userInput=$a_p{simplify}
+        </when>
+      </award>
+    </answer>
+  </p>
+
+
+ 
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+  <feedback condition="$correct">Awesome!</feedback>
+
+
+<!--*********************************************
+            Hint
+**********************************************-->
+<hint name="helpSection"><title>Worked Example</title>
+<p>Here is a similar worked example:</p>
+
+<example>
+<p><em>If <m>a_1 = 6</m> and <m>a_n = $expr</m>, find <m>a_5</m>.</em></p>
+<p>In this example, we create a table since the requested <m>n</m> value is sufficiently small that a step-wise or recursive solution is not overly laborious. Here is a similar worked example:</p>
+
+  <p><em><alert>Solution.</alert></em></p>
+  <md>
+    <mrow>a_1 \amp= 6\;\;\;\amp\text{given information}</mrow>
+    <mrow>a_2 \amp= 2\cdot 6 - 1 = 11\;\;\;\amp\text{substitute}\;\; a_{n-1} = a_1 = 6</mrow>
+    <mrow>a_3 \amp= 2\cdot 11 - 1 = 21\;\;\;\amp\text{substitute}\;\;  a_{n-1} = a_2 = 11</mrow>
+    <mrow>a_4 \amp= 2\cdot 21 - 1 = 41\;\;\;\amp\text{substitute}\;\;  a_{n-1} = a_3 = 21</mrow>
+    <mrow>a_5 \amp= 2\cdot 41 - 1 = 81\;\;\;\amp\text{substitute}\;\;  a_{n-1} = a_4 = 41</mrow>
+  </md>
+</example>  
+
+  </hint>
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>To solve for <m>a_$p</m> with the given recursive formula, we construct a table of values:</p>
+<conditionalContent>
+  <case condition="$p = 4">
+    <md>
+      <mrow>a_1 \amp= $a</mrow>
+      <mrow>a_2 \amp= $step1 = $step1{simplify}</mrow>
+      <mrow>a_3 \amp= $step2 = $step2{simplify}</mrow>
+      <mrow>a_4 \amp= $step3 = $step3{simplify}</mrow>
+    </md>
+  </case>
+  <case condition="$p = 5">
+    <md>
+      <mrow>a_1 \amp= $a</mrow>
+      <mrow>a_2 \amp= $step1 = $step1{simplify}</mrow>
+      <mrow>a_3 \amp= $step2 = $step2{simplify}</mrow>
+      <mrow>a_4 \amp= $step3 = $step3{simplify}</mrow>
+      <mrow>a_5 \amp= $step4 = $step4{simplify}</mrow>
+    </md>
+  </case>
+  <case condition="$p = 6">
+    <md>
+      <mrow>a_1 \amp= $a</mrow>
+      <mrow>a_2 \amp= $step1 = $step1{simplify}</mrow>
+      <mrow>a_3 \amp= $step2 = $step2{simplify}</mrow>
+      <mrow>a_4 \amp= $step3 = $step3{simplify}</mrow>
+      <mrow>a_5 \amp= $step4 = $step4{simplify}</mrow>
+      <mrow>a_6 \amp= $step5 = $step5{simplify}</mrow>
+    </md>
+  </case>
+</conditionalContent>
+<p>If the student prefers to try to discover an explicit solution based on the pattern, one such equivalent explicit solution is: <me>a_n = (a_1 - 1)\cdot2^{(n - 1)} + 1</me>.</p>
+</solution>
+</problem>
+
+
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

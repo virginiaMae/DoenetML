@@ -1,0 +1,14 @@
+<title>This is a graph</title>
+
+<graph name="graph" xmin="-1" xmax="10">
+  <point name="A">($graph.xmin*-4 , 6)</point>
+  <endpoint name="B">($A.y, -3)</endpoint>
+  <lineSegment name="segAB" endpoints="$A $B"/>
+  <line name="lineB" through="$B" slope="$A.x / $B.y"/>
+  <circle name="circ" center="$lineB.yIntercept" radius="$segAB.length"/>
+  <function name="f">$circ.diameter x^2 + $lineB.slope x</function>
+  <label anchor="(0,$lineB.yIntercept)">Minimum</label>
+  <parabola name="parab" through="$A $B (7,2)"/>
+  <regularPolygon name="penta" numSides="5" center="$parab.vertex"/>
+  <math anchor="$penta.vertices[3]">x^2</math>
+</graph>

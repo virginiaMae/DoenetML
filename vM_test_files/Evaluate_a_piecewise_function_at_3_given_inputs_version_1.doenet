@@ -1,0 +1,164 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Evaluate a piecewise function at three given inputs. A graphing tool is provided to help with visualizing the geometry of the problem. This problem has two versions.
+Version 1: The endpoint is included in the first inequality
+Version 2: The endpoint is included in the second inequality
+*************************************************************-->
+<problem><title/>
+<setup>
+  <selectFromSequence name="a" from="-4" to="4" exclude="-1 0 1"/>
+  <selectFromSequence name="b" from="-8" to="8" exclude="0"/>
+  <selectFromSequence name="c" from="-4" to="4" exclude="-1 0 1"/>
+  <piecewiseFunction name="f" symbolic="false" simplify="numberspreserveorder">
+    <function domain="(-infinity, 2]">x^2 + $c</function>
+    <function domain="(2, 10)" simplify>$a x + $b</function>
+  </piecewiseFunction>
+  <function name="fUnrest" symbolic="false">$a x + $b</function>
+  <boolean name="usedWrongPiece">$$fUnrest(2) = $userInput2 and $$fUnrest(2) != $$f(2)</boolean>
+  <math name="solNeg1">$$f(-1)</math>
+  <math name="sol2">$$f(2)</math>
+  <math name="sol4">$$f(4)</math>
+</setup>
+
+
+<!--testing-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>f = $f</p>
+<p>solNeg1 = $solNeg1</p>
+<p>sol2 = $sol2</p>
+<p>sol4 = $sol4</p> -->
+<!-- <graph>$f</graph> -->
+<!--testing-->
+
+<p>Evaluate the following piecewise-defined function at the given points.</p> 
+
+<m>f(x) = $f{simplify}</m>
+
+
+
+<!--******************************************************
+            Graphing Tool
+*******************************************************-->
+<aside><title>Graphing tool</title>
+<p>Graph piecewise function: </p>
+<sideBySide widths="15% 85%">
+  <p><m>f(x) = \Huge{ \{ }</m></p>
+
+  <stack>
+  <p><mathInput name="userF1"/> if <m>x \leq 2</m></p>
+  <p><mathInput name="userF2"/> if <m>2 < x < 10</m></p>
+  </stack>
+</sideBySide>
+  
+<setup>
+  <piecewiseFunction name="graphFunc" symbolic="false">
+    <function name="fL" domain="(-infinity, 2]">$userF1</function>
+    <function name="fR" domain="(2, 10)">$userF2</function>
+  </piecewiseFunction>
+  <function name="fR_unrestr" copySource="fR" domain="(-infinity, infinity)"/>
+  <endpoint name="ep1" open="false" switchable="false" draggable="false" layer="2">
+    (2, $$graphFunc(2))
+  </endpoint>
+  <endpoint name="ep2" open switchable="false" draggable="false">
+    (2, $$fR_unrestr(2))
+  </endpoint>
+  <endpoint name="ep3" open switchable="false" draggable="false">
+    (10, $$fR_unrestr(10))
+  </endpoint>
+</setup>
+      
+<sideBySide margins="5%" widths="40% 60%">
+<div>
+<p>Check points:</p>
+<p><m>f(-1) = \bigg( -1, </m><mathInput name="userp1" bindValueTo="$userInputNeg1"/><m>\bigg)</m></p> 
+<p><m>f(2) = \bigg( 2, </m><mathInput name="userp2" bindValueTo="$userInput2"/><m>\bigg)</m></p> 
+<p><m>f(4) = \bigg( 4, </m><mathInput name="userp3" bindValueTo="$userInput4"/><m>\bigg)</m></p> 
+</div>
+  
+<graph>
+  <point styleNumber="5" draggable="false">(-1, $userp1)</point>
+  <point styleNumber="5" draggable="false" layer="3">(2, $userp2)</point>
+  <point styleNumber="5" draggable="false">(4, $userp3)</point>
+  $graphFunc
+  $ep1 $ep2 $ep3
+</graph>  
+</sideBySide>
+
+</aside>  
+
+
+
+<!--******************************************************
+            User Input
+*******************************************************-->  
+<p><m>f(-1) = </m> <mathInput name="userInputNeg1" /></p>
+<p><m>f(2) = </m> <mathInput name="userInput2" /></p>
+<p><m>f(4) = </m> <mathInput name="userInput4" /></p>
+  <answer name="ans1">
+    <award name="allCorrect">
+      <when>$userInputNeg1 = $solNeg1 and $userInput2 = $sol2 and $userInput4 = $sol4</when>
+    </award>
+  </answer>
+
+
+
+
+
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$allCorrect and $ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+  <feedback condition="$usedWrongPiece and $ans1.justSubmitted = true">Double check that you are evaluating the correct "piece" of the function at all locations.</feedback>
+
+  <feedback condition="$userInputNeg1 != $solNeg1 and $ans1.justSubmitted">Your response for <m>f(-1)</m> is incorrect.</feedback>
+  <feedback condition="$userInput2 != $sol2 and $ans1.justSubmitted">Your response for <m>f(2)</m> is incorrect.</feedback>
+  <feedback condition="$userInput4 != $sol4 and $ans1.justSubmitted">Your response for <m>f(4)</m> is incorrect.</feedback>
+  
+
+<!--*********************************************
+            Solution
+**********************************************-->
+<solution>
+<p><m>f(-1) = $solNeg1</m></p>
+<p><m>f(2) = $sol2</m></p>
+<p><m>f(4) = $sol4</m></p>
+</solution>
+</problem>
+
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>

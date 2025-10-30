@@ -1,0 +1,117 @@
+<!--************************************************************
+Author: University of Minnesota PreCalculus Dept.
+Reviewed/Remixed by: Doenet team
+
+About the problem: Determine the probability of landing k heads when n coins are tossed. This problem is randomized, with the number of coins ranging from 5 to 7 and the number of heads varying from 1 to n-1. The order of choices is also shuffled.
+
+
+
+QUESTION: A jar contains $$d$$ ping pong balls, $$a$$ of which are blue and $$b$$ of which are red. Two ping pong balls are drawn without replacement. What is the probability that at least one ping pong ball is blue? In other words, what is the probability that the first ping pong ball is blue or the second ping pong ball is blue, or both? Enter your answer as a fraction. 
+ ;; 
+
+VARIABLES: {$$a$$[{3,9}, Integer], $$b$$[{4,8}, Integer]} ;;
+
+ComputedVariables: {$$d$$ -> $$a$$+$$b$$};;
+
+answerLabel = {""};;
+
+answer = {1-($$b$$^2-$$b$$)/($$d$$^2-$$d$$)};;
+
+tolerance = 0
+
+
+
+*************************************************************-->
+<problem>
+<setup>
+  <selectFromSequence name="a" from="3" to="9"/>
+  <selectFromSequence name="b" from="4" to="8"/>
+  <math name="d" simplify>$a + 
+  $b</math>
+  <math name="sol" simplify>1 - ($b^2 - $b)/($d^2 - $d)</math>
+</setup>
+
+<!--******************************************************
+            Begin testing
+*******************************************************-->
+<!-- <p>a = $a</p>
+<p>b = $b</p>
+<p>d = $d</p>
+<p>sol = $sol</p> -->
+
+<!--******************************************************
+            End testing
+*******************************************************-->
+<p>A jar contains <m>$d</m> ping pong balls, <m>$a</m> of which are blue and <m>$b</m> of which are red. Two ping pong balls are drawn without replacement. What is the probability that at least one ping pong ball is blue? In other words, what is the probability that the first ping pong ball is blue or the second ping pong ball is blue, or both?</p>
+  
+<p><em>Enter your answer as a fraction. </em></p>
+
+
+<!--*********************************************
+            User solution input
+**********************************************-->  
+<p><m>P(\text{at least one blue}) = </m>
+  <answer>$sol</answer>
+</p>
+
+<!--*********************************************
+            Feedbacks
+**********************************************-->
+<setup>
+  <select name="correctFeedback" type="text">
+    <option>Awesome!</option>
+    <option>Great job!</option>
+    <option>Fantastic!</option>
+    <option>Nice work!</option>
+    <option>Amazing!</option>
+    <option>Excellent!</option>
+    <option>Right on!</option>
+    <option>Perfect!</option>
+  </select>
+</setup>
+  <feedback condition="$ans1.creditAchieved = 1">$correctFeedback</feedback>
+
+<!--*********************************************
+            Hint
+**********************************************-->
+
+
+<!--*********************************************
+            Solution
+**********************************************-->  
+<solution>
+<p>This is one strategy. Other (perhaps faster!...) strategies are possible.</p>
+<p>There are three ways to choose at least one blue ball: (first blue, second blue), (first blue, second red), (first red, second blue). Each of these has the following probability of occuring:</p>
+<p><alert>(blue, blue)</alert>: At first, there are <m>$d</m> balls to choose from, and <m>$a</m> possible blue balls. So, the first pick has probability <m>P = <math name="aOverD">$a/$d</math></m>. For the second pick, there are now only <math simplify>$d - 1</math> balls left to choose from, and there are <math simplify>$a - 1</math> blue balls remaining. So, to pick blue again has probability <m>P = <math name="secondChoice" simplify>($a - 1)/($d - 1)</math></m>. Combining these two selections gives a total probability for this selection of <m>P = ($aOverD)($secondChoice) = <math name="p1" simplify>($aOverD)($secondChoice)</math></m></p>
+
+<p><alert>(blue, red)</alert>: The first choice again has probability <m>$aOverD</m>. Next, there are <m>$b</m> red balls of the <math simplify>$d - 1</math> balls remaining, so the second choice has probability <math name="secondChoice2" simplify>$b/($d - 1)</math>. Combining these two selections gives a total probability for this selection of <m>P = ($aOverD)($secondChoice2) = <math name="p2" simplify>($aOverD)($secondChoice2)</math></m></p>
+
+<p><alert>(red, blue)</alert>: The first choice has probability <math name="bOverD">$b/$d</math>. Next, there are <m>$a</m> blue balls of the <math simplify>$d - 1</math> balls remaining, so the second choice has probability <math name="secondChoice3" simplify>$a/($d - 1)</math>. Combining these two selections gives a total probability for this selection of <m>P = ($bOverD)($secondChoice3) = <math name="p3" simplify>($bOverD)($secondChoice3)</math></m></p>
+
+<p>The sum of all of these three possiblities gives the total probability of at least one blue ball being selected.</p>
+  
+  
+<p><m>P(\text{at least one blue}) = $p1 + $p2 + $p3 = $sol</m></p>
+
+<p><em>Can you think of another way to do this involving only one probability computation?</em></p>
+</solution>
+</problem>
+<!--******************************************************
+        Style Definitions
+*******************************************************-->  
+<setup>
+<styleDefinitions>
+<!--blue, styleNumber 1 corrolary-->
+<styleDefinition styleNumber="7" fillColor="#648FFF" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#648FFF"/>
+<!--red, styleNumber 2 corrolary-->
+<styleDefinition styleNumber="8" fillColor="#D4042D" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#D4042D" lineColor="#D4042D" lineOpacity="0.7"  lineWidth="4"/>
+<!--orange, styleNumber 3 corrolary-->
+<styleDefinition styleNumber="9" fillColor="#F19143" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#F19143" lineColor="#F19143" lineOpacity="0.7"  lineWidth="4"/>
+<!--purple, styleNumber 4 corrolary-->
+<styleDefinition styleNumber="10" fillColor="#644CD6" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#644CD6" lineColor="#644CD6" lineOpacity="0.7" lineWidth="4"/>
+<!--black, styleNumber 5 corrolary-->
+<styleDefinition styleNumber="11" fillColor="black" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="black" lineColor="black" lineOpacity="0.7" lineWidth="4"/>
+<!--green, styleNumber 1 but green corrolary-->
+<styleDefinition styleNumber="12" fillColor="#469152" fillOpacity="0.1" markerSize="6" markerStyle="circle" markerColor="#469152" lineColor="#469152" lineOpacity="0.7" lineWidth="4"/>
+</styleDefinitions>
+</setup>
