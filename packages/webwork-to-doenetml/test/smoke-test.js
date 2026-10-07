@@ -264,4 +264,72 @@ assert.match(
     /<conditionalContent><case condition="\$a=1"><p>Is it a function\?: Yes<\/p><\/case>/,
 );
 
+// If blocks that switch on a random value become a <select>
+output = convert(String.raw`DOCUMENT();
+$a = random(1,2,1);
+$graph1 = init_graph(-5,-5,5,5);
+if ($a==1){
+$p1 = FEQ("x+1 for x in <-5,0> using color:blue");
+$c = Compute("2x");
+plot_functions($graph1,$p1);
+}
+if ($a==2){
+$p1 = FEQ("x-4 for x in <0,4> using color:blue");
+$p2 = FEQ("-x+4 for x in <0,4> using color:blue");
+$c = Compute("3x");
+plot_functions($graph1,$p1,$p2);
+}
+$d = Compute("$a + 1");
+BEGIN_TEXT
+Case $a.
+$PAR
+\{ image(insertGraph($graph1),width=>200) \}
+$PAR
+\{ ans_rule(10) \}
+END_TEXT
+ANS($c->cmp);
+ENDDOCUMENT();`);
+
+assert.doesNotMatch(output, /Unrecognized|defined differently/);
+assert.match(
+    output,
+    /<select name="s1">\s*<option>\s*<number name="a">1<\/number>\s*<function name="p1" domain="\[-5,0\]"[^>]*>x\+1<\/function>\s*<math name="c" simplify="full">2x<\/math>\s*<group name="graph1Plot">\$p1<\/group>\s*<\/option>/,
+);
+const option2 = output.match(
+    /<option>\s*<number name="a">2<\/number>[\s\S]*?<\/option>/,
+)[0];
+assert.match(
+    option2,
+    /<function name="p1" domain="\[0,4\]"[^>]*>x-4<\/function>/,
+);
+assert.match(option2, /<function name="p2"[^>]*>-x\+4<\/function>/);
+assert.match(option2, /<math name="c" simplify="full">3x<\/math>/);
+assert.match(option2, /<group name="graph1Plot">\$p1 \$p2<\/group>/);
+assert.match(output, /<math name="d" simplify="full">\$s1\.a \+ 1<\/math>/);
+assert.match(output, /<p>Case \$s1\.a\.<\/p>/);
+assert.match(
+    output,
+    /<graph[^>]*>\s*<shortDescription>A graph<\/shortDescription>\s*\$s1\.graph1Plot\s*<\/graph>/,
+);
+assert.match(output, /<answer name="ans1">\$s1\.c<\/answer>/);
+assert.doesNotMatch(output, /<selectFromSequence name="a"/);
+
+// ...but not when there's an else block: keep the old behavior and warn
+output = convert(String.raw`DOCUMENT();
+$a = random(1,2,1);
+$graph1 = init_graph(-5,-5,5,5);
+if ($a==1){
+$p1 = FEQ("x+1 for x in <-5,0>");
+} else {
+$p1 = FEQ("x-4 for x in <0,4>");
+}
+plot_functions($graph1,$p1);
+BEGIN_TEXT
+\{ image(insertGraph($graph1),width=>200) \}
+END_TEXT
+ENDDOCUMENT();`);
+
+assert.match(output, /p1 is defined differently in if blocks/);
+assert.doesNotMatch(output, /<select /);
+
 console.log("webwork-to-doenetml smoke test passed");

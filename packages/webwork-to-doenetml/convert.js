@@ -128,6 +128,7 @@ export function convert(data) {
     let graphBounds = {}; // from init_graph: { xmin, ymin, xmax, ymax }
     let graphPens = {}; // current point of $graph->moveTo/lineTo
     let graphFills = {}; // $graph->fillRegion([x, y, color]): [{ x, y }]
+    let conditionalPlots = {}; // plot_functions in if blocks: [{ child, condition }]
 
     // Things that are printed in the TEXT section, so are rendered later
     let tables = {}; // $t = BeginTable()...: [{ graphs, labels }] per row
@@ -147,10 +148,17 @@ export function convert(data) {
 
         let data = setup.get(name);
         if (data) {
-            // Ignore open and close, add child option
+            // Keep the first open and close, add child option. Each option
+            // also keeps its own open and close, in case its if block
+            // becomes a <select> option.
 
             let childOptions = data.childOptions;
-            childOptions.push({ value: child, condition: conditionText });
+            childOptions.push({
+                value: child,
+                condition: conditionText,
+                open,
+                close,
+            });
 
             setup.set(name, {
                 open: data.open,
@@ -159,7 +167,9 @@ export function convert(data) {
             });
         } else {
             // Use open and close and child
-            let childOptions = [{ value: child, condition: conditionText }];
+            let childOptions = [
+                { value: child, condition: conditionText, open, close },
+            ];
             setup.set(name, {
                 open: open,
                 childOptions: childOptions,
@@ -315,11 +325,16 @@ export function convert(data) {
             let plotGraph = plotArgs.shift();
             plotGraph = plotGraph.slice(1); //remove $
 
-            // A graph can be plotted in more than one if block
+            // Plots inside if blocks are sorted out after all statements
+            const condition = conditionTextOf(activeConditions);
             for (let child of plotArgs) {
-                graphContents[plotGraph] ??= [];
-                if (!graphContents[plotGraph].includes(child)) {
-                    graphContents[plotGraph].push(child);
+                if (condition) {
+                    (conditionalPlots[plotGraph] ??= []).push({
+                        child,
+                        condition,
+                    });
+                } else {
+                    (graphContents[plotGraph] ??= []).push(child);
                 }
             }
 
@@ -370,6 +385,125 @@ export function convert(data) {
             // ERROR: unrecognized pattern
         } else {
             out += warnAndComment(`Unrecognized pattern: ${statement}`);
+        }
+    }
+
+    // If blocks that switch on a random value become a <select>:
+    //
+    //     $a = random(1,2,1);
+    //     if ($a==1) { $p = FEQ(...); plot_functions($graph1, $p); }
+    //     if ($a==2) { $p = FEQ(...); plot_functions($graph1, $p); }
+    //
+    // becomes a <select> with an <option> for each value of $a, holding
+    // <number name="a">, that branch's definitions, and a <group> of what it
+    // plots on each graph. References from outside go through the select:
+    // `$p` -> `$s1.p`. Definitions with any other kind of condition are left
+    // as they were.
+    let switchSelects = [];
+    let renames = new Map(); // name -> name through the select, e.g. s1.p
+    const switchCondition = (condition) =>
+        condition.match(/^\$(\w+)\s*=\s*(-?\d+)$/);
+
+    // Definitions and plots where every condition is `$v = k`, by v
+    let switches = new Map();
+    for (let [name, data] of setup) {
+        const matches = data.childOptions.map((option) =>
+            switchCondition(option.condition),
+        );
+        const variable = matches[0]?.[1];
+        if (variable && matches.every((m) => m && m[1] === variable)) {
+            if (!switches.has(variable)) {
+                switches.set(variable, { definitions: [], plots: [] });
+            }
+            switches.get(variable).definitions.push(name);
+        }
+    }
+    for (let [graphName, plots] of Object.entries(conditionalPlots)) {
+        for (let plot of plots) {
+            const variable = switchCondition(plot.condition)?.[1];
+            if (switches.has(variable)) {
+                switches.get(variable).plots.push({ graphName, ...plot });
+            }
+        }
+    }
+
+    for (let [variable, { definitions, plots }] of switches) {
+        // The variable must be a plain random(from, to, step)
+        const variableData = setup.get(variable);
+        const findRandom = variableData?.open.match(
+            /^<selectFromSequence name="\w+" from="(-?\d+)" to="(-?\d+)"( step="(\d+)")?( exclude="0")?\/>$/,
+        );
+        if (
+            !findRandom ||
+            variableData.childOptions.length !== 1 ||
+            variableData.childOptions[0].condition !== ""
+        ) {
+            continue;
+        }
+        const [, from, to, , step = "1", exclude] = findRandom;
+        let values = [];
+        for (let k = Number(from); k <= Number(to); k += Number(step)) {
+            if (!(exclude && k === 0)) {
+                values.push(k);
+            }
+        }
+        if (values.length === 0 || values.length > 20) {
+            continue;
+        }
+
+        const selectName = `s${selects.length + switchSelects.length + 1}`;
+        let select = `<select name="${selectName}">\n`;
+        for (let k of values) {
+            const isK = (condition) =>
+                Number(switchCondition(condition)[2]) === k;
+            select += `${tab}<option>\n`;
+            select += `${tab}${tab}<number name="${variable}">${k}</number>\n`;
+            for (let name of definitions) {
+                for (let option of setup.get(name).childOptions) {
+                    if (isK(option.condition)) {
+                        select += `${tab}${tab}${option.open}${option.value}${option.close}\n`;
+                    }
+                }
+            }
+            // What this branch plots on each graph
+            let branchPlots = {};
+            for (let { graphName, child, condition } of plots) {
+                if (isK(condition)) {
+                    (branchPlots[graphName] ??= []).push(child);
+                }
+            }
+            for (let [graphName, children] of Object.entries(branchPlots)) {
+                select += `${tab}${tab}<group name="${graphName}Plot">${children.join(" ")}</group>\n`;
+            }
+            select += `${tab}</option>\n`;
+        }
+        select += `</select>`;
+        switchSelects.push(select);
+
+        // Take everything that's now in the select out of setup
+        setup.delete(variable);
+        renames.set(variable, `${selectName}.${variable}`);
+        for (let name of definitions) {
+            setup.delete(name);
+            renames.set(name, `${selectName}.${name}`);
+        }
+        for (let graphName of new Set(plots.map((p) => p.graphName))) {
+            (graphContents[graphName] ??= []).push(
+                `$${selectName}.${graphName}Plot`,
+            );
+            conditionalPlots[graphName] = conditionalPlots[graphName].filter(
+                (plot) => switchCondition(plot.condition)?.[1] !== variable,
+            );
+        }
+    }
+
+    // Any other plots in if blocks: plot everything (each only once)
+    for (let [graphName, plots] of Object.entries(conditionalPlots)) {
+        for (let { child } of plots) {
+            graphContents[graphName] ??= [];
+            if (!graphContents[graphName].includes(child)) {
+                graphContents[graphName].push(child);
+            }
         }
     }
 
@@ -462,6 +596,12 @@ export function convert(data) {
         popups,
     };
 
+    // Placeholders for the <select>s from if blocks, filled in at the end so
+    // that renaming references doesn't touch what's inside them
+    switchSelects.forEach((select, i) => {
+        out += `⟦switch${i}⟧\n`;
+    });
+
     for (let [name, data] of setup) {
         let options = data.childOptions;
         if (
@@ -548,6 +688,21 @@ export function convert(data) {
         const solutionOut = textSection(solutionSection, [], [], context);
         out += `\n<solution>\n${solutionOut}</solution>\n`;
     }
+
+    // References to what moved into a <select> go through the select
+    if (renames.size > 0) {
+        const renameRegex = new RegExp(
+            String.raw`(\$\$?)(${[...renames.keys()].join("|")})\b(?!\.\w)`,
+            "g",
+        );
+        out = out.replace(
+            renameRegex,
+            (match, dollars, name) => dollars + renames.get(name),
+        );
+    }
+    switchSelects.forEach((select, i) => {
+        out = out.replace(`⟦switch${i}⟧`, select.replaceAll("\n", `\n${tab}`));
+    });
 
     out = headerComment(data) + "<problem><title />\n" + out;
     out += "</problem>\n";
@@ -834,7 +989,10 @@ function functionStatement(name, func, argsString, graphicalStyleCount) {
         open = `<selectFromSequence${nameStr} from="${args[0]}" to="${args[1]}"${step}/>`;
     } else if (func === "non_zero_random") {
         // <selectFromSequence>, exclude 0
-        let step = args[2] === "1" ? "" : ` step="${args[2]}"`;
+        let step =
+            args[2] === "1" || args[2] === undefined
+                ? ""
+                : ` step="${args[2]}"`;
         open = `<selectFromSequence${nameStr} from="${args[0]}" to="${args[1]}"${step} exclude="0"/>`;
     } else if (func === "Real") {
         // <number>
@@ -1036,6 +1194,8 @@ function selectListBlock(list, answerRecords) {
  */
 function popupAnswer(name, popup, description, answerRecords) {
     const { choices, correct } = popup;
+    // e.g. "Answer:" -> "Answer"
+    description = description.replace(/[\s:]+$/, "");
     const shortDescription = `<shortDescription>${description}</shortDescription>`;
 
     // Conditions only matter if they lead to different answers
