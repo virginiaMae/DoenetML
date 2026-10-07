@@ -33,6 +33,7 @@
     ],
     "scripts": {
         "build": "npm run build --workspace packages/doenetml",
+        "scrape-doenetml": "node scripts/scrape-doenetml.mjs",
         "build:all": "npm run build -ws --if-present",
         "clean": "rimraf packages/*/dist",
         "dev": "npm run dev --workspace packages/doenetml",
@@ -142,6 +143,7 @@
         "prettier": "^3.6.2",
         "prettier-plugin-pegjs": "^2.0.2",
         "prismjs": "^1.30.0",
+        "puppeteer": "^21.11.0",
         "react": "^19.1.1",
         "react-bootstrap": "^2.10.10",
         "react-copy-to-clipboard": "^5.1.0",

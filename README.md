@@ -220,6 +220,26 @@ get rebuilt. Instead you should use
 npm run build --watch
 ```
 
+## Scraper utilities
+
+This repository includes small helper scripts to extract embedded DoenetML from a web page that serves activities dynamically.
+
+- Scripts are located in the `scripts/` directory: `scrape-doenetml.mjs`, `scrape-doenetml-network.mjs`, `scrape-doenetml-fast.mjs`, and `extract-doenetml.mjs`.
+- To run the network-capable scraper (recommended for client-side rendered pages):
+
+```bash
+npm run scrape-doenetml -- "https://doenet.org/sharedActivities/aM1EeELqDCwTamWnYKeTLe/5mqti6pRx4tEqQXjQgP1Fk"
+```
+
+- Or run directly:
+
+```bash
+node scripts/scrape-doenetml-network.mjs "https://doenet.org/sharedActivities/aM1EeELqDCwTamWnYKeTLe/5mqti6pRx4tEqQXjQgP1Fk" --output=downloaded
+```
+
+- Output: captures and extracted DoenetML are saved under `downloaded/extracted/...` preserving activity path segments.
+- Requirements: `puppeteer` is required for the network scraper; it has been added as a devDependency. Run `npm install` in this folder if you haven't already.
+
 from a package's directory to have `wireit` manage rebuilding of dependencies. For example, to automatically rebuild
 `doenetml` on any change and have that reflected in `test-viewer`, you could run
 
