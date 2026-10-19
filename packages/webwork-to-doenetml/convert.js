@@ -189,7 +189,14 @@ export function convert(data) {
 
         // Open conditional if
         if ((find = statement.match(/if\s*\((.*)\)/))) {
-            let condition = find[1].trim();
+            // Perl -> DoenetML: `$a == 3 && $b == 6` -> `$a = 3 and $b = 6`
+            let condition = find[1]
+                .trim()
+                .replaceAll("==", "=")
+                .replaceAll("&&", " and ")
+                .replaceAll("||", " or ")
+                .replace(/\s+eq\s+/g, " = ")
+                .replace(/\s+/g, " ");
             activeConditions.push(condition);
 
             // Open conditional else
@@ -1265,9 +1272,8 @@ function plainText(text) {
 function textSection(text, answers, answerRecords, context) {
     let out = "";
 
-    text = text.replaceAll("\r\n", "");
-    text = text.replaceAll("\n", "");
-    text = text.replaceAll("\r", "");
+    // Lines of text run together, like in HTML
+    text = text.replace(/\s*(\r\n|\n|\r)\s*/g, " ");
 
     // Bold text: <alert>
     text = text.replaceAll("$BBOLD", "<alert>");
