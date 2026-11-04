@@ -332,4 +332,99 @@ ENDDOCUMENT();`);
 assert.match(output, /p1 is defined differently in if blocks/);
 assert.doesNotMatch(output, /<select /);
 
+// A two-part MultiAnswer shown as a fraction, with a custom checker
+// (from Alg 10.4.2 in the PreCalculus library; OPL, author Paul Pearson)
+output = convert(String.raw`DOCUMENT();
+$a = random(3,9,2);
+$b = random(2,8,2);
+$n = random(2,9,1);
+$fraction = "\frac{\displaystyle \frac{$a}{x} }{ \displaystyle \frac{$b}{x^{$n}} }";
+$num = Formula("$a * x^($n-1)")->reduce;
+$den = Formula("$b")->reduce;
+$numbogus = Formula("$a * $b");
+$denbogus = Formula("x^($n+1)");
+$multians = MultiAnswer($num, $den)->with(
+  singleResult => 0,
+  checker => sub {
+      my ( $correct, $student, $ansHash ) = @_;
+      my ( $f1stu, $f2stu ) = @{$student};
+      my ( $f1, $f2 ) = @{$correct};
+      if ( ($f1 == $f1stu && $f2 == $f2stu) ) {
+          return [1,1];
+      } elsif ($numbogus==$f1stu || $denbogus==$f2stu) {
+          $ansHash->setMessage(1,"Multiply by its reciprocal");
+          return [0,0];
+      } elsif ( $f1*$f2stu==$f1stu*$f2 ) {
+          $ansHash->setMessage(1,"Simplify your answer further");
+          return [0,0];
+      } elsif ( $f1stu == 0 ) {
+          $ansHash->setMessage(1,"Not zero");
+          return [0,0];
+      }
+  }
+);
+if ($displayMode eq 'TeX') {
+  $showfraction = "\[ $fraction = ".$multians->ans_rule(10)." \]";
+} else {
+  $showfraction = ColumnTable(
+  "\( \displaystyle $fraction = \)",
+  $multians->ans_rule(20).$BR.$HR.$multians->ans_rule(20),
+  indent => 0, separation => 10
+  );
+}
+BEGIN_TEXT
+Simplify.
+$PAR
+$showfraction
+END_TEXT
+ANS($multians->cmp());
+ENDDOCUMENT();`);
+
+assert.doesNotMatch(
+    output,
+    /Unrecognized|Unknown function|answer blanks|No answers/,
+);
+assert.match(
+    output,
+    /<math name="fraction">\( \(\$a\)\/\(x\) \)\/\( \(\$b\)\/\(x\^\(\$n\)\) \)<\/math>/,
+);
+assert.match(output, /<math name="num" simplify="full">/);
+assert.match(
+    output,
+    /<p><answer name="ans1"><label><m>\\displaystyle \$fraction = <\/m><\/label>\s*<award credit="1" symbolicEquality>\$num\/\$den<\/award>/,
+);
+assert.match(
+    output,
+    /<award name="ans1Simplify" credit="0">\$num\/\$den<\/award>/,
+);
+assert.match(
+    output,
+    /<award name="ans1Mistake1" credit="0">\$numbogus\/\$denbogus<\/award>/,
+);
+assert.match(output, /Not converted: checker message "Not zero"/);
+assert.match(
+    output,
+    /<\/answer><\/p>\s*<feedback condition="\$ans1Simplify">Simplify your answer further<\/feedback>\s*<feedback condition="\$ans1Mistake1">Multiply by its reciprocal<\/feedback>/,
+);
+assert.match(
+    output,
+    /<p><m>\\displaystyle \$fraction = \\frac\{\$num\}\{\$den\}<\/m><\/p>/,
+);
+
+// A MultiAnswer whose blanks aren't a fraction: one answer per part
+output = convert(String.raw`DOCUMENT();
+$p = Compute("2");
+$q = Compute("3");
+$m = MultiAnswer($p, $q)->with(singleResult => 0);
+BEGIN_TEXT
+\(x =\) \{$m->ans_rule(10)\} and \(y =\) \{$m->ans_rule(10)\}
+END_TEXT
+ANS($m->cmp());
+ENDDOCUMENT();`);
+
+assert.match(
+    output,
+    /<answer name="ans1"><label><m>x = <\/m><\/label>\$p<\/answer> and <answer name="ans2"><label><m>y = <\/m><\/label>\$q<\/answer>/,
+);
+
 console.log("webwork-to-doenetml smoke test passed");

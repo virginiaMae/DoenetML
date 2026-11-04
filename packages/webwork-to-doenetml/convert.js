@@ -65,8 +65,12 @@ export function convert(data) {
     );
 
     // Perl subroutines (helpers, custom answer checkers) aren't converted
-    let subroutineWarnings;
-    [document, subroutineWarnings] = removeSubroutines(document);
+    let subroutineWarnings, checkers;
+    [document, subroutineWarnings, checkers] = removeSubroutines(document);
+    let usedCheckers = new Set();
+
+    // Only the web version of `if ($displayMode eq 'TeX') {...} else {...}`
+    document = dropTexDisplayMode(document);
 
     // Clean up the rest of the document a bit
     document = document.replace(/(\r\n)+/g, "\n");
@@ -134,6 +138,8 @@ export function convert(data) {
     let tables = {}; // $t = BeginTable()...: [{ graphs, labels }] per row
     let selectLists = {}; // new_select_list(): { pairs, numToShow }
     let popups = {}; // PopUp(): { choices, correct: [{ condition, value }] }
+    let multiAnswers = {}; // MultiAnswer(): { parts, checker }
+    let textSnippets = {}; // $v = ColumnTable(...): TEXT to print for $v
 
     function conditionTextOf(conditions) {
         return conditions.filter((c) => c !== "while").join(" and ");
@@ -300,15 +306,50 @@ export function convert(data) {
             } else if (varValue.startsWith("BeginTable")) {
                 tables[varName] = parseTable(varValue);
 
+                // Special case: several answer blanks checked together
+                // Of the form $m = MultiAnswer($a, $b)->with(checker => sub {...});
+            } else if (varValue.startsWith("MultiAnswer(")) {
+                const closeId = findClosing(varValue, "MultiAnswer".length);
+                const parts = splitTopLevel(
+                    varValue.slice("MultiAnswer(".length, closeId),
+                );
+                const checkerId = varValue.match(/⟦checker(\d+)⟧/)?.[1];
+                if (checkerId !== undefined) {
+                    usedCheckers.add(Number(checkerId));
+                }
+                multiAnswers[varName] = {
+                    parts,
+                    checker:
+                        checkerId === undefined
+                            ? null
+                            : checkers[Number(checkerId)],
+                };
+
+                // Special case: a layout of text and answer blanks
+                // Of the form $v = ColumnTable("\( x = \)", $m->ans_rule(20), ...);
+            } else if (varValue.startsWith("ColumnTable(")) {
+                const closeId = findClosing(varValue, "ColumnTable".length);
+                const columns = splitTopLevel(
+                    varValue.slice("ColumnTable(".length, closeId),
+                ).filter((arg) => !arg.includes("=>"));
+                textSnippets[varName] = columns.map(perlToText).join(" ");
+
                 // Function statement
                 // Of the form $a = b(c)...;
             } else if (findFunc && findFunc.index === 0) {
-                const [open, child, close, gStyle] = functionStatement(
+                let [open, child, close, gStyle] = functionStatement(
                     varName,
                     findFunc[1],
                     findFunc[2],
                     graphicalStyleCount,
                 );
+                // Formula(...)->reduce: simplify it
+                if (findFunc[3] === "->reduce") {
+                    open = open.replace(
+                        / simplify="[^"]*"/,
+                        ` simplify="full"`,
+                    );
+                }
                 addSetup(varName, open, child, close, activeConditions);
                 graphicalStyleCount = gStyle;
 
@@ -322,6 +363,15 @@ export function convert(data) {
                 let child = `${varValue}`;
                 child = child.replaceAll(`"`, ``);
                 let close = `</math>`;
+                // A TeX string, e.g. "\frac{$a}{x}": convert it to math
+                if (/\\[a-zA-Z]/.test(child)) {
+                    const math = texToMath(child);
+                    if (math === null) {
+                        open = `<math name="${varName}" format="latex">`;
+                    } else {
+                        child = math;
+                    }
+                }
                 addSetup(varName, open, child, close, activeConditions);
             }
 
@@ -357,7 +407,9 @@ export function convert(data) {
                 arg.match(/\$(\w+)->ra_correct_ans\b/);
             if (
                 findObject &&
-                (popups[findObject[1]] || selectLists[findObject[1]])
+                (popups[findObject[1]] ||
+                    selectLists[findObject[1]] ||
+                    multiAnswers[findObject[1]])
             ) {
                 continue;
             }
@@ -394,6 +446,15 @@ export function convert(data) {
             out += warnAndComment(`Unrecognized pattern: ${statement}`);
         }
     }
+
+    // Custom answer checkers that weren't part of a MultiAnswer
+    checkers.forEach((checker, i) => {
+        if (!usedCheckers.has(i)) {
+            out += warnAndComment(
+                "Not converted: custom answer checker (anonymous Perl subroutine); check the answer by hand",
+            );
+        }
+    });
 
     // If blocks that switch on a random value become a <select>:
     //
@@ -601,6 +662,8 @@ export function convert(data) {
         tables,
         selectLists,
         popups,
+        multiAnswers,
+        textSnippets,
     };
 
     // Placeholders for the <select>s from if blocks, filled in at the end so
@@ -859,12 +922,15 @@ function convertIndexedArrays(document, texts) {
  *
  * - Named subroutines (`sub bold {...}`) are removed.
  * - Anonymous ones (`checker => sub {...}`, usually custom answer checkers)
- *   are replaced by `sub {}` so the surrounding statement still parses.
+ *   are replaced by `sub {⟦checkerN⟧}` so the surrounding statement still
+ *   parses. Their bodies are returned, so a MultiAnswer can translate its
+ *   checker; any that aren't used get a warning later.
  *
- * @returns {[string, string]} [document, warning comments]
+ * @returns {[string, string, string[]]} [document, warning comments, checker bodies]
  */
 function removeSubroutines(document) {
     let warnings = "";
+    let checkers = [];
     const subRegex = /\bsub\b\s*(\w*)\s*\{/g;
     let find;
     while ((find = subRegex.exec(document))) {
@@ -886,10 +952,8 @@ function removeSubroutines(document) {
                 replacement +
                 document.slice(closeId + 1 + (semicolon?.[0].length ?? 0));
         } else {
-            warnings += warnAndComment(
-                "Not converted: custom answer checker (anonymous Perl subroutine); check the answer by hand",
-            );
-            replacement = "sub {}";
+            replacement = `sub {⟦checker${checkers.length}⟧}`;
+            checkers.push(document.slice(openId + 1, closeId));
             document =
                 document.slice(0, find.index) +
                 replacement +
@@ -897,7 +961,113 @@ function removeSubroutines(document) {
         }
         subRegex.lastIndex = find.index + replacement.length;
     }
-    return [document, warnings];
+    return [document, warnings, checkers];
+}
+
+/**
+ * WeBWorK can show different things on screen and in printed (TeX) copies:
+ *
+ *     if ($displayMode eq 'TeX') { ...print version... } else { ...web version... }
+ *
+ * Keep only the web version.
+ */
+function dropTexDisplayMode(document) {
+    const ifRegex =
+        /\bif\s*\(\s*\$displayMode\s*(eq|ne)\s*["']TeX["']\s*\)\s*\{/g;
+    let find;
+    while ((find = ifRegex.exec(document))) {
+        const ifClose = findClosing(
+            document,
+            find.index + find[0].length - 1,
+            "{",
+            "}",
+        );
+        if (ifClose === -1) {
+            break;
+        }
+        const findElse = document.slice(ifClose + 1).match(/^\s*else\s*\{/);
+        let elseBody = "";
+        let endId = ifClose + 1;
+        if (findElse) {
+            const elseOpen = ifClose + findElse[0].length;
+            const elseClose = findClosing(document, elseOpen, "{", "}");
+            if (elseClose === -1) {
+                break;
+            }
+            elseBody = document.slice(elseOpen + 1, elseClose);
+            endId = elseClose + 1;
+        }
+        const ifBody = document.slice(find.index + find[0].length, ifClose);
+        const webVersion = find[1] === "eq" ? elseBody : ifBody;
+        document =
+            document.slice(0, find.index) + webVersion + document.slice(endId);
+        ifRegex.lastIndex = find.index;
+    }
+    return document;
+}
+
+/**
+ * A Perl string expression, as it would appear in a TEXT section:
+ *
+ *     "\( x = \)" . $m->ans_rule(20) . $BR   ->   \( x = \) \{$m->ans_rule(20)\} $BR
+ */
+function perlToText(expression) {
+    return splitTopLevel(expression.replace(/\s*\.\s*(?=["'$])/g, ","))
+        .map((piece) => {
+            const findString = piece.match(/^(["'])([\s\S]*)\1$/);
+            if (findString) {
+                return findString[2];
+            }
+            if (/^\$\w+->\w+\(.*\)$/.test(piece)) {
+                return `\\{${piece}\\}`;
+            }
+            return piece;
+        })
+        .join(" ");
+}
+
+/**
+ * Convert simple TeX to a math expression DoenetML can evaluate:
+ * \frac{a}{b} -> (a)/(b), x^{n} -> x^(n), \cdot -> *. Returns null if there
+ * is TeX it doesn't know.
+ */
+function texToMath(tex) {
+    let math = tex
+        .replace(/^\s*\\[([]\s*/, "")
+        .replace(/\s*\\[)\]]\s*$/, "")
+        .replaceAll(/\\(displaystyle|left|right|,|;|!)/g, " ")
+        .replaceAll(/\\(cdot|times)\b/g, "*");
+
+    // \frac{a}{b}, innermost first
+    let find;
+    while ((find = math.match(/\\frac\s*\{/))) {
+        const numOpen = find.index + find[0].length - 1;
+        const numClose = findClosing(math, numOpen, "{", "}");
+        const denOpen = math.indexOf("{", numClose);
+        if (
+            numClose === -1 ||
+            denOpen === -1 ||
+            math.slice(numClose + 1, denOpen).trim()
+        ) {
+            return null;
+        }
+        const denClose = findClosing(math, denOpen, "{", "}");
+        if (denClose === -1) {
+            return null;
+        }
+        math =
+            math.slice(0, find.index) +
+            `(${math.slice(numOpen + 1, numClose)})/(${math.slice(denOpen + 1, denClose)})` +
+            math.slice(denClose + 1);
+    }
+    if (math.includes("\\")) {
+        return null;
+    }
+    return math
+        .replaceAll("{", "(")
+        .replaceAll("}", ")")
+        .replace(/\s+/g, " ")
+        .trim();
 }
 
 // Words that can appear in a math expression, so don't mean "this is text"
@@ -1254,6 +1424,132 @@ function popupAnswer(name, popup, description, answerRecords) {
 }
 
 /**
+ * A two-part MultiAnswer shown as a fraction becomes one answer for the
+ * whole fraction. Its custom checker, if any, is translated into awards:
+ *
+ * - `$f1*$f2stu == $f1stu*$f2` (equivalent fraction) with a message like
+ *   "Simplify your answer further": the correct answer then has to be in
+ *   reduced form (symbolicEquality), and an equivalent unreduced answer
+ *   gets 0 credit and the message.
+ * - `$numbogus == $f1stu || $denbogus == $f2stu` (a common mistake) with a
+ *   message: that mistake gets 0 credit and the message.
+ *
+ * Other branches are listed in a comment to convert by hand.
+ *
+ * @returns {{ content: string, given: string, feedback: string }}
+ */
+function fractionAnswer({ parts: [num, den], checker }, name) {
+    const given = `\\frac{${num}}{${den}}`;
+    if (!checker) {
+        return { content: `${num}/${den}`, given, feedback: "" };
+    }
+
+    // Names the checker uses for the student's and the correct parts
+    const partNames = (source) =>
+        checker
+            .match(
+                new RegExp(
+                    String.raw`my\s*\(\s*\$(\w+)\s*,\s*\$(\w+)\s*\)\s*=\s*@\{\s*\$${source}\s*\}`,
+                ),
+            )
+            ?.slice(1);
+    const student = partNames("student");
+    const correct = partNames("correct");
+    if (!student || !correct) {
+        return {
+            content:
+                warnAndComment(
+                    `Not converted: custom checker for MultiAnswer; check the answer by hand`,
+                ).trim() + `${num}/${den}`,
+            given,
+            feedback: "",
+        };
+    }
+    const sameSet = (a, b) =>
+        a.length === b.length && a.every((x) => b.includes(x));
+
+    let needsSimplify = null;
+    let mistakes = [];
+    let unconverted = [];
+    const branchRegex = /\b(?:if|elsif)\s*\(/g;
+    let find;
+    while ((find = branchRegex.exec(checker))) {
+        const conditionOpen = find.index + find[0].length - 1;
+        const conditionClose = findClosing(checker, conditionOpen);
+        const bodyOpen = checker.indexOf("{", conditionClose);
+        const bodyClose = findClosing(checker, bodyOpen, "{", "}");
+        if (conditionClose === -1 || bodyOpen === -1 || bodyClose === -1) {
+            break;
+        }
+        const condition = checker.slice(conditionOpen + 1, conditionClose);
+        const body = checker.slice(bodyOpen + 1, bodyClose);
+        const message = body.match(
+            /setMessage\(\s*\d+\s*,\s*(["'])([\s\S]*?)\1/,
+        )?.[2];
+        if (!message) {
+            continue;
+        }
+
+        // Equivalent fraction: $f1*$f2stu == $f1stu*$f2 (in any order)
+        const findCross = condition
+            .replace(/[\s()]/g, "")
+            .match(/^\$(\w+)\*\$(\w+)==\$(\w+)\*\$(\w+)$/);
+        if (findCross) {
+            const left = [findCross[1], findCross[2]];
+            const right = [findCross[3], findCross[4]];
+            const side1 = [correct[0], student[1]];
+            const side2 = [student[0], correct[1]];
+            if (
+                (sameSet(left, side1) && sameSet(right, side2)) ||
+                (sameSet(left, side2) && sameSet(right, side1))
+            ) {
+                needsSimplify ??= message;
+                continue;
+            }
+        }
+
+        // A mistake: some part of the student's answer == some formula
+        let mistakeParts = [null, null];
+        for (let [, x, y] of condition.matchAll(/\$(\w+)\s*==\s*\$(\w+)/g)) {
+            student.forEach((studentPart, i) => {
+                const other =
+                    x === studentPart ? y : y === studentPart ? x : null;
+                if (other && !correct.includes(other)) {
+                    mistakeParts[i] = `$${other}`;
+                }
+            });
+        }
+        if (mistakeParts.some((part) => part)) {
+            mistakes.push({
+                answer: `${mistakeParts[0] ?? num}/${mistakeParts[1] ?? den}`,
+                message,
+            });
+        } else {
+            unconverted.push(message);
+        }
+    }
+
+    let content = needsSimplify
+        ? `\n  <award credit="1" symbolicEquality>${num}/${den}</award>` +
+          `\n  <!-- Other reduced forms (e.g. (a/b) x^k) need their own symbolicEquality award -->`
+        : `\n  <award credit="1">${num}/${den}</award>`;
+    let feedback = "";
+    if (needsSimplify) {
+        content += `\n  <award name="${name}Simplify" credit="0">${num}/${den}</award>`;
+        feedback += `<feedback condition="$${name}Simplify">${needsSimplify}</feedback>\n`;
+    }
+    mistakes.forEach(({ answer, message }, i) => {
+        const awardName = `${name}Mistake${i + 1}`;
+        content += `\n  <award name="${awardName}" credit="0">${answer}</award>`;
+        feedback += `<feedback condition="$${awardName}">${message}</feedback>\n`;
+    });
+    for (let message of unconverted) {
+        content += `\n  ${warnAndComment(`Not converted: checker message "${message}"; add an award by hand`).trim()}`;
+    }
+    return { content: content + "\n", given, feedback };
+}
+
+/**
  * Text with tags removed, for a <shortDescription>
  */
 function plainText(text) {
@@ -1271,6 +1567,22 @@ function plainText(text) {
  */
 function textSection(text, answers, answerRecords, context) {
     let out = "";
+
+    // Text built in Perl, e.g. $showfraction = ColumnTable(...)
+    text = text.replaceAll(
+        /\$(\w+)\b/g,
+        (match, name) => context.textSnippets[name] ?? match,
+    );
+
+    // A MultiAnswer with two parts shown as a fraction: numerator blank,
+    // a line ($HR), denominator blank. Becomes one answer.
+    text = text.replaceAll(
+        /\\\{\s*\$(\w+)->ans_rule\([^)]*\)\s*\\\}\s*(?:\$\{?BR\}?\s*)?\$\{?HR\}?\s*\\\{\s*\$\1->ans_rule\([^)]*\)\s*\\\}/g,
+        (match, name) =>
+            context.multiAnswers[name]?.parts.length === 2
+                ? `⟦fraction:${name}⟧`
+                : match,
+    );
 
     // Lines of text run together, like in HTML
     text = text.replace(/\s*(\r\n|\n|\r)\s*/g, " ");
@@ -1310,12 +1622,49 @@ function textSection(text, answers, answerRecords, context) {
 
     text = text.trim();
 
+    let multiAnswerPartsUsed = {};
     for (let par of text.split("\n")) {
+        const numRecordsBefore = answerRecords.length;
+
         // <answer> tags
         par = insertAnswers(
             par,
             /\\?\{\s?ans_rule\(\s?\d+\s?\)\s?\\\}?/g,
-            () => answers[answerRecords.length],
+            () => answers[answerRecords.filter((r) => r.blank).length],
+            answerRecords,
+        );
+
+        // MultiAnswer shown as a fraction
+        par = insertAnswers(
+            par,
+            /⟦fraction:(\w+)⟧/g,
+            (match, name) =>
+                fractionAnswer(context.multiAnswers[match[1]], name),
+            answerRecords,
+        );
+
+        // Any other MultiAnswer blanks: an answer for each part, in order
+        par = insertAnswers(
+            par,
+            /\\\{\s*\$(\w+)->ans_rule\([^)]*\)\s*\\\}/g,
+            (match) => {
+                const multiAnswer = context.multiAnswers[match[1]];
+                if (!multiAnswer) {
+                    return undefined;
+                }
+                const i = (multiAnswerPartsUsed[match[1]] ??= 0);
+                multiAnswerPartsUsed[match[1]]++;
+                const warning =
+                    multiAnswer.checker && i === 0
+                        ? warnAndComment(
+                              `Not converted: custom checker for MultiAnswer $${match[1]}; check these answers by hand`,
+                          ).trim()
+                        : "";
+                return {
+                    content: warning + (multiAnswer.parts[i] ?? ""),
+                    given: multiAnswer.parts[i],
+                };
+            },
             answerRecords,
         );
 
@@ -1382,6 +1731,11 @@ function textSection(text, answers, answerRecords, context) {
             out += `${par}\n`;
         } else if (par !== "") {
             out += `<p>${par}</p>\n`;
+        }
+
+        // Feedback for answers in this paragraph goes right after it
+        for (let record of answerRecords.slice(numRecordsBefore)) {
+            out += record.feedback ?? "";
         }
     }
     return out;
@@ -1450,7 +1804,17 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
     let out = "";
     let lastId = 0;
     for (let match of par.matchAll(regex)) {
-        const answer = getAnswer(match);
+        const name = `ans${answerRecords.length + 1}`;
+        // Either the correct answer, or { content, given, feedback } for an
+        // answer with its own awards
+        let answer = getAnswer(match, name);
+        let content = answer;
+        let record = { blank: true };
+        if (answer && typeof answer === "object") {
+            content = answer.content;
+            record = { blank: false, feedback: answer.feedback };
+            answer = answer.given;
+        }
         let before = par.slice(lastId, match.index);
         lastId = match.index + match[0].length;
 
@@ -1466,13 +1830,12 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
             before = before.slice(0, findLabel.index);
         }
 
-        answerRecords.push({ lhs, answer, blank: true });
-        const name = `ans${answerRecords.length}`;
-        if (answer === undefined) {
+        answerRecords.push({ lhs, answer, ...record });
+        if (content === undefined) {
             out += before + warnAndComment(`No correct answer for ${name}`);
             out += `<answer name="${name}">${label}</answer>`;
         } else {
-            out += `${before}<answer name="${name}">${label}${answer}</answer>`;
+            out += `${before}<answer name="${name}">${label}${content}</answer>`;
         }
     }
     return out + par.slice(lastId);
