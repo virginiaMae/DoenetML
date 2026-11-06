@@ -197,7 +197,7 @@ assert.match(
 );
 assert.match(
     output,
-    /<sideBySide>\s*<figure suppressFigureNameInCaption>\s*<graph[^>]*>\s*<shortDescription>Graph A<\/shortDescription>\s*\$p1\s*<regionBetweenCurves boundaryValues="-8 8">\$p1 \$graph1Edge<\/regionBetweenCurves>\s*<\/graph>\s*<caption>A<\/caption>/,
+    /<sideBySide>\s*<figure suppressFigureNameInCaption>\s*<graph[^>]*>\s*<!-- TODO: describe this graph[^>]*-->\s*<shortDescription>Graph A<\/shortDescription>\s*\$p1\s*<regionBetweenCurves boundaryValues="-8 8">\$p1 \$graph1Edge<\/regionBetweenCurves>\s*<\/graph>\s*<caption>A<\/caption>/,
 );
 assert.match(
     output,
@@ -213,6 +213,45 @@ assert.match(
 );
 assert.match(output, /<givenAnswer>\s*<p><m>x\+y < \$c<\/m>: A<\/p>/);
 assert.doesNotMatch(output, /<p>\s*<sideBySide|<p>\s*<ol/);
+
+// The same curve plotted twice on a graph is drawn once, curves of the same
+// color share a style, non_zero_random only excludes 0 when it's in range,
+// and the note about enlarging images becomes one about zooming
+output = convert(String.raw`DOCUMENT();
+$a = non_zero_random(2,4,1);
+$b = non_zero_random(-3,3,1);
+$p0 = FEQ("x for x in <-8,8> using color:green weight:2");
+$graph1 = init_graph(-8,-8,8,8,'axes'=>[0,0]);
+$graph2 = init_graph(-8,-8,8,8,'axes'=>[0,0]);
+$p1a = FEQ("(x-$a)^4 for x in <-8,8> using color:blue weight:2");
+$p1b = FEQ("(x-$a)^4 for x in <-8,8> using color:blue weight:2");
+$p2a = FEQ("x^4-$b for x in <-8,8> using color:blue weight:2");
+$p2b = FEQ("x^4+$b for x in <-8,8> using color:red weight:2");
+plot_functions($graph1,$p1a,$p1b);
+plot_functions($graph2,$p2a,$p2b,$p0);
+BEGIN_TEXT
+\{ image(insertGraph($graph1)) \} \{ image(insertGraph($graph2)) \}
+$BBOLD Note: $EBOLD $BITALIC You can click on the graphs to enlarge the images.$EITALIC
+END_TEXT
+ENDDOCUMENT();`);
+
+assert.match(output, /<selectFromSequence name="a" from="2" to="4"\/>/);
+assert.match(
+    output,
+    /<selectFromSequence name="b" from="-3" to="3" exclude="0"\/>/,
+);
+assert.doesNotMatch(output, /p1b/);
+assert.match(output, /name="p1a" domain="\[-8,8\]" stylenumber="1">/);
+assert.match(output, /name="p2a" domain="\[-8,8\]" stylenumber="1">/);
+assert.match(output, /name="p2b" domain="\[-8,8\]" stylenumber="2">/);
+// Blue and red are DoenetML's styles 1 and 2 even when another color comes
+// first; other colors get the next free style
+assert.match(output, /name="p0" domain="\[-8,8\]" stylenumber="3">/);
+assert.match(output, /\$p2a\s*\$p2b\s*\$p0/);
+assert.match(
+    output,
+    /<em> Use the \(\+\) symbol in the lower-right corner of the graph to zoom in\.<\/em>/,
+);
 
 // A select list showing only some of its questions
 output = convert(String.raw`DOCUMENT();
@@ -309,7 +348,7 @@ assert.match(output, /<math name="d" simplify="full">\$s1\.a \+ 1<\/math>/);
 assert.match(output, /<p>Case \$s1\.a\.<\/p>/);
 assert.match(
     output,
-    /<graph[^>]*>\s*<shortDescription>A graph<\/shortDescription>\s*\$s1\.graph1Plot\s*<\/graph>/,
+    /<graph[^>]*>\s*<!-- TODO: describe this graph[^>]*-->\s*<shortDescription>A graph<\/shortDescription>\s*\$s1\.graph1Plot\s*<\/graph>/,
 );
 assert.match(output, /<answer name="ans1">\$s1\.c<\/answer>/);
 assert.doesNotMatch(output, /<selectFromSequence name="a"/);

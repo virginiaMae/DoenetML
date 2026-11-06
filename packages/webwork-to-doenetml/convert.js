@@ -191,6 +191,7 @@ export function convert(data) {
     }
 
     let graphicalStyleCount = 0; //styling for graphical objects
+    const colorStyles = new Map(); // FEQ color -> styleNumber
     for (let statement of statements) {
         let find;
 
@@ -343,6 +344,7 @@ export function convert(data) {
                     findFunc[1],
                     findFunc[2],
                     graphicalStyleCount,
+                    colorStyles,
                 );
                 // Formula(...)->reduce: simplify it
                 if (findFunc[3] === "->reduce") {
@@ -457,6 +459,7 @@ export function convert(data) {
                         find[1],
                         find[2],
                         graphicalStyleCount,
+                        colorStyles,
                     );
                     ans = open + child + close;
                 }
@@ -664,6 +667,45 @@ export function convert(data) {
             if (!graphContents[graphName].includes(child)) {
                 graphContents[graphName].push(child);
             }
+        }
+    }
+
+    // WeBWorK problems often plot the same curve twice on a graph
+    // (plot_functions($graph1, $p1a, $p1b) with $p1b identical to $p1a).
+    // Keep the first, and drop the copy from setup if nothing else uses it.
+    const droppedCurves = new Set();
+    for (let [graphName, contents] of Object.entries(graphContents)) {
+        const seen = new Set();
+        graphContents[graphName] = contents.filter((child) => {
+            const key = curveKey(setup.get(child.match(/^\$(\w+)$/)?.[1]));
+            if (key === null) {
+                return true;
+            }
+            if (seen.has(key)) {
+                droppedCurves.add(child.slice(1));
+                return false;
+            }
+            seen.add(key);
+            return true;
+        });
+    }
+    for (let name of droppedCurves) {
+        const reference = new RegExp(`\\$${name}\\b`);
+        const usedInGraph = Object.values(graphContents).some((contents) =>
+            contents.includes(`$${name}`),
+        );
+        // Any use other than its definition and plot_functions
+        const usedElsewhere =
+            reference.test(content) ||
+            reference.test(solutionSection) ||
+            statements.some(
+                (statement) =>
+                    reference.test(statement) &&
+                    !/plot_functions\(/.test(statement) &&
+                    !new RegExp(`^\\$${name}\\s*=`).test(statement),
+            );
+        if (!usedInGraph && !usedElsewhere) {
+            setup.delete(name);
         }
     }
 
@@ -1265,7 +1307,13 @@ ${stars}-->
  * @param {string} argsString - everything between parenthesis
  * @returns
  */
-function functionStatement(name, func, argsString, graphicalStyleCount) {
+function functionStatement(
+    name,
+    func,
+    argsString,
+    graphicalStyleCount,
+    colorStyles = new Map(),
+) {
     let args = splitArgs(argsString);
 
     let nameStr = name ? ` name="${name}"` : "";
@@ -1286,7 +1334,13 @@ function functionStatement(name, func, argsString, graphicalStyleCount) {
             args[2] === "1" || args[2] === undefined
                 ? ""
                 : ` step="${args[2]}"`;
-        open = `<selectFromSequence${nameStr} from="${args[0]}" to="${args[1]}"${step} exclude="0"/>`;
+        // Only exclude 0 if it can be selected
+        const [from, to] = [Number(args[0]), Number(args[1])];
+        const exclude =
+            Number.isFinite(from) && Number.isFinite(to) && (from > 0 || to < 0)
+                ? ""
+                : ` exclude="0"`;
+        open = `<selectFromSequence${nameStr} from="${args[0]}" to="${args[1]}"${step}${exclude}/>`;
     } else if (func === "Real") {
         // <number>
         open = `<number${nameStr}>`;
@@ -1325,14 +1379,30 @@ function functionStatement(name, func, argsString, graphicalStyleCount) {
         close = `</interval></math>`;
     } else if (func === "FEQ") {
         // <function>
-        graphicalStyleCount++;
+        // Curves of the same color share a styleNumber, so e.g. all the
+        // blue curves of a problem look alike. Blue and red are DoenetML's
+        // default styles 1 and 2; other colors get the next free style.
+        const color = args[0].match(/color:\s*(\w+)/)?.[1]?.toLowerCase();
+        let styleNumber =
+            DEFAULT_COLOR_STYLES.get(color) ?? colorStyles.get(color);
+        if (styleNumber === undefined) {
+            do {
+                graphicalStyleCount++;
+            } while (
+                [...DEFAULT_COLOR_STYLES.values()].includes(graphicalStyleCount)
+            );
+            styleNumber = graphicalStyleCount;
+            if (color) {
+                colorStyles.set(color, styleNumber);
+            }
+        }
         let funcDef = args[0].match(/(.*)\sfor\sx\sin\s<(.*),(.*)>/);
         if (funcDef) {
             // Dashed usually means a strict inequality, so keep it
             const lineStyle = /line:\s*dashed/.test(args[0])
                 ? ` lineStyle="dashed"`
                 : "";
-            open = `<function${nameStr} domain="[${funcDef[2]},${funcDef[3]}]" stylenumber="${graphicalStyleCount}"${lineStyle}>`;
+            open = `<function${nameStr} domain="[${funcDef[2]},${funcDef[3]}]" stylenumber="${styleNumber}"${lineStyle}>`;
             child = `${funcDef[1]}`;
             close = `</function>`;
         } else {
@@ -1368,6 +1438,7 @@ function graphWithContents(graphName, context) {
     }
     const label = graphLabels[graphName];
     let out = graphs[graphName] + "\n";
+    out += `${tab}<!-- TODO: describe this graph for screen readers, without giving away the answer -->\n`;
     out += `${tab}<shortDescription>${label ? `Graph ${label}` : "A graph"}</shortDescription>\n`;
     for (let child of graphContents[graphName] ?? []) {
         out += tab + child + "\n";
@@ -1698,6 +1769,13 @@ function textSection(text, answers, answerRecords, context) {
             context.multiAnswers[name]?.parts.length === 2
                 ? `⟦fraction:${name}⟧`
                 : match,
+    );
+
+    // WeBWorK's note about enlarging graph images: DoenetML graphs zoom
+    // with their (+) button instead
+    text = text.replaceAll(
+        /You can click on the graphs? to enlarge the images?\./g,
+        "Use the (+) symbol in the lower-right corner of the graph to zoom in.",
     );
 
     // Lines of text run together, like in HTML
@@ -2130,6 +2208,31 @@ function escapeAttribute(str) {
  */
 function commentSafe(str) {
     return str.replace(/-(?=-)/g, "- ");
+}
+
+/**
+ * WeBWorK colors that match DoenetML's default styles: color -> styleNumber
+ */
+const DEFAULT_COLOR_STYLES = new Map([
+    ["blue", 1],
+    ["red", 2],
+]);
+
+/**
+ * What a plotted <function> draws, ignoring its name and style: equal keys
+ * are the same curve. null if it isn't a single, unconditional <function>.
+ */
+function curveKey(data) {
+    if (
+        !data?.open.startsWith("<function") ||
+        data.childOptions.length !== 1 ||
+        data.childOptions[0].condition !== ""
+    ) {
+        return null;
+    }
+    const domain = data.open.match(/domain="([^"]*)"/)?.[1];
+    const lineStyle = data.open.match(/lineStyle="([^"]*)"/)?.[1];
+    return JSON.stringify([domain, lineStyle, data.childOptions[0].value]);
 }
 
 function warnAndComment(message) {
