@@ -140,6 +140,7 @@ export function convert(data) {
     let popups = {}; // PopUp(): { choices, correct: [{ condition, value }] }
     let multiAnswers = {}; // MultiAnswer(): { parts, checker }
     let textSnippets = {}; // $v = ColumnTable(...): TEXT to print for $v
+    let evaluatedFunctions = new Map(); // $f->eval(x=>...): f -> its variables
 
     function conditionTextOf(conditions) {
         return conditions.filter((c) => c !== "while").join(" and ");
@@ -356,6 +357,28 @@ export function convert(data) {
                 // Special case: partial answers
                 // Not needed: each answer blank becomes its own <answer>
             } else if (varName === "showPartialCorrectAnswers") {
+                // Evaluating a formula: $y = $f->eval(x=>-4)
+                // f becomes a <function> (after all statements) and y = $$f(-4)
+            } else if (
+                (find = varValue.match(/^\$(\w+)->eval\(([\s\S]*)\)$/))
+            ) {
+                const [, functionName, argsString] = find;
+                const pairs = splitTopLevel(argsString).map((arg) =>
+                    arg.split(/\s*=>\s*/),
+                );
+                evaluatedFunctions.set(
+                    functionName,
+                    pairs.map(([variable]) => variable.replace(/["']/g, "")),
+                );
+                const inputs = pairs.map(([, value]) => value).join(", ");
+                addSetup(
+                    varName,
+                    `<math name="${varName}">`,
+                    `$$${functionName}(${inputs})`,
+                    `</math>`,
+                    activeConditions,
+                );
+
                 // Variable assignment, no function
             } else {
                 // stick it in a math tag
@@ -447,6 +470,28 @@ export function convert(data) {
         }
     }
 
+    // Formulas that get evaluated are functions: <function name="f">
+    for (let [functionName, variables] of evaluatedFunctions) {
+        const data = setup.get(functionName);
+        if (!data) {
+            continue;
+        }
+        const variablesAttribute =
+            variables.join(" ") === "x"
+                ? ""
+                : ` variables="${variables.join(" ")}"`;
+        const toFunction = (open) =>
+            open
+                .replace(/^<math\b/, "<function")
+                .replace(/>$/, `${variablesAttribute}>`);
+        data.open = toFunction(data.open);
+        data.close = "</function>";
+        for (let option of data.childOptions) {
+            option.open = toFunction(option.open);
+            option.close = "</function>";
+        }
+    }
+
     // Custom answer checkers that weren't part of a MultiAnswer
     checkers.forEach((checker, i) => {
         if (!usedCheckers.has(i)) {
@@ -455,6 +500,33 @@ export function convert(data) {
             );
         }
     });
+
+    // References to rename at the end: $old -> $new
+    let renames = new Map();
+
+    // Answers are named ans1, ans2, ... so Perl variables with those names
+    // would clash with them: $ans1 -> sol1
+    if ([...setup.keys()].some((name) => /^ans\d+$/.test(name))) {
+        let renamedSetup = new Map();
+        for (let [name, data] of setup) {
+            if (/^ans\d+$/.test(name)) {
+                let newName = name.replace(/^ans/, "sol");
+                if (setup.has(newName)) {
+                    newName = `${name}Value`;
+                }
+                const rename = (open) =>
+                    open.replace(`name="${name}"`, `name="${newName}"`);
+                data.open = rename(data.open);
+                for (let option of data.childOptions) {
+                    option.open = rename(option.open);
+                }
+                renames.set(name, newName);
+                name = newName;
+            }
+            renamedSetup.set(name, data);
+        }
+        setup = renamedSetup;
+    }
 
     // If blocks that switch on a random value become a <select>:
     //
@@ -468,7 +540,17 @@ export function convert(data) {
     // `$p` -> `$s1.p`. Definitions with any other kind of condition are left
     // as they were.
     let switchSelects = [];
-    let renames = new Map(); // name -> name through the select, e.g. s1.p
+    // Refer to `name` through the select, e.g. p -> s1.p, including where
+    // it was already renamed to (e.g. ans1 -> sol1 -> s1.sol1)
+    function renameThroughSelect(name, selectName) {
+        const qualified = `${selectName}.${name}`;
+        for (let [oldName, newName] of renames) {
+            if (newName === name) {
+                renames.set(oldName, qualified);
+            }
+        }
+        renames.set(name, qualified);
+    }
     const switchCondition = (condition) =>
         condition.match(/^\$(\w+)\s*=\s*(-?\d+)$/);
 
@@ -529,7 +611,17 @@ export function convert(data) {
             for (let name of definitions) {
                 for (let option of setup.get(name).childOptions) {
                     if (isK(option.condition)) {
-                        select += `${tab}${tab}${option.open}${option.value}${option.close}\n`;
+                        // The final renaming skips the select, so apply the
+                        // ans1 -> sol1 renames here; names in the same
+                        // option don't need to go through the select
+                        const value = option.value.replace(
+                            /(\$\$?)(ans\d+)\b(?!\.\w)/g,
+                            (match, dollars, ansName) =>
+                                renames.has(ansName)
+                                    ? dollars + renames.get(ansName)
+                                    : match,
+                        );
+                        select += `${tab}${tab}${option.open}${value}${option.close}\n`;
                     }
                 }
             }
@@ -550,10 +642,10 @@ export function convert(data) {
 
         // Take everything that's now in the select out of setup
         setup.delete(variable);
-        renames.set(variable, `${selectName}.${variable}`);
+        renameThroughSelect(variable, selectName);
         for (let name of definitions) {
             setup.delete(name);
-            renames.set(name, `${selectName}.${name}`);
+            renameThroughSelect(name, selectName);
         }
         for (let graphName of new Set(plots.map((p) => p.graphName))) {
             (graphContents[graphName] ??= []).push(
@@ -733,21 +825,26 @@ export function convert(data) {
     out += textOut;
 
     // THE ANSWER AND SOLUTION
+    // Answers from a <part> are listed in a <part> too, so the numbers match
     let givenAnswerOut = "";
-    for (let { lhs, answer, givenAnswer } of answerRecords) {
+    for (let { lhs, answer, givenAnswer, part } of answerRecords) {
+        let item = "";
         if (givenAnswer !== undefined) {
-            givenAnswerOut += givenAnswer ? `${tab}${givenAnswer}\n` : "";
+            item = givenAnswer;
+        } else if (answer === undefined) {
             continue;
-        }
-        if (answer === undefined) {
-            continue;
-        }
-        if (answer.startsWith("<")) {
+        } else if (answer.startsWith("<")) {
             const lhsOut = lhs ? `<m>${lhs} =</m> ` : "";
-            givenAnswerOut += `${tab}<p>${lhsOut}${answer}</p>\n`;
+            item = part ? `${lhsOut}${answer}` : `<p>${lhsOut}${answer}</p>`;
         } else {
             const lhsOut = lhs ? `${lhs} = ` : "";
-            givenAnswerOut += `${tab}<p><m>${lhsOut}${answer}</m></p>\n`;
+            const math = `<m>${lhsOut}${answer}</m>`;
+            item = part ? math : `<p>${math}</p>`;
+        }
+        if (item) {
+            givenAnswerOut += part
+                ? `${tab}<part>${item}</part>\n`
+                : `${tab}${item}\n`;
         }
     }
     if (givenAnswerOut) {
@@ -773,6 +870,25 @@ export function convert(data) {
     switchSelects.forEach((select, i) => {
         out = out.replace(`⟦switch${i}⟧`, select.replaceAll("\n", `\n${tab}`));
     });
+
+    // A commented-out block that shows the correct answers, for checking
+    // variants while authoring
+    const answerValues = [
+        ...new Set(
+            answerRecords
+                .map(({ answer }) => answer?.match(/^\$([\w.]+)$/)?.[1])
+                .filter((name) => name),
+        ),
+    ].map((name) => renames.get(name) ?? name);
+    if (answerValues.length > 0) {
+        const lines = answerValues
+            .map((name) => `<p>${name} = $${name}</p>`)
+            .join("\n");
+        out = out.replace(
+            "</setup>\n\n",
+            `</setup>\n\n<!-- testing -->\n<!-- ${lines} -->\n<!-- /testing -->\n\n`,
+        );
+    }
 
     out = headerComment(data) + "<problem><title />\n" + out;
     out += "</problem>\n";
@@ -1721,22 +1837,41 @@ function textSection(text, answers, answerRecords, context) {
             (match, graphName) => graphWithContents(graphName, context),
         );
 
-        // Blocks (lists, tables, graphs) on their own aren't put in a <p>
+        // A numbered question with an answer, like "1." or "(a)" (often in
+        // bold), becomes a <part>, which numbers itself
         par = par.trim();
+        const newRecords = answerRecords.slice(numRecordsBefore);
+        const findNumber = par.match(
+            /^(?:<alert>\s*\(?(?:\d+|[a-zA-Z])[.)]\s*<\/alert>|\(?(?:\d+|[a-zA-Z])[.)](?=\s))\s*/,
+        );
+        const isPart = findNumber && newRecords.length > 0;
+        if (isPart) {
+            par = par.slice(findNumber[0].length);
+            for (let record of newRecords) {
+                record.part = true;
+            }
+        }
+
+        // Blocks (lists, tables, graphs) on their own aren't put in a <p>
+        let parOut = "";
         if (
             /^<(ol|sideBySide|graph)\b[\s\S]*<\/(ol|sideBySide|graph)>$/.test(
                 par,
             )
         ) {
-            out += `${par}\n`;
+            parOut += `${par}\n`;
         } else if (par !== "") {
-            out += `<p>${par}</p>\n`;
+            parOut += `<p>${par}</p>\n`;
         }
 
         // Feedback for answers in this paragraph goes right after it
-        for (let record of answerRecords.slice(numRecordsBefore)) {
-            out += record.feedback ?? "";
+        for (let record of newRecords) {
+            parOut += record.feedback ?? "";
         }
+
+        out += isPart
+            ? `<part>\n${tab}${parOut.trim().replaceAll("\n", `\n${tab}`)}\n</part>\n`
+            : parOut;
     }
     return out;
 }

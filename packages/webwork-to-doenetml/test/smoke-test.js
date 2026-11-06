@@ -427,4 +427,49 @@ assert.match(
     /<answer name="ans1"><label><m>x = <\/m><\/label>\$p<\/answer> and <answer name="ans2"><label><m>y = <\/m><\/label>\$q<\/answer>/,
 );
 
+// Evaluating formulas, $ans1-style names, and numbered questions as parts
+// (from "Problem 13" of the UMTYMP Calculus 1 summer assignment; OPL,
+// author Justin Sukiennik)
+output = convert(String.raw`DOCUMENT();
+$a = random(-6,-2,1);
+$b = random(3,8,1);
+$f = Formula("$a*x+$b");
+$g = Formula("$a*t");
+$ans1 = $f->eval(x=>-4);
+$ans2 = $g->eval(t=>2);
+BEGIN_TEXT
+Find the following values. $PAR
+$BBOLD 1. $EBOLD \( f(-4) = \) \{ ans_rule(20) \} $PAR
+$BBOLD 2. $EBOLD \( g(2) = \) \{ ans_rule(20) \} $PAR
+3. Not a question.
+END_TEXT
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ENDDOCUMENT();`);
+
+assert.doesNotMatch(output, /->eval|name="ans1">\$|<math name="ans/);
+assert.match(
+    output,
+    /<function name="f" simplify="numbersPreserveOrder">\$a\*x\+\$b<\/function>/,
+);
+assert.match(
+    output,
+    /<function name="g" simplify="numbersPreserveOrder" variables="t">\$a\*t<\/function>/,
+);
+assert.match(output, /<math name="sol1">\$\$f\(-4\)<\/math>/);
+assert.match(output, /<math name="sol2">\$\$g\(2\)<\/math>/);
+assert.match(
+    output,
+    /<part>\s*<p><answer name="ans1"><label><m>f\(-4\) = <\/m><\/label>\$sol1<\/answer><\/p>\s*<\/part>/,
+);
+assert.match(output, /<p>3\. Not a question\.<\/p>/);
+assert.match(
+    output,
+    /<givenAnswer>\s*<part><m>f\(-4\) = \$sol1<\/m><\/part>\s*<part><m>g\(2\) = \$sol2<\/m><\/part>\s*<\/givenAnswer>/,
+);
+assert.match(
+    output,
+    /<\/setup>\s*<!-- testing -->\s*<!-- <p>sol1 = \$sol1<\/p>\s*<p>sol2 = \$sol2<\/p> -->\s*<!-- \/testing -->/,
+);
+
 console.log("webwork-to-doenetml smoke test passed");
