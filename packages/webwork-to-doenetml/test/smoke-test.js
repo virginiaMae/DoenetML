@@ -203,15 +203,21 @@ assert.match(
     output,
     /<lineSegment endpoints="\(2,4\) \(2,8\)"\/>\s*\$p2\s*<regionBetweenCurves boundaryValues="-8 2">/,
 );
+// The order is picked in <setup>, and the list and the <givenAnswer> both
+// follow it
 assert.match(
     output,
-    /<ol>\s*<shuffle>\s*<li><answer inline name="ans1"><label><m>x\+y < \$c<\/m><\/label><choice credit="1">A<\/choice><choice>B<\/choice><\/answer><\/li>/,
+    /<selectFromSequence name="ord" from="1" to="2" numToSelect="2"\/>\s*<group name="questions">\s*<label><m>x\+y < \$c<\/m><\/label>\s*<label><m>x \\le 2<\/m> and <m>y \\ge 4\\;<\/m><\/label>\s*<\/group>\s*<textList name="keys">A B<\/textList>\s*<\/setup>/,
+);
+assert.doesNotMatch(output, /<shuffle>|credit=/);
+assert.match(
+    output,
+    /<ol>\s*<li>\s*<choiceInput inline name="ci1">\$questions\[\$ord\[1\]\]\s*<choice>A<\/choice>\s*<choice>B<\/choice>\s*<\/choiceInput>\s*<answer inline name="ans1" forceSmallCheckWorkButton><award><when>\$ci1 = \$keys\[\$ord\[1\]\]<\/when><\/award><\/answer>\s*<\/li>/,
 );
 assert.match(
     output,
-    /<label><m>x \\le 2<\/m> and <m>y \\ge 4\\;<\/m><\/label>/,
+    /<givenAnswer>\s*<ol>\s*<li>\$questions\[\$ord\[1\]\]: \$keys\[\$ord\[1\]\]<\/li>\s*<li>\$questions\[\$ord\[2\]\]: \$keys\[\$ord\[2\]\]<\/li>\s*<\/ol>\s*<\/givenAnswer>/,
 );
-assert.match(output, /<givenAnswer>\s*<p><m>x\+y < \$c<\/m>: A<\/p>/);
 assert.doesNotMatch(output, /<p>\s*<sideBySide|<p>\s*<ol/);
 
 // The same curve plotted twice on a graph is drawn once, curves of the same
@@ -253,22 +259,58 @@ assert.match(
     /<em> Use the \(\+\) symbol in the lower-right corner of the graph to zoom in\.<\/em>/,
 );
 
-// A select list showing only some of its questions
+// A select list showing only some of its questions: the order picks 2 of
+// the 3, and the answers can be given since they follow the same order.
+// The list's names don't clash with names already in setup.
 output = convert(String.raw`DOCUMENT();
+$ord = random(1,3,1);
 $sl = new_select_list();
 $sl->qa("\(1=1\)", "T", "\(1=2\)", "F", "\(2=2\)", "T");
 $sl->choose(2);
 BEGIN_TEXT
-\{$sl->print_q\}
+\{$sl->print_q\} $ord
 END_TEXT
 ANS(str_cmp($sl->ra_correct_ans));
 ENDDOCUMENT();`);
 
 assert.match(
     output,
-    /<select numToSelect="2">\s*<option><li><answer inline name="ans1"><label><m>1=1<\/m><\/label><choice>F<\/choice><choice credit="1">T<\/choice><\/answer><\/li><\/option>/,
+    /<selectFromSequence name="ord2" from="1" to="3" numToSelect="2"\/>/,
 );
-assert.doesNotMatch(output, /<givenAnswer>/);
+assert.match(output, /<textList name="keys">T F T<\/textList>/);
+assert.match(
+    output,
+    /<choiceInput inline name="ci2">\$questions\[\$ord2\[2\]\]\s*<choice>F<\/choice>\s*<choice>T<\/choice>/,
+);
+assert.doesNotMatch(output, /ci3/);
+assert.match(
+    output,
+    /<li>\$questions\[\$ord2\[2\]\]: \$keys\[\$ord2\[2\]\]<\/li>/,
+);
+
+// list_random picks one of its values
+output = convert(String.raw`DOCUMENT();
+$a = list_random(2,6);
+$b = list_random('cat','dog');
+$c = list_random("a pig","a cow");
+$d = list_random(sqrt(2), pi/4);
+BEGIN_TEXT
+\{ ans_rule(10) \}
+END_TEXT
+ANS(Compute("$a")->cmp);
+ENDDOCUMENT();`);
+
+assert.doesNotMatch(output, /Unknown function/);
+assert.match(output, /<select name="a" type="number">2 6<\/select>/);
+assert.match(output, /<select name="b" type="text">cat dog<\/select>/);
+assert.match(
+    output,
+    /<select name="c"><option><text>a pig<\/text><\/option><option><text>a cow<\/text><\/option><\/select>/,
+);
+assert.match(
+    output,
+    /<select name="d"><option><math>sqrt\(2\)<\/math><\/option><option><math>pi\/4<\/math><\/option><\/select>/,
+);
 
 // Pop-up menus, including one whose answer depends on an if block
 output = convert(String.raw`DOCUMENT();
@@ -466,6 +508,82 @@ assert.match(
     /<answer name="ans1"><label><m>x = <\/m><\/label>\$p<\/answer> and <answer name="ans2"><label><m>y = <\/m><\/label>\$q<\/answer>/,
 );
 
+// A MultiAnswer whose checker accepts its parts in either order: inputs
+// checked by one answer with an award for each order. Image sizes are
+// dropped. (From "Problem 17" of the UMTYMP Calculus 1 summer assignment;
+// OPL, author Justin Sukiennik)
+const anyOrderProblem = (condition) => String.raw`DOCUMENT();
+$w = 400;  # graph size
+$tw = 500; # graph size in TeX
+$a = random(-2,-1,1);
+$c = random(2,3,1);
+$ans = Real("$a");
+$b = Real("1");
+$graph1 = init_graph(-8,-8,8,8,'axes'=>[0,0]);
+$multians = MultiAnswer($b, $c)->with(
+  singleResult => 0,
+  checker => sub {
+      my ( $correct, $student, $self ) = @_;
+      my ( $f1stu, $f2stu ) = @{$student};
+      my ( $f1, $f2 ) = @{$correct};
+      if ( ${condition} ) {
+          return [1,1];
+      } else {
+          if ($f1 == $f1stu || $f2 == $f1stu) {
+              return [1,0];
+          } else {
+              return [0,0];
+          }
+      }
+  }
+);
+BEGIN_TEXT
+\{image(insertGraph($graph1),width=>$w,height=>$w,tex_size=>$tw)\}
+Answer: \(a =\) \{ans_rule(10)\}, \(b =\) \{$multians->ans_rule(10)\}, and \(c =\) \{$multians->ans_rule(10)\}
+END_TEXT
+ANS( $ans->cmp );
+ANS( $multians->cmp() );
+ENDDOCUMENT();`;
+
+output = convert(
+    anyOrderProblem(
+        "($f1 == $f1stu && $f2 == $f2stu) ||\n           ($f1 == $f2stu && $f2 == $f1stu)",
+    ),
+);
+assert.doesNotMatch(output, /name="w"|name="tw"/);
+assert.match(
+    output,
+    /<answer name="ans1"><label><m>a = <\/m><\/label>\$ans<\/answer>, <mathInput name="multians1"><label><m>b = <\/m><\/label><\/mathInput>, and <mathInput name="multians2"><label><m>c = <\/m><\/label><\/mathInput><!-- Not converted: partial credit[^>]*--><answer name="ans2"><shortDescription>Check b and c<\/shortDescription><award><when>\$multians1 = \$b and \$multians2 = \$c<\/when><\/award><award><when>\$multians1 = \$c and \$multians2 = \$b<\/when><\/award><\/answer>/,
+);
+assert.match(
+    output,
+    /<givenAnswer>\s*<p><m>a = \$ans<\/m><\/p>\s*<p><m>b = \$b,\\; c = \$c<\/m><\/p>\s*<p>or<\/p>\s*<p><m>b = \$c,\\; c = \$b<\/m><\/p>\s*<\/givenAnswer>/,
+);
+
+// The comparisons can be written either way round
+output = convert(
+    anyOrderProblem(
+        "($f2stu == $f2 && $f1stu == $f1) || ($f2 == $f1stu && $f2stu == $f1)",
+    ),
+);
+assert.match(output, /<mathInput name="multians1">/);
+
+// Anything else is not any-order: one order only, or an extra condition
+for (const condition of [
+    "($f1 == $f1stu && $f2 == $f2stu)",
+    "($f1 == $f1stu && $f2 == $f2stu) || ($f1 == $f1stu && $f2 == $f2stu)",
+    "($f1 == $f1stu && $f2 == $f2stu) || ($f1 == $f2stu && $f2 == $f1stu) || $f1 == 0",
+    "($f1 == $f1stu && $f2 == $f2stu) || ($f1 == $f2stu && $f2 == $f1stu && $f1 > 0)",
+]) {
+    output = convert(anyOrderProblem(condition));
+    assert.doesNotMatch(output, /<mathInput/, condition);
+    assert.match(
+        output,
+        /Not converted: custom checker for MultiAnswer \$multians/,
+        condition,
+    );
+}
+
 // Evaluating formulas, $ans1-style names, and numbered questions as parts
 // (from "Problem 13" of the UMTYMP Calculus 1 summer assignment; OPL,
 // author Justin Sukiennik)
@@ -510,5 +628,86 @@ assert.match(
     output,
     /<\/setup>\s*<!-- testing -->\s*<!-- <p>sol1 = \$sol1<\/p>\s*<p>sol2 = \$sol2<\/p> -->\s*<!-- \/testing -->/,
 );
+
+// std_problem_grader gives credit only if every answer is right: each
+// answer becomes its input, and one answer after the last requires them all
+const stdGrader = (body) => String.raw`DOCUMENT();
+install_problem_grader(~~&std_problem_grader);
+${body}
+ENDDOCUMENT();`;
+
+// Math blanks and a pop-up
+output = convert(
+    stdGrader(String.raw`$a = Compute("2");
+$b = Compute("3");
+$p = PopUp(['?','Yes','No'],'No');
+BEGIN_TEXT
+\(x =\) \{ans_rule(10)\} and \(y =\) \{ans_rule(10)\}
+$PAR
+\{$p->menu\} Is it?
+END_TEXT
+ANS($a->cmp);
+ANS($b->cmp);
+ANS($p->cmp);`),
+);
+assert.doesNotMatch(output, /<answer name="ans[23]"|credit=/);
+assert.match(
+    output,
+    /<mathInput name="ans1Input"><label><m>x = <\/m><\/label><\/mathInput> and <mathInput name="ans2Input"><label><m>y = <\/m><\/label><\/mathInput>/,
+);
+assert.match(
+    output,
+    /<choiceInput inline name="ans3Input"><shortDescription>Is it\?<\/shortDescription><choice>Yes<\/choice><choice>No<\/choice><\/choiceInput><answer name="ans1"><shortDescription>Check all answers<\/shortDescription><award><when>\$ans1Input = \$a and \$ans2Input = \$b and \$ans3Input\.selectedIndices = 2<\/when><\/award><\/answer>/,
+);
+// The given answers are unchanged
+assert.match(
+    output,
+    /<givenAnswer>\s*<p><m>x = \$a<\/m><\/p>\s*<p><m>y = \$b<\/m><\/p>/,
+);
+
+// A select list: the answer goes after the list
+output = convert(
+    stdGrader(String.raw`$sl = new_select_list();
+$sl->qa("\(1=1\)", "T", "\(1=2\)", "F");
+$sl->choose(2);
+BEGIN_TEXT
+\{$sl->print_q\}
+END_TEXT
+ANS(str_cmp($sl->ra_correct_ans));`),
+);
+assert.doesNotMatch(output, /forceSmallCheckWorkButton/);
+assert.match(
+    output,
+    /<\/choiceInput>\s*<\/li>\s*<\/ol>\n<answer name="ans1"><shortDescription>Check all answers<\/shortDescription><award><when>\(\$ci1 = \$keys\[\$ord\[1\]\]\) and \(\$ci2 = \$keys\[\$ord\[2\]\]\)<\/when><\/award><\/answer>/,
+);
+
+// An any-order MultiAnswer: no note about partial credit, since there is none
+output = convert(
+    anyOrderProblem(
+        "($f1 == $f1stu && $f2 == $f2stu) || ($f1 == $f2stu && $f2 == $f1stu)",
+    ).replace(
+        "DOCUMENT();",
+        "DOCUMENT();\ninstall_problem_grader(~~&std_problem_grader);",
+    ),
+);
+assert.doesNotMatch(output, /partial credit/);
+assert.match(
+    output,
+    /<mathInput name="ans1Input"><label><m>a = <\/m><\/label><\/mathInput>, <mathInput name="multians1">[\s\S]*?<\/mathInput><answer name="ans1"><shortDescription>Check all answers<\/shortDescription><award><when>\$ans1Input = \$ans and \(\(\$multians1 = \$b and \$multians2 = \$c\) or \(\$multians1 = \$c and \$multians2 = \$b\)\)<\/when><\/award><\/answer>/,
+);
+
+// <part>s, or one answer: left as they are
+output = convert(
+    stdGrader(String.raw`$a = Compute("2");
+BEGIN_TEXT
+\(x =\) \{ans_rule(10)\}
+END_TEXT
+ANS($a->cmp);`),
+);
+assert.match(
+    output,
+    /<answer name="ans1"><label><m>x = <\/m><\/label>\$a<\/answer>/,
+);
+assert.doesNotMatch(output, /all-or-nothing|Check all answers/);
 
 console.log("webwork-to-doenetml smoke test passed");

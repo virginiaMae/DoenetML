@@ -24,6 +24,10 @@ export function convert(data) {
     // Remove comments
     document = document.replace(/\#.*/g, "");
 
+    // std_problem_grader: credit only if every answer is right
+    const allOrNothing =
+        /install_problem_grader\([^)]*\bstd_problem_grader\b/.test(document);
+
     let content = "";
     let contentType = null;
 
@@ -319,12 +323,29 @@ export function convert(data) {
                 if (checkerId !== undefined) {
                     usedCheckers.add(Number(checkerId));
                 }
+                const checker =
+                    checkerId === undefined
+                        ? null
+                        : checkers[Number(checkerId)];
                 multiAnswers[varName] = {
                     parts,
-                    checker:
-                        checkerId === undefined
-                            ? null
-                            : checkers[Number(checkerId)],
+                    checker,
+                    // Blanks that can be answered in either order become
+                    // inputs checked by one <answer>, filled in as found
+                    anyOrder: isAnyOrderChecker(checker, parts)
+                        ? {
+                              parts,
+                              inputs: [],
+                              lhs: [],
+                              // All-or-nothing grading ignores a checker's
+                              // partial credit
+                              partialCredit:
+                                  !allOrNothing &&
+                                  /return\s*\[\s*(1\s*,\s*0|0\s*,\s*1)\s*\]/.test(
+                                      checker,
+                                  ),
+                          }
+                        : null,
                 };
 
                 // Special case: a layout of text and answer blanks
@@ -709,6 +730,32 @@ export function convert(data) {
         }
     }
 
+    // Image sizes, e.g. `$w = 400; # graph size` used only in
+    // image(..., width=>$w, tex_size=>$tw): DoenetML graphs don't need them
+    for (let name of setup.keys()) {
+        const sizeUse = new RegExp(
+            `\\b(width|height|tex_size)\\s*=>\\s*\\$${name}\\b`,
+        );
+        const reference = new RegExp(`\\$${name}\\b`);
+        const otherUse = (text) =>
+            reference.test(text.replace(new RegExp(sizeUse.source, "g"), ""));
+        const usedForSize = [content, solutionSection, ...statements].some(
+            (text) => sizeUse.test(text),
+        );
+        if (
+            usedForSize &&
+            !otherUse(content) &&
+            !otherUse(solutionSection) &&
+            !statements.some(
+                (statement) =>
+                    otherUse(statement) &&
+                    !new RegExp(`^\\$${name}\\s*=`).test(statement),
+            )
+        ) {
+            setup.delete(name);
+        }
+    }
+
     // Shading: $graph->fillRegion([x, y, color]) fills the region containing
     // (x, y). We can convert this when the graph has a single function:
     // shade between the function and the top or bottom edge of the graph,
@@ -798,6 +845,9 @@ export function convert(data) {
         popups,
         multiAnswers,
         textSnippets,
+        // Names taken in <setup>, and definitions the TEXT section adds to it
+        setupNames: new Set(setup.keys()),
+        extraSetup: [],
     };
 
     // Placeholders for the <select>s from if blocks, filled in at the end so
@@ -864,6 +914,19 @@ export function convert(data) {
         // PGML
         textOut = pgmlSection(content, answerRecords);
     }
+    if (context.extraSetup.length > 0) {
+        const lines = context.extraSetup
+            .join("\n")
+            .replaceAll("\n", `\n${tab}`);
+        out = out.replace("</setup>\n\n", `${tab}${lines}\n</setup>\n\n`);
+    }
+    if (allOrNothing) {
+        textOut =
+            combineAnswers(textOut) ??
+            warnAndComment(
+                "WeBWorK grades this problem all-or-nothing (std_problem_grader); combine its answers into one <answer> by hand",
+            ) + textOut;
+    }
     out += textOut;
 
     // THE ANSWER AND SOLUTION
@@ -884,6 +947,7 @@ export function convert(data) {
             item = part ? math : `<p>${math}</p>`;
         }
         if (item) {
+            item = item.replaceAll("\n", `\n${tab}`);
             givenAnswerOut += part
                 ? `${tab}<part>${item}</part>\n`
                 : `${tab}${item}\n`;
@@ -1328,6 +1392,35 @@ function functionStatement(
                 ? ""
                 : ` step="${args[2]}"`;
         open = `<selectFromSequence${nameStr} from="${args[0]}" to="${args[1]}"${step}/>`;
+    } else if (func === "list_random") {
+        // <select> one of the listed values. splitArgs drops quotes, which
+        // tell strings from math here.
+        const values = splitTopLevel(argsString).map((arg) => arg.trim());
+        const unquote = (s) => s.replace(/^(["'])([\s\S]*)\1$/, "$2");
+        const quoted = values.every((arg) => /^(["'])[\s\S]*\1$/.test(arg));
+        if (values.every((arg) => arg !== "" && Number.isFinite(Number(arg)))) {
+            open = `<select${nameStr} type="number">`;
+            child = values.join(" ");
+        } else if (
+            quoted &&
+            values.every((arg) => /^\S+$/.test(unquote(arg)))
+        ) {
+            open = `<select${nameStr} type="text">`;
+            child = values.map(unquote).join(" ");
+        } else {
+            // Values with spaces, or expressions: one <option> each. They
+            // go in `open`, since `child` is read as math.
+            const tag = quoted ? "text" : "math";
+            open =
+                `<select${nameStr}>` +
+                values
+                    .map(
+                        (arg) =>
+                            `<option><${tag}>${quoted ? unquote(arg) : arg}</${tag}></option>`,
+                    )
+                    .join("");
+        }
+        close = "</select>";
     } else if (func === "non_zero_random") {
         // <selectFromSequence>, exclude 0
         let step =
@@ -1510,44 +1603,74 @@ function tableBlock(rows, context) {
 
 /**
  * Render a select list (`\{$sl->print_q\}`): each question becomes a list
- * item holding a drop-down <answer> whose choices are all the answers that
- * appear in the list (e.g. A, B, C, D or T, F).
+ * item holding a drop-down whose choices are all the answers that appear in
+ * the list (e.g. A, B, C, D or T, F).
  *
- * WeBWorK shows `numToShow` of the questions in random order: shuffle them
- * all, or select some.
+ * WeBWorK shows `numToShow` of the questions in random order. The order is
+ * picked in <setup> (`ord`), and both the list and the <givenAnswer> read
+ * the questions (`questions`) and their answers (`keys`) through it, so the
+ * two are always in the same order.
+ *
+ * The <label> goes inside the <choiceInput>: an <answer>'s own label only
+ * reaches an input the answer makes itself.
  */
-function selectListBlock(list, answerRecords) {
+function selectListBlock(list, answerRecords, context) {
     const allAnswers = [...new Set(list.pairs.map(([, answer]) => answer))];
     allAnswers.sort();
-    const showAll = !list.numToShow || list.numToShow >= list.pairs.length;
+    const numQuestions = list.pairs.length;
+    const numToShow = Math.min(list.numToShow || numQuestions, numQuestions);
 
-    let items = [];
-    for (let [question, answer] of list.pairs) {
-        const questionOut = convertTex(question);
-        // Only list answers if every question is shown
-        answerRecords.push({
-            givenAnswer: showAll ? `<p>${questionOut}: ${answer}</p>` : "",
-        });
-        const name = `ans${answerRecords.length}`;
-        const choices = allAnswers
-            .map((choice) =>
-                choice === answer
-                    ? `<choice credit="1">${choice}</choice>`
-                    : `<choice>${choice}</choice>`,
-            )
-            .join("");
-        items.push(
-            `<li><answer inline name="${name}"><label>${questionOut}</label>${choices}</answer></li>`,
-        );
-    }
+    const ord = uniqueSetupName("ord", context);
+    const questions = uniqueSetupName("questions", context);
+    const keys = uniqueSetupName("keys", context);
 
-    if (showAll) {
-        return `<ol>\n${tab}<shuffle>\n${items.map((item) => `${tab}${tab}${item}\n`).join("")}${tab}</shuffle>\n</ol>`;
-    }
-    const options = items
-        .map((item) => `${tab}${tab}<option>${item}</option>\n`)
+    const questionLabels = list.pairs
+        .map(([question]) => `${tab}<label>${convertTex(question)}</label>\n`)
         .join("");
-    return `<ol>\n${tab}<select numToSelect="${list.numToShow}">\n${options}${tab}</select>\n</ol>`;
+    const answers = list.pairs.map(([, answer]) => answer);
+    const keysOut = answers.every((answer) => /^[^\s,]+$/.test(answer))
+        ? `<textList name="${keys}">${answers.join(" ")}</textList>`
+        : `<group name="${keys}">${answers.map((answer) => `<text>${answer}</text>`).join("")}</group>`;
+    context.extraSetup.push(
+        `<!-- random order of the questions: item i of the list shows question ${ord}[i] -->\n` +
+            `<selectFromSequence name="${ord}" from="1" to="${numQuestions}" numToSelect="${numToShow}"/>\n` +
+            `<group name="${questions}">\n${questionLabels}</group>\n` +
+            keysOut,
+    );
+
+    const choices = allAnswers
+        .map((choice) => `${tab}${tab}<choice>${choice}</choice>\n`)
+        .join("");
+    let items = "";
+    let givenItems = "";
+    for (let i = 1; i <= numToShow; i++) {
+        const question = `$${questions}[$${ord}[${i}]]`;
+        const key = `$${keys}[$${ord}[${i}]]`;
+        // The whole list goes in the first record's <givenAnswer>
+        answerRecords.push({ givenAnswer: "" });
+        const number = answerRecords.length;
+        items +=
+            `${tab}<li>\n` +
+            `${tab}${tab}<choiceInput inline name="ci${number}">${question}\n${choices}${tab}${tab}</choiceInput>\n` +
+            `${tab}${tab}<answer inline name="ans${number}" forceSmallCheckWorkButton><award><when>$ci${number} = ${key}</when></award></answer>\n` +
+            `${tab}</li>\n`;
+        givenItems += `${tab}<li>${question}: ${key}</li>\n`;
+    }
+    answerRecords.at(-numToShow).givenAnswer = `<ol>\n${givenItems}</ol>`;
+
+    return `<ol>\n${items}</ol>`;
+}
+
+/**
+ * `base`, or `base2`, `base3`, ... if that's already a name in <setup>
+ */
+function uniqueSetupName(base, context) {
+    let name = base;
+    for (let i = 2; context.setupNames.has(name); i++) {
+        name = `${base}${i}`;
+    }
+    context.setupNames.add(name);
+    return name;
 }
 
 /**
@@ -1608,6 +1731,276 @@ function popupAnswer(name, popup, description, answerRecords) {
         .map((choice) => `<choice>${choice}</choice>`)
         .join("");
     return `<answer inline name="${name}">${shortDescription}<choiceInput inline name="${inputName}">${choicesOut}</choiceInput><award><when>${spaceLessThan(when)}</when></award></answer>`;
+}
+
+/**
+ * WeBWorK's std_problem_grader gives credit only when every answer is right.
+ * DoenetML has no setting for that, so each <answer> becomes just its input,
+ * and one <answer> after the last input requires all of their conditions.
+ * It goes after the list if the last input is in one (e.g. a select list).
+ *
+ * Returns null, to leave the answers as they are, if the problem has
+ * <part>s or an answer isn't one of the forms answerAsInput() knows.
+ */
+function combineAnswers(text) {
+    const matches = [
+        ...text.matchAll(/<answer\b([^>]*)>([\s\S]*?)<\/answer>/g),
+    ];
+    if (matches.length < 2) {
+        return text;
+    }
+    if (/<part>/.test(text)) {
+        return null;
+    }
+
+    let out = "";
+    let lastId = 0;
+    let insertAt = 0;
+    const conditions = [];
+    for (const match of matches) {
+        const [whole, attributes, inner] = match;
+        const name = attributes.match(/name="(\w+)"/)?.[1];
+        const converted = name && answerAsInput(name, inner);
+        if (!converted) {
+            return null;
+        }
+        conditions.push(converted.condition);
+        let start = match.index;
+        let end = match.index + whole.length;
+        if (converted.input === "") {
+            // An answer on a line of its own: remove the line
+            const lineStart = text.lastIndexOf("\n", start - 1) + 1;
+            if (
+                /^[ \t]*$/.test(text.slice(lineStart, start)) &&
+                text[end] === "\n"
+            ) {
+                start = lineStart;
+                end++;
+            }
+        }
+        out += text.slice(lastId, start) + converted.input;
+        lastId = end;
+        insertAt = out.length;
+    }
+    out += text.slice(lastId);
+
+    // After the list, if the last input is in one
+    const before = out.slice(0, insertAt);
+    const openLists =
+        (before.match(/<ol\b/g) ?? []).length -
+        (before.match(/<\/ol>/g) ?? []).length;
+    let answerOut = `<answer name="ans1"><shortDescription>Check all answers</shortDescription><award><when>${conditions.join(" and ")}</when></award></answer>`;
+    if (openLists > 0) {
+        insertAt = out.indexOf("</ol>", insertAt) + "</ol>".length;
+        answerOut = `\n${answerOut}`;
+    }
+    return out.slice(0, insertAt) + answerOut + out.slice(insertAt);
+}
+
+/**
+ * One <answer> as its input and the condition for it to be right:
+ *
+ * - `<label/>$a` (a math answer) -> a <mathInput>, `$input = $a`
+ * - <choice>s, one with credit="1" -> a <choiceInput>,
+ *   `$input.selectedIndices = k`
+ * - a <choiceInput> and an <award><when> -> the <choiceInput>, the condition
+ * - just <award><when>s, for inputs outside the answer (select lists,
+ *   any-order MultiAnswers) -> no input, any of the conditions
+ *
+ * A <label> or <shortDescription> moves to the input. null for anything
+ * else.
+ */
+function answerAsInput(name, inner) {
+    let rest = inner;
+    let describe = "";
+    let find;
+    while ((find = rest.match(/^<(label|shortDescription)>[\s\S]*?<\/\1>/))) {
+        describe += find[0];
+        rest = rest.slice(find[0].length);
+    }
+    const inputName = `${name}Input`;
+
+    // A math answer
+    if (rest.trim() !== "" && !/[<>]/.test(rest)) {
+        return {
+            input: `<mathInput name="${inputName}">${describe}</mathInput>`,
+            condition: `$${inputName} = ${rest.trim()}`,
+        };
+    }
+
+    // <choice>s, one of them right
+    if (/^(<choice( credit="1")?>[^<]*<\/choice>)+$/.test(rest)) {
+        const choices = [...rest.matchAll(/<choice( credit="1")?>/g)];
+        const right = choices.findIndex((choice) => choice[1]);
+        if (right < 0 || choices.filter((choice) => choice[1]).length > 1) {
+            return null;
+        }
+        return {
+            input: `<choiceInput inline name="${inputName}">${describe}${rest.replaceAll(' credit="1"', "")}</choiceInput>`,
+            condition: `$${inputName}.selectedIndices = ${right + 1}`,
+        };
+    }
+
+    // A <choiceInput> and the condition for it
+    if (
+        (find = rest.match(
+            /^(<choiceInput\b[^>]*>)([\s\S]*?<\/choiceInput>)<award><when>([\s\S]*?)<\/when><\/award>$/,
+        ))
+    ) {
+        return {
+            input: find[1] + describe + find[2],
+            condition: `(${find[3]})`,
+        };
+    }
+
+    // Conditions on inputs outside the answer
+    const whens = [
+        ...rest.matchAll(/<award><when>([\s\S]*?)<\/when><\/award>/g),
+    ];
+    if (
+        whens.length > 0 &&
+        rest
+            .replaceAll(/<award><when>[\s\S]*?<\/when><\/award>/g, "")
+            .trim() === ""
+    ) {
+        const condition =
+            whens.length === 1
+                ? `(${whens[0][1]})`
+                : `(${whens.map((when) => `(${when[1]})`).join(" or ")})`;
+        return { input: "", condition };
+    }
+
+    return null;
+}
+
+/**
+ * Whether a MultiAnswer's checker accepts its two parts in either order:
+ *
+ *     my ( $f1stu, $f2stu ) = @{$student};
+ *     my ( $f1, $f2 ) = @{$correct};
+ *     if ( ($f1 == $f1stu && $f2 == $f2stu) ||
+ *          ($f1 == $f2stu && $f2 == $f1stu) ) {
+ *         return [1,1];
+ *     } ...
+ *
+ * Only when its first `if` is exactly that, giving full credit, and each
+ * part is a variable or a number.
+ */
+function isAnyOrderChecker(checker, parts) {
+    if (
+        !checker ||
+        parts.length !== 2 ||
+        !parts.every((part) => /^(\$\w+|-?\d+(\.\d+)?)$/.test(part.trim()))
+    ) {
+        return false;
+    }
+    // my ($correct, $student, $self) = @_;
+    const params = checker.match(
+        /my\s*\(\s*\$(\w+)\s*,\s*\$(\w+)[^)]*\)\s*=\s*@_/,
+    );
+    if (!params) {
+        return false;
+    }
+    const unpack = (arrayName) =>
+        checker.match(
+            new RegExp(
+                `my\\s*\\(\\s*\\$(\\w+)\\s*,\\s*\\$(\\w+)\\s*\\)\\s*=\\s*@\\{\\s*\\$${arrayName}\\s*\\}`,
+            ),
+        );
+    const correct = unpack(params[1]);
+    const student = unpack(params[2]);
+    if (!correct || !student) {
+        return false;
+    }
+
+    const ifMatch = /\bif\s*\(/.exec(checker);
+    if (!ifMatch) {
+        return false;
+    }
+    const conditionOpen = ifMatch.index + ifMatch[0].length - 1;
+    const conditionClose = findClosing(checker, conditionOpen);
+    const bodyOpen = checker.indexOf("{", conditionClose);
+    const bodyClose = findClosing(checker, bodyOpen, "{", "}");
+    if (conditionClose < 0 || bodyOpen < 0 || bodyClose < 0) {
+        return false;
+    }
+    const body = checker.slice(bodyOpen + 1, bodyClose);
+    if (!/^\s*return\s*(\[\s*1\s*,\s*1\s*\]|1)\s*;?\s*$/.test(body)) {
+        return false;
+    }
+
+    // Each `a == b` as "a=b" with the sides sorted, each clause as its
+    // sorted equalities
+    const equality = (a, b) => [a, b].sort().join("=");
+    const clauseKey = (equalities) => equalities.sort().join("&");
+    const condition = checker
+        .slice(conditionOpen + 1, conditionClose)
+        .replaceAll(/\s|\$/g, "");
+    let clauses;
+    try {
+        clauses = condition.split("||").map((clause) => {
+            const equalities = clause
+                .replace(/^\(+/, "")
+                .replace(/\)+$/, "")
+                .split("&&")
+                .map((eq) => {
+                    const sides = eq.split("==");
+                    if (sides.length !== 2 || /[()]/.test(eq)) {
+                        throw new Error("not a simple equality");
+                    }
+                    return equality(...sides);
+                });
+            return clauseKey(equalities);
+        });
+    } catch {
+        return false;
+    }
+    const [, c1, c2] = correct;
+    const [, s1, s2] = student;
+    const expected = [
+        clauseKey([equality(c1, s1), equality(c2, s2)]),
+        clauseKey([equality(c1, s2), equality(c2, s1)]),
+    ];
+    return (
+        clauses.length === 2 &&
+        expected.every((key) => clauses.includes(key)) &&
+        clauses[0] !== clauses[1]
+    );
+}
+
+/**
+ * The <answer> for an any-order group of inputs: full credit for either
+ * order of the parts
+ */
+function anyOrderAnswer(group, name) {
+    const [input1, input2] = group.inputs;
+    const [part1, part2] = group.parts.map((part) => part.trim());
+    const what = group.lhs.every((lhs) => lhs)
+        ? group.lhs.join(" and ")
+        : "both answers";
+    const note = group.partialCredit
+        ? warnAndComment(
+              `Not converted: partial credit for one correct part of a MultiAnswer; ${name} needs both`,
+          ).trim()
+        : "";
+    return (
+        `${note}<answer name="${name}"><shortDescription>Check ${what}</shortDescription>` +
+        `<award><when>$${input1} = ${part1} and $${input2} = ${part2}</when></award>` +
+        `<award><when>$${input1} = ${part2} and $${input2} = ${part1}</when></award></answer>`
+    );
+}
+
+/**
+ * Both orders of an any-order group, for the <givenAnswer>
+ */
+function anyOrderGivenAnswer(group) {
+    const [lhs1, lhs2] = group.lhs;
+    const [part1, part2] = group.parts.map((part) => part.trim());
+    const pair = (a, b) =>
+        lhs1 && lhs2
+            ? `<m>${lhs1} = ${a},\\; ${lhs2} = ${b}</m>`
+            : `<m>${a},\\; ${b}</m>`;
+    return `<p>${pair(part1, part2)}</p>\n<p>or</p>\n<p>${pair(part2, part1)}</p>`;
 }
 
 /**
@@ -1848,6 +2241,12 @@ function textSection(text, answers, answerRecords, context) {
                 }
                 const i = (multiAnswerPartsUsed[match[1]] ??= 0);
                 multiAnswerPartsUsed[match[1]]++;
+                if (multiAnswer.anyOrder) {
+                    return {
+                        input: `${match[1]}${i + 1}`,
+                        group: multiAnswer.anyOrder,
+                    };
+                }
                 const warning =
                     multiAnswer.checker && i === 0
                         ? warnAndComment(
@@ -1898,6 +2297,7 @@ function textSection(text, answers, answerRecords, context) {
                     ? selectListBlock(
                           context.selectLists[listName],
                           answerRecords,
+                          context,
                       )
                     : match,
         );
@@ -2018,16 +2418,10 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
     let lastId = 0;
     for (let match of par.matchAll(regex)) {
         const name = `ans${answerRecords.length + 1}`;
-        // Either the correct answer, or { content, given, feedback } for an
-        // answer with its own awards
+        // Either the correct answer, { content, given, feedback } for an
+        // answer with its own awards, or { input, group } for one input of
+        // an any-order group
         let answer = getAnswer(match, name);
-        let content = answer;
-        let record = { blank: true };
-        if (answer && typeof answer === "object") {
-            content = answer.content;
-            record = { blank: false, feedback: answer.feedback };
-            answer = answer.given;
-        }
         let before = par.slice(lastId, match.index);
         lastId = match.index + match[0].length;
 
@@ -2041,6 +2435,30 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
             lhs = findLabel[1].trim();
             label = `<label><m>${lhs} = </m></label>`;
             before = before.slice(0, findLabel.index);
+        }
+
+        if (answer?.input) {
+            // The <answer> comes after the group's last input
+            const group = answer.group;
+            group.inputs.push(answer.input);
+            group.lhs.push(lhs);
+            out += `${before}<mathInput name="${answer.input}">${label}</mathInput>`;
+            if (group.inputs.length === group.parts.length) {
+                answerRecords.push({
+                    blank: false,
+                    givenAnswer: anyOrderGivenAnswer(group),
+                });
+                out += anyOrderAnswer(group, name);
+            }
+            continue;
+        }
+
+        let content = answer;
+        let record = { blank: true };
+        if (answer && typeof answer === "object") {
+            content = answer.content;
+            record = { blank: false, feedback: answer.feedback };
+            answer = answer.given;
         }
 
         answerRecords.push({ lhs, answer, ...record });
