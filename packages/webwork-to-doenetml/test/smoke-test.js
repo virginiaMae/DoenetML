@@ -710,4 +710,74 @@ assert.match(
 );
 assert.doesNotMatch(output, /all-or-nothing|Check all answers/);
 
+// Points, lists and intervals, and a numbered question with its answer on
+// the next line (from OPL, author Justin Sukiennik)
+output = convert(String.raw`DOCUMENT();
+loadMacros("PGstandard.pl", "MathObjects.pl", "weightedGrader.pl");
+install_weighted_grader();
+$a = random(2,8,2);
+$b = Compute("$a+2");
+$an1 = Point(0,$b);
+$an2a = Point(-$a,0);
+$an2b = Point($b,0);
+$ans1 = List($an1);
+$ans2 = List($an2a,$an2b);
+$ans3 = Union("(-inf,-$a) U [$b,inf)");
+BEGIN_TEXT
+$BBOLD 1.$EBOLD Find the \(y\)-intercept(s). $BR
+Answer (separate by commas): \{ans_rule(30)\} $PAR
+$BBOLD 2.$EBOLD Find the \(x\)-intercept(s). $BR
+Answer (separate by commas): \{ans_rule(30)\} $PAR
+$BBOLD 3.$EBOLD Where is \(f(x) > 0\)? $BR
+Answer (in interval notation): \{ans_rule(30)\} $PAR
+END_TEXT
+WEIGHTED_ANS( ($ans1)->cmp(showHints=>0), 25 );
+WEIGHTED_ANS( ($ans2)->cmp(showHints=>0), 25 );
+WEIGHTED_ANS( ($ans3)->cmp(), 50 );
+ENDDOCUMENT();`);
+
+assert.match(output, /<point name="an1" x="0" y="\$b"\/>/);
+assert.match(output, /<math name="sol1">\$an1<\/math>/);
+assert.match(output, /<mathList name="sol2">\$an2a \$an2b<\/mathList>/);
+assert.match(
+    output,
+    /<math name="sol3"><interval>\(-infinity,-\$a\) union \[\$b,infinity\)<\/interval><\/math>/,
+);
+assert.match(
+    output,
+    /<part>\s*<p>Find the <m>y<\/m>-intercept\(s\)\.\s*<\/p>\s*<p><answer name="ans1" weight="25"><label>Answer \(separate by commas\): <\/label>\$sol1<\/answer><\/p>\s*<\/part>/,
+);
+assert.match(
+    output,
+    /<answer name="ans2" unorderedCompare weight="25"><label>Answer \(separate by commas\): <\/label>\$sol2<\/answer>/,
+);
+assert.match(
+    output,
+    /<answer name="ans3" weight="50"><mathInput unionFromU><label>Answer \(in interval notation\): <\/label><\/mathInput>\$sol3<\/answer>/,
+);
+assert.match(output, /<givenAnswer>\s*<part><m>\$sol1<\/m><\/part>/);
+assert.doesNotMatch(output, /Unknown function|\(\$sol|alert> 1\./);
+
+// Equal weights are left out; a numbered line that isn't followed by its
+// answer stays a paragraph
+output = convert(String.raw`DOCUMENT();
+$a = Compute("2");
+$b = Compute("3");
+BEGIN_TEXT
+$BBOLD 1.$EBOLD Read this. $PAR
+Some text. $PAR
+\(x =\) \{ans_rule(10)\} $PAR
+$BBOLD 2.$EBOLD Last. $PAR
+\(y =\) \{ans_rule(10)\}
+END_TEXT
+WEIGHTED_ANS($a->cmp, 50);
+WEIGHTED_ANS($b->cmp, 50);
+ENDDOCUMENT();`);
+assert.doesNotMatch(output, /weight=/);
+assert.match(
+    output,
+    /<p><alert> 1\.<\/alert> Read this\.<\/p>\s*<p>Some text\.<\/p>\s*<p><answer name="ans1">/,
+);
+assert.match(output, /<part>\s*<p>Last\.<\/p>\s*<p><answer name="ans2">/);
+
 console.log("webwork-to-doenetml smoke test passed");

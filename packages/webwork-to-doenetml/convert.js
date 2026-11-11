@@ -127,6 +127,8 @@ export function convert(data) {
 
     // let out = "";
     let answers = [];
+    // For each answer: { weight, unordered, unionFromU }
+    let answerOptions = [];
     let activeConditions = [];
     let prevCondition = "";
 
@@ -446,6 +448,16 @@ export function convert(data) {
         } else if ((find = statement.match(/ANS\(\s*(.*)\s*\)/))) {
             let arg = find[1];
 
+            // WEIGHTED_ANS(answer, weight)
+            let weight = null;
+            if (/^WEIGHTED_ANS\(/.test(statement)) {
+                const weightArgs = splitTopLevel(arg);
+                if (weightArgs.length === 2) {
+                    arg = weightArgs[0].trim();
+                    weight = weightArgs[1].trim();
+                }
+            }
+
             // Pop-up menus and select lists get their <answer>s where
             // they're printed in the TEXT section
             const findObject =
@@ -469,7 +481,14 @@ export function convert(data) {
             //   }
             // }
 
-            let ans = parts[0];
+            let ans = parts[0].trim();
+            // ($ans1)->cmp: the parentheses only group the Perl
+            while (
+                ans.startsWith("(") &&
+                findClosing(ans, 0) === ans.length - 1
+            ) {
+                ans = ans.slice(1, -1).trim();
+            }
 
             if ((find = ans.match(/(\w+)\s*\(\s*(.*)\s*\)/))) {
                 if (find[1] == "fun_cmp") {
@@ -485,6 +504,20 @@ export function convert(data) {
                     ans = open + child + close;
                 }
             }
+
+            // What kind of answer it is: a variable's definition, or the
+            // answer itself
+            const refName = ans.match(/^\$(\w+)$/)?.[1];
+            const definition = refName ? (setup.get(refName)?.open ?? "") : ans;
+            answerOptions.push({
+                weight,
+                // WeBWorK compares lists in any order, unless ordered=>1
+                unordered:
+                    definition.startsWith("<mathList") &&
+                    !/\bordered\s*=>\s*1/.test(arg),
+                // Let students type U for a union, as in WeBWorK
+                unionFromU: /<interval>/.test(definition),
+            });
 
             answers.push(ans);
 
@@ -513,6 +546,13 @@ export function convert(data) {
         for (let option of data.childOptions) {
             option.open = toFunction(option.open);
             option.close = "</function>";
+        }
+    }
+
+    // Weights only matter if they differ
+    if (new Set(answerOptions.map((options) => options.weight)).size <= 1) {
+        for (let options of answerOptions) {
+            options.weight = null;
         }
     }
 
@@ -845,6 +885,7 @@ export function convert(data) {
         popups,
         multiAnswers,
         textSnippets,
+        answerOptions,
         // Names taken in <setup>, and definitions the TEXT section adds to it
         setupNames: new Set(setup.keys()),
         extraSetup: [],
@@ -1371,6 +1412,20 @@ ${stars}-->
  * @param {string} argsString - everything between parenthesis
  * @returns
  */
+/**
+ * A function's one argument, without its quotes: Interval("(1,2]") -> (1,2]
+ */
+function wholeArg(argsString) {
+    return argsString.trim().replace(/^(["'])([\s\S]*)\1$/, "$2");
+}
+
+/**
+ * WeBWorK reads `inf` as infinity, but DoenetML reads it as i*n*f
+ */
+function infinityFromInf(math) {
+    return math.replaceAll(/\binf\b/g, "infinity");
+}
+
 function functionStatement(
     name,
     func,
@@ -1442,11 +1497,32 @@ function functionStatement(
     } else if (func === "Compute") {
         // <math>
         open = `<math${nameStr} simplify="full">`;
-        child = `${args[0]}`;
+        child = infinityFromInf(args[0]);
         close = "</math>";
     } else if (func === "ImplicitPlane" || func === "Formula") {
         // <math> with equation
         open = `<math${nameStr} simplify="numbersPreserveOrder">`;
+        child = `${args[0]}`;
+        close = `</math>`;
+    } else if (func === "Point") {
+        // <point>: Point(1, 2) -> x and y, Point("(1,2)") -> its coords
+        const coords = splitTopLevel(argsString).map((arg) =>
+            arg.replace(/^(["'])([\s\S]*)\1$/, "$2"),
+        );
+        if (coords.length >= 2 && coords.length <= 3) {
+            const attributes = ["x", "y", "z"]
+                .slice(0, coords.length)
+                .map((coord, i) => ` ${coord}="${escapeAttribute(coords[i])}"`)
+                .join("");
+            open = `<point${nameStr}${attributes}/>`;
+        } else {
+            open = `<point${nameStr}>`;
+            child = coords.length === 1 ? coords[0] : `(${coords.join(", ")})`;
+            close = `</point>`;
+        }
+    } else if (func === "List" && args.length === 1) {
+        // A list of one thing is just that thing
+        open = `<math${nameStr}>`;
         child = `${args[0]}`;
         close = `</math>`;
     } else if (func === "List") {
@@ -1461,14 +1537,15 @@ function functionStatement(
         close = `</mathList>`;
     } else if (func === "Interval") {
         // <interval>
+        // The whole argument: splitArgs would split it at its comma
         open = `<math${nameStr}><interval>`;
-        child = `${args[0]}`;
+        child = infinityFromInf(wholeArg(argsString));
         close = `</interval></math>`;
     } else if (func === "Union") {
         // <interval> with union
-        args[0] = args[0].replaceAll(/\s+U\s+/g, " union ");
+        const union = wholeArg(argsString).replaceAll(/\s+U\s+/g, " union ");
         open = `<math${nameStr}><interval>`;
-        child = `${args[0]}`;
+        child = infinityFromInf(union);
         close = `</interval></math>`;
     } else if (func === "FEQ") {
         // <function>
@@ -1760,6 +1837,10 @@ function combineAnswers(text) {
     for (const match of matches) {
         const [whole, attributes, inner] = match;
         const name = attributes.match(/name="(\w+)"/)?.[1];
+        // `$input = $list` would compare in order
+        if (/\bunorderedCompare\b/.test(attributes)) {
+            return null;
+        }
         const converted = name && answerAsInput(name, inner);
         if (!converted) {
             return null;
@@ -1819,6 +1900,18 @@ function answerAsInput(name, inner) {
         rest = rest.slice(find[0].length);
     }
     const inputName = `${name}Input`;
+
+    // A math answer with its own <mathInput>
+    if (
+        (find = rest.match(
+            /^<mathInput\b([^>]*)>([\s\S]*?)<\/mathInput>([^<>]+)$/,
+        ))
+    ) {
+        return {
+            input: `<mathInput name="${inputName}"${find[1]}>${describe}${find[2]}</mathInput>`,
+            condition: `$${inputName} = ${find[3].trim()}`,
+        };
+    }
 
     // A math answer
     if (rest.trim() !== "" && !/[<>]/.test(rest)) {
@@ -2210,6 +2303,9 @@ function textSection(text, answers, answerRecords, context) {
     text = text.trim();
 
     let multiAnswerPartsUsed = {};
+    // A numbered question without an answer, waiting to see if the answer
+    // is on the next line: { numbered, question } outputs
+    let pendingQuestion = null;
     for (let par of text.split("\n")) {
         const numRecordsBefore = answerRecords.length;
 
@@ -2217,7 +2313,13 @@ function textSection(text, answers, answerRecords, context) {
         par = insertAnswers(
             par,
             /\\?\{\s?ans_rule\(\s?\d+\s?\)\s?\\\}?/g,
-            () => answers[answerRecords.filter((r) => r.blank).length],
+            () => {
+                const i = answerRecords.filter((r) => r.blank).length;
+                return withAnswerOptions(
+                    answers[i],
+                    context.answerOptions?.[i],
+                );
+            },
             answerRecords,
         );
 
@@ -2316,42 +2418,105 @@ function textSection(text, answers, answerRecords, context) {
         );
 
         // A numbered question with an answer, like "1." or "(a)" (often in
-        // bold), becomes a <part>, which numbers itself
+        // bold), becomes a <part>, which numbers itself. So does a
+        // numbered question with its answer on the next line.
         par = par.trim();
         const newRecords = answerRecords.slice(numRecordsBefore);
+        if (par === "" && newRecords.length === 0) {
+            continue;
+        }
         const findNumber = par.match(
             /^(?:<alert>\s*\(?(?:\d+|[a-zA-Z])[.)]\s*<\/alert>|\(?(?:\d+|[a-zA-Z])[.)](?=\s))\s*/,
         );
-        const isPart = findNumber && newRecords.length > 0;
+        const unnumbered = findNumber ? par.slice(findNumber[0].length) : par;
+        const isQuestion =
+            findNumber &&
+            newRecords.length === 0 &&
+            unnumbered !== "" &&
+            !/^<(ol|sideBySide|graph)\b/.test(unnumbered);
+        const answersQuestion =
+            pendingQuestion && !findNumber && newRecords.length > 0;
+
+        // Not the answer to the question before: that's just a paragraph
+        if (pendingQuestion && !answersQuestion) {
+            out += pendingQuestion.numbered;
+            pendingQuestion = null;
+        }
+        if (isQuestion) {
+            pendingQuestion = {
+                numbered: paragraphOut(par, newRecords),
+                question: paragraphOut(unnumbered, newRecords),
+            };
+            continue;
+        }
+
+        const isPart = (findNumber && newRecords.length > 0) || answersQuestion;
         if (isPart) {
-            par = par.slice(findNumber[0].length);
             for (let record of newRecords) {
                 record.part = true;
             }
         }
-
-        // Blocks (lists, tables, graphs) on their own aren't put in a <p>
-        let parOut = "";
-        if (
-            /^<(ol|sideBySide|graph)\b[\s\S]*<\/(ol|sideBySide|graph)>$/.test(
-                par,
-            )
-        ) {
-            parOut += `${par}\n`;
-        } else if (par !== "") {
-            parOut += `<p>${par}</p>\n`;
-        }
-
-        // Feedback for answers in this paragraph goes right after it
-        for (let record of newRecords) {
-            parOut += record.feedback ?? "";
+        let parOut = paragraphOut(isPart ? unnumbered : par, newRecords);
+        if (answersQuestion) {
+            parOut = pendingQuestion.question + parOut;
+            pendingQuestion = null;
         }
 
         out += isPart
             ? `<part>\n${tab}${parOut.trim().replaceAll("\n", `\n${tab}`)}\n</part>\n`
             : parOut;
     }
+    if (pendingQuestion) {
+        out += pendingQuestion.numbered;
+    }
     return out;
+}
+
+/**
+ * A paragraph of a TEXT section, with feedback for its answers after it.
+ * Blocks (lists, tables, graphs) on their own aren't put in a <p>.
+ */
+function paragraphOut(par, newRecords) {
+    let parOut = "";
+    if (
+        /^<(ol|sideBySide|graph)\b[\s\S]*<\/(ol|sideBySide|graph)>$/.test(par)
+    ) {
+        parOut += `${par}\n`;
+    } else if (par !== "") {
+        parOut += `<p>${par}</p>\n`;
+    }
+    for (let record of newRecords) {
+        parOut += record.feedback ?? "";
+    }
+    return parOut;
+}
+
+/**
+ * An answer from ANS() with the attributes from its options, for
+ * insertAnswers(). Just the answer if there are none.
+ */
+function withAnswerOptions(answer, options) {
+    if (answer === undefined || !options) {
+        return answer;
+    }
+    let attributes = "";
+    if (options.unordered) {
+        attributes += " unorderedCompare";
+    }
+    if (options.weight !== null) {
+        attributes += ` weight="${escapeAttribute(options.weight)}"`;
+    }
+    const inputAttributes = options.unionFromU ? " unionFromU" : "";
+    if (!attributes && !inputAttributes) {
+        return answer;
+    }
+    return {
+        content: answer,
+        given: answer,
+        blank: true,
+        attributes,
+        inputAttributes,
+    };
 }
 
 /**
@@ -2431,10 +2596,16 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
             before.match(/([^\s<>=]+)\s*=\s*$/);
         let lhs = null;
         let label = "";
+        // A short prompt ending in a colon, alone before the blank, like
+        // `Answer (separate by commas):`
+        const findPrompt = before.match(/^\s*([^<>.?!:]{1,60}:)\s*$/);
         if (findLabel) {
             lhs = findLabel[1].trim();
             label = `<label><m>${lhs} = </m></label>`;
             before = before.slice(0, findLabel.index);
+        } else if (findPrompt) {
+            label = `<label>${findPrompt[1].trim()} </label>`;
+            before = before.slice(0, findPrompt.index);
         }
 
         if (answer?.input) {
@@ -2455,18 +2626,31 @@ function insertAnswers(par, regex, getAnswer, answerRecords) {
 
         let content = answer;
         let record = { blank: true };
+        let attributes = "";
+        let inputAttributes = null;
         if (answer && typeof answer === "object") {
             content = answer.content;
-            record = { blank: false, feedback: answer.feedback };
+            record = {
+                blank: answer.blank ?? false,
+                feedback: answer.feedback,
+            };
+            attributes = answer.attributes ?? "";
+            inputAttributes = answer.inputAttributes || null;
             answer = answer.given;
         }
+
+        // An input with attributes is written out, and holds the label
+        const inner =
+            inputAttributes === null
+                ? label
+                : `<mathInput${inputAttributes}>${label}</mathInput>`;
 
         answerRecords.push({ lhs, answer, ...record });
         if (content === undefined) {
             out += before + warnAndComment(`No correct answer for ${name}`);
-            out += `<answer name="${name}">${label}</answer>`;
+            out += `<answer name="${name}"${attributes}>${inner}</answer>`;
         } else {
-            out += `${before}<answer name="${name}">${label}${content}</answer>`;
+            out += `${before}<answer name="${name}"${attributes}>${inner}${content}</answer>`;
         }
     }
     return out + par.slice(lastId);
@@ -2673,6 +2857,9 @@ export function main(args = process.argv.slice(2)) {
         console.error("Error reading file:", err);
         return;
     }
+    // A file pulled from doenet.org starts with its Doenet-Sync header,
+    // which mustn't be copied into the output
+    data = data.replace(/^\s*<!--\s*Doenet-Sync\b[\s\S]*?-->\s*/, "");
 
     let output = convert(data);
     if (!hideOriginal) {
