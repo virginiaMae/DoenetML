@@ -846,4 +846,71 @@ assert.match(
 );
 assert.match(output, /<part>\s*<p>Last\.<\/p>\s*<p><answer name="ans2">/);
 
+// A loop picking again until the value is allowed becomes exclude, and
+// its counter is dropped; the first question can start mid-paragraph
+// (from OPL, author Justin Sukiennik)
+output = convert(String.raw`DOCUMENT();
+$a = random(2,9);
+my $count = 10;
+do {
+    $b = non_zero_random(-9,9,1);
+}  until ($count<=0 or ( $b != $a and $b != -$a));
+$f = Formula("x/($a x + $b)");
+BEGIN_TEXT
+Consider \(f(x) = $f.\) a) Find the inverse
+$BR
+\(f^{-1}(x)\)= \{ans_rule(35)\},
+$BR
+(b) The domain of \(f\) excludes \{ans_rule(15)\}
+END_TEXT
+ANS($f->cmp);
+ANS(Compute("-$b/$a")->cmp);
+ENDDOCUMENT();`);
+assert.match(
+    output,
+    /<selectFromSequence name="b" from="-9" to="9" exclude="0 \$a -\$a"\/>/,
+);
+assert.doesNotMatch(output, /count|Unrecognized|until/);
+assert.match(
+    output,
+    /<p>Consider <m>f\(x\) = \$f\.<\/m><\/p>\s*<part>\s*<p>Find the inverse<\/p>\s*<p><answer name="ans1"><label><m>f\^\{-1\}\(x\) = <\/m><\/label>\$f<\/answer><\/p>\s*<\/part>/,
+);
+
+// The `while` form, with a counter used elsewhere (kept)
+output = convert(String.raw`DOCUMENT();
+$a = random(1,5,1);
+$n = 0;
+do { $b = random(1,5,1); $n++; } while ($b == $a || $b == 2*$a);
+BEGIN_TEXT
+\{ans_rule(10)\} $n
+END_TEXT
+ANS(Compute("$b")->cmp);
+ENDDOCUMENT();`);
+assert.match(
+    output,
+    /<selectFromSequence name="b" from="1" to="5" exclude="\$a 2\*\$a"\/>/,
+);
+assert.match(output, /<math name="n">0<\/math>/);
+
+// Any other loop condition is left alone
+output = convert(String.raw`DOCUMENT();
+$a = random(1,5,1);
+do { $b = random(1,5,1); } until ($b > $a);
+BEGIN_TEXT
+\{ans_rule(10)\}
+END_TEXT
+ANS(Compute("$b")->cmp);
+ENDDOCUMENT();`);
+assert.doesNotMatch(output, /exclude=/);
+assert.match(output, /Unrecognized pattern: until/);
+
+// No "b)" later: "a)" mid-paragraph is just text
+output = convert(String.raw`DOCUMENT();
+BEGIN_TEXT
+Consider this. a) is a choice \{ans_rule(10)\}
+END_TEXT
+ANS(Compute("1")->cmp);
+ENDDOCUMENT();`);
+assert.doesNotMatch(output, /<part>/);
+
 console.log("webwork-to-doenetml smoke test passed");

@@ -79,6 +79,9 @@ export function convert(data) {
     // Only the web version of `if ($displayMode eq 'TeX') {...} else {...}`
     document = dropTexDisplayMode(document);
 
+    // do { $b = random(...) } until ($b != $a): exclude $a from $b
+    document = convertRejectionLoops(document);
+
     // Clean up the rest of the document a bit
     document = document.replace(/(\r\n)+/g, "\n");
     document = document.replace(/\n+/g, "\n");
@@ -206,6 +209,26 @@ export function convert(data) {
     let variableContexts = new Map();
     for (let statement of statements) {
         let find;
+
+        // Values a rejection loop excluded: ⟦exclude b: $a -$a⟧
+        if ((find = statement.match(/^⟦exclude (\w+): ([^⟧]*)⟧$/))) {
+            const [, varName, values] = find;
+            const addExclude = (open) =>
+                /\bexclude="/.test(open)
+                    ? open.replace(
+                          /\bexclude="([^"]*)"/,
+                          `exclude="$1 ${values}"`,
+                      )
+                    : open.replace(/\/>$/, ` exclude="${values}"/>`);
+            const data = setup.get(varName);
+            if (data?.open.startsWith("<selectFromSequence")) {
+                data.open = addExclude(data.open);
+                for (let option of data.childOptions) {
+                    option.open = addExclude(option.open);
+                }
+            }
+            continue;
+        }
 
         // Context("LimitedPolynomial")->flags->set(singlePowers=>1)
         if (statement.startsWith("Context(")) {
@@ -1297,6 +1320,166 @@ function dropTexDisplayMode(document) {
 }
 
 /**
+ * WeBWorK can't exclude a variable from random(), so problems pick again
+ * until the value is allowed:
+ *
+ *     my $count = 10;
+ *     do {
+ *         $b = non_zero_random(-9,9,1);
+ *     } until ($count<=0 or ( $b != $a and $b != -$a));
+ *
+ * (or `} while ($b == $a || $b == -$a);`). Becomes the random() and a
+ * `⟦exclude b: $a -$a⟧` statement, which adds the values to its
+ * <selectFromSequence>'s exclude. A counter that only limits the tries is
+ * dropped. Loops with any other condition are left alone.
+ */
+function convertRejectionLoops(document) {
+    const loopRegex = /\bdo\s*\{([^{}]*)\}\s*(until|while)\s*\(/g;
+    let find;
+    while ((find = loopRegex.exec(document))) {
+        const [whole, body, keyword] = find;
+        const condOpen = find.index + whole.length - 1;
+        const condClose = findClosing(document, condOpen);
+        const findEnd = document.slice(condClose + 1).match(/^\s*;/);
+        if (condClose === -1 || !findEnd) {
+            continue;
+        }
+        const condition = document.slice(condOpen + 1, condClose);
+
+        // The body: one random value, and maybe a counter
+        const statements = body
+            .split(";")
+            .map((st) => st.trim())
+            .filter((st) => st !== "");
+        const randoms = statements.filter((st) =>
+            /^\$\w+\s*=\s*(random|non_zero_random)\(/.test(st),
+        );
+        const counterOps = statements.filter((st) =>
+            /^(\$\w+\s*(--|\+\+|[-+]=\s*1|=\s*\$\w+\s*[-+]\s*1)|(--|\+\+)\$\w+)$/.test(
+                st,
+            ),
+        );
+        if (
+            randoms.length !== 1 ||
+            randoms.length + counterOps.length !== statements.length
+        ) {
+            continue;
+        }
+        const varName = randoms[0].match(/^\$(\w+)/)[1];
+
+        const values = rejectedValues(varName, keyword, condition);
+        if (!values) {
+            continue;
+        }
+        const counters = [
+            ...new Set(
+                [...condition.matchAll(/\$(\w+)/g)]
+                    .map((m) => m[1])
+                    .filter((name) => name !== varName),
+            ),
+        ].filter((name) => !values.some((v) => v.includes(`$${name}`)));
+
+        const replacement = `${randoms[0]};\n⟦exclude ${varName}: ${values.join(" ")}⟧;`;
+        const endId = condClose + 1 + findEnd[0].length;
+        document =
+            document.slice(0, find.index) + replacement + document.slice(endId);
+        loopRegex.lastIndex = find.index + replacement.length;
+
+        // A counter used nowhere else: drop it
+        for (let counter of counters) {
+            const definition = new RegExp(
+                String.raw`(?:\bmy\s+)?\$${counter}\s*=\s*[^;]*;`,
+                "g",
+            );
+            const rest = document.replace(definition, "");
+            if (!new RegExp(String.raw`\$${counter}\b`).test(rest)) {
+                document = rest;
+                loopRegex.lastIndex = 0;
+            }
+        }
+    }
+    return document;
+}
+
+/**
+ * The values a rejection loop rules out for $varName, or null if its
+ * condition is anything else. Clauses about other variables only (a
+ * counter) are ignored.
+ *
+ * - until: keep when `$b != $a and $b != -$a` (and/&&, != or ne)
+ * - while: pick again when `$b == $a or $b == -$a` (or/||, == or eq)
+ */
+function rejectedValues(varName, keyword, condition) {
+    const unwrap = (str) => {
+        str = str.trim();
+        while (str.startsWith("(") && findClosing(str, 0) === str.length - 1) {
+            str = str.slice(1, -1).trim();
+        }
+        return str;
+    };
+    const splitOn = (str, operators) => {
+        // Split at top level on `or`/`||` or `and`/`&&`
+        let parts = [];
+        let depth = 0;
+        let start = 0;
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === "(") depth++;
+            else if (str[i] === ")") depth--;
+            else if (depth === 0) {
+                for (let op of operators) {
+                    const isWord = /\w/.test(op);
+                    if (
+                        str.startsWith(op, i) &&
+                        (!isWord ||
+                            (/\s/.test(str[i - 1] ?? " ") &&
+                                /\s/.test(str[i + op.length] ?? " ")))
+                    ) {
+                        parts.push(str.slice(start, i));
+                        start = i + op.length;
+                        i = start - 1;
+                        break;
+                    }
+                }
+            }
+        }
+        parts.push(str.slice(start));
+        return parts.map(unwrap);
+    };
+    const mentions = (clause) =>
+        new RegExp(String.raw`\$${varName}\b`).test(clause);
+
+    const [outerOps, innerOps, relation] =
+        keyword === "until"
+            ? [["or", "||"], ["and", "&&"], /^(?:!=|ne)$/]
+            : [["and", "&&"], ["or", "||"], /^(?:==|eq)$/];
+    // Clauses that don't mention the variable (a counter) are ignored
+    const outer = splitOn(unwrap(condition), outerOps).filter(mentions);
+    if (outer.length !== 1) {
+        return null;
+    }
+    let values = [];
+    for (let clause of splitOn(outer[0], innerOps)) {
+        const find = clause.match(/^(.+?)\s*(!=|==|\bne\b|\beq\b)\s*(.+)$/);
+        if (!find || !relation.test(find[2])) {
+            return null;
+        }
+        const [left, right] = [find[1].trim(), find[3].trim()];
+        const other =
+            left === `$${varName}`
+                ? right
+                : right === `$${varName}`
+                  ? left
+                  : null;
+        if (other === null || mentions(other)) {
+            return null;
+        }
+        // exclude="..." is split on spaces
+        values.push(other.replace(/\s+/g, ""));
+    }
+    return values;
+}
+
+/**
  * A Perl string expression, as it would appear in a TEXT section:
  *
  *     "\( x = \)" . $m->ans_rule(20) . $BR   ->   \( x = \) \{$m->ans_rule(20)\} $BR
@@ -2336,7 +2519,7 @@ function textSection(text, answers, answerRecords, context) {
     // A numbered question without an answer, waiting to see if the answer
     // is on the next line: { numbered, question } outputs
     let pendingQuestion = null;
-    for (let par of text.split("\n")) {
+    for (let par of splitFirstNumber(text.split("\n"))) {
         const numRecordsBefore = answerRecords.length;
 
         // <answer> tags
@@ -2447,6 +2630,9 @@ function textSection(text, answers, answerRecords, context) {
             (match, graphName) => graphWithContents(graphName, context),
         );
 
+        // A comma left after the last answer: `\{ans_rule(35)\},`
+        par = par.replace(/(<\/answer>)\s*,\s*$/, "$1");
+
         // A numbered question with an answer, like "1." or "(a)" (often in
         // bold), becomes a <part>, which numbers itself. So does a
         // numbered question with its answer on the next line.
@@ -2500,6 +2686,43 @@ function textSection(text, answers, answerRecords, context) {
         out += pendingQuestion.numbered;
     }
     return out;
+}
+
+/**
+ * The first numbered question can follow the introduction on the same
+ * line: `Consider f. a) Find the inverse`. Start a new paragraph at
+ * `a)`, `(a)` or `1.` (bold or not) after the end of a sentence, but only
+ * if a later paragraph starts with the next one (`b)`, `(b)`, `2.`).
+ */
+function splitFirstNumber(pars) {
+    const marker = (first) =>
+        String.raw`(?:<alert>\s*)?\(?${first}[.)](?:\s*<\/alert>)?(?=\s)`;
+    const nextMarker = (second) =>
+        new RegExp(String.raw`^\s*${marker(second)}`);
+    for (let [first, second] of [
+        ["a", "b"],
+        ["A", "B"],
+        ["1", "2"],
+    ]) {
+        const midFirst = new RegExp(
+            String.raw`([.?!:](?:\s*<\/me?>)?)\s+(${marker(first)})`,
+        );
+        const i = pars.findIndex((par) => midFirst.test(par));
+        if (
+            i >= 0 &&
+            pars.slice(i + 1).some((par) => nextMarker(second).test(par))
+        ) {
+            const find = pars[i].match(midFirst);
+            const splitId = find.index + find[1].length;
+            return [
+                ...pars.slice(0, i),
+                pars[i].slice(0, splitId),
+                pars[i].slice(splitId).trim(),
+                ...pars.slice(i + 1),
+            ];
+        }
+    }
+    return pars;
 }
 
 /**
