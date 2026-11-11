@@ -758,6 +758,23 @@ assert.match(
 assert.match(output, /<givenAnswer>\s*<part><m>\$sol1<\/m><\/part>/);
 assert.doesNotMatch(output, /Unknown function|\(\$sol|alert> 1\./);
 
+// An interval is simplified, so 5/$b shows cleanly; a union isn't, since
+// that would reorder its intervals
+output = convert(String.raw`DOCUMENT();
+$b = random(1,4,1);
+$in1 = Interval("(-inf,5/$b)");
+$ans = Union("$in1 U (5/$b,inf)");
+BEGIN_TEXT
+\{ans_rule(10)\}
+END_TEXT
+ANS($ans->cmp);
+ENDDOCUMENT();`);
+assert.match(
+    output,
+    /<math name="in1" simplify="full"><interval>\(-infinity,5\/\$b\)<\/interval><\/math>/,
+);
+assert.match(output, /<math name="ans"><interval>/);
+
 // Equal weights are left out; a numbered line that isn't followed by its
 // answer stays a paragraph
 output = convert(String.raw`DOCUMENT();

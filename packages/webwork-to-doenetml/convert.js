@@ -1537,8 +1537,10 @@ function functionStatement(
         close = `</mathList>`;
     } else if (func === "Interval") {
         // <interval>
-        // The whole argument: splitArgs would split it at its comma
-        open = `<math${nameStr}><interval>`;
+        // The whole argument: splitArgs would split it at its comma.
+        // Simplified, so endpoints like 5/$b show cleanly in every variant
+        // (not for a Union: simplifying reorders its intervals)
+        open = `<math${nameStr} simplify="full"><interval>`;
         child = infinityFromInf(wholeArg(argsString));
         close = `</interval></math>`;
     } else if (func === "Union") {
