@@ -775,6 +775,55 @@ assert.match(
 );
 assert.match(output, /<math name="ans"><interval>/);
 
+// Simplified answers: from the context an answer was made in, or the text
+// asking to simplify. Not for intervals.
+output = convert(String.raw`DOCUMENT();
+loadMacros("PGstandard.pl", "MathObjects.pl", "contextLimitedPolynomial.pl");
+Context("Numeric");
+$q = Compute("(x+3)/(x-2)")->reduce;
+$i = Interval("(2,inf)");
+Context("LimitedPolynomial");
+$p = Compute("x^2-1");
+Context("LimitedPolynomial")->flags->set(singlePowers=>1);
+$s = Compute("x^2-2x");
+BEGIN_TEXT
+Simplify your answers. $PAR
+\(a =\) \{ans_rule(10)\} $PAR
+\(b =\) \{ans_rule(10)\} $PAR
+\(c =\) \{ans_rule(10)\} $PAR
+\(d =\) \{ans_rule(10)\}
+END_TEXT
+ANS($q->cmp);
+ANS($p->cmp);
+ANS($s->cmp);
+Context("Interval");
+ANS($i->cmp);
+ENDDOCUMENT();`);
+assert.match(
+    output,
+    /<answer name="ans1" symbolicEquality simplifyOnCompare expandOnCompare>/,
+);
+assert.match(
+    output,
+    /<answer name="ans2" symbolicEquality simplifyOnCompare="full">/,
+);
+assert.match(
+    output,
+    /<answer name="ans3" symbolicEquality simplifyOnCompare="numbers">/,
+);
+assert.match(output, /<answer name="ans4"><mathInput unionFromU>/);
+
+// Without "simplify" in the text, a Numeric answer accepts anything equal
+output = convert(String.raw`DOCUMENT();
+Context("Numeric");
+$q = Compute("(x+3)/(x-2)");
+BEGIN_TEXT
+\{ans_rule(10)\}
+END_TEXT
+ANS($q->cmp);
+ENDDOCUMENT();`);
+assert.doesNotMatch(output, /symbolicEquality/);
+
 // Equal weights are left out; a numbered line that isn't followed by its
 // answer stays a paragraph
 output = convert(String.raw`DOCUMENT();

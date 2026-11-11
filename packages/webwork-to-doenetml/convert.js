@@ -61,6 +61,9 @@ export function convert(data) {
         document = document.replaceAll(/SOLUTION.*END_SOLUTION/gs, "");
     }
 
+    // The problem asks for simplified answers
+    const asksToSimplify = /\bsimplif(y|ied)\b/i.test(content);
+
     // Arrays indexed by a random variable become a <select>
     let selects;
     [document, [content, solutionSection], selects] = convertIndexedArrays(
@@ -90,7 +93,7 @@ export function convert(data) {
             v !== "" &&
             !v.includes("loadMacros") &&
             !v.includes("beginproblem") &&
-            !v.includes("Context(") &&
+            (!v.includes("Context(") || v.trim().startsWith("Context(")) &&
             !/install_\w*grader\(/.test(v),
     );
 
@@ -198,8 +201,24 @@ export function convert(data) {
 
     let graphicalStyleCount = 0; //styling for graphical objects
     const colorStyles = new Map(); // FEQ color -> styleNumber
+    // The context a variable was made in decides how WeBWorK checks it
+    let currentContext = { name: "Numeric", singlePowers: false };
+    let variableContexts = new Map();
     for (let statement of statements) {
         let find;
+
+        // Context("LimitedPolynomial")->flags->set(singlePowers=>1)
+        if (statement.startsWith("Context(")) {
+            const name = statement.match(/^Context\(\s*["']([\w-]+)["']/)?.[1];
+            if (name) {
+                currentContext = { name, singlePowers: false };
+            }
+            const flags = statement.match(/->flags->set\(([\s\S]*)\)/)?.[1];
+            if (flags && /\bsinglePowers\s*=>\s*1\b/.test(flags)) {
+                currentContext = { ...currentContext, singlePowers: true };
+            }
+            continue;
+        }
 
         // Open conditional if
         if ((find = statement.match(/if\s*\((.*)\)/))) {
@@ -275,6 +294,7 @@ export function convert(data) {
         } else if ((find = statement.match(/\$(\w+)\s*=(.*)/))) {
             const varName = find[1].trim();
             const varValue = find[2].trim();
+            variableContexts.set(varName, currentContext);
             const findFunc = varValue.match(/(\w+)\((.*)\)(->\w+)?/);
 
             // Special case: init_graph()
@@ -511,6 +531,13 @@ export function convert(data) {
             const definition = refName ? (setup.get(refName)?.open ?? "") : ans;
             answerOptions.push({
                 weight,
+                comparison: comparisonAttributes(
+                    refName
+                        ? (variableContexts.get(refName) ?? currentContext)
+                        : currentContext,
+                    definition,
+                    asksToSimplify,
+                ),
                 // WeBWorK compares lists in any order, unless ordered=>1
                 unordered:
                     definition.startsWith("<mathList") &&
@@ -1839,8 +1866,9 @@ function combineAnswers(text) {
     for (const match of matches) {
         const [whole, attributes, inner] = match;
         const name = attributes.match(/name="(\w+)"/)?.[1];
-        // `$input = $list` would compare in order
-        if (/\bunorderedCompare\b/.test(attributes)) {
+        // `$input = $list` would compare in order, and `$input = $a`
+        // wouldn't compare symbolically
+        if (/\b(unorderedCompare|symbolicEquality)\b/.test(attributes)) {
             return null;
         }
         const converted = name && answerAsInput(name, inner);
@@ -2494,6 +2522,45 @@ function paragraphOut(par, newRecords) {
 }
 
 /**
+ * How strictly a formula answer must match, as an <answer>'s
+ * symbolicEquality attributes, or "" to accept anything equal to it.
+ * From the context WeBWorK made the answer in:
+ *
+ * - LimitedPolynomial with singlePowers: arithmetic in the coefficients,
+ *   but one term for each power -> "numbers"
+ * - LimitedPolynomial: also like terms -> "full" (neither expands, so a
+ *   factored polynomial is wrong)
+ * - LimitedPolynomial-Strict and other Limited contexts: no arithmetic
+ *   -> "normalizeOrder"
+ *
+ * Or, when the problem text asks to simplify but the context accepts
+ * anything equal, simplifyOnCompare with expandOnCompare: any simplified
+ * form (factored or expanded, terms in any order, -(x+3)/(2-x)), but not
+ * one with a factor left to cancel, like (x+3)(x-5)/((x-2)(x-5)).
+ */
+function comparisonAttributes(context, definition, asksToSimplify) {
+    // Only formulas: not intervals, lists, points or menus
+    if (
+        !/^<(math|number)\b/.test(definition) ||
+        /<interval>/.test(definition)
+    ) {
+        return "";
+    }
+    const symbolic = (simplify) =>
+        ` symbolicEquality simplifyOnCompare="${simplify}"`;
+    if (context.name === "LimitedPolynomial") {
+        return symbolic(context.singlePowers ? "numbers" : "full");
+    }
+    if (context.name.startsWith("Limited")) {
+        return symbolic("normalizeOrder");
+    }
+    if (asksToSimplify && ["Numeric", "Complex"].includes(context.name)) {
+        return " symbolicEquality simplifyOnCompare expandOnCompare";
+    }
+    return "";
+}
+
+/**
  * An answer from ANS() with the attributes from its options, for
  * insertAnswers(). Just the answer if there are none.
  */
@@ -2502,6 +2569,7 @@ function withAnswerOptions(answer, options) {
         return answer;
     }
     let attributes = "";
+    attributes += options.comparison;
     if (options.unordered) {
         attributes += " unorderedCompare";
     }
