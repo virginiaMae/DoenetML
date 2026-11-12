@@ -824,6 +824,20 @@ ANS($q->cmp);
 ENDDOCUMENT();`);
 assert.doesNotMatch(output, /symbolicEquality/);
 
+// Parentheses around the whole ->cmp call only group the Perl too
+output = convert(String.raw`DOCUMENT();
+$ans1 = Compute("2");
+BEGIN_TEXT
+Answer: \{ans_rule(20)\}
+END_TEXT
+ANS(($ans1->cmp() ));
+ENDDOCUMENT();`);
+assert.match(
+    output,
+    /<answer name="ans1"><label>Answer: <\/label>\$sol1<\/answer>/,
+);
+assert.match(output, /<p><m>\$sol1<\/m><\/p>/);
+
 // Equal weights are left out; a numbered line that isn't followed by its
 // answer stays a paragraph
 output = convert(String.raw`DOCUMENT();

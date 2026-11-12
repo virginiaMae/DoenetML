@@ -500,6 +500,8 @@ export function convert(data) {
                     weight = weightArgs[1].trim();
                 }
             }
+            // ANS(($ans1->cmp())): the parentheses only group the Perl
+            arg = withoutGroupingParens(arg);
 
             // Pop-up menus and select lists get their <answer>s where
             // they're printed in the TEXT section
@@ -524,14 +526,8 @@ export function convert(data) {
             //   }
             // }
 
-            let ans = parts[0].trim();
-            // ($ans1)->cmp: the parentheses only group the Perl
-            while (
-                ans.startsWith("(") &&
-                findClosing(ans, 0) === ans.length - 1
-            ) {
-                ans = ans.slice(1, -1).trim();
-            }
+            // ($ans1)->cmp: so do these
+            let ans = withoutGroupingParens(parts[0]);
 
             if ((find = ans.match(/(\w+)\s*\(\s*(.*)\s*\)/))) {
                 if (find[1] == "fun_cmp") {
@@ -1410,13 +1406,7 @@ function convertRejectionLoops(document) {
  * - while: pick again when `$b == $a or $b == -$a` (or/||, == or eq)
  */
 function rejectedValues(varName, keyword, condition) {
-    const unwrap = (str) => {
-        str = str.trim();
-        while (str.startsWith("(") && findClosing(str, 0) === str.length - 1) {
-            str = str.slice(1, -1).trim();
-        }
-        return str;
-    };
+    const unwrap = withoutGroupingParens;
     const splitOn = (str, operators) => {
         // Split at top level on `or`/`||` or `and`/`&&`
         let parts = [];
@@ -2992,6 +2982,17 @@ function splitArgs(argsString) {
         .map((arg) => arg.trim().replaceAll(`"`, ``));
     args = args.map((a) => a.replace("🍩", ","));
     return args;
+}
+
+/**
+ * `str` without parentheses around all of it: `(($a))` -> `$a`
+ */
+function withoutGroupingParens(str) {
+    str = str.trim();
+    while (str.startsWith("(") && findClosing(str, 0) === str.length - 1) {
+        str = str.slice(1, -1).trim();
+    }
+    return str;
 }
 
 /**
