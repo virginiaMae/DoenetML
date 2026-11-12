@@ -1863,7 +1863,8 @@ function parseTable(value) {
 function tableBlock(rows, context) {
     let out = "";
     for (let { graphs: rowGraphs, labels } of rows) {
-        out += "<sideBySide>\n";
+        // A margin keeps the graphs from crowding each other
+        out += `<sideBySide margins="3%">\n`;
         rowGraphs.forEach((graphName, i) => {
             if (!graphName) {
                 return;
@@ -1929,15 +1930,17 @@ function selectListBlock(list, answerRecords, context) {
         answerRecords.push({ givenAnswer: "" });
         const number = answerRecords.length;
         items +=
-            `${tab}<li>\n` +
+            `<part>\n` +
+            `${tab}<p>\n` +
             `${tab}${tab}<choiceInput inline name="ci${number}">${question}\n${choices}${tab}${tab}</choiceInput>\n` +
             `${tab}${tab}<answer inline name="ans${number}" forceSmallCheckWorkButton><award><when>$ci${number} = ${key}</when></award></answer>\n` +
-            `${tab}</li>\n`;
-        givenItems += `${tab}<li>${question}: ${key}</li>\n`;
+            `${tab}</p>\n` +
+            `</part>\n`;
+        answerRecords.at(-1).givenAnswer =
+            `<part><p>${question}: ${key}</p></part>`;
     }
-    answerRecords.at(-numToShow).givenAnswer = `<ol>\n${givenItems}</ol>`;
 
-    return `<ol>\n${items}</ol>`;
+    return items.trim();
 }
 
 /**
@@ -2028,7 +2031,16 @@ function combineAnswers(text) {
     if (matches.length < 2) {
         return text;
     }
-    if (/<part>/.test(text)) {
+    // Answers in <part>s are graded part by part, except a select list's,
+    // which are one question
+    const partAnswers = [...text.matchAll(/<part>[\s\S]*?<\/part>/g)].flatMap(
+        (part) => [...part[0].matchAll(/<answer\b[^>]*>/g)],
+    );
+    if (
+        partAnswers.some(
+            (answer) => !/\bforceSmallCheckWorkButton\b/.test(answer[0]),
+        )
+    ) {
         return null;
     }
 
@@ -2074,8 +2086,15 @@ function combineAnswers(text) {
         (before.match(/<ol\b/g) ?? []).length -
         (before.match(/<\/ol>/g) ?? []).length;
     let answerOut = `<answer name="ans1"><shortDescription>Check all answers</shortDescription><award><when>${conditions.join(" and ")}</when></award></answer>`;
+    const openParts =
+        (before.match(/<part>/g) ?? []).length -
+        (before.match(/<\/part>/g) ?? []).length;
     if (openLists > 0) {
         insertAt = out.indexOf("</ol>", insertAt) + "</ol>".length;
+        answerOut = `\n${answerOut}`;
+    } else if (openParts > 0) {
+        // After the select list's last <part>
+        insertAt = out.indexOf("</part>", insertAt) + "</part>".length;
         answerOut = `\n${answerOut}`;
     }
     return out.slice(0, insertAt) + answerOut + out.slice(insertAt);
@@ -2639,7 +2658,7 @@ function textSection(text, answers, answerRecords, context) {
             findNumber &&
             newRecords.length === 0 &&
             unnumbered !== "" &&
-            !/^<(ol|sideBySide|graph)\b/.test(unnumbered);
+            !/^<(ol|sideBySide|graph|part)\b/.test(unnumbered);
         const answersQuestion =
             pendingQuestion && !findNumber && newRecords.length > 0;
 
@@ -2722,7 +2741,9 @@ function splitFirstNumber(pars) {
 function paragraphOut(par, newRecords) {
     let parOut = "";
     if (
-        /^<(ol|sideBySide|graph)\b[\s\S]*<\/(ol|sideBySide|graph)>$/.test(par)
+        /^<(ol|sideBySide|graph|part)\b[\s\S]*<\/(ol|sideBySide|graph|part)>$/.test(
+            par,
+        )
     ) {
         parOut += `${par}\n`;
     } else if (par !== "") {

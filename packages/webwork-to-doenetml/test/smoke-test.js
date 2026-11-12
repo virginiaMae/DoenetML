@@ -197,7 +197,7 @@ assert.match(
 );
 assert.match(
     output,
-    /<sideBySide>\s*<figure suppressFigureNameInCaption>\s*<graph[^>]*>\s*<!-- TODO: describe this graph[^>]*-->\s*<shortDescription>Graph A<\/shortDescription>\s*\$p1\s*<regionBetweenCurves boundaryValues="-8 8">\$p1 \$graph1Edge<\/regionBetweenCurves>\s*<\/graph>\s*<caption>A<\/caption>/,
+    /<sideBySide margins="3%">\s*<figure suppressFigureNameInCaption>\s*<graph[^>]*>\s*<!-- TODO: describe this graph[^>]*-->\s*<shortDescription>Graph A<\/shortDescription>\s*\$p1\s*<regionBetweenCurves boundaryValues="-8 8">\$p1 \$graph1Edge<\/regionBetweenCurves>\s*<\/graph>\s*<caption>A<\/caption>/,
 );
 assert.match(
     output,
@@ -212,13 +212,13 @@ assert.match(
 assert.doesNotMatch(output, /<shuffle>|credit=/);
 assert.match(
     output,
-    /<ol>\s*<li>\s*<choiceInput inline name="ci1">\$questions\[\$ord\[1\]\]\s*<choice>A<\/choice>\s*<choice>B<\/choice>\s*<\/choiceInput>\s*<answer inline name="ans1" forceSmallCheckWorkButton><award><when>\$ci1 = \$keys\[\$ord\[1\]\]<\/when><\/award><\/answer>\s*<\/li>/,
+    /<\/sideBySide>\s*<part>\s*<p>\s*<choiceInput inline name="ci1">\$questions\[\$ord\[1\]\]\s*<choice>A<\/choice>\s*<choice>B<\/choice>\s*<\/choiceInput>\s*<answer inline name="ans1" forceSmallCheckWorkButton><award><when>\$ci1 = \$keys\[\$ord\[1\]\]<\/when><\/award><\/answer>\s*<\/p>\s*<\/part>/,
 );
 assert.match(
     output,
-    /<givenAnswer>\s*<ol>\s*<li>\$questions\[\$ord\[1\]\]: \$keys\[\$ord\[1\]\]<\/li>\s*<li>\$questions\[\$ord\[2\]\]: \$keys\[\$ord\[2\]\]<\/li>\s*<\/ol>\s*<\/givenAnswer>/,
+    /<givenAnswer>\s*<part><p>\$questions\[\$ord\[1\]\]: \$keys\[\$ord\[1\]\]<\/p><\/part>\s*<part><p>\$questions\[\$ord\[2\]\]: \$keys\[\$ord\[2\]\]<\/p><\/part>\s*<\/givenAnswer>/,
 );
-assert.doesNotMatch(output, /<p>\s*<sideBySide|<p>\s*<ol/);
+assert.doesNotMatch(output, /<p>\s*<sideBySide|<p>\s*<part|<ol>/);
 
 // The same curve plotted twice on a graph is drawn once, curves of the same
 // color share a style, non_zero_random only excludes 0 when it's in range,
@@ -285,7 +285,7 @@ assert.match(
 assert.doesNotMatch(output, /ci3/);
 assert.match(
     output,
-    /<li>\$questions\[\$ord2\[2\]\]: \$keys\[\$ord2\[2\]\]<\/li>/,
+    /<part><p>\$questions\[\$ord2\[2\]\]: \$keys\[\$ord2\[2\]\]<\/p><\/part>/,
 );
 
 // list_random picks one of its values
@@ -678,7 +678,7 @@ ANS(str_cmp($sl->ra_correct_ans));`),
 assert.doesNotMatch(output, /forceSmallCheckWorkButton/);
 assert.match(
     output,
-    /<\/choiceInput>\s*<\/li>\s*<\/ol>\n<answer name="ans1"><shortDescription>Check all answers<\/shortDescription><award><when>\(\$ci1 = \$keys\[\$ord\[1\]\]\) and \(\$ci2 = \$keys\[\$ord\[2\]\]\)<\/when><\/award><\/answer>/,
+    /<\/choiceInput>\s*<\/p>\s*<\/part>\n<answer name="ans1"><shortDescription>Check all answers<\/shortDescription><award><when>\(\$ci1 = \$keys\[\$ord\[1\]\]\) and \(\$ci2 = \$keys\[\$ord\[2\]\]\)<\/when><\/award><\/answer>/,
 );
 
 // An any-order MultiAnswer: no note about partial credit, since there is none
